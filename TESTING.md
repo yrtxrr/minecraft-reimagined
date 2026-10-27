@@ -78,3 +78,7 @@ Full Gradle build19/19 JUnit tests passed; resource check93JSON/91bilingual keys
 ## Dynamic shulker-color browser increment
 
 Full Gradle build19/19 JUnit tests and fresh official server report58/58 required GameTests passed, zero failures/skips. Three dynamic-browser tests check every generated preview against real vanilla recipe matching/assembly, name/cargo/component preservation and non-mutation, strict concrete ingredients, incoming/outgoing usage counts and unique bounded IDs, all17 dye-input boxes, rejection of unrelated selections/arbitrary subclasses, and snapshot cache reuse/replacement/invalidation/logout. Resource validation93JSON/92bilingual keys passed. GUI layout, end-to-end client recipe reload and client performance remain unverified; no graphical client/display server was available in this cloud session.
+
+## Graphical Alpha validation
+
+A real NeoForge client now launches on Xvfb/Mesa llvmpipe and enters the saved test world. This exposed/fixed the recipe browser's double-blur rendering order and milling recipes' unsupported vanilla recipe-book category. Fixed Russian GUI/item/recipe rendering, actual drive animation, barley/deer visuals, journal pages and client-process save/reopen were observed. Full build19unit tests and58server GameTests passed after the fixes. See docs/ALPHA_VALIDATION.md for exact environment, evidence boundaries and remaining checks. A second graphical client launched but its local-server login was rejected because Minecraft authentication services were unreachable; multiplayer is not marked passed.

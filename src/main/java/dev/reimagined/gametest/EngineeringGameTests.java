@@ -35,6 +35,7 @@ public final class EngineeringGameTests {
                 new SingleRecipeInput(new ItemStack(Items.WHEAT)), level);
         helper.assertTrue(wheat.isPresent(), "Wheat milling recipe was not loaded");
         var recipe = wheat.orElseThrow().value();
+        helper.assertTrue(recipe.isSpecial(), "Machine recipes must stay out of unsupported vanilla recipe-book categories");
         helper.assertTrue(recipe.getResultItem(level.registryAccess()).is(EngineeringContent.FLOUR.get()),
                 "Wheat milling result must be registered flour");
         helper.assertTrue(recipe.getToastSymbol().is(EngineeringContent.MILLSTONE.get().asItem()),

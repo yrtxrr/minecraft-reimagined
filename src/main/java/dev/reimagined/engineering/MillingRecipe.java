@@ -24,6 +24,8 @@ public record MillingRecipe(Ingredient ingredient, ItemStack result, int seconds
     @Override public RecipeType<?> getType() { return EngineeringContent.MILLING.get(); }
     @Override public NonNullList<Ingredient> getIngredients() { return NonNullList.of(Ingredient.EMPTY, ingredient); }
     @Override public ItemStack getToastSymbol() { return new ItemStack(EngineeringContent.MILLSTONE.get()); }
+    // This process belongs to the mill/browser, not the vanilla crafting recipe book.
+    @Override public boolean isSpecial() { return true; }
     public static final class Serializer implements RecipeSerializer<MillingRecipe> {
         private static final MapCodec<MillingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(MillingRecipe::ingredient),

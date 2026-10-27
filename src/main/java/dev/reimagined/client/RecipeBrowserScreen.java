@@ -156,9 +156,16 @@ public final class RecipeBrowserScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.fill(4, 4, width - 4, height - 4, 0xE0202428);
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        // Screen.render includes the background in1.21.1: calling it after our content
+        // would blur all item icons/text a second time. Draw it and its widgets first.
+        super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawString(font, title, 8, 10, 0xFFFFFF);
         recipeItems.clear();
         ItemStack hovered = ItemStack.EMPTY;
@@ -220,7 +227,6 @@ public final class RecipeBrowserScreen extends Screen {
             graphics.drawWordWrap(font, Component.translatable("reimagined.browser.no_recipes"), x, 88,
                     Math.max(40, width - x - 8), 0xCCCCCC);
         }
-        super.render(graphics, mouseX, mouseY, partialTick);
         if (!hovered.isEmpty()) graphics.renderTooltip(font, hovered, mouseX, mouseY);
     }
 

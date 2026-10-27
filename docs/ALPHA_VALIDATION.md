@@ -1,0 +1,27 @@
+# Graphical Alpha validation (2026-10-27)
+
+This is an executed development-client check, not a blanket release certification. Minecraft1.21.1 / NeoForge21.1.264 / Oracle Java21.0.8 were launched through ModDevGradle in the existing checkout. A local Xvfb display and Mesa llvmpipe OpenGL4.5 supplied real rendering; this was not a headless GameTestServer. Software rendering/shared cloud CPU is unsuitable for certifying ordinary GPU frame rate or multiplayer TPS. No mandatory mod dependency was added.
+
+## Environment and reproducibility
+
+Xvfb21.1.16-1.3+deb13u4, xserver-common, xdotool/libxdo were extracted into a temporary directory from Debian's HTTPS package repository after comparing each package with the published SHA256 in trixie's Packages.xz. They are test tools, not shipped mod assets. Existing Mesa/X11 libraries were used. Keep these tools outside Git and never disable platform network/TLS/authentication checks.
+
+Run an isolated virtual display if no physical display exists, then source scripts/cloud-shell.sh and launch `DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2 XDG_CACHE_HOME=/tmp/reimagined-mesa-cache ./gradlew runClient`. The second session used Java's `-XX:ActiveProcessorCount=4 -Xmx2G` through its environment. Preserve ordinary developer settings outside this smoke test. Client options tested:English/automatic GUI scale initially; Russian/GUI scale2 at1280×800 after fixing the browser. Client simulation distance must be at least5 (dedicated-server settings accept a different range).
+
+Use a disposable world only. The executed world was a copy of the already-disposable mechanical profile world, labelled Reimagined Alpha Smoke, creative/commands enabled, with its own `.alpha-approved-disposable` marker. No player world was edited. The local fixture used the existing wheel/shaft/mill, enclosed flowing-water channel, all barley stages, and a persistent deer. Worlds/screenshots/logs remain ignored under run*/ or temporary storage.
+
+For the optional second client, publish the disposable integrated server with `/publish true creative 25578`, then launch `DISPLAY=:100 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=1 ./gradlew runAlphaPeer`. It has separate run-alpha-peer data/options and the AlphaObserver development identity. `-PalphaPeerAddress=host:port` changes the local test target. This is an ordinary NeoForge client connection with normal authentication; the task does not disable login checks or supply account credentials.
+
+## Observed results and fixes
+
+- Initial model/texture atlas baking completed; no missing reimagined model/texture was reported. Wheels, shafts, mill geometry, original barley textures, item icons, deer and calendar HUD rendered in the actual world. Successive world frames visibly showed rotating drive geometry; actual milling output was queried through the in-game command and contained reimagined:flour.
+- The real client exposed double background rendering in RecipeBrowserScreen:Screen.render in1.21.1 already invokes renderBackground. The late super.render blurred our previously drawn icons/text. The screen now supplies its panel fill through renderBackground and invokes the superclass before drawing its own content. The fixed Russian browser atGUI scale2 displays sharp labels/icons, barley search, all three barley uses and actual mill/bread ingredient/result/station previews. The initial English/automatic-scale screen supplied the failing visual baseline.
+- The client exposed unknown vanilla recipe-book category warnings for every milling recipe. MillingRecipe.isSpecial now returns true, keeping machine processes out of the vanilla crafting book while retaining the standalone browser. After an actual client restart/world re-entry the milling-category warnings disappeared. Server tests assert this contract and still validate milling/browser recipes.
+- With the browser kept open on barley usage3/3, a scheduled server `/reload` loaded a disposable data-pack override changing milling output from one flour to two. The same open screen updated the result count without reconnecting and retained its selection/page. The override is test-world-only, not a change to shipped recipes.
+- Research journal opened as a real eleven-page book; Russian introduction and seasonal instructions were read using native page controls. The calendar HUD localized correctly.
+- Save and Quit to Title completed normal world/chunk saving. A fresh client process reopened the same world with inventory/blocks/crops intact and resumed visible drive motion and milling. The earlier normal-server64-mill restart test remains separate supporting evidence.
+- A second real graphical NeoForge client reached127.0.0.1:25578, but login failed because Minecraft authentication services were unreachable. Simultaneous connected players, remote-client motion synchronization and online accounts remain unverified. Authentication was not disabled to manufacture a successful result.
+
+## Remaining gates
+
+Full survival progression/balance, long sessions, sound hardware, physical GPU frame-time profiling, simultaneous connected players and a standalone launcher installation of the final player JAR are not certified by this session. Individual combat/spell edge cases and large farms/factories retain their automated/profile evidence; do not infer exhaustive manual coverage from a graphical launch. Track additional executed checks below instead of silently promoting these gaps to passed.

@@ -15,7 +15,8 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 - [x] Validate preset registry loading and actual same-seed chunk generation.
 - [ ] In-game exercise deer spawn/breeding, powered milling, saving/restart, client recipe reload and server/client interaction.
 - [x] Produce a development JAR with server integration verification.
-- [ ] Validate graphical client and multiplayer before calling the playable alpha ready.
+- [x] Launch the graphical NeoForge client; inspect world models, RU browser/journal and actual recipe reload; fix client-discovered issues.
+- [ ] Complete survival/physical-GPU/standalone-JAR validation and authenticated multiplayer before calling the playable alpha ready. Second client reached the local server but authentication services were unavailable.
 
 ## Subsequent playable increments
 
