@@ -37,6 +37,9 @@ for phase in report['phases']:
     ticks = [e for e in events if e['type'] == 'reimagined.CookingTick']
     if len(ticks) != 600:
         raise SystemExit(f'Expected600measured custom tick events, got{len(ticks)}')
+    # Report construction follows the last measured Post event; exclude its audit/allocation work.
+    end = min(end, max(stamp(e['values']['startTime']) for e in ticks))
+    events = [e for e in events if stamp(e['values']['startTime']) <= end]
     samples = [e for e in events if e['type'] in ('jdk.ExecutionSample', 'jdk.NativeMethodSample')]
     def frames(event):
         return (event['values'].get('stackTrace') or {}).get('frames', [])
@@ -65,8 +68,9 @@ for phase in report['phases']:
         finish = stamp(tick['values']['startTime'])
         elapsed = tick['values']['durationNanos'] / 1e9
         window = [e for e in samples if finish - elapsed <= stamp(e['values']['startTime']) <= finish]
+        window.sort(key=lambda e: (e['values'].get('sampledThread') or {}).get('javaName') != 'Server thread')
         slow.append({'tick': tick['values']['tick'], 'ms': elapsed * 1000,
-                     'sampledStacks': [[method(f) for f in frames(e)[:12]] for e in window[:8]]})
+                     'sampledStacks': [{'thread': (e['values'].get('sampledThread') or {}).get('javaName', 'unknown'), 'frames': [method(f) for f in frames(e)[:16]]} for e in window[:8]]})
     result['longestTickNearbySamplesNotProofOfCause'] = slow
     results.append(result)
 print(json.dumps({'revision': report['revision'], 'notes': 'JFR sampling/weighted allocations; no retained-memory or exact per-method cost verdict. Whole tick windows end at the custom Post event; nearby stacks are not attribution proof.', 'phases': results}, indent=2))

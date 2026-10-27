@@ -120,7 +120,7 @@ public final class CookingProfile {
             if(counter==MEASURE)complete();
         }
         void complete()throws Exception {
-            long elapsed=System.nanoTime()-measureStart;int working=0,outputs=0;
+            long elapsed=System.nanoTime()-measureStart;Instant measurementEndUtc=Instant.now();int working=0,outputs=0;
             for(BlockPos pos:positions) {
                 var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
                 if(chunk==null || !(chunk.getBlockEntity(pos) instanceof CookingPotBlockEntity))throw new IllegalStateException("Measured pot missing");
@@ -133,7 +133,7 @@ public final class CookingProfile {
             }
             long[] sorted=times.clone();Arrays.sort(sorted);
             JsonObject data=new JsonObject();data.addProperty("phase",phase);data.addProperty("pots",COUNTS[phase]);data.addProperty("active",phase>=2);
-            data.addProperty("measurementStartUtc",measurementStartUtc.toString());data.addProperty("measurementEndUtc",Instant.now().toString());
+            data.addProperty("measurementStartUtc",measurementStartUtc.toString());data.addProperty("measurementEndUtc",measurementEndUtc.toString());
             data.addProperty("ticks",counter);data.addProperty("wallSeconds",elapsed/1e9);data.addProperty("tps",counter*1e9/elapsed);
             data.addProperty("meanMs",Arrays.stream(sorted).average().orElseThrow()/1e6);data.addProperty("p95Ms",sorted[569]/1e6);data.addProperty("p99Ms",sorted[593]/1e6);data.addProperty("maxMs",sorted[599]/1e6);
             data.addProperty("over50ms",Arrays.stream(sorted).filter(v->v>50_000_000).count());

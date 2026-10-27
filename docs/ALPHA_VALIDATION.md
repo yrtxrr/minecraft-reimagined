@@ -39,3 +39,7 @@ A second fresh world, Alpha Continents, was created through the normal world-cre
 Selected original screenshots from this session are retained under ignored `run/screenshots/alpha-validation/` in the cloud workspace; they are not committed Minecraft assets or public raw test artifacts. X11 auto-repeat was disabled during scripted native-input checks to avoid repeated hotkey toggles on the software-rendered display.
 
 The final server-only loaded-read/index correction followed the graphical session:it was checked with a fresh full build,58server GameTests and the ordinary-server profiling scenario. Renderer/UI/resources did not change after their graphical checks. Installing the final JAR in a standalone authenticated launcher and repeating the full client/multiplayer session remains a separate release gate.
+
+## Cooking content follow-up
+
+The subsequent heated-pot increment received separate native Russian menu/model/browser/eating and full-client-process persistence checks, plus real-server scaling scenarios. See [COOKING.md](COOKING.md) for scope/results. Earlier Alpha gates and unverified multiplayer/standalone/physical-hardware limits are unchanged; this is not a full Alpha re-certification.
