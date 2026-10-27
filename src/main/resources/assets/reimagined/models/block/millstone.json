@@ -3,6 +3,7 @@
   "textures": {
     "wood": "minecraft:block/oak_planks",
     "stone": "minecraft:block/smooth_stone",
+    "top": "minecraft:block/polished_andesite",
     "particle": "minecraft:block/smooth_stone"
   },
   "elements": [
@@ -46,7 +47,7 @@
       ],
       "to": [
         15,
-        10,
+        9,
         15
       ],
       "faces": {
@@ -73,7 +74,7 @@
     {
       "from": [
         3,
-        10,
+        9,
         3
       ],
       "to": [
@@ -83,33 +84,33 @@
       ],
       "faces": {
         "north": {
-          "texture": "#stone"
+          "texture": "#top"
         },
         "south": {
-          "texture": "#stone"
+          "texture": "#top"
         },
         "east": {
-          "texture": "#stone"
+          "texture": "#top"
         },
         "west": {
-          "texture": "#stone"
+          "texture": "#top"
         },
         "up": {
-          "texture": "#stone"
+          "texture": "#top"
         },
         "down": {
-          "texture": "#stone"
+          "texture": "#top"
         }
       }
     },
     {
       "from": [
-        7,
+        4,
         13,
         7
       ],
       "to": [
-        9,
+        6,
         16,
         9
       ],

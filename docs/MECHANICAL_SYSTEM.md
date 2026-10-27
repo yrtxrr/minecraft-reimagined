@@ -1,0 +1,25 @@
+# Mechanical motion and bounded networks
+
+Water wheels, shafts and millstones retain the existing 16 RPM, 1:1 positive drive and load contract (wheel capacity16, mill load8). Gears, reverse flow direction, ratios and physical right-angle gearing are not implemented. Redstone-paused mills freeze and do not consume capacity. Existing milling recipes, two-slot inventory, sided hopper/capability access and saved progress remain supported.
+
+The client uses a NeoForge block-entity renderer, interpolating an angle/time/speed snapshot, rather than swapping textures. Static bases and moving geometry are separate. Rotor quads bake once per resource reload, and the renderer only transforms cached meshes. There is no client tick loop, world scan or per-frame network query. All geometry uses this project's existing vanilla texture references. Stopped rotors hold their angle. Saved angle is restored frozen until the server validates the loaded network. Old inventory/progress fields remain compatible; old saves lacking motion start at angle zero.
+
+Each loaded server dimension has a bounded component cache:128 nodes/component,16384 guarded block reads/scan, at most8 scans and256 queue dequeues/tick,16384 retained member positions and4096 queued requests. Lookups never run a traversal. Expiry is20 ticks; a FIFO refresh serves the previous known state until processed. At saturation4096 independent requests may take512 ticks to refresh; this is a responsiveness limit, not an assertion of performance at that scale. Topology changes and chunk teardown invalidate affected components and stop consumers immediately. Unloaded boundaries fail closed. Chunk indexes and dimension teardown release cached membership; no chunk is loaded for inspection. Mill processing remains staggered once/20 ticks. There is no unchanged per-tick motion packet/save; motion tags omit inventories.
+
+## Upstream research and provenance
+
+Reviewed Create's `mc1.21.1/dev` at commit `7ff2760e4924d35d4bc2e22c4b19923f0178cd16`:
+
+- [KineticNetwork](https://github.com/Creators-of-Create/Create/blob/7ff2760e4924d35d4bc2e22c4b19923f0178cd16/src/main/java/com/simibubi/create/content/kinetics/KineticNetwork.java): component membership, aggregate capacity/load and changed-state synchronization.
+- [KineticBlockEntityRenderer](https://github.com/Creators-of-Create/Create/blob/7ff2760e4924d35d4bc2e22c4b19923f0178cd16/src/main/java/com/simibubi/create/content/kinetics/base/KineticBlockEntityRenderer.java): interpolate rotation from speed/time and cached geometry.
+- [License](https://github.com/Creators-of-Create/Create/blob/7ff2760e4924d35d4bc2e22c4b19923f0178cd16/LICENSE.md): code MIT, asset directory all rights reserved. The build targets Minecraft1.21.1/NeoForge21.1 with Flywheel/Catnip integration.
+
+These technical principles informed an independent implementation using existing project contracts. Importing Create's renderer would introduce coupled dependencies disproportionate to three blocks. No Create code, models or textures are incorporated and no new mod dependency is required.
+
+## Reproducing normal-server profiling
+
+Source `scripts/cloud-shell.sh`. Create a disposable `run-mechanical-profile` directory and `.profile-approved-disposable` marker inside it; this explicitly destructive fixture must never target a player world. Configure identical flat world seed12345, view/simulation distance4 and an unused server port. Run `./gradlew runMechanicalProfile -PprofileRevision=<revision> -PprofileLabel=<label>`. The harness refuses GameTestServer and connected players, uses normal20TPS ticks, warms200ticks and measures600ticks each at0/16/64 independent powered wheel/shaft/mill components. Fixture writes are capped32/tick and require loaded chunks. Legal runtime prerequisites must already be satisfied; do not auto-accept an EULA.
+
+Require report `complete:true`, three phases,600ticks/phase and output from every mill. Analyze with `python3 scripts/analyze-mechanical-profile.py <report.json> --jfr <jdk21>/bin/jfr`. Keep worlds, JSON reports and raw JFR files ignored. This diagnostic harness is excluded from the player JAR. A short headless run cannot verify visible animation, client frame time, multiplayer packets, long-term retention or enormous factories. See TESTING.md for actually executed results.
+
+The harness sets the disposable world's vanilla spawn radius to4 and resets `ServerLevel.resetEmptyTime()` on each profile tick. Without this explicit headless-fixture setting Minecraft1.21.1 stops block-entity ticks after300 ticks without players. It verifies that every placement is in an already-loaded block-ticking chunk. This adjustment is confined to the opt-in diagnostic; normal gameplay retains vanilla idle behavior. Fixture inventory is cleared before each phase. For restart verification, run the completed candidate's same disposable world again with `-PprofileRestart=true`; require `reports/restart-result.json` complete:true. It compares saved input/output/progress/recipe before ticking and checks resumed consumption and shared wheel/shaft/mill phase after220 normal ticks.

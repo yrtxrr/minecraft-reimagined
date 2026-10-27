@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "wood": "minecraft:block/stripped_oak_log",
+    "metal": "minecraft:block/iron_block",
+    "particle": "minecraft:block/stripped_oak_log"
+  },
+  "elements": []
+}

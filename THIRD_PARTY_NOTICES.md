@@ -9,3 +9,5 @@ Project gameplay code, deer geometry and deer pixel texture were written for thi
 - The cloud bootstrap downloads **Oracle JDK 21.0.8**, separately from the mod, from Oracle's official archive and checks its published checksum. Its bundled license and release-specific Oracle terms apply; it is not redistributed in the mod. Developers may instead use another licensed JDK 21. https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
 
 Current original project files are All Rights Reserved pending the owner's license choice. This is not a grant to redistribute third-party software beyond its own terms.
+
+Mechanical implementation research: Create commit `7ff2760e4924d35d4bc2e22c4b19923f0178cd16`, code MIT, assets all rights reserved. No source/assets copied; reviewed patterns and compatibility are recorded in docs/MECHANICAL_SYSTEM.md. The native NeoForge renderer requires no Create/Flywheel dependency.

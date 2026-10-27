@@ -1,22 +1,22 @@
 {
   "variants": {
     "active=true,axis=x": {
-      "model": "reimagined:block/millstone_active"
-    },
-    "active=false,axis=x": {
-      "model": "reimagined:block/millstone"
+      "model": "reimagined:block/mechanical/millstone_static"
     },
     "active=true,axis=y": {
-      "model": "reimagined:block/millstone_active"
-    },
-    "active=false,axis=y": {
-      "model": "reimagined:block/millstone"
+      "model": "reimagined:block/mechanical/millstone_static"
     },
     "active=true,axis=z": {
-      "model": "reimagined:block/millstone_active"
+      "model": "reimagined:block/mechanical/millstone_static"
+    },
+    "active=false,axis=x": {
+      "model": "reimagined:block/mechanical/millstone_static"
+    },
+    "active=false,axis=y": {
+      "model": "reimagined:block/mechanical/millstone_static"
     },
     "active=false,axis=z": {
-      "model": "reimagined:block/millstone"
+      "model": "reimagined:block/mechanical/millstone_static"
     }
   }
 }

@@ -45,3 +45,9 @@ Full build +16unit tests +41/41 real server GameTests passed. Rendering/client-n
 ## Cross-project performance policy
 
 Recorded the user's high-priority performance rules in AGENTS.md and ARCHITECTURE.md: event/local/bounded work, aggregate tick budgets, loaded-only inspection, proper generation/thread boundaries, bounded lifecycle-aware caches, change-driven networking/persistence, and meaningful cost/scale checks. FCC integration now explicitly requires both correctness review and performance review. Real Minecraft profiling with a reproducible workload/baseline and measured TPS/MSPT/memory/CPU is required for costly features; successful builds/GameTests alone are not performance evidence. This stage changes documentation only; no runtime profiling or gameplay optimization was performed.
+
+## Mechanical motion and bounded network checkpoint
+
+Implemented native client BER animation for wheel/shaft/mill rotors with reload-cached geometry, synchronized common phase, state-dependent stopping and frozen persisted angle. Shared loaded-only component cache and capped per-dimension scheduler replace independent production BFS calls; topology/unload invalidation stops stale consumers. Existing milling, recipe reload lookup, hopper/capability access and inventory/progress NBT remain compatible. Create architecture/license research is documented without copying code/assets or adding dependencies.
+
+Checks:full build19unit tests,49server GameTests; ordinary-server JFR baseline/candidate0/16/64components, and actual normal-world save/restart64mills passed. See docs/MECHANICAL_PROFILE.md for measurements, allocation/GC limitations and long ticks. Graphical animation and live client chunk streaming are not verified. All development now belongs to the main developer; FCC handoff is historical. Next:ordinary barley crop, then the first remaining browser increment in ROADMAP.md.

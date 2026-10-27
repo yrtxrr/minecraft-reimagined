@@ -26,18 +26,19 @@ public final class EngineeringContent {
     public static final DeferredBlock<MechanicalBlock> MILLSTONE = block("millstone", MechanicalBlock.Kind.MILLSTONE);
     public static final DeferredItem<Item> FLOUR = ITEMS.registerSimpleItem("flour");
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MachineBlockEntity>> MACHINE = ENTITIES.register("machine",
-            () -> BlockEntityType.Builder.of(MachineBlockEntity::new, WATER_WHEEL.get(), MILLSTONE.get()).build(null));
+            () -> BlockEntityType.Builder.of(MachineBlockEntity::new, WATER_WHEEL.get(), SHAFT.get(), MILLSTONE.get()).build(null));
     public static final DeferredHolder<RecipeType<?>, RecipeType<MillingRecipe>> MILLING = TYPES.register("milling", () -> new RecipeType<>() {
         @Override public String toString() { return "reimagined:milling"; }
     });
     public static final DeferredHolder<RecipeSerializer<?>, MillingRecipe.Serializer> MILLING_SERIALIZER = SERIALIZERS.register("milling", MillingRecipe.Serializer::new);
     private EngineeringContent() {}
     private static DeferredBlock<MechanicalBlock> block(String name, MechanicalBlock.Kind kind) {
-        var block = BLOCKS.register(name, () -> new MechanicalBlock(BlockBehaviour.Properties.of().strength(2.5F).sound(SoundType.WOOD), kind));
+        var block = BLOCKS.register(name, () -> new MechanicalBlock(BlockBehaviour.Properties.of().strength(2.5F).sound(SoundType.WOOD).noOcclusion(), kind));
         ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
         return block;
     }
     public static void register(IEventBus bus) {
+        MechanicalNetworks.register();
         BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); TYPES.register(bus); SERIALIZERS.register(bus);
         bus.addListener((net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) ->
                 event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, MACHINE.get(),

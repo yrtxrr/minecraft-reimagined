@@ -1,6 +1,10 @@
 package dev.reimagined.engineering;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
@@ -22,17 +26,22 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     private ItemStack output = ItemStack.EMPTY;
     private int progress;
     private String currentRecipe = "";
+    private double rotationAnchor;
+    private long rotationTick;
+    private int rotationRpm;
+    private long motionVersion;
     public MachineBlockEntity(BlockPos pos, BlockState state) { super(EngineeringContent.MACHINE.get(), pos, state); }
     public static void tick(Level level, BlockPos pos, BlockState state, MachineBlockEntity machine) {
         if (level.getGameTime() % 20 != Math.floorMod(pos.asLong(), 20)) return;
-        boolean running = state.is(EngineeringContent.WATER_WHEEL.get())
-                ? MechanicalNetwork.powered(level, pos, state)
-                : !level.hasNeighborSignal(pos) && MechanicalNetwork.inspect(level, pos).running();
-        if (state.getValue(MechanicalBlock.ACTIVE) != running)
-            level.setBlock(pos, state.setValue(MechanicalBlock.ACTIVE, running), 3);
+        if (!(level instanceof ServerLevel server)) return;
+        Rotation network = MechanicalNetworks.rotation(server, pos);
+        boolean running = network.running() && !MechanicalNetwork.redstonePowered(level, pos);
         if (!state.is(EngineeringContent.MILLSTONE.get()) || !running || machine.input.isEmpty()) return;
         var recipe = level.getRecipeManager().getRecipeFor(EngineeringContent.MILLING.get(), new SingleRecipeInput(machine.input), level);
-        if (recipe.isEmpty()) { machine.progress = 0; machine.setChanged(); return; }
+        if (recipe.isEmpty()) {
+            if (machine.progress != 0 || !machine.currentRecipe.isEmpty()) { machine.resetProgress(); machine.setChanged(); }
+            return;
+        }
         var holder = recipe.get();
         ItemStack result = holder.value().getResultItem(level.registryAccess());
         if (result.getCount() > machine.getMaxStackSize(result)) return;
@@ -46,6 +55,63 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
             machine.progress = 0;
         }
         machine.setChanged();
+    }
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level instanceof ServerLevel server) {
+            // Saved motion is frozen until the currently loaded topology is evaluated.
+            if (rotationRpm == 0) rotationTick = level.getGameTime();
+            MechanicalNetworks.request(server, worldPosition);
+        }
+    }
+    @Override public void setRemoved() {
+        if (level instanceof ServerLevel server) MechanicalNetworks.invalidate(server, worldPosition);
+        super.setRemoved();
+    }
+    public int rotationSpeed() { return rotationRpm; }
+    public long motionVersion() { return motionVersion; }
+    public double rotationAngle(float partialTick) {
+        return RotationAnimation.angle(rotationAnchor, rotationTick, rotationRpm,
+                level == null ? rotationTick : level.getGameTime(), partialTick);
+    }
+    /** One common snapshot for connected nodes; unchanged motion sends/saves nothing. */
+    public boolean applyRotation(int rpm, double angle, long tick) {
+        if (!(level instanceof ServerLevel) || isRemoved() || !level.hasChunkAt(worldPosition)
+                || level.getBlockState(worldPosition).getBlock() != getBlockState().getBlock()) return false;
+        rpm = rpm == 0 ? 0 : 16; // Current mechanical contract is a fixed positive 16 RPM, 1:1 drive.
+        if (rotationRpm == rpm && getBlockState().getValue(MechanicalBlock.ACTIVE) == (rpm != 0)
+                && RotationAnimation.difference(rotationAngle(0), angle) < 0.01) return false;
+        rotationAnchor = RotationAnimation.normalize(angle);
+        rotationTick = tick;
+        rotationRpm = rpm;
+        motionVersion++;
+        setChanged();
+        BlockState state = getBlockState();
+        BlockState updated = state.setValue(MechanicalBlock.ACTIVE, rpm != 0);
+        if (state != updated) level.setBlock(worldPosition, updated, Block.UPDATE_CLIENTS);
+        // Only tracking clients receive a small motion-only tag, never the mill inventory.
+        level.sendBlockUpdated(worldPosition, updated, updated, Block.UPDATE_CLIENTS);
+        return true;
+    }
+    private CompoundTag motionTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("MotionVersion", 1);
+        tag.putDouble("Angle", rotationAnchor);
+        tag.putLong("MotionTick", rotationTick);
+        tag.putInt("Rpm", rotationRpm);
+        return tag;
+    }
+    private void receiveMotion(CompoundTag tag) {
+        double angle = tag.getDouble("Angle");
+        rotationAnchor = Double.isFinite(angle) ? RotationAnimation.normalize(angle) : 0;
+        rotationTick = tag.getLong("MotionTick");
+        rotationRpm = tag.getInt("Rpm") == 16 ? 16 : 0;
+    }
+    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return motionTag(); }
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
+    @Override public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) { receiveMotion(tag); }
+    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider registries) {
+        receiveMotion(packet.getTag());
     }
     public boolean isMillstone() { return getBlockState().is(EngineeringContent.MILLSTONE.get()); }
     @Override public int getContainerSize() { return isMillstone() ? 2 : 0; }
@@ -72,6 +138,7 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     @Override public void setItem(int slot, ItemStack stack) {
         if (!isMillstone() || slot < 0 || slot > 1) return;
         ItemStack bounded = stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(Math.min(stack.getCount(), getMaxStackSize(stack)));
+        if (getItem(slot).getCount() == bounded.getCount() && ItemStack.isSameItemSameComponents(getItem(slot), bounded)) return;
         if (slot == 0) {
             if (bounded.isEmpty() || !ItemStack.isSameItemSameComponents(input, bounded)) resetProgress();
             input = bounded;
@@ -80,6 +147,7 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     }
     @Override public boolean stillValid(Player player) { return isMillstone() && Container.stillValidBlockEntity(this, player); }
     @Override public void clearContent() {
+        if (input.isEmpty() && output.isEmpty() && progress == 0 && currentRecipe.isEmpty()) return;
         input = ItemStack.EMPTY; output = ItemStack.EMPTY; resetProgress(); setChanged();
     }
     private void resetProgress() { progress = 0; currentRecipe = ""; }
@@ -124,9 +192,14 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
         if (!input.isEmpty()) tag.put("Input", input.save(registries));
         if (!output.isEmpty()) tag.put("Output", output.save(registries));
         tag.putInt("Progress", progress); tag.putString("Recipe", currentRecipe);
+        tag.putInt("MotionVersion", 1);
+        tag.putDouble("SavedAngle", rotationAngle(0));
     }
     @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        double savedAngle = tag.getDouble("SavedAngle");
+        rotationAnchor = Double.isFinite(savedAngle) ? RotationAnimation.normalize(savedAngle) : 0;
+        rotationRpm = 0; rotationTick = level == null ? 0 : level.getGameTime();
         input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
         if (!input.isEmpty()) input.setCount(Math.min(input.getCount(), getMaxStackSize(input)));
         output = ItemStack.parseOptional(registries, tag.getCompound("Output"));

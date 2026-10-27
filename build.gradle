@@ -12,6 +12,17 @@ neoForge {
     runs {
         client { client() }
         server { server(); programArgument '--nogui' }
+        mechanicalProfile {
+            server()
+            programArgument '--nogui'
+            gameDirectory = file('run-mechanical-profile')
+            systemProperty 'reimagined.mechanicalProfile', 'true'
+            systemProperty 'reimagined.mechanicalRestartProbe', project.findProperty('profileRestart') ?: 'false'
+            systemProperty 'reimagined.profileRevision', project.findProperty('profileRevision') ?: 'working-tree'
+            systemProperty 'reimagined.profileLabel', project.findProperty('profileLabel') ?: 'candidate'
+            jvmArgument '-Xmx2G'
+            jvmArgument '-XX:ActiveProcessorCount=4'
+        }
         gameTestServer {
             type = 'gameTestServer'
             gameDirectory = file('run-gametest')
@@ -40,5 +51,6 @@ tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 // Test fixtures run from development outputs and are never shipped in the player JAR.
 tasks.named('jar') {
     exclude 'dev/reimagined/gametest/**'
+    exclude 'dev/reimagined/engineering/profile/**'
     exclude 'data/reimagined/structure/empty.nbt'
 }

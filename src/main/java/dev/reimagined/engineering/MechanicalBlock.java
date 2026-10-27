@@ -52,17 +52,17 @@ public final class MechanicalBlock extends BaseEntityBlock {
     }
     @Override protected RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return kind == Kind.SHAFT ? null : new MachineBlockEntity(pos, state);
+        return new MachineBlockEntity(pos, state);
     }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, EngineeringContent.MACHINE.get(), MachineBlockEntity::tick);
+        return level.isClientSide || kind == Kind.SHAFT ? null : createTickerHelper(type, EngineeringContent.MACHINE.get(), MachineBlockEntity::tick);
     }
     @Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof MachineBlockEntity machine && kind == Kind.MILLSTONE)
                 machine.interact(player, stack);
-            Rotation network = MechanicalNetwork.inspect(level, pos);
+            Rotation network = level instanceof net.minecraft.server.level.ServerLevel server ? MechanicalNetworks.rotation(server, pos) : new Rotation(0, 0, false);
             player.displayClientMessage(Component.translatable("message.reimagined.rotation", network.speed(), network.load(), network.capacity()), true);
         }
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
@@ -72,13 +72,20 @@ public final class MechanicalBlock extends BaseEntityBlock {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof MachineBlockEntity machine && kind == Kind.MILLSTONE)
                 machine.interact(player, ItemStack.EMPTY);
-            Rotation network = MechanicalNetwork.inspect(level, pos);
+            Rotation network = level instanceof net.minecraft.server.level.ServerLevel server ? MechanicalNetworks.rotation(server, pos) : new Rotation(0, 0, false);
             player.displayClientMessage(Component.translatable("message.reimagined.rotation", network.speed(), network.load(), network.capacity()), true);
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
+    @Override protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor, BlockPos from, boolean moving) {
+        if (level instanceof net.minecraft.server.level.ServerLevel server) MechanicalNetworks.invalidate(server, pos);
+        super.neighborChanged(state, level, pos, neighbor, from, moving);
+    }
     @Override protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moving) {
-        if (!state.is(replacement.getBlock()) && level.getBlockEntity(pos) instanceof MachineBlockEntity machine) machine.dropContents();
+        if (!state.is(replacement.getBlock())) {
+            if (level instanceof net.minecraft.server.level.ServerLevel server) MechanicalNetworks.invalidate(server, pos);
+            if (level.getBlockEntity(pos) instanceof MachineBlockEntity machine) machine.dropContents();
+        }
         super.onRemove(state, level, pos, replacement, moving);
     }
 }

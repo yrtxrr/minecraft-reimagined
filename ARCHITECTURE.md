@@ -1,12 +1,12 @@
 # Architecture
 
-Single entry point: `dev.reimagined.Reimagined`. Each module registers its own deferred registries through the mod event bus; gameplay hooks use the NeoForge game bus. Parallel contributors own separate package/resource paths; shared entry point and build files are integrated centrally. No upstream gameplay-mod code is embedded.
+Single entry point: `dev.reimagined.Reimagined`. Each module registers its own deferred registries through the mod event bus; gameplay hooks use the NeoForge game bus. The main developer owns all modules and integration in feat/reimagined-alpha. No upstream gameplay-mod code is embedded.
 
 | Module | Responsibility | State / authority |
 |---|---|---|
 | `season` | 96-day calendar, local crop growth, calendar commands | Overworld SavedData stores versioned offset; overworld day time is authoritative |
 | `progression` | 10 skills, uncapped XP/levels, finite mastery | Player persistent NBT, decimal BigInteger, copied on player clone; server event XP and commands |
-| `engineering` | water flow, axial connectivity, bounded load, milling | Server tick every 20 ticks staggered by position; block entity NBT inventory/progress; WorldlyContainer plus sided IItemHandler, input top/sides and output bottom |
+| `engineering` | water flow, axial connectivity, bounded load, milling | Shared bounded component scheduler; motion snapshots/client BER; milling every20 ticks staggered by position; NBT inventory/progress; WorldlyContainer and sided IItemHandler |
 | `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
 | `research` | readable journal and personal observations | Versioned player NBT, 256 total unique registry IDs, deep-copied on clone; every200 player ticks/current book use, 6-block local scan with at most8 visibility traces |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
@@ -24,7 +24,7 @@ New process recipes implement vanilla `Recipe<RecipeInput>` and register a `Reci
 
 ## Performance and boundaries
 
-No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Remote civilization simulation, mechanical caching across large networks and climate weather effects are future work; no placeholder simulation is presented as complete.
+No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Remote civilization simulation and climate weather effects are future work; no placeholder simulation is presented as complete.
 
 Player state is server-owned. There is no state-level player kingdom creation API and no NPC war terrain destruction. Both civilizations and wars remain unimplemented.
 
@@ -52,3 +52,9 @@ For a potentially costly stage or FCC change, the main developer must also run o
 6. Summarize baseline and candidate results, regressions, hotspots, supported workload and limitations in TESTING.md/PROGRESS.md or a linked feature report. Keep raw JFR recordings, logs, generated worlds and build artifacts ignored. Correctness remains required; do not trade away assertions, security or required simulation to make numbers pass.
 
 FCC handoff reviews must include the same cost contract and actual profiling evidence for potentially expensive changes. If profiling cannot be performed, record that gap and withhold a performance-readiness claim; compilation and passing GameTests remain separate correctness evidence. Optimize observed structural bottlenecks first. No new profiling run or optimization is claimed by this documentation update.
+
+## Mechanical component and animation update
+
+Engineering now uses the per-dimension bounded cache/scheduler described in [MECHANICAL_SYSTEM.md](docs/MECHANICAL_SYSTEM.md). Passive shaft block entities have no tickers. Server-authoritative changed-motion snapshots feed a client BER with reload-cached rotor quads; stopped phases persist across saves and require topology revalidation before resuming. Earlier references to mechanical caching as future work are superseded by this implementation.
+
+Before major features, review existing open implementations, pinned licenses and NeoForge compatibility. Reuse licensed components when proportionate, otherwise apply learned principles independently. Record provenance and attribution; never assume code licenses cover art. New mandatory mod dependencies require user agreement. Current development is solely on feat/reimagined-alpha; historical FCC ownership restrictions no longer apply.

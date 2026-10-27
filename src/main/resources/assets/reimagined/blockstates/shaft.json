@@ -1,26 +1,26 @@
 {
   "variants": {
     "active=true,axis=x": {
-      "model": "reimagined:block/shaft",
-      "y": 90
-    },
-    "active=false,axis=x": {
-      "model": "reimagined:block/shaft",
+      "model": "reimagined:block/mechanical/shaft_static",
       "y": 90
     },
     "active=true,axis=y": {
-      "model": "reimagined:block/shaft",
-      "x": 90
-    },
-    "active=false,axis=y": {
-      "model": "reimagined:block/shaft",
-      "x": 90
+      "model": "reimagined:block/mechanical/shaft_static",
+      "x": 270
     },
     "active=true,axis=z": {
-      "model": "reimagined:block/shaft"
+      "model": "reimagined:block/mechanical/shaft_static"
+    },
+    "active=false,axis=x": {
+      "model": "reimagined:block/mechanical/shaft_static",
+      "y": 90
+    },
+    "active=false,axis=y": {
+      "model": "reimagined:block/mechanical/shaft_static",
+      "x": 270
     },
     "active=false,axis=z": {
-      "model": "reimagined:block/shaft"
+      "model": "reimagined:block/mechanical/shaft_static"
     }
   }
 }
