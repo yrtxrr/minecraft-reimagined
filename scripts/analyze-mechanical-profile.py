@@ -57,7 +57,9 @@ def main():
         ],
         'phases': [],
     }
-    types = ','.join(('reimagined.MechanicalTick', 'jdk.ExecutionSample', 'jdk.ObjectAllocationSample', 'jdk.GarbageCollection', 'jdk.GCHeapSummary'))
+    types = ','.join(('reimagined.MechanicalTick', 'jdk.ExecutionSample', 'jdk.NativeMethodSample',
+                      'jdk.SafepointBegin', 'jdk.ExecuteVMOperation', 'jdk.ObjectAllocationSample',
+                      'jdk.GarbageCollection', 'jdk.GCHeapSummary'))
     for phase in report.get('phases', []):
         if phase.get('ticks') != report.get('measurementTicksPerPhase') or phase.get('millsWithOutput') != phase.get('components'):
             raise SystemExit('Incomplete/idle workload phase: ' + str(phase.get('components')))
@@ -66,7 +68,8 @@ def main():
             raise SystemExit('Missing JFR recording: ' + str(recording))
         if recording.stat().st_size > 128 * 1024 * 1024:
             raise SystemExit('Recording exceeds this helper\'s128MiB analysis bound; use JDK tooling directly')
-        process = subprocess.run([args.jfr, 'print', '--json', '--events', types, str(recording)], check=True, capture_output=True, text=True)
+        # jfr print defaults to ONLY5 frames even when the recording contains deeper stacks.
+        process = subprocess.run([args.jfr, 'print', '--json', '--stack-depth', '64', '--events', types, str(recording)], check=True, capture_output=True, text=True)
         events = json.loads(process.stdout)['recording']['events']
         start = instant(phase['measurementStartUtc'])
         end = start + timedelta(seconds=phase['wallSeconds'])
@@ -106,6 +109,32 @@ def main():
         tick_events = sum(1 for event in events if event['type'] == 'reimagined.MechanicalTick')
         if tick_events != phase['ticks']:
             raise SystemExit(f'JFR tick events do not match actual measured phase: {tick_events} != {phase["ticks"]}')
+        # A tick event is emitted AFTER the vanilla ring sample. Inspect the preceding
+        # duration, never the following sample interval. Correlation is not attribution.
+        slow_ticks = sorted((event for event in events if event['type'] == 'reimagined.MechanicalTick'
+                             and event['values']['tickDurationNanos'] > 50_000_000),
+                            key=lambda event: event['values']['tickDurationNanos'], reverse=True)[:5]
+        correlations = []
+        for event in slow_ticks:
+            values = event['values']
+            tick_end = instant(values['startTime'])
+            tick_start = tick_end - timedelta(seconds=values['tickDurationNanos'] / 1e9)
+            evidence = []
+            for candidate in events:
+                data = candidate.get('values', {})
+                timestamp = data.get('startTime')
+                if not timestamp or not tick_start <= instant(timestamp) <= tick_end:
+                    continue
+                thread = data.get('sampledThread') or data.get('eventThread') or {}
+                kind = candidate['type']
+                if (kind in ('jdk.ExecutionSample', 'jdk.NativeMethodSample') and thread.get('javaName') == 'Server thread'):
+                    evidence.append({'type': kind, 'frames': frames(data)[:12]})
+                elif kind in ('jdk.SafepointBegin', 'jdk.ExecuteVMOperation', 'jdk.GarbageCollection'):
+                    evidence.append({'type': kind, 'duration': data.get('duration'), 'operation': data.get('operation')})
+            correlations.append({'tick': values['tick'], 'tickMs': values['tickDurationNanos'] / 1e6,
+                                 'serverThreadCpuMs': values.get('serverThreadCpuNanos', -1) / 1e6
+                                     if values.get('serverThreadCpuNanos', -1) >= 0 else None,
+                                 'precedingTickWindowEvidence': evidence})
         summary['phases'].append({
             **phase,
             'measuredWindowEventCounts': dict(event_counts),
@@ -116,6 +145,7 @@ def main():
             'sampledAllocationTopLeafFramesByWeight': allocations.most_common(20),
             'gcSumOfPausesMs': gc_pause_seconds * 1000 if gc_pause_values else None,
             'afterGcHeapUsedBytes': heaps_after_gc,
+            'longTickCorrelationsNotRootCauseProof': correlations,
         })
     if len(summary['phases']) != 3:
         raise SystemExit('Expected completed0/16/64 profile phases')

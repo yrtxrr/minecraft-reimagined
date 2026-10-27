@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -54,7 +56,7 @@ public final class MechanicalNetworks {
     private static final class Cache {
         final Map<BlockPos, Entry> members = new HashMap<>();
         final LinkedHashSet<Entry> entries = new LinkedHashSet<>();
-        final Map<Long, Set<Entry>> chunks = new HashMap<>();
+        final Long2ObjectMap<Set<Entry>> chunks = new Long2ObjectOpenHashMap<>();
         final LinkedHashSet<BlockPos> pending = new LinkedHashSet<>();
         final LinkedHashSet<Long> unloadingChunks = new LinkedHashSet<>();
         long scans, cacheHits, nodesRead, blockReads, skippedUnloaded, deferredRequests, droppedRequests;
@@ -87,12 +89,12 @@ public final class MechanicalNetworks {
         NeoForge.EVENT_BUS.addListener(MechanicalNetworks::levelUnloaded);
     }
     public static void request(ServerLevel level, BlockPos pos) {
-        if (UNLOADED_LEVELS.contains(level) || !level.hasChunkAt(pos)) return;
+        if (UNLOADED_LEVELS.contains(level) || !MechanicalWorldAccess.loaded(level, pos)) return;
         Cache cache = LEVELS.computeIfAbsent(level, ignored -> new Cache());
         if (!cache.unloadingChunks.contains(ChunkPos.asLong(pos))) cache.enqueue(pos);
     }
     public static Rotation rotation(ServerLevel level, BlockPos pos) {
-        if (UNLOADED_LEVELS.contains(level) || !level.hasChunkAt(pos)) return STOPPED;
+        if (UNLOADED_LEVELS.contains(level) || !MechanicalWorldAccess.loaded(level, pos)) return STOPPED;
         Cache cache = LEVELS.computeIfAbsent(level, ignored -> new Cache());
         if (cache.unloadingChunks.contains(ChunkPos.asLong(pos))) return STOPPED;
         Entry entry = cache.members.get(pos);
@@ -118,8 +120,8 @@ public final class MechanicalNetworks {
         cache.forget(entry);
         long time = level.getGameTime();
         for (BlockPos pos : entry.nodes) {
-            if (retained.contains(pos) || !level.hasChunkAt(pos)) continue;
-            if (level.getBlockEntity(pos) instanceof MachineBlockEntity machine)
+            if (retained.contains(pos) || !MechanicalWorldAccess.loaded(level, pos)) continue;
+            if (MechanicalWorldAccess.blockEntity(level, pos) instanceof MachineBlockEntity machine)
                 machine.applyRotation(0, machine.rotationAngle(0), time);
             cache.enqueue(pos);
         }
@@ -137,7 +139,7 @@ public final class MechanicalNetworks {
                 && cache.lastTickDequeues < MAX_DEQUEUES_PER_TICK) {
             Iterator<BlockPos> iterator = cache.pending.iterator();
             BlockPos start = iterator.next(); iterator.remove(); cache.lastTickDequeues++;
-            if (!level.hasChunkAt(start) || cache.unloadingChunks.contains(ChunkPos.asLong(start))) {
+            if (!MechanicalWorldAccess.loaded(level, start) || cache.unloadingChunks.contains(ChunkPos.asLong(start))) {
                 cache.skippedUnloaded++; continue;
             }
             Entry existing = cache.members.get(start);
@@ -168,8 +170,8 @@ public final class MechanicalNetworks {
             BlockPos representative = null;
             boolean movingRepresentative = false;
             for (BlockPos pos : entry.nodes) {
-                if (!level.hasChunkAt(pos) || !(level.getBlockEntity(pos) instanceof MachineBlockEntity machine)) continue;
-                boolean moving = level.getBlockState(pos).getValue(MechanicalBlock.ACTIVE)
+                if (!MechanicalWorldAccess.loaded(level, pos) || !(MechanicalWorldAccess.blockEntity(level, pos) instanceof MachineBlockEntity machine)) continue;
+                boolean moving = machine.getBlockState().getValue(MechanicalBlock.ACTIVE)
                         && !(machine.isMillstone() && MechanicalNetwork.redstonePowered(level, pos));
                 if (representative == null || moving && !movingRepresentative
                         || moving == movingRepresentative && pos.compareTo(representative) < 0) {
@@ -177,7 +179,7 @@ public final class MechanicalNetworks {
                 }
             }
             for (BlockPos pos : entry.nodes) {
-                if (!level.hasChunkAt(pos) || !(level.getBlockEntity(pos) instanceof MachineBlockEntity machine)) continue;
+                if (!MechanicalWorldAccess.loaded(level, pos) || !(MechanicalWorldAccess.blockEntity(level, pos) instanceof MachineBlockEntity machine)) continue;
                 int rpm = entry.rotation.speed();
                 if (machine.isMillstone() && MechanicalNetwork.redstonePowered(level, pos)) rpm = 0;
                 machine.applyRotation(rpm, rpm == 0 ? machine.rotationAngle(0) : phase, now);
@@ -202,8 +204,8 @@ public final class MechanicalNetworks {
         for (Entry entry : new ArrayList<>(entries)) {
             cache.forget(entry);
             for (BlockPos member : entry.nodes) {
-                if (new ChunkPos(member).equals(pos) || !level.hasChunkAt(member)) continue;
-                if (level.getBlockEntity(member) instanceof MachineBlockEntity machine)
+                if (new ChunkPos(member).equals(pos) || !MechanicalWorldAccess.loaded(level, member)) continue;
+                if (MechanicalWorldAccess.blockEntity(level, member) instanceof MachineBlockEntity machine)
                     machine.applyRotation(0, machine.rotationAngle(0), level.getGameTime());
                 cache.enqueue(member);
             }

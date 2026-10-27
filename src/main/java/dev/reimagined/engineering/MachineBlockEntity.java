@@ -76,8 +76,8 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     }
     /** One common snapshot for connected nodes; unchanged motion sends/saves nothing. */
     public boolean applyRotation(int rpm, double angle, long tick) {
-        if (!(level instanceof ServerLevel) || isRemoved() || !level.hasChunkAt(worldPosition)
-                || level.getBlockState(worldPosition).getBlock() != getBlockState().getBlock()) return false;
+        if (!(level instanceof ServerLevel) || isRemoved() || !MechanicalWorldAccess.loaded(level, worldPosition)
+                || MechanicalWorldAccess.chunk(level, worldPosition).getBlockState(worldPosition).getBlock() != getBlockState().getBlock()) return false;
         rpm = rpm == 0 ? 0 : 16; // Current mechanical contract is a fixed positive 16 RPM, 1:1 drive.
         if (rotationRpm == rpm && getBlockState().getValue(MechanicalBlock.ACTIVE) == (rpm != 0)
                 && RotationAnimation.difference(rotationAngle(0), angle) < 0.01) return false;

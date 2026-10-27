@@ -92,7 +92,7 @@ public final class MechanicalNetwork {
         private boolean exhausted;
         LoadedSignals(Level level) { this(level, Set.of()); }
         LoadedSignals(Level level, Set<Long> unavailableChunks) { this.level = level; this.unavailableChunks = unavailableChunks; }
-        boolean loaded(BlockPos pos) { return !unavailableChunks.contains(ChunkPos.asLong(pos)) && level.hasChunkAt(pos); }
+        boolean loaded(BlockPos pos) { return !unavailableChunks.contains(ChunkPos.asLong(pos)) && MechanicalWorldAccess.loaded(level, pos); }
         private boolean readable(BlockPos pos) {
             if (reads >= MAX_READS) { exhausted = true; return false; }
             reads++;
@@ -100,12 +100,16 @@ public final class MechanicalNetwork {
             return true;
         }
         @Override public BlockState getBlockState(BlockPos pos) {
-            return readable(pos) ? level.getBlockState(pos) : Blocks.AIR.defaultBlockState();
+            if (!readable(pos)) return Blocks.AIR.defaultBlockState();
+            var chunk = MechanicalWorldAccess.chunk(level, pos);
+            return chunk == null ? Blocks.AIR.defaultBlockState() : chunk.getBlockState(pos);
         }
         @Override public FluidState getFluidState(BlockPos pos) {
-            return readable(pos) ? level.getFluidState(pos) : Fluids.EMPTY.defaultFluidState();
+            if (!readable(pos)) return Fluids.EMPTY.defaultFluidState();
+            var chunk = MechanicalWorldAccess.chunk(level, pos);
+            return chunk == null ? Fluids.EMPTY.defaultFluidState() : chunk.getFluidState(pos);
         }
-        @Override public BlockEntity getBlockEntity(BlockPos pos) { return readable(pos) ? level.getBlockEntity(pos) : null; }
+        @Override public BlockEntity getBlockEntity(BlockPos pos) { return readable(pos) ? MechanicalWorldAccess.blockEntity(level, pos) : null; }
         @Override public int getHeight() { return level.getHeight(); }
         @Override public int getMinBuildHeight() { return level.getMinBuildHeight(); }
     }

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import dev.reimagined.engineering.EngineeringContent;
 import dev.reimagined.engineering.MachineBlockEntity;
 import dev.reimagined.engineering.MechanicalBlock;
+import dev.reimagined.engineering.MechanicalNetworks;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +35,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +45,7 @@ public final class MechanicalProfile {
     private static final Logger LOGGER = LoggerFactory.getLogger(MechanicalProfile.class);
     private static final boolean ENABLED = Boolean.getBoolean("reimagined.mechanicalProfile");
     private static final int[] COUNTS = {0, 16, 64};
-    private static final int WARMUP_TICKS = 200;
+    private static final int WARMUP_TICKS = Math.clamp(Integer.getInteger("reimagined.profileWarmupTicks", 200), 200, 1200);
     private static final int MEASURE_TICKS = 600;
     private static final int MAX_WRITES_PER_TICK = 32;
     private static final long PHASE_TIMEOUT_NS = 120_000_000_000L;
@@ -56,6 +58,29 @@ public final class MechanicalProfile {
         @Label("Independent wheel-shaft-mill components") public int components;
         @Label("Server tick") public long tick;
         @Label("Actual per-tick vanilla tick body nanoseconds") public long tickDurationNanos;
+        @Label("Server thread CPU nanoseconds between tick events; -1 if unsupported") public long serverThreadCpuNanos;
+        @Label("Wall nanoseconds between tick events") public long eventPairWallNanos;
+        @Label("Overworld post-tick bus wall nanoseconds (contains network scheduler)") public long levelPostWallNanos;
+        @Label("Overworld post-tick bus server-thread CPU nanoseconds") public long levelPostCpuNanos;
+    }
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGHEST)
+    public static void beforeTick(ServerTickEvent.Pre event) {
+        if (ENABLED && run != null && !run.finished) run.beginTick();
+    }
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGHEST)
+    public static void beforeLevelPost(LevelTickEvent.Post event) {
+        if (!ENABLED || run == null || run.finished || event.getLevel() != run.level) return;
+        run.levelPostStart = System.nanoTime();
+        run.levelPostCpuStart = run.cpu.isCurrentThreadCpuTimeSupported() ? run.cpu.getCurrentThreadCpuTime() : -1;
+    }
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
+    public static void afterLevelPost(LevelTickEvent.Post event) {
+        if (!ENABLED || run == null || run.finished || event.getLevel() != run.level) return;
+        run.levelPostCpu = run.levelPostCpuStart < 0 ? -1 : run.cpu.getCurrentThreadCpuTime() - run.levelPostCpuStart;
+        run.levelPostWall = System.nanoTime() - run.levelPostStart;
     }
 
     @SubscribeEvent public static void started(ServerStartedEvent event) {
@@ -106,6 +131,13 @@ public final class MechanicalProfile {
         final List<BlockPos> previous = new ArrayList<>();
         final List<BlockPos> mills = new ArrayList<>();
         final long[] tickTimes = new long[MEASURE_TICKS];
+        final long[] cpuTimes = new long[MEASURE_TICKS];
+        final long[] levelPostTimes = new long[MEASURE_TICKS];
+        final long[] levelPostCpuTimes = new long[MEASURE_TICKS];
+        final JsonArray slowTicks = new JsonArray();
+        final java.lang.management.ThreadMXBean cpu = ManagementFactory.getThreadMXBean();
+        long tickWallStart, tickCpuStart;
+        long levelPostStart, levelPostCpuStart, levelPostWall, levelPostCpu;
         final Path directory = Path.of("reports");
         final String name;
         int phase = -1, counter;
@@ -117,6 +149,7 @@ public final class MechanicalProfile {
 
         Run(MinecraftServer server) throws Exception {
             this.server = server; level = server.overworld();
+            if (cpu.isCurrentThreadCpuTimeSupported() && !cpu.isThreadCpuTimeEnabled()) cpu.setThreadCpuTimeEnabled(true);
             Files.createDirectories(directory);
             String label = System.getProperty("reimagined.profileLabel", "mechanical").replaceAll("[^a-zA-Z0-9_-]", "_");
             name = label + "-" + System.currentTimeMillis();
@@ -144,6 +177,7 @@ public final class MechanicalProfile {
             report.addProperty("playerCount", 0);
             report.addProperty("warmupTicksPerPhase", WARMUP_TICKS);
             report.addProperty("measurementTicksPerPhase", MEASURE_TICKS);
+            report.addProperty("cpuTimingNote", "CPU is the main server thread only, not chunk/IO/JIT/GC workers. Event-pair wall time brackets tick events and differs slightly from the vanilla tick ring. Neither proves a sampled frame caused the whole tick.");
             report.addProperty("notes", "Normal server, no clients. 3 mechanical blocks/component, continuous wheat milling. Setup/cleanup excluded. JFR includes warmup; custom tick events cover measurement only. Heap change is not a leak verdict. No forced GC or mechanism chunk loading. Vanilla spawn radius4 supplies ticking chunks; empty-world suspension is reset to simulate presence without a client. Individual tick samples use the vanilla server tick-time ring, not averaged JFR TickTime events.");
             report.add("phases", phases);
         }
@@ -164,6 +198,7 @@ public final class MechanicalProfile {
             phase++;
             if (phase >= COUNTS.length) { finish(); return; }
             stage = Stage.SETUP; counter = 0; phaseStart = System.nanoTime();
+            slowTicks.asList().clear();
             BlockPos spawn = level.getSharedSpawnPos();
             int y = spawn.getY() + 3;
             for (int index = 0; index < COUNTS[phase]; index++) {
@@ -209,6 +244,10 @@ public final class MechanicalProfile {
                     machine.setItem(0, new ItemStack(Items.WHEAT, 64));
                 }
                 recording = new Recording(Configuration.getConfiguration("profile"));
+                // Keep recordings useful without capturing arbitrary environment/properties/CLI secrets.
+                recording.disable("jdk.InitialEnvironmentVariable");
+                recording.disable("jdk.InitialSystemProperty");
+                recording.disable("jdk.JVMInformation");
                 recording.enable(MeasuredTick.class);
                 recording.setName(name + "-" + COUNTS[phase]);
                 recording.start();
@@ -219,16 +258,40 @@ public final class MechanicalProfile {
                 if (++counter < WARMUP_TICKS) return;
                 measureStart = System.nanoTime(); measureStartUtc = Instant.now();
                 heapStart = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
+                MechanicalNetworks.resetStats(level);
                 counter = 0; stage = Stage.MEASURE;
                 return;
             }
             // The current ring entry is populated by Minecraft before ServerTickEvent.Post.
             long elapsed = server.getTickTimesNanos()[Math.floorMod(server.getTickCount(), 100)];
-            tickTimes[counter++] = elapsed;
+            long threadCpu = tickCpuStart < 0 ? -1 : cpu.getCurrentThreadCpuTime() - tickCpuStart;
+            long wall = System.nanoTime() - tickWallStart;
+            tickTimes[counter] = elapsed;
+            levelPostTimes[counter] = levelPostWall;
+            levelPostCpuTimes[counter] = levelPostCpu;
+            cpuTimes[counter++] = threadCpu;
+            if (elapsed > 50_000_000L) {
+                JsonObject slow = new JsonObject();
+                slow.addProperty("tick", server.getTickCount());
+                slow.addProperty("tickMs", elapsed / 1e6);
+                slow.addProperty("eventPairWallMs", wall / 1e6);
+                slow.addProperty("serverThreadCpuMs", threadCpu < 0 ? -1 : threadCpu / 1e6);
+                slow.addProperty("levelPostWallMs", levelPostWall / 1e6);
+                slow.addProperty("levelPostCpuMs", levelPostCpu < 0 ? -1 : levelPostCpu / 1e6);
+                slowTicks.add(slow);
+            }
             MeasuredTick sample = new MeasuredTick();
             sample.components = COUNTS[phase]; sample.tick = server.getTickCount(); sample.tickDurationNanos = elapsed;
+            sample.serverThreadCpuNanos = threadCpu; sample.eventPairWallNanos = wall;
+            sample.levelPostWallNanos = levelPostWall; sample.levelPostCpuNanos = levelPostCpu;
             sample.commit();
             if (counter == MEASURE_TICKS) completePhase();
+        }
+
+        void beginTick() {
+            levelPostWall = 0; levelPostCpu = 0;
+            tickWallStart = System.nanoTime();
+            tickCpuStart = cpu.isCurrentThreadCpuTimeSupported() ? cpu.getCurrentThreadCpuTime() : -1;
         }
 
         void completePhase() throws Exception {
@@ -261,6 +324,17 @@ public final class MechanicalProfile {
             result.addProperty("tickP99Ms", sorted[(int) Math.ceil(counter * .99) - 1] / 1e6);
             result.addProperty("tickMaxMs", sorted[counter - 1] / 1e6);
             result.addProperty("ticksOver50ms", overBudget);
+            long[] sortedCpu = cpuTimes.clone(); Arrays.sort(sortedCpu);
+            if (sortedCpu[0] >= 0) {
+                result.addProperty("serverThreadCpuMeanMs", Arrays.stream(sortedCpu).average().orElseThrow() / 1e6);
+                result.addProperty("serverThreadCpuP99Ms", sortedCpu[(int) Math.ceil(counter * .99) - 1] / 1e6);
+            }
+            result.add("slowTicks", slowTicks.deepCopy());
+            result.addProperty("levelPostMeanMs", Arrays.stream(levelPostTimes).average().orElseThrow() / 1e6);
+            result.addProperty("levelPostMaxMs", Arrays.stream(levelPostTimes).max().orElseThrow() / 1e6);
+            result.addProperty("levelPostCpuMaxMs", Arrays.stream(levelPostCpuTimes).max().orElseThrow() / 1e6);
+            result.addProperty("mechanicalScans", MechanicalNetworks.stats(level).scans());
+            result.addProperty("mechanicalMaxScansPerTick", MechanicalNetworks.stats(level).maxTickScans());
             result.addProperty("heapUsedBeforeBytes", heapStart);
             result.addProperty("heapUsedAfterBytes", heapEnd);
             result.addProperty("loadedChunks", level.getChunkSource().getLoadedChunksCount());
