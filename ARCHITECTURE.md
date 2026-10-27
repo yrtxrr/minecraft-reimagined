@@ -7,7 +7,7 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `season` | 96-day calendar, local crop growth, calendar commands | Overworld SavedData stores versioned offset; overworld day time is authoritative |
 | `progression` | 10 skills, uncapped XP/levels, finite mastery | Player persistent NBT, decimal BigInteger, copied on player clone; server event XP and commands |
 | `engineering` | water flow, axial connectivity, bounded load, milling | Server tick every 20 ticks staggered by position; block entity NBT inventory/progress; WorldlyContainer plus sided IItemHandler, input top/sides and output bottom |
-| `content` | weapons, four wand schools | Server use processing, bounded mana and cooldown state |
+| `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
 | `client` | inventory item panel and recipe screen | Read-only synchronized recipe-manager data; no client item spawning/crafting authority |
 | data `worldgen` | optional world preset | Stateless seeded chunk noise, built-in registry codecs |

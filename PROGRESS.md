@@ -23,3 +23,7 @@ Stayed on `feat/reimagined-alpha`. NeoForge Maven became reachable through the a
 GitHub read and push access verified through the existing HTTPS proxy. Published the initial history and checked stage cdaaeb6 on `feat/reimagined-alpha`, without force pushing or changing other branches. Per user request, completed stages are now immediately committed and pushed; `AGENTS.md` records this for future tasks.
 
 Implemented sided hopper/NeoForge item-handler automation for the millstone, recipe filtering, bounded inventory and progress-preserving save/load. Full Gradle build and **20/20** server integration tests passed. Added a fresh-report integration runner and CI execution. No temporary builds/worlds/credentials are tracked.
+
+## Combat checkpoint
+
+Implemented four server-authoritative weapon specials with saved shared cooldowns, attack-charge/durability limits, line-of-sight/alliance/PvP checks; automatic timed frontal shield parry respecting vanilla warmup/facing/unblockable sources. Normal attacks and offhand shielding remain vanilla. Full build passed with12unit tests and **27/27** real server GameTests. This does not validate graphical input/animation or complete the whole combat/armor specification.

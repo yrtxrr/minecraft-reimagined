@@ -64,5 +64,12 @@
   "season.reimagined.winter": "Winter",
   "hud.reimagined.calendar": "%s · Day %s",
   "message.reimagined.calendar": "%s, day %s/%s · world day %s",
-  "message.reimagined.season_set": "Season updated"
+  "message.reimagined.season_set": "Season updated",
+  "message.reimagined.special_recharging": "Your weapon special is recharging.",
+  "message.reimagined.parry": "Parry!",
+  "tooltip.reimagined.special.spear": "Sneak + use: precise long thrust.",
+  "tooltip.reimagined.special.hammer": "Sneak + use: front shockwave and stagger.",
+  "tooltip.reimagined.special.dagger": "Sneak + use: quick thrust and brief footwork.",
+  "tooltip.reimagined.special.halberd": "Sneak + use: sweep up to three targets in front.",
+  "tooltip.reimagined.special_cooldown": "Shared special cooldown: %ss; costs 2 durability."
 }

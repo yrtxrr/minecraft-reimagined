@@ -64,5 +64,12 @@
   "season.reimagined.winter": "Зима",
   "hud.reimagined.calendar": "%s · День %s",
   "message.reimagined.calendar": "%s, день %s/%s · день мира %s",
-  "message.reimagined.season_set": "Время года изменено"
+  "message.reimagined.season_set": "Время года изменено",
+  "message.reimagined.special_recharging": "Особый приём оружия восстанавливается.",
+  "message.reimagined.parry": "Парирование!",
+  "tooltip.reimagined.special.spear": "Присесть + использовать: точный дальний выпад.",
+  "tooltip.reimagined.special.hammer": "Присесть + использовать: ударная волна и ошеломление.",
+  "tooltip.reimagined.special.dagger": "Присесть + использовать: быстрый выпад и манёвр.",
+  "tooltip.reimagined.special.halberd": "Присесть + использовать: взмах по трём целям впереди.",
+  "tooltip.reimagined.special_cooldown": "Общее восстановление приёма: %s с; расход прочности: 2."
 }
