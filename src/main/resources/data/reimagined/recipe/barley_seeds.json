@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "reimagined:barley"
+    }
+  ],
+  "result": {
+    "id": "reimagined:barley_seeds",
+    "count": 2
+  }
+}

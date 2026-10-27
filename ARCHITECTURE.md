@@ -58,3 +58,7 @@ FCC handoff reviews must include the same cost contract and actual profiling evi
 Engineering now uses the per-dimension bounded cache/scheduler described in [MECHANICAL_SYSTEM.md](docs/MECHANICAL_SYSTEM.md). Passive shaft block entities have no tickers. Server-authoritative changed-motion snapshots feed a client BER with reload-cached rotor quads; stopped phases persist across saves and require topology revalidation before resuming. Earlier references to mechanical caching as future work are superseded by this implementation.
 
 Before major features, review existing open implementations, pinned licenses and NeoForge compatibility. Reuse licensed components when proportionate, otherwise apply learned principles independently. Record provenance and attribution; never assume code licenses cover art. New mandatory mod dependencies require user agreement. Current development is solely on feat/reimagined-alpha; historical FCC ownership restrictions no longer apply.
+
+## Ordinary agriculture
+
+`agriculture` adds barley through a vanilla CropBlock subclass and ItemNameBlockItem seed. Growth remains vanilla random ticking and the shared seasonal event; no new per-tick coordinator or persistent farm simulation exists. Grass seed acquisition is an additive NeoForge loot modifier using the built-in add_table codec. Milling uses the existing reloadable recipe type/automation unchanged. Barley details and upstream review: docs/AGRICULTURE.md.

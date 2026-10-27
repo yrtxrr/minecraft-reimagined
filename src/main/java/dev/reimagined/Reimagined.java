@@ -16,6 +16,7 @@ public final class Reimagined {
         Content.register(modBus);
         CreatureContent.register(modBus);
         EngineeringContent.register(modBus);
+        dev.reimagined.agriculture.AgricultureContent.register(modBus);
         ProgressionEvents.register();
         Seasons.register(modBus);
     }

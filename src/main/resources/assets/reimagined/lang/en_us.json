@@ -86,5 +86,8 @@
   "journal.reimagined.page.current_biome": "CURRENT BIOME\n\n%s\n\nBase warmth index: %s\n\nThis is Minecraft's biome value, not degrees or a weather forecast.",
   "reimagined.browser.category.brewing": "Potions",
   "reimagined.browser.brewing_note": "Brew: %ss. Blaze powder fuels the stand; up to 3 bottles per batch.",
-  "reimagined.browser.smithing_note": "Base result shown. Smithing transfers the base item components during actual crafting."
+  "reimagined.browser.smithing_note": "Base result shown. Smithing transfers the base item components during actual crafting.",
+  "block.reimagined.barley_crop": "Barley Crop",
+  "item.reimagined.barley": "Barley",
+  "item.reimagined.barley_seeds": "Barley Seeds"
 }

@@ -11,3 +11,5 @@ Project gameplay code, deer geometry and deer pixel texture were written for thi
 Current original project files are All Rights Reserved pending the owner's license choice. This is not a grant to redistribute third-party software beyond its own terms.
 
 Mechanical implementation research: Create commit `7ff2760e4924d35d4bc2e22c4b19923f0178cd16`, code MIT, assets all rights reserved. No source/assets copied; reviewed patterns and compatibility are recorded in docs/MECHANICAL_SYSTEM.md. The native NeoForge renderer requires no Create/Flywheel dependency.
+
+Barley research: Farmer's Delight commit `dd8b9b0bfec916a2da88a6d64e3a37f4a02c3259`, MIT (vectorwing). No copied code/assets; vanilla CropBlock and the installed NeoForge AddTableLootModifier API are used directly. Barley pixel textures are original project artwork. See docs/AGRICULTURE.md.

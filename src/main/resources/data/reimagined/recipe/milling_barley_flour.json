@@ -1,0 +1,11 @@
+{
+  "type": "reimagined:milling",
+  "ingredient": {
+    "item": "reimagined:barley"
+  },
+  "result": {
+    "id": "reimagined:flour",
+    "count": 1
+  },
+  "seconds": 8
+}
