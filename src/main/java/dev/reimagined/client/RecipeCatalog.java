@@ -1,6 +1,7 @@
 package dev.reimagined.client;
 
 import dev.reimagined.browser.BrowserRecipes;
+import dev.reimagined.browser.ShulkerColorDisplays;
 import dev.reimagined.browser.BrowserItems;
 import dev.reimagined.browser.RecipeDisplayAdapter;
 import dev.reimagined.browser.RecipeDisplay;
@@ -41,7 +42,11 @@ public final class RecipeCatalog {
         var level = Minecraft.getInstance().level;
         var recipes = level != null && !adapters.isEmpty()
                 ? BrowserRecipes.recipeDisplays(level.getRecipeManager(), level.registryAccess(), item, adapters) : snapshot.recipes();
-        return java.util.stream.Stream.concat(recipes.stream(), snapshot.brewing().stream())
+        // Built-in special previews operate only on the reload-indexed recipe, not the full catalog.
+        var dynamic = level == null ? List.<RecipeDisplay>of() : snapshot.shulkerColoring()
+                .filter(holder -> adapters.stream().noneMatch(adapter -> adapter.supports(holder.value())))
+                .map(holder -> ShulkerColorDisplays.INSTANCE.displays(holder, level.registryAccess(), item)).orElse(List.of());
+        return java.util.stream.Stream.concat(java.util.stream.Stream.concat(recipes.stream(), snapshot.brewing().stream()), dynamic.stream())
                 .filter(display -> usages ? display.uses(item) : display.produces(item))
                 .sorted(java.util.Comparator.comparing(display -> display.id().toString())).toList();
     }

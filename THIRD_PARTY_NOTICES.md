@@ -13,3 +13,5 @@ Current original project files are All Rights Reserved pending the owner's licen
 Mechanical implementation research: Create commit `7ff2760e4924d35d4bc2e22c4b19923f0178cd16`, code MIT, assets all rights reserved. No source/assets copied; reviewed patterns and compatibility are recorded in docs/MECHANICAL_SYSTEM.md. The native NeoForge renderer requires no Create/Flywheel dependency.
 
 Barley research: Farmer's Delight commit `dd8b9b0bfec916a2da88a6d64e3a37f4a02c3259`, MIT (vectorwing). No copied code/assets; vanilla CropBlock and the installed NeoForge AddTableLootModifier API are used directly. Barley pixel textures are original project artwork. See docs/AGRICULTURE.md.
+
+Dynamic browser research: JEI Minecraft1.21.1 commit `7d70c027c9a03901afb74bf3e4d40638a7a7a383`, MIT (mezz), reviewed `Library/src/main/java/mezz/jei/library/plugins/vanilla/crafting/replacers/ShulkerBoxColoringRecipeMaker.java` and LICENSE.txt. Its finite concrete-replacement pattern informed the independently written, vanilla-assembly-based ShulkerColorDisplays adapter. No JEI source/assets are copied and no JEI dependency is added.

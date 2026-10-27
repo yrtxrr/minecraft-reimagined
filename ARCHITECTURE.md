@@ -62,3 +62,7 @@ Before major features, review existing open implementations, pinned licenses and
 ## Ordinary agriculture
 
 `agriculture` adds barley through a vanilla CropBlock subclass and ItemNameBlockItem seed. Growth remains vanilla random ticking and the shared seasonal event; no new per-tick coordinator or persistent farm simulation exists. Grass seed acquisition is an additive NeoForge loot modifier using the built-in add_table codec. Milling uses the existing reloadable recipe type/automation unchanged. Barley details and upstream review: docs/AGRICULTURE.md.
+
+## Finite dynamic recipe previews
+
+The browser snapshots one canonical exact vanilla ShulkerBoxColoring holder per recipe refresh. The selection-only ShulkerColorDisplays adapter assembles up to33 concrete previews using vanilla results and strict component ingredients, preserving container contents and names. No recipe-wide expansion occurs per frame/tick in the default bridge. Snapshot replacement/logout invalidates retained recipe holders; arbitrary subclasses are excluded. Optional adapters keep the existing extension path and can override the built-in. Other special recipe families remain explicit future adapters.

@@ -89,5 +89,6 @@
   "reimagined.browser.smithing_note": "Base result shown. Smithing transfers the base item components during actual crafting.",
   "block.reimagined.barley_crop": "Barley Crop",
   "item.reimagined.barley": "Barley",
-  "item.reimagined.barley_seeds": "Barley Seeds"
+  "item.reimagined.barley_seeds": "Barley Seeds",
+  "reimagined.browser.shulker_color_note": "One box + dye; contents and custom components are preserved."
 }

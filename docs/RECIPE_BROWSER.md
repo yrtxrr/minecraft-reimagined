@@ -33,4 +33,14 @@ No graphical client was launched. Verify actual rendering at several GUI scales,
 
 Arbitrary vanilla special recipes (armor dye/trim, fireworks, maps and other component-dependent results) still need real adapters. Generic IBrewingRecipe implementations with opaque custom predicates and arbitrary custom potion components cannot all be enumerated. Brewing information reflects the public brewing rules available on the client; arbitrary server-only custom brewing-rule synchronization is not implemented. A complete magic/forge/cooking-machine catalog depends on those gameplay systems existing; current ordinary recipe types work through the shared contract. Recipe transfer/auto-fill is not implemented.
 
-FCC-Codex's barley package/resources/branch are outside this stage; no agriculture integration was performed.
+The earlier browser checkpoint did not include agriculture. Ordinary barley has since been implemented and tested by the main developer; see docs/AGRICULTURE.md.
+
+## Concrete shulker coloring increment
+
+The client now includes vanilla shulker-box coloring without installing an adapter manually. `ShulkerColorDisplays` delegates concrete results to Minecraft's ShulkerBoxColoring. Selecting a box exposes16 outgoing dye usages; a colored box also has17 incoming base-box variants, deduplicating their shared case. Selecting a dye shows17 input boxes. Contents/custom name/components are preserved and source ingredients use strict component matching; no empty-box input is substituted for a cargo-filled example. Output is a read-only preview, never a client crafting action.
+
+The default path indexes the canonical vanilla coloring recipe once per snapshot/recipe replacement (identical base-class duplicates have no ingredient configuration); arbitrary subclasses are excluded because their semantics may differ. At most33 displays are built on a selection/refresh, with no registry-wide expansion or per-frame projection. Existing optional adapters can override this built-in display and retain the previous extension API. Logout clears the holder with the snapshot; recipe-sync invalidation removes/restores it normally. No server commands, transfer packets or new dependencies are introduced.
+
+Reviewed JEI1.21.1 commit [7d70c027c9a03901afb74bf3e4d40638a7a7a383](https://github.com/mezz/JustEnoughItems/tree/7d70c027c9a03901afb74bf3e4d40638a7a7a383), specifically its `ShulkerBoxColoringRecipeMaker` finite replacement approach and MIT license (mezz). No code/assets copied; this implementation uses actual vanilla assembly and selected components instead of invented static crafting outputs. See THIRD_PARTY_NOTICES.md.
+
+Other special crafting (armor dyes/trims, fireworks, maps, repairs), recipe transfer/auto-fill and end-to-end graphical reload/navigation remain unfinished. This increment is not full dynamic-recipe coverage. Actual client performance and display layout are not measured; the finite selection-only budget and cache lifecycle are checked headlessly.
