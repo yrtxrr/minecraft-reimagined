@@ -12,6 +12,19 @@ The user explicitly authorizes committing and pushing completed development stag
 - Do not commit credentials, user worlds, logs, dependency caches, compiled Minecraft artifacts, mod build outputs or temporary test results. Keep the generated player JAR under ignored `build/libs/`; use an explicit authorized artifact/release flow if publishing binaries later.
 - Save verified stages promptly so an interruption does not leave completed work only in the cloud machine.
 
+## Performance requirements for every stage
+
+Performance is a high priority: stable server TPS, bounded tick latency, reasonable retained memory and scaling with many mechanisms/creatures. Avoid premature microoptimization; fix structural costs and measured bottlenecks first.
+
+- Do not scan the world, all entities or all chunks every tick. Prefer relevant events, local queries and scheduled work with explicit limits on frequency, radius, nodes/entities examined and total work. A bounded per-machine operation is not enough if thousands run together: assess aggregate cost, stagger/batch work and define a per-tick budget where needed.
+- Never generate/load chunks just to inspect mechanisms, resources or entities. Check loaded state before access. Keep expensive world generation in Minecraft's supported chunk-generation pipeline, not gameplay ticks or synchronous tick-time waits. Do not access live world state from arbitrary worker threads; async work needs immutable inputs and safe lifecycle/result application.
+- Cache only when ownership, size limits and invalidation are defined. Cover relevant block/config/recipe/registry changes, chunk unload, dimension/world changes and disconnect. Release world/entity/player references when their owner ends; do not cache unbounded positions or stale worlds.
+- Minimize network payloads, recipients and frequency: prefer changes/deltas and initial state over unchanged broadcasts. Mark/save state only when it actually changes; never force disk saves every tick. Avoid unnecessary allocations in hot paths, using profiles to decide which matter.
+- Potentially costly mechanics require meaningful budget/scale checks: verify bounds, loaded-only access, cache reuse/invalidation, no-op behavior and relevant packet/save rates. Do not weaken assertions, disable AI/gameplay or silently skip checks to manufacture performance success.
+- Every FCC-Codex integration must review correctness and aggregate performance. For potentially costly stages or integrations, require a reproducible real-Minecraft profiling scenario, relevant scale, baseline/comparison and measured results; the main developer owns this integration gate.
+- A successful build, GameTests, operation-count checks or theoretical complexity does not establish smooth gameplay or acceptable TPS/memory. Profile an actual Minecraft server/client as relevant, recording revision, hardware/JVM/settings, scenario size, warmup/duration, TPS/MSPT, CPU hotspots, allocation/GC/retained memory and network/save metrics where relevant. Include tails only if the instrumentation measures them. See ARCHITECTURE.md for the profiling procedure.
+- Report profiling as not performed or blocked when the required runtime/clients/scenario are unavailable. Do not claim an optimization or good performance without measurements. Keep raw recordings/worlds/logs out of Git; retain the setup, results summary and limitations in documentation.
+
 ## Verification
 
 Java21, Minecraft1.21.1 and NeoForge21.1.264 are pinned. In this cloud checkout source `scripts/cloud-shell.sh` before Gradle commands. Use the existing checkout; tasks are already isolated, so do not create worktrees unless explicitly requested.
