@@ -13,7 +13,8 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 - [x] Compile all common/client Minecraft APIs; correct integration errors.
 - [x] Complete full Gradle build/test and headless GameTestServer startup/execution.
 - [x] Validate preset registry loading and actual same-seed chunk generation.
-- [ ] In-game exercise deer spawn/breeding, powered milling, saving/restart, client recipe reload and server/client interaction.
+- [x] In-game powered milling, actual server/client chunk unload/reload, client-process saving/restart, native barley planting/harvest and open-browser recipe reload.
+- [ ] Complete natural deer spawning/breeding and full survival/multiplayer playthrough validation. Deer rendering and scripted spawn are checked in the graphical client; breeding retains server-test coverage.
 - [x] Produce a development JAR with server integration verification.
 - [x] Launch the graphical NeoForge client; inspect world models, RU browser/journal and actual recipe reload; fix client-discovered issues.
 - [ ] Complete survival/physical-GPU/standalone-JAR validation and authenticated multiplayer before calling the playable alpha ready. Second client reached the local server but authentication services were unavailable.
