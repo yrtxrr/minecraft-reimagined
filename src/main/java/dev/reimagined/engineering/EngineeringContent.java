@@ -39,6 +39,10 @@ public final class EngineeringContent {
     }
     public static void register(IEventBus bus) {
         BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); TYPES.register(bus); SERIALIZERS.register(bus);
+        bus.addListener((net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) ->
+                event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, MACHINE.get(),
+                        (machine, side) -> machine.isMillstone() && side != null
+                                ? new net.neoforged.neoforge.items.wrapper.SidedInvWrapper(machine, side) : null));
         bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
             if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
                 event.accept(WATER_WHEEL); event.accept(SHAFT); event.accept(MILLSTONE);

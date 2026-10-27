@@ -20,7 +20,7 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 ## Subsequent playable increments
 
 1. Browser: recipe history/transfer, special/dynamic crafting displays, vanilla potion brewing adapters, custom machine categories, accessibility and GUI-scale verification.
-2. Engineering: animated wheels, cached networks, item automation/capabilities, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
+2. Engineering: animated wheels, cached networks, extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
 3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
 4. RPG: richer finite skill trees and UI, parry/special attacks/shields/armor, research journal content, spell research and stations, deterministic material/skill/equipment smithing.
 5. Agriculture: new crops/fruit trees, fertility/fertilizers/greenhouses, husbandry, cooking workstations without mandatory thirst/disease/micronutrients.

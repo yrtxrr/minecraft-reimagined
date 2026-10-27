@@ -13,6 +13,16 @@ jobs:
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew --no-daemon build
+      - run: python3 scripts/validate-resources.py
+      - run: bash scripts/verify-integration.sh --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-reports
+          path: |
+            build/reports/tests/
+            run-gametest/reports/
+            run-gametest/logs/
       - uses: actions/upload-artifact@v4
         with:
           name: reimagined-alpha

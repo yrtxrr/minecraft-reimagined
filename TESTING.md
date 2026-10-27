@@ -40,3 +40,9 @@ CI is configured but has not run on GitHub in this session. The existing detaile
 8. Check `/reimagined calendar` and HUD, season command operator permission, season offset after restart, synchronized day after joining/dimension travel. Compare winter temperate crop growth with/without a glass roof. Time commands and sleep intentionally affect this world-time calendar.
 
 Record actual outcomes before marking the alpha milestone complete. Do not publish an unverified build as a completed mod.
+
+## Engineering automation checkpoint
+
+Full Gradle build passed again (12 unit tests). `bash scripts/verify-integration.sh` executed **20/20 required GameTests, 0 failures, 0 skips**, and verified the fresh XML report against all declared tests. Three new runtime tests cover actual vanilla hoppers inserting two wheat and receiving two flour, invalid ingredient rejection; sided capability simulation, exact64 capacity/remainder and output/input restrictions; and saving/replacing a genuinely mid-process machine with both slots occupied before resuming at its saved progress. Water wheels expose no inventory/capability. Manual interaction remains supported.
+
+The integration wrapper preserves Gradle's failure exit status, removes stale reports, and rejects missing/zero/incomplete/skipped runs. GitHub CI now runs it and archives reports/logs, but that remote workflow has not been observed in this session. Verified the built JAR excludes test classes and the empty test structure.

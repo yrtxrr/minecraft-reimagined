@@ -17,3 +17,9 @@ Next action after network changes apply: `bash scripts/setup-cloud.sh`, fix all 
 Stayed on `feat/reimagined-alpha`. NeoForge Maven became reachable through the authorized proxy. Full build now passes; fixed glass tag API compatibility and Java lambda capture, then added server integration coverage. 12 JUnit tests passed; all 17 GameTests passed on a real headless NeoForge GameTestServer. The initial worldgen test failure was a fixture lifecycle/status issue and was fixed without weakening assertions. An isolated same-seed pair of chunks went through actual biome/noise/surface generation and block comparison. Current XML reports distinguish actual execution from planned manual checks.
 
 `docs/FULL_SPEC.md` is absent; reported this to the user. Existing complete requirements remain in `docs/USER_SPEC_RU.md`. No systems were removed. Test classes/template are excluded from player JAR. Real GUI rendering and multiplayer/login remain untested; the alpha is not declared fully ready. Authlib public-key service remains inaccessible in this cloud instance, without disabling security checks.
+
+## Engineering automation and GitHub checkpoints
+
+GitHub read and push access verified through the existing HTTPS proxy. Published the initial history and checked stage cdaaeb6 on `feat/reimagined-alpha`, without force pushing or changing other branches. Per user request, completed stages are now immediately committed and pushed; `AGENTS.md` records this for future tasks.
+
+Implemented sided hopper/NeoForge item-handler automation for the millstone, recipe filtering, bounded inventory and progress-preserving save/load. Full Gradle build and **20/20** server integration tests passed. Added a fresh-report integration runner and CI execution. No temporary builds/worlds/credentials are tracked.

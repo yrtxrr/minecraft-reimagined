@@ -116,6 +116,100 @@ public final class EngineeringGameTests {
         });
     }
 
+    @GameTest(template = "empty", timeoutTicks = 440)
+    public static void hoppersFeedAndCollectOnlyValidMillingItems(GameTestHelper helper) {
+        setupPoweredMill(helper);
+        var level = helper.getLevel();
+        helper.setBlock(MILL.above(), Blocks.HOPPER.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.HopperBlock.FACING, Direction.DOWN));
+        helper.setBlock(MILL.below(), Blocks.HOPPER.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.HopperBlock.FACING, Direction.DOWN));
+        var feeder = (net.minecraft.world.level.block.entity.HopperBlockEntity) level.getBlockEntity(helper.absolutePos(MILL.above()));
+        var collector = (net.minecraft.world.level.block.entity.HopperBlockEntity) level.getBlockEntity(helper.absolutePos(MILL.below()));
+        feeder.setItem(0, new ItemStack(Items.DIAMOND));
+        feeder.setItem(1, new ItemStack(Items.WHEAT, 2));
+        helper.succeedWhen(() -> {
+            helper.assertTrue(collector.countItem(EngineeringContent.FLOUR.get()) == 2,
+                    "A lower hopper must collect exactly the two processed flour outputs");
+            helper.assertTrue(feeder.countItem(Items.DIAMOND) == 1 && feeder.countItem(Items.WHEAT) == 0,
+                    "The upper hopper must retain unsupported diamonds and transfer all wheat");
+            var machine = (MachineBlockEntity) level.getBlockEntity(helper.absolutePos(MILL));
+            helper.assertTrue(machine.isEmpty(), "Input and output must be empty after automatic collection");
+            helper.assertTrue(collector.countItem(Items.DIAMOND) == 0 && collector.countItem(Items.WHEAT) == 0,
+                    "The lower hopper must never extract unprocessed input or unsupported items");
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void sidedItemHandlersRespectFiltersSimulationAndCapacity(GameTestHelper helper) {
+        setupPoweredMill(helper);
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(MILL);
+        var top = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, Direction.UP);
+        var bottom = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, Direction.DOWN);
+        helper.assertTrue(top != null && bottom != null && top.getSlots() == 1 && bottom.getSlots() == 1,
+                "Millstone must expose one input slot above and one output slot below");
+        var machine = (MachineBlockEntity) level.getBlockEntity(pos);
+        ItemStack offered = new ItemStack(Items.WHEAT, 70);
+        ItemStack simulated = top.insertItem(0, offered, true);
+        helper.assertTrue(simulated.getCount() == 6 && machine.isEmpty() && offered.getCount() == 70,
+                "Simulation must report capacity64 without changing machine or caller stack");
+        ItemStack remainder = top.insertItem(0, offered, false);
+        helper.assertTrue(remainder.getCount() == 6 && machine.getItem(0).getCount() == 64 && offered.getCount() == 70,
+                "Real insertion must cap at64 and return all six excess items without mutating caller stack");
+        helper.assertTrue(top.extractItem(0, 64, false).isEmpty() && machine.getItem(0).getCount() == 64,
+                "Input-side handlers must not extract unprocessed input");
+        helper.assertTrue(top.insertItem(0, new ItemStack(Items.DIAMOND), false).is(Items.DIAMOND),
+                "Unsupported ingredients must be rejected");
+        helper.assertTrue(bottom.insertItem(0, new ItemStack(EngineeringContent.FLOUR.get()), false).getCount() == 1,
+                "Output-side handlers must reject all insertion");
+        machine.setItem(1, new ItemStack(EngineeringContent.FLOUR.get(), 3));
+        helper.assertTrue(bottom.extractItem(0, 2, true).getCount() == 2 && machine.getItem(1).getCount() == 3,
+                "Extraction simulation must leave output unchanged");
+        helper.assertTrue(bottom.extractItem(0, 2, false).getCount() == 2 && machine.getItem(1).getCount() == 1,
+                "Extraction must remove exactly the requested output count");
+        helper.assertTrue(level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+                helper.absolutePos(WHEEL), Direction.UP) == null,
+                "Water wheels must not expose an item handler");
+        var wheel = (MachineBlockEntity) level.getBlockEntity(helper.absolutePos(WHEEL));
+        helper.assertTrue(wheel.getContainerSize() == 0 && wheel.getSlotsForFace(Direction.DOWN).length == 0,
+                "Water wheels must not expose vanilla container slots either");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 230)
+    public static void restoredPartialMillingResumesWithoutLosingProgress(GameTestHelper helper) {
+        setupPoweredMill(helper);
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(MILL);
+        var original = (MachineBlockEntity) level.getBlockEntity(pos);
+        original.setItem(0, new ItemStack(Items.WHEAT, 2));
+        original.setItem(1, new ItemStack(EngineeringContent.FLOUR.get(), 3));
+        boolean[] restored = {false};
+        helper.runAtTickTime(85, () -> {
+            CompoundTag saved = original.saveWithFullMetadata(level.registryAccess());
+            helper.assertTrue(saved.getInt("Progress") >= 3 && saved.getInt("Progress") < 8,
+                    "Fixture must save a genuinely unfinished recipe");
+            var replacement = BlockEntity.loadStatic(pos, level.getBlockState(pos), saved, level.registryAccess());
+            helper.assertTrue(replacement instanceof MachineBlockEntity, "Persistent machine must be recreatable");
+            level.setBlockEntity(replacement);
+            CompoundTag checked = replacement.saveWithFullMetadata(level.registryAccess());
+            helper.assertTrue(saved.getInt("Progress") == checked.getInt("Progress")
+                            && saved.getCompound("Input").equals(checked.getCompound("Input"))
+                            && saved.getCompound("Output").equals(checked.getCompound("Output")),
+                    "Replacement must preserve partial progress and both inventory slots");
+            restored[0] = true;
+        });
+        helper.succeedWhen(() -> {
+            helper.assertTrue(restored[0], "Machine must be saved and restored during processing");
+            var current = (MachineBlockEntity) level.getBlockEntity(pos);
+            helper.assertTrue(current.getItem(1).is(EngineeringContent.FLOUR.get()) && current.getItem(1).getCount() == 4,
+                    "Restored processing must finish before a restarted-from-zero recipe could finish");
+            helper.assertTrue(current.getItem(0).is(Items.WHEAT) && current.getItem(0).getCount() == 1,
+                    "Saving and loading must neither lose nor duplicate input");
+        });
+    }
+
     private static void setupPoweredMill(GameTestHelper helper) {
         helper.setBlock(WHEEL, EngineeringContent.WATER_WHEEL.get().defaultBlockState().setValue(MechanicalBlock.AXIS, Direction.Axis.X));
         helper.setBlock(SHAFT, EngineeringContent.SHAFT.get().defaultBlockState().setValue(MechanicalBlock.AXIS, Direction.Axis.X));
