@@ -90,5 +90,19 @@
   "block.reimagined.barley_crop": "Barley Crop",
   "item.reimagined.barley": "Barley",
   "item.reimagined.barley_seeds": "Barley Seeds",
-  "reimagined.browser.shulker_color_note": "One box + dye; contents and custom components are preserved."
+  "reimagined.browser.shulker_color_note": "One box + dye; contents and custom components are preserved.",
+  "block.reimagined.cooking_pot": "Cooking Pot",
+  "item.reimagined.barley_porridge": "Apple Barley Porridge",
+  "item.reimagined.vegetable_stew": "Vegetable Stew",
+  "item.reimagined.hunters_stew": "Hunter’s Stew",
+  "item.reimagined.fish_chowder": "Fish Chowder",
+  "item.reimagined.mushroom_dumplings": "Mushroom Dumplings",
+  "reimagined.cooking.hot": "Heated. Cooking needs matching ingredients, a bowl and output space.",
+  "reimagined.cooking.cold": "Needs a lit campfire, fire or magma below; one hopper, iron bar or iron block may conduct heat.",
+  "reimagined.cooking.ingredients": "Ingredients: one per slot, any order. Use the recipe browser.",
+  "reimagined.cooking.bowls": "Empty bowls: one per meal. Insert from the sides.",
+  "reimagined.cooking.output": "Cooked meal. Extract from below.",
+  "reimagined.cooking.progress": "Cooking: %s / %s seconds",
+  "reimagined.browser.cooking_note": "Heat below; one bowl per meal; %s seconds.",
+  "journal.reimagined.page.cooking": "COOKING\n\nHeat a pot over a campfire or magma. One hopper may sit between. Add ingredients and bowls. Barley + apple: porridge. Flour + mushrooms: dumplings. Browse recipes. Eating returns bowls."
 }

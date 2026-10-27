@@ -21,11 +21,11 @@ public final class JournalPages {
         pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page.current_biome",
                 Component.translatableWithFallback("biome." + currentId.getNamespace() + "." + currentId.getPath().replace('/', '.'), currentId.getPath().replace('_', ' ')),
                 String.format(java.util.Locale.ROOT, "%.2f", current.value().getBaseTemperature()))));
-        for (String chapter : List.of("seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife"))
+        for (String chapter : List.of("seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "cooking"))
             pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page." + chapter)));
         catalogue(pages, discoveries.biomes(), "biomes", "biome");
         catalogue(pages, discoveries.creatures(), "creatures", "entity");
-        // 9 guide pages + at most 87 catalogue pages for the combined discovery cap of 256.
+        // 10 guide pages + at most 87 catalogue pages for the combined discovery cap of 256.
         return new WrittenBookContent(Filterable.passThrough("Minecraft: Reimagined"), "Reimagined", 0, List.copyOf(pages), true);
     }
     private static void catalogue(List<Filterable<Component>> pages, List<ResourceLocation> entries, String chapter, String prefix) {

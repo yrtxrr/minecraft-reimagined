@@ -7,6 +7,7 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `season` | 96-day calendar, local crop growth, calendar commands | Overworld SavedData stores versioned offset; overworld day time is authoritative |
 | `progression` | 10 skills, uncapped XP/levels, finite mastery | Player persistent NBT, decimal BigInteger, copied on player clone; server event XP and commands |
 | `engineering` | water flow, axial connectivity, bounded load, milling | Shared bounded component scheduler; motion snapshots/client BER; milling every20 ticks staggered by position; NBT inventory/progress; WorldlyContainer and sided IItemHandler |
+| `cooking` | heated cooking pot, five meals, menu and sided automation | Server scheduled block ticks, reload-aware recipe hit/miss cache; NBT contents/progress; vanilla menu deltas |
 | `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
 | `research` | readable journal and personal observations | Versioned player NBT, 256 total unique registry IDs, deep-copied on clone; every200 player ticks/current book use, 6-block local scan with at most8 visibility traces |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
@@ -70,3 +71,7 @@ The browser snapshots one canonical exact vanilla ShulkerBoxColoring holder per 
 ## Non-requesting mechanical world access
 
 JFR investigation exposed a1.21.1 API trap:ServerChunkCache.hasChunk/Level.hasChunkAt only establish ticket availability. Subsequent Level.getBlockState/getFluidState/getBlockEntity can enter the FULL-chunk future/request path. MechanicalWorldAccess now uses server-thread getChunkNow and direct LevelChunk reads; unavailable/not-ready chunks fail closed. Manager lookups/callbacks use the same non-requesting access. No chunk futures are awaited or requested by inspection. Native world mutations still use Level APIs after verifying a ready chunk, preserving normal synchronization/hooks. The per-chunk index uses Minecraft's existing fastutil primitive-long map, avoiding boxed packed-coordinate hash collisions observed in the cache retirement profile. Scan/cache/queue budgets, recipes, inventory and motion contracts remain unchanged.
+
+## Cooking workstation
+
+Cooking uses the shared vanilla recipe contract and an independently registered menu/container. Pots have no BE ticker: empty pots sleep, active pots use staggered20-tick scheduled steps, blocked nonempty pots retry every100ticks with memoized recipe matches. Heat reads stay in one already-ready chunk/column, at most2blocks; there are no chunk tickets, world scans or catch-up loops. Reload epoch and inventory changes invalidate matches; progress/NBT/automation remain server-owned. See [COOKING.md](docs/COOKING.md) for lifecycle, resource provenance and actual validation limits.

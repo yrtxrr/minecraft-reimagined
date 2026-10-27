@@ -1,0 +1,253 @@
+{
+  "textures": {
+    "particle": "minecraft:block/iron_block",
+    "metal": "minecraft:block/cauldron_side",
+    "handle": "minecraft:block/cauldron_bottom",
+    "broth": "reimagined:block/cooking_broth"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        2,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#metal"
+        },
+        "down": {
+          "texture": "#metal"
+        },
+        "north": {
+          "texture": "#metal"
+        },
+        "south": {
+          "texture": "#metal"
+        },
+        "east": {
+          "texture": "#metal"
+        },
+        "west": {
+          "texture": "#metal"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        4,
+        10,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#metal"
+        },
+        "down": {
+          "texture": "#metal"
+        },
+        "north": {
+          "texture": "#metal"
+        },
+        "south": {
+          "texture": "#metal"
+        },
+        "east": {
+          "texture": "#metal"
+        },
+        "west": {
+          "texture": "#metal"
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        10,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#metal"
+        },
+        "down": {
+          "texture": "#metal"
+        },
+        "north": {
+          "texture": "#metal"
+        },
+        "south": {
+          "texture": "#metal"
+        },
+        "east": {
+          "texture": "#metal"
+        },
+        "west": {
+          "texture": "#metal"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        2,
+        2
+      ],
+      "to": [
+        12,
+        10,
+        4
+      ],
+      "faces": {
+        "up": {
+          "texture": "#metal"
+        },
+        "down": {
+          "texture": "#metal"
+        },
+        "north": {
+          "texture": "#metal"
+        },
+        "south": {
+          "texture": "#metal"
+        },
+        "east": {
+          "texture": "#metal"
+        },
+        "west": {
+          "texture": "#metal"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        2,
+        12
+      ],
+      "to": [
+        12,
+        10,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#metal"
+        },
+        "down": {
+          "texture": "#metal"
+        },
+        "north": {
+          "texture": "#metal"
+        },
+        "south": {
+          "texture": "#metal"
+        },
+        "east": {
+          "texture": "#metal"
+        },
+        "west": {
+          "texture": "#metal"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        6,
+        6
+      ],
+      "to": [
+        2,
+        8,
+        10
+      ],
+      "faces": {
+        "up": {
+          "texture": "#handle"
+        },
+        "down": {
+          "texture": "#handle"
+        },
+        "north": {
+          "texture": "#handle"
+        },
+        "south": {
+          "texture": "#handle"
+        },
+        "east": {
+          "texture": "#handle"
+        },
+        "west": {
+          "texture": "#handle"
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        6,
+        6
+      ],
+      "to": [
+        16,
+        8,
+        10
+      ],
+      "faces": {
+        "up": {
+          "texture": "#handle"
+        },
+        "down": {
+          "texture": "#handle"
+        },
+        "north": {
+          "texture": "#handle"
+        },
+        "south": {
+          "texture": "#handle"
+        },
+        "east": {
+          "texture": "#handle"
+        },
+        "west": {
+          "texture": "#handle"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        1,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    }
+  }
+}

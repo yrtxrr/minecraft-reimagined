@@ -1,0 +1,16 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    {
+      "item": "reimagined:barley"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "result": {
+    "id": "reimagined:barley_porridge",
+    "count": 1
+  },
+  "seconds": 12
+}

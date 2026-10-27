@@ -183,7 +183,7 @@ public final class ResearchGameTests {
             try (var stream = ResearchGameTests.class.getResourceAsStream("/assets/reimagined/lang/" + locale + ".json")) {
                 helper.assertTrue(stream != null, "Journal language file must be packaged: " + locale);
                 JsonObject language = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
-                for (String chapter : List.of("introduction", "seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "current_biome", "biomes", "creatures", "undiscovered")) {
+                for (String chapter : List.of("introduction", "seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "cooking", "current_biome", "biomes", "creatures", "undiscovered")) {
                     String key = "journal.reimagined.page." + chapter;
                     helper.assertTrue(language.has(key), "Journal chapter needs a packaged translation: " + locale + " " + key);
                     helper.assertTrue(language.get(key).getAsString().length() <= 200,

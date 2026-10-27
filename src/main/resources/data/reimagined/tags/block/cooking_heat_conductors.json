@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:hopper",
+    "minecraft:iron_bars",
+    "minecraft:iron_block"
+  ]
+}

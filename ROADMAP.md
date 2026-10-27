@@ -25,7 +25,7 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 2. Engineering: animated wheels and bounded shared networks implemented; extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
 3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
 4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, extend the verified readable/discovery journal with research progression, spell research and stations, deterministic material/skill/equipment smithing.
-5. Agriculture: ordinary barley with seasonal hooks, harvest and milling implemented; further crops/fruit trees, fertility/fertilizers/greenhouses, husbandry, cooking workstations without mandatory thirst/disease/micronutrients.
+5. Agriculture: ordinary barley with seasonal hooks, harvest and milling implemented; further crops/fruit trees, fertility/fertilizers/greenhouses, husbandry. Heated cooking pot, five connected meals, browser/menu and hopper automation implemented; expand cooking variety after focused runtime validation, without mandatory thirst/disease/micronutrients.
 6. Content/civilizations: cultures, NPC states/cities, reputation/citizenship, diplomacy/trade/armies, persistent unloaded-region simulation. Player cannot found a state. Protect player terrain from NPC wars.
 7. Exploration: original mobs/animations, room-connected dungeons/puzzles/mini-bosses, Nether/End biomes and independent bosses/artifacts, retaining dragon and wither.
 8. Transport/economy: carts/caravans/sailing/ships, linked minecarts/switches/loading stations, roads/geography/economy integration.
@@ -34,4 +34,4 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-All development is assigned to the main developer in `feat/reimagined-alpha`; FCC-Codex no longer participates. Prior handoff documents are historical. Mechanical animation/cache and ordinary barley source/automated checks are complete, with graphical validation still open. Next is the first unfinished browser increment above. No unrelated branch is merged automatically.
+All development is assigned to the main developer in `feat/reimagined-alpha`; FCC-Codex no longer participates. Prior handoff documents are historical. Mechanical animation/cache and ordinary barley include graphical checks recorded in docs/ALPHA_VALIDATION.md. The cooking workstation increment now has full source/server coverage; focused client/performance checks are in progress. Subsequent priorities include research progression/spell stations or further finite browser adapters. No unrelated branch is merged automatically.

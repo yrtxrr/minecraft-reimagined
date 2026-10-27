@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:beetroot"
+    }
+  ],
+  "result": {
+    "id": "reimagined:vegetable_stew",
+    "count": 1
+  },
+  "seconds": 16
+}

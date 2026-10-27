@@ -35,6 +35,15 @@ neoForge {
             jvmArgument '-Xmx2G'
             jvmArgument '-XX:ActiveProcessorCount=4'
         }
+        cookingProfile {
+            server()
+            programArgument '--nogui'
+            gameDirectory = file('run-cooking-profile')
+            systemProperty 'reimagined.cookingProfile', 'true'
+            systemProperty 'reimagined.profileRevision', project.findProperty('profileRevision') ?: 'working-tree'
+            jvmArgument '-Xmx2G'
+            jvmArgument '-XX:ActiveProcessorCount=4'
+        }
         gameTestServer {
             type = 'gameTestServer'
             gameDirectory = file('run-gametest')
@@ -64,5 +73,6 @@ tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.named('jar') {
     exclude 'dev/reimagined/gametest/**'
     exclude 'dev/reimagined/engineering/profile/**'
+    exclude 'dev/reimagined/cooking/profile/**'
     exclude 'data/reimagined/structure/empty.nbt'
 }

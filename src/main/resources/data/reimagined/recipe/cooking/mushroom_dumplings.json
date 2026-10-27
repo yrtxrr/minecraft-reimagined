@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    {
+      "item": "reimagined:flour"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ],
+  "result": {
+    "id": "reimagined:mushroom_dumplings",
+    "count": 1
+  },
+  "seconds": 16
+}

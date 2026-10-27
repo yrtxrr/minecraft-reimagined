@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:dried_kelp"
+    }
+  ],
+  "result": {
+    "id": "reimagined:fish_chowder",
+    "count": 1
+  },
+  "seconds": 16
+}

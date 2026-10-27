@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "cooking=false": {
+      "model": "reimagined:block/cooking_pot"
+    },
+    "cooking=true": {
+      "model": "reimagined:block/cooking_pot_active"
+    }
+  }
+}

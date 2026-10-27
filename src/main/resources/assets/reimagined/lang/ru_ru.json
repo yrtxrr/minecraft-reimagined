@@ -90,5 +90,19 @@
   "block.reimagined.barley_crop": "Посевы ячменя",
   "item.reimagined.barley": "Ячмень",
   "item.reimagined.barley_seeds": "Семена ячменя",
-  "reimagined.browser.shulker_color_note": "Один ящик + краситель; содержимое и особые компоненты сохраняются."
+  "reimagined.browser.shulker_color_note": "Один ящик + краситель; содержимое и особые компоненты сохраняются.",
+  "block.reimagined.cooking_pot": "Котелок",
+  "item.reimagined.barley_porridge": "Ячневая каша с яблоком",
+  "item.reimagined.vegetable_stew": "Овощное рагу",
+  "item.reimagined.hunters_stew": "Охотничья похлёбка",
+  "item.reimagined.fish_chowder": "Рыбная похлёбка",
+  "item.reimagined.mushroom_dumplings": "Грибные клёцки",
+  "reimagined.cooking.hot": "Нагрет. Нужны ингредиенты рецепта, миска и место для блюда.",
+  "reimagined.cooking.cold": "Нужен костёр, огонь или магма снизу. Допустима одна прослойка из воронки, решётки или железа.",
+  "reimagined.cooking.ingredients": "Ингредиенты: по одному виду на ячейку, порядок любой. Рецепты — в браузере.",
+  "reimagined.cooking.bowls": "Пустые миски: одна на блюдо. Воронки подают сбоку.",
+  "reimagined.cooking.output": "Готовое блюдо. Воронки извлекают снизу.",
+  "reimagined.cooking.progress": "Готовка: %s / %s с",
+  "reimagined.browser.cooking_note": "Нагрев снизу; миска на блюдо; %s с.",
+  "journal.reimagined.page.cooking": "КУЛИНАРИЯ\n\nНагрейте котелок костром или магмой. Между ними допустима воронка. Добавьте продукты и миски. Ячмень + яблоко: каша. Мука + грибы: клёцки. Рецепты — в браузере. Миска возвращается."
 }
