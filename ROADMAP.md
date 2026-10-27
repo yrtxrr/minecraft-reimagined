@@ -1,0 +1,30 @@
+# Roadmap
+
+The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This file separates implemented source from validated release milestones.
+
+## 0.1.0-alpha gate — in progress
+
+- [x] NeoForge 1.21.1 project, modular entry point, pinned/checksummed Gradle wrapper, Java 21.
+- [x] Source modules for optional world preset, new deer, water wheel/shaft/millstone, ten skill trees, independent recipe browser.
+- [x] Server state and calendar payload, custom reloadable milling recipes.
+- [x] Additional source: seasonal crop growth, four wand schools, four weapon profiles.
+- [x] Executed independent tests for skill arithmetic, mana, seasons and load calculations.
+- [ ] Restore NeoForge Maven access in the actual cloud instance.
+- [ ] Compile all common/client Minecraft APIs; correct any integration errors.
+- [ ] Complete full Gradle build/test and dedicated-server startup.
+- [ ] Validate preset registry loading/chunk generation and deterministic seeds.
+- [ ] In-game exercise deer spawn/breeding, powered milling, saving/restart, client recipe reload and server/client interaction.
+- [ ] Produce and verify installable alpha JAR. Do not label this gate complete before these pass.
+
+## Subsequent playable increments
+
+1. Browser: recipe history/transfer, special/dynamic crafting displays, vanilla potion brewing adapters, custom machine categories, accessibility and GUI-scale verification.
+2. Engineering: animated wheels, cached networks, item automation/capabilities, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
+3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
+4. RPG: richer finite skill trees and UI, parry/special attacks/shields/armor, research journal content, spell research and stations, deterministic material/skill/equipment smithing.
+5. Agriculture: new crops/fruit trees, fertility/fertilizers/greenhouses, husbandry, cooking workstations without mandatory thirst/disease/micronutrients.
+6. Content/civilizations: cultures, NPC states/cities, reputation/citizenship, diplomacy/trade/armies, persistent unloaded-region simulation. Player cannot found a state. Protect player terrain from NPC wars.
+7. Exploration: original mobs/animations, room-connected dungeons/puzzles/mini-bosses, Nether/End biomes and independent bosses/artifacts, retaining dragon and wither.
+8. Transport/economy: carts/caravans/sailing/ships, linked minecarts/switches/loading stations, roads/geography/economy integration.
+
+Each increment requires a passing build, relevant automated tests, a meaningful game/server check and a Git checkpoint. No milestone is satisfied by documentation alone.

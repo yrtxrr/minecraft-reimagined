@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "food",
+  "ingredients": [
+    {
+      "item": "reimagined:flour"
+    },
+    {
+      "item": "reimagined:flour"
+    },
+    {
+      "item": "reimagined:flour"
+    }
+  ],
+  "result": {
+    "id": "minecraft:bread",
+    "count": 2
+  }
+}

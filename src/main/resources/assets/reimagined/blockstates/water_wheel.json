@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "active=true,axis=x": {
+      "model": "reimagined:block/water_wheel_active",
+      "y": 90
+    },
+    "active=false,axis=x": {
+      "model": "reimagined:block/water_wheel",
+      "y": 90
+    },
+    "active=true,axis=y": {
+      "model": "reimagined:block/water_wheel_active",
+      "x": 90
+    },
+    "active=false,axis=y": {
+      "model": "reimagined:block/water_wheel",
+      "x": 90
+    },
+    "active=true,axis=z": {
+      "model": "reimagined:block/water_wheel_active"
+    },
+    "active=false,axis=z": {
+      "model": "reimagined:block/water_wheel"
+    }
+  }
+}

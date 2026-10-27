@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "active=true,axis=x": {
+      "model": "reimagined:block/millstone_active"
+    },
+    "active=false,axis=x": {
+      "model": "reimagined:block/millstone"
+    },
+    "active=true,axis=y": {
+      "model": "reimagined:block/millstone_active"
+    },
+    "active=false,axis=y": {
+      "model": "reimagined:block/millstone"
+    },
+    "active=true,axis=z": {
+      "model": "reimagined:block/millstone_active"
+    },
+    "active=false,axis=z": {
+      "model": "reimagined:block/millstone"
+    }
+  }
+}

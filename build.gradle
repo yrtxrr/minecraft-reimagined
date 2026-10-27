@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = '0.1.0-alpha'
+group = 'dev.reimagined'
+base { archivesName = 'reimagined' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories { mavenCentral() }
+neoForge {
+    version = '21.1.264'
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+        gameTestServer { type = 'gameTestServer'; systemProperty 'neoforge.enabledGameTestNamespaces', 'reimagined' }
+    }
+    mods { reimagined { sourceSet sourceSets.main } }
+}
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+test { useJUnitPlatform() }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

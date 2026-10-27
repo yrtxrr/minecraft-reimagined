@@ -1,0 +1,16 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": [
+    "minecraft:forest",
+    "minecraft:birch_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:taiga",
+    "minecraft:meadow"
+  ],
+  "spawners": {
+    "type": "reimagined:deer",
+    "weight": 8,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

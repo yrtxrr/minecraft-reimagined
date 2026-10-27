@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:max",
+  "argument1": {
+    "type": "minecraft:min",
+    "argument1": {
+      "type": "minecraft:min",
+      "argument1": "reimagined:depth",
+      "argument2": "reimagined:caves"
+    },
+    "argument2": "minecraft:overworld/caves/noodle"
+  },
+  "argument2": {
+    "type": "minecraft:y_clamped_gradient",
+    "from_y": -64,
+    "to_y": -60,
+    "from_value": 2.0,
+    "to_value": -2.0
+  }
+}

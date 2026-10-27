@@ -1,0 +1,11 @@
+{
+  "type": "reimagined:milling",
+  "ingredient": {
+    "item": "minecraft:wheat"
+  },
+  "result": {
+    "id": "reimagined:flour",
+    "count": 1
+  },
+  "seconds": 8
+}

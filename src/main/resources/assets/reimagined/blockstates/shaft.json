@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "active=true,axis=x": {
+      "model": "reimagined:block/shaft",
+      "y": 90
+    },
+    "active=false,axis=x": {
+      "model": "reimagined:block/shaft",
+      "y": 90
+    },
+    "active=true,axis=y": {
+      "model": "reimagined:block/shaft",
+      "x": 90
+    },
+    "active=false,axis=y": {
+      "model": "reimagined:block/shaft",
+      "x": 90
+    },
+    "active=true,axis=z": {
+      "model": "reimagined:block/shaft"
+    },
+    "active=false,axis=z": {
+      "model": "reimagined:block/shaft"
+    }
+  }
+}
