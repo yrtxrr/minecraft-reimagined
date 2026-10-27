@@ -22,10 +22,14 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 1. Browser: recipe history/transfer, special/dynamic crafting displays, vanilla potion brewing adapters, custom machine categories, accessibility and GUI-scale verification.
 2. Engineering: animated wheels, cached networks, extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
 3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
-4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, research journal content, spell research and stations, deterministic material/skill/equipment smithing.
+4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, extend the verified readable/discovery journal with research progression, spell research and stations, deterministic material/skill/equipment smithing.
 5. Agriculture: new crops/fruit trees, fertility/fertilizers/greenhouses, husbandry, cooking workstations without mandatory thirst/disease/micronutrients.
 6. Content/civilizations: cultures, NPC states/cities, reputation/citizenship, diplomacy/trade/armies, persistent unloaded-region simulation. Player cannot found a state. Protect player terrain from NPC wars.
 7. Exploration: original mobs/animations, room-connected dungeons/puzzles/mini-bosses, Nether/End biomes and independent bosses/artifacts, retaining dragon and wither.
 8. Transport/economy: carts/caravans/sailing/ships, linked minecarts/switches/loading stations, roads/geography/economy integration.
 
 Each increment requires a passing build, relevant automated tests, a meaningful game/server check and a Git checkpoint. No milestone is satisfied by documentation alone.
+
+## Coordination pause
+
+Research-journal checkpoint: full build +12unit tests +32server GameTests passed. Readable per-reader guide/discoveries are implemented; all remaining specification systems retain their statuses above. Stop new stages until the user chooses task ownership with external FCC-Codex. Proposals only: `docs/FCC_HANDOFF.md`.

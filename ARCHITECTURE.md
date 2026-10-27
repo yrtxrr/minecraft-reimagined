@@ -8,13 +8,14 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `progression` | 10 skills, uncapped XP/levels, finite mastery | Player persistent NBT, decimal BigInteger, copied on player clone; server event XP and commands |
 | `engineering` | water flow, axial connectivity, bounded load, milling | Server tick every 20 ticks staggered by position; block entity NBT inventory/progress; WorldlyContainer plus sided IItemHandler, input top/sides and output bottom |
 | `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
+| `research` | readable journal and personal observations | Versioned player NBT, 256 total unique registry IDs, deep-copied on clone; every200 player ticks/current book use, 6-block local scan with at most8 visibility traces |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
 | `client` | inventory item panel and recipe screen | Read-only synchronized recipe-manager data; no client item spawning/crafting authority |
 | data `worldgen` | optional world preset | Stateless seeded chunk noise, built-in registry codecs |
 
 ## Network
 
-`reimagined:calendar` is a version-1 clientbound payload with a single varlong day. Server pushes on login and every 100 ticks and after operator season changes. The handler only updates a primitive value cache, with no common-side references to client-only classes. The HUD is client-only. Vanilla networking handles entity state, item use, player messages and recipe synchronization. Skill inspection is via server-generated command output, not a writable client cache.
+`reimagined:calendar` is a version-1 clientbound payload with a single varlong day. Server pushes on login and every 100 ticks and after operator season changes. The handler only updates a primitive value cache, with no common-side references to client-only classes. The HUD is client-only. The research journal uses standard written-book data components and vanilla held-slot/OpenBook packets, explicitly syncing pages before opening; no additional writable client research state exists. Vanilla networking handles entity state, item use, player messages and recipe synchronization. Skill inspection is via server-generated command output, not a writable client cache.
 
 ## Shared recipe contract
 

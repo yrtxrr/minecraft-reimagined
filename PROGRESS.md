@@ -27,3 +27,11 @@ Implemented sided hopper/NeoForge item-handler automation for the millstone, rec
 ## Combat checkpoint
 
 Implemented four server-authoritative weapon specials with saved shared cooldowns, attack-charge/durability limits, line-of-sight/alliance/PvP checks; automatic timed frontal shield parry respecting vanilla warmup/facing/unblockable sources. Normal attacks and offhand shielding remain vanilla. Full build passed with12unit tests and **27/27** real server GameTests. This does not validate graphical input/animation or complete the whole combat/armor specification.
+
+## Research journal and pause for FCC-Codex coordination
+
+Replaced chat-only guidance with a real readable written-book journal: localized guide chapters (including deer and current biome information), personal observed biome/creature catalogues, bounded local ten-second observation, versioned player saves/death cloning, per-reader rebuilding and explicit pages-before-open network ordering. This is not a research unlock/quest system.
+
+Exercised the saved cloud setup script successfully, then full build with12unit tests and **32/32** required server GameTests. Five journal tests check real item use/network components/packet order, observer cadence/visibility/deduplication, NBT/clone and per-reader isolation, bounded valid entries/book size, and packaged EN/RU chapters. A packet class-name mismatch was corrected against Minecraft1.21.1 APIs before the final passing run. Graphical book display, GUI scale and real multiplayer/authentication remain unverified.
+
+Prepared the player JAR under ignored build/libs with SHA256; test fixtures are excluded. Per user's new organization request, stop new implementation after this checkpoint and push. Four independent proposals and reserved shared files are recorded in docs/FCC_HANDOFF.md. No tasks assigned to FCC, no FCC branches created, and no next major stage started. Main developer retains architecture, integration, testing and merges.

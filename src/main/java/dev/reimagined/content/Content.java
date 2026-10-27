@@ -33,6 +33,7 @@ public final class Content {
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
         CombatEvents.register();
+        dev.reimagined.research.ResearchEvents.register();
         bus.addListener(Content::creative);
         NeoForge.EVENT_BUS.addListener(Content::tick);
         NeoForge.EVENT_BUS.addListener(Content::clonePlayer);

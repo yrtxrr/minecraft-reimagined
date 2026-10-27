@@ -71,5 +71,17 @@
   "tooltip.reimagined.special.hammer": "Sneak + use: front shockwave and stagger.",
   "tooltip.reimagined.special.dagger": "Sneak + use: quick thrust and brief footwork.",
   "tooltip.reimagined.special.halberd": "Sneak + use: sweep up to three targets in front.",
-  "tooltip.reimagined.special_cooldown": "Shared special cooldown: %ss; costs 2 durability."
+  "tooltip.reimagined.special_cooldown": "Shared special cooldown: %ss; costs 2 durability.",
+  "journal.reimagined.page.introduction": "FIELD JOURNAL\n\nExplore to record nearby creatures and visited biomes.\n\nBiomes: %s\nCreatures: %s\n\nOpen again to refresh your notes.",
+  "journal.reimagined.page.seasons": "SEASONS\n\nA year lasts 96 days: four seasons of 24 days.\n\nUse /reimagined calendar to check the date. Seasonal crop growth depends on the local biome.",
+  "journal.reimagined.page.skills": "SKILLS\n\nActions train ten skill trees. Levels continue indefinitely, but each tree has only three upgrade ranks.\n\n/reimagined skills\n/reimagined skills unlock <tree>",
+  "journal.reimagined.page.recipes": "RECIPES\n\nOpen inventory for the item browser. Search and filter; left click an item for recipes and right click for uses.\n\nThe browser includes crafting, cooking and milling.",
+  "journal.reimagined.page.engineering": "ENGINEERING\n\nFlowing water turns a water wheel. Connect its axis to shafts and a millstone.\n\nWheels supply 16 load; mills use 8. Overload stops rotation. Hoppers automate milling.",
+  "journal.reimagined.page.magic": "MAGIC\n\nRight click a wand to cast. Mana returns slowly.\n\nElemental: spark.\nNature: grow or heal.\nArcane: safe blink.\nRitual: ally protection; costs amethyst.",
+  "journal.reimagined.page.combat": "COMBAT\n\nLeft click attacks normally. Sneak + right click uses a weapon special. Specials share a cooldown and cost durability.\n\nRaise a shield just before a melee hit to parry.",
+  "journal.reimagined.page.biomes": "VISITED BIOMES",
+  "journal.reimagined.page.creatures": "OBSERVED CREATURES",
+  "journal.reimagined.page.undiscovered": "No observations yet. Explore nearby terrain and look for living creatures.",
+  "journal.reimagined.page.wildlife": "FOREST DEER\n\nLook in forests, taigas and meadows. Deer follow sweet berries. Feed two adults berries to breed a fawn.\n\nKeep wolves away: deer flee from them.",
+  "journal.reimagined.page.current_biome": "CURRENT BIOME\n\n%s\n\nBase warmth index: %s\n\nThis is Minecraft's biome value, not degrees or a weather forecast."
 }
