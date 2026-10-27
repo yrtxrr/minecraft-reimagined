@@ -11,6 +11,17 @@ neoForge {
     version = '21.1.264'
     runs {
         client { client() }
+        // Optional local multiplayer smoke-test client; separate options/saves and dev identity.
+        alphaPeer {
+            client()
+            gameDirectory = file('run-alpha-peer')
+            programArgument '--username'
+            programArgument 'AlphaObserver'
+            programArgument '--quickPlayMultiplayer'
+            programArgument project.findProperty('alphaPeerAddress') ?: '127.0.0.1:25578'
+            jvmArgument '-Xmx1536M'
+            jvmArgument '-XX:ActiveProcessorCount=2'
+        }
         server { server(); programArgument '--nogui' }
         mechanicalProfile {
             server()
@@ -20,6 +31,7 @@ neoForge {
             systemProperty 'reimagined.mechanicalRestartProbe', project.findProperty('profileRestart') ?: 'false'
             systemProperty 'reimagined.profileRevision', project.findProperty('profileRevision') ?: 'working-tree'
             systemProperty 'reimagined.profileLabel', project.findProperty('profileLabel') ?: 'candidate'
+            systemProperty 'reimagined.profileWarmupTicks', project.findProperty('profileWarmupTicks') ?: '200'
             jvmArgument '-Xmx2G'
             jvmArgument '-XX:ActiveProcessorCount=4'
         }
