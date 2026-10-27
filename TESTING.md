@@ -9,21 +9,24 @@
 - `bash -n scripts/*.sh`: passed.
 - Official NeoForge 1.21.1 documentation/source signatures inspected for events, registries, payloads and block-entity serialization. Static review does not prove compilation.
 
-## Blocked — not passed
+## Continuation — actual Minecraft validation
 
-`bash scripts/setup-cloud.sh` invokes `./gradlew --no-daemon build`. It stops at `:createMinecraftArtifacts` because the cloud egress proxy returns **403 Forbidden** for `https://maven.neoforged.net/releases/net/neoforged/neoform-runtime/2.0.31/neoform-runtime-2.0.31.pom`. TLS verification is enabled; the system truststore is used. No checksums/signatures were disabled and no forbidden endpoint is bypassed.
+NeoForge Maven now returns HTTP 200 through the existing authorized proxy. `./gradlew build` **passed**, including **12/12 JUnit tests, 0 skipped**. Corrected incompatible greenhouse glass API references using NeoForge common glass tags, and the non-effectively-final ray endpoint captured by a lambda. Removed deprecated client subscriber bus selection.
 
-Domain additions saved in the environment draft need applying through environment settings. Then rerun:
+`./gradlew runGameTestServer` **passed: 17 required GameTests, 0 failed**. Current-run XML: `run-gametest/reports/gametest.xml` (ignored). The first run was 16/17: an isolated ProtoChunk fixture failed because it did not commit generation statuses. Fixed the fixture to follow normal BIOMES→NOISE→SURFACE lifecycle; reran all tests successfully.
+
+Coverage: all 14 item / 3 block / deer / machine / milling registry entries; all 16 custom recipes through JSON and network codecs; deer biome modifier, actual breeding, entity NBT; water-powered transmission, shaft axis, overload, redstone, actual server-tick milling and block-entity NBT; calendar commands/SavedData; player skills save/death clone; nature-wand healing, mana, XP, rejected casts and actual cooldown expiry; preset codec/vanilla preservation, full biomes/noise/surface generation of two identical-seed isolated ocean chunks, block-for-block comparison, sealed bedrock and water/stone/air assertions.
+
+GameTest code and the empty template are excluded from the player JAR. Test server processes exit on completion; no running process is part of the prepared environment. No graphical client or online player authentication has been tested. Vanilla Authlib explicitly uses a direct Proxy.NO_PROXY connection for its public-key fetch; it logs an unavailable authentication endpoint in this cloud environment. This does not fail the headless tests and is not evidence that real online login works. `api.minecraftservices.com` and `sessionserver.mojang.com` were added to the draft allowlist; applying settings is separate from this tested server run. TLS and authentication checks remain enabled.
 
 ```sh
-cd /workspace/minecraft-reimagined
-bash scripts/setup-cloud.sh
 source scripts/cloud-shell.sh
-python3 scripts/validate-resources.py
 ./gradlew build
+./gradlew runGameTestServer
+python3 scripts/validate-resources.py
 ```
 
-CI is configured to run the full Gradle build on GitHub, but has not run in this session. No compiled mod JAR, server launch, GameTest suite or graphical client validation is claimed. `runGameTestServer` has a development configuration but no registered GameTests yet; a zero-test run must not be accepted as verification.
+CI is configured but has not run on GitHub in this session. The existing detailed manual checklist below remains required where automated tests do not cover client behavior, multiplayer or broader terrain sampling.
 
 ## Required Minecraft checks after compilation succeeds
 

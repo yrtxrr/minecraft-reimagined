@@ -9,12 +9,13 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 - [x] Server state and calendar payload, custom reloadable milling recipes.
 - [x] Additional source: seasonal crop growth, four wand schools, four weapon profiles.
 - [x] Executed independent tests for skill arithmetic, mana, seasons and load calculations.
-- [ ] Restore NeoForge Maven access in the actual cloud instance.
-- [ ] Compile all common/client Minecraft APIs; correct any integration errors.
-- [ ] Complete full Gradle build/test and dedicated-server startup.
-- [ ] Validate preset registry loading/chunk generation and deterministic seeds.
+- [x] Restore NeoForge Maven access in the actual cloud instance.
+- [x] Compile all common/client Minecraft APIs; correct integration errors.
+- [x] Complete full Gradle build/test and headless GameTestServer startup/execution.
+- [x] Validate preset registry loading and actual same-seed chunk generation.
 - [ ] In-game exercise deer spawn/breeding, powered milling, saving/restart, client recipe reload and server/client interaction.
-- [ ] Produce and verify installable alpha JAR. Do not label this gate complete before these pass.
+- [x] Produce a development JAR with server integration verification.
+- [ ] Validate graphical client and multiplayer before calling the playable alpha ready.
 
 ## Subsequent playable increments
 

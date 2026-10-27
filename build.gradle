@@ -12,7 +12,20 @@ neoForge {
     runs {
         client { client() }
         server { server(); programArgument '--nogui' }
-        gameTestServer { type = 'gameTestServer'; systemProperty 'neoforge.enabledGameTestNamespaces', 'reimagined' }
+        gameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = file('run-gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'reimagined'
+        }
+    }
+    runs.configureEach {
+        // Gradle's systemProp settings do not automatically reach Minecraft child JVMs.
+        // Forward only non-credential routing/trust settings, preserving TLS validation.
+        ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort',
+         'javax.net.ssl.trustStore'].each { key ->
+            def value = System.getProperty(key)
+            if (value != null) systemProperty key, value
+        }
     }
     mods { reimagined { sourceSet sourceSets.main } }
 }
@@ -23,3 +36,9 @@ dependencies {
 }
 test { useJUnitPlatform() }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+// Test fixtures run from development outputs and are never shipped in the player JAR.
+tasks.named('jar') {
+    exclude 'dev/reimagined/gametest/**'
+    exclude 'data/reimagined/structure/empty.nbt'
+}

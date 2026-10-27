@@ -80,11 +80,12 @@ public final class SpellWand extends Item {
         Vec3 start = player.getEyePosition();
         Vec3 end = start.add(player.getLookAngle().scale(16));
         var block = level.clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-        Vec3 limit = block.getLocation();
+        final Vec3 wallLimit = block.getLocation();
+        Vec3 limit = wallLimit;
         var target = level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().expandTowards(limit.subtract(start)).inflate(1),
                 entity -> entity != player && entity.isAlive() && !entity.isAlliedTo(player)
                         && (!(entity instanceof Player other) || player.canHarmPlayer(other)))
-                .stream().filter(entity -> entity.getBoundingBox().inflate(0.25).clip(start, limit).isPresent())
+                .stream().filter(entity -> entity.getBoundingBox().inflate(0.25).clip(start, wallLimit).isPresent())
                 .min(Comparator.comparingDouble(entity -> entity.distanceToSqr(player))).orElse(null);
         if (target != null) {
             limit = target.getBoundingBox().getCenter();

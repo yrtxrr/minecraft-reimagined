@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractGlassBlock;
+import net.neoforged.neoforge.common.Tags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
@@ -54,7 +54,7 @@ public final class Seasons {
     private static boolean sheltered(net.minecraft.server.level.ServerLevel level, BlockPos pos) {
         for (int dy = 1; dy <= 16 && pos.getY() + dy < level.getMaxBuildHeight(); dy++) {
             BlockState state = level.getBlockState(pos.above(dy));
-            if (state.getBlock() instanceof AbstractGlassBlock || state.is(Blocks.GLASS_PANE) || state.is(BlockTags.IMPERMEABLE)) return true;
+            if (state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_PANES)) return true;
             if (state.canOcclude()) return false;
         }
         return false;
