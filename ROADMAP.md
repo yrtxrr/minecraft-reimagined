@@ -19,7 +19,7 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 
 ## Subsequent playable increments
 
-1. Browser: recipe history/transfer, special/dynamic crafting displays, vanilla potion brewing adapters, custom machine categories, accessibility and GUI-scale verification.
+1. Browser: complete actual special/dynamic crafting adapters, recipe transfer/auto-fill, process-category expansion, accessibility and GUI-scale/end-to-end client reload verification. Shared displays, history restoration, vanilla brewing, smithing transforms, item categories and headless query/cache tests are implemented.
 2. Engineering: animated wheels, cached networks, extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
 3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
 4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, extend the verified readable/discovery journal with research progression, spell research and stations, deterministic material/skill/equipment smithing.
@@ -33,3 +33,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 ## Coordination pause
 
 Research-journal checkpoint: full build +12unit tests +32server GameTests passed. Readable per-reader guide/discoveries are implemented; all remaining specification systems retain their statuses above. Stop new stages until the user chooses task ownership with external FCC-Codex. Proposals only: `docs/FCC_HANDOFF.md`.
+
+## Browser ownership checkpoint
+
+FCC-Codex is assigned barley in fcc/agriculture-barley; main developer owns the built-in browser on feat/reimagined-alpha. Browser build16unit/41server tests passed. No agriculture integration or unrelated major subsystem is part of this stage. Existing coordination-pause notes above describe the earlier handoff checkpoint, before the user distributed this work.

@@ -1,22 +1,26 @@
 package dev.reimagined.client;
 
+import dev.reimagined.browser.BrowserItems;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.ArrayDeque;
+import dev.reimagined.browser.navigation.BrowserHistory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import dev.reimagined.browser.RecipeDisplay;
+import dev.reimagined.browser.navigation.BrowserPages;
+import net.minecraft.resources.ResourceLocation;
 
 /** Standalone item/recipe browser. No item spawning or client-side crafting authority. */
 public final class RecipeBrowserScreen extends Screen {
     private final Screen parent;
     private List<ItemStack> items = List.of();
-    private List<RecipeHolder<?>> recipes = List.of();
-    private RecipeCatalog.Category category = RecipeCatalog.Category.ALL;
+    private List<RecipeDisplay> recipes = List.of();
+    private BrowserItems.Category category = BrowserItems.Category.ALL;
     private EditBox search;
     private String query = "";
     private ItemStack selected = ItemStack.EMPTY;
@@ -26,9 +30,13 @@ public final class RecipeBrowserScreen extends Screen {
     private int columns;
     private int rows;
     private int gridWidth;
-    private int refreshTicks;
+    private long catalogRevision = -1;
+    private String language = "";
     private final List<ItemHit> recipeItems = new ArrayList<>();
-    private final ArrayDeque<Selection> history = new ArrayDeque<>();
+    private final BrowserHistory<Selection> history = new BrowserHistory<>(64);
+    private Button historyButton;
+    private Button recipesButton;
+    private Button usagesButton;
 
     public RecipeBrowserScreen(Screen parent) {
         super(Component.translatable("reimagined.browser.title"));
@@ -53,7 +61,7 @@ public final class RecipeBrowserScreen extends Screen {
         search.setHint(Component.translatable("reimagined.browser.search"));
         search.setResponder(value -> { query = value; page = 0; refreshItems(); });
         addRenderableWidget(Button.builder(categoryName(), b -> {
-            var values = RecipeCatalog.Category.values();
+            var values = BrowserItems.Category.values();
             category = values[(category.ordinal() + 1) % values.length];
             b.setMessage(categoryName());
             page = 0;
@@ -63,9 +71,9 @@ public final class RecipeBrowserScreen extends Screen {
                 .bounds(8, height - 28, 24, 20).build());
         addRenderableWidget(Button.builder(Component.literal(">"), b -> page = Math.min(pageCount() - 1, page + 1))
                 .bounds(gridWidth - 32, height - 28, 24, 20).build());
-        addRenderableWidget(Button.builder(Component.translatable("reimagined.browser.recipes"), b -> select(selected, false))
+        recipesButton = addRenderableWidget(Button.builder(Component.translatable("reimagined.browser.recipes"), b -> navigate(selected, false))
                 .bounds(gridWidth + 8, 26, Math.max(48, (width - gridWidth - 24) / 2), 20).build());
-        addRenderableWidget(Button.builder(Component.translatable("reimagined.browser.usages"), b -> select(selected, true))
+        usagesButton = addRenderableWidget(Button.builder(Component.translatable("reimagined.browser.usages"), b -> navigate(selected, true))
                 .bounds(gridWidth + 12 + Math.max(48, (width - gridWidth - 24) / 2), 26,
                         Math.max(48, (width - gridWidth - 24) / 2), 20).build());
         addRenderableWidget(Button.builder(Component.literal("<"), b -> recipePage = Math.max(0, recipePage - 1))
@@ -74,50 +82,76 @@ public final class RecipeBrowserScreen extends Screen {
                 .bounds(gridWidth + 36, height - 28, 24, 20).build());
         addRenderableWidget(Button.builder(Component.translatable("gui.back"), b -> onClose())
                 .bounds(width - 66, height - 28, 58, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("←"), b -> previousSelection())
+        historyButton = addRenderableWidget(Button.builder(Component.literal("←"), b -> previousSelection())
                 .tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable("reimagined.browser.previous")))
                 .bounds(width - 28, 5, 20, 18).build());
         refreshItems();
-        select(selected, usages);
+        refreshRecipes(false);
+        catalogRevision = RecipeCatalog.revision();
+        language = minecraft.getLanguageManager().getSelected();
+        updateButtons();
     }
 
     private Component categoryName() {
         return Component.translatable("reimagined.browser.category." + category.name().toLowerCase(java.util.Locale.ROOT));
     }
 
-    private int pageCount() { return Math.max(1, (items.size() + columns * rows - 1) / (columns * rows)); }
-    private void refreshItems() { items = RecipeCatalog.items(query, category); }
+    private int pageCount() { return BrowserPages.count(items.size(), columns * rows); }
+    private void refreshItems() {
+        items = RecipeCatalog.items(query, category);
+        page = BrowserPages.clamp(page, items.size(), columns * rows);
+    }
 
     private void select(ItemStack stack, boolean uses) {
         selected = stack.copy();
         usages = uses;
-        recipes = selected.isEmpty() ? List.of() : RecipeCatalog.recipes(selected, usages);
         recipePage = 0;
+        recipeItems.clear();
+        refreshRecipes(true);
     }
 
     private void navigate(ItemStack stack, boolean uses) {
+        if (ItemStack.isSameItemSameComponents(selected, stack) && usages == uses) return;
         if (!selected.isEmpty()) {
-            if (history.size() >= 64) history.removeFirst();
-            history.addLast(new Selection(selected.copy(), usages));
+            history.push(new Selection(selected.copy(), usages, recipePage));
         }
         select(stack, uses);
+        setFocused(null); search.setFocused(false);
+        updateButtons();
     }
 
     private void previousSelection() {
-        if (!history.isEmpty()) {
-            Selection previous = history.removeLast();
+        history.back().ifPresent(previous -> {
             select(previous.item(), previous.usages());
-        }
+            recipePage = BrowserPages.clamp(previous.recipePage(), recipes.size(), 1);
+        });
+        updateButtons();
     }
 
-    @Override
-    public void tick() {
+    private void updateButtons() {
+        historyButton.active = history.size() > 0;
+        recipesButton.active = usages;
+        usagesButton.active = !usages;
+    }
+
+    private void refreshRecipes(boolean reset) {
+        ResourceLocation previous = !reset && !recipes.isEmpty() && recipePage < recipes.size()
+                ? recipes.get(recipePage).id() : null;
+        recipes = selected.isEmpty() ? List.of() : RecipeCatalog.recipes(selected, usages);
+        recipePage = BrowserPages.clamp(recipePage, recipes.size(), 1);
+        if (previous != null) {
+            for (int i = 0; i < recipes.size(); i++) if (recipes.get(i).id().equals(previous)) { recipePage = i; break; }
+        }
+        recipeItems.clear();
+    }
+
+    @Override public void tick() {
         super.tick();
-        // The server replaces synchronized recipes after /reload; no world reconnect required.
-        if (++refreshTicks >= 20 && !selected.isEmpty()) {
-            refreshTicks = 0;
-            recipes = RecipeCatalog.recipes(selected, usages);
-            recipePage = Math.min(recipePage, Math.max(0, recipes.size() - 1));
+        long revision = RecipeCatalog.revision();
+        String currentLanguage = minecraft.getLanguageManager().getSelected();
+        if (revision != catalogRevision || !currentLanguage.equals(language)) {
+            catalogRevision = revision; language = currentLanguage;
+            refreshItems(); refreshRecipes(false);
         }
     }
 
@@ -145,20 +179,18 @@ public final class RecipeBrowserScreen extends Screen {
             graphics.drawWordWrap(font, Component.translatable("reimagined.browser.help"), x, 55, Math.max(40, width - x - 8), 0xCCCCCC);
         }
         if (!recipes.isEmpty()) {
-            var holder = recipes.get(recipePage);
-            var recipe = holder.value();
-            ItemStack station = recipe.getToastSymbol();
+            var recipe = recipes.get(recipePage);
+            ItemStack station = recipe.station();
             graphics.drawString(font, font.plainSubstrByWidth(station.getHoverName().getString(), width - x - 8), x, 82, 0xFFE0A0);
             if (minecraft.options.advancedItemTooltips) {
-                graphics.drawString(font, font.plainSubstrByWidth(holder.id().toString(), width - x - 8), x, 94, 0x999999);
+                graphics.drawString(font, font.plainSubstrByWidth(recipe.id().toString(), width - x - 8), x, 94, 0x999999);
             }
-            int ingredientColumns = recipe instanceof net.minecraft.world.item.crafting.ShapedRecipe shaped
-                    ? shaped.getWidth() : Math.max(1, (width - x - 8) / 20);
-            var ingredients = recipe.getIngredients();
+            int ingredientColumns = recipe.columns() > 0 ? recipe.columns() : Math.max(1, (width - x - 8) / 20);
+            var ingredients = recipe.inputs();
             for (int i = 0; i < ingredients.size(); i++) {
                 int ix = x + (i % ingredientColumns) * 20;
                 int iy = 112 + (i / ingredientColumns) * 20;
-                ItemStack stack = RecipeCatalog.ingredient(ingredients.get(i), minecraft.level.getGameTime());
+                ItemStack stack = recipe.ingredient(i, minecraft.level.getGameTime());
                 graphics.fill(ix - 1, iy - 1, ix + 17, iy + 17, 0xFF44484C);
                 graphics.renderItem(stack, ix, iy);
                 graphics.renderItemDecorations(font, stack, ix, iy);
@@ -166,7 +198,7 @@ public final class RecipeBrowserScreen extends Screen {
                 if (inside(mouseX, mouseY, ix, iy, 16, 16)) hovered = stack;
             }
             int outputY = 120 + ((ingredients.size() + ingredientColumns - 1) / ingredientColumns) * 20;
-            ItemStack output = recipe.getResultItem(minecraft.level.registryAccess());
+            ItemStack output = recipe.result();
             graphics.drawString(font, Component.translatable("reimagined.browser.result"), x, outputY, 0xCCCCCC);
             graphics.renderItem(output, x, outputY + 12);
             graphics.renderItemDecorations(font, output, x, outputY + 12);
@@ -176,6 +208,12 @@ public final class RecipeBrowserScreen extends Screen {
                 graphics.renderItem(station, x + 28, outputY + 12);
                 recipeItems.add(new ItemHit(x + 28, outputY + 12, station));
                 if (inside(mouseX, mouseY, x + 28, outputY + 12, 16, 16)) hovered = station;
+            }
+            int noteY = outputY + 34;
+            if (noteY < height - 32 && !recipe.note().getString().isEmpty()) {
+                graphics.enableScissor(x, noteY, width - 8, height - 32);
+                graphics.drawWordWrap(font, recipe.note(), x, noteY, Math.max(40, width - x - 8), 0xBBBBBB);
+                graphics.disableScissor();
             }
             graphics.drawString(font, (recipePage + 1) + "/" + recipes.size(), gridWidth + 72, height - 22, 0xFFFFFF);
         } else if (!selected.isEmpty()) {
@@ -211,8 +249,26 @@ public final class RecipeBrowserScreen extends Screen {
         return mx >= x && mx < x + w && my >= y && my < y + h;
     }
 
+    @Override public boolean keyPressed(int key, int scan, int modifiers) {
+        if (!search.isFocused()) {
+            if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE) { previousSelection(); return true; }
+            ItemStack hover = ItemStack.EMPTY;
+            double mx = minecraft.mouseHandler.xpos() * width / minecraft.getWindow().getScreenWidth();
+            double my = minecraft.mouseHandler.ypos() * height / minecraft.getWindow().getScreenHeight();
+            for (ItemHit hit : recipeItems) if (inside(mx, my, hit.x(), hit.y(), 16, 16)) hover = hit.stack();
+            for (int i = 0; i < columns * rows && page * columns * rows + i < items.size(); i++) {
+                if (inside(mx, my, 8 + i % columns * 18, 74 + i / columns * 18, 16, 16))
+                    hover = items.get(page * columns * rows + i);
+            }
+            if (!hover.isEmpty() && (key == org.lwjgl.glfw.GLFW.GLFW_KEY_R || key == org.lwjgl.glfw.GLFW.GLFW_KEY_U)) {
+                navigate(hover, key == org.lwjgl.glfw.GLFW.GLFW_KEY_U); return true;
+            }
+        }
+        return super.keyPressed(key, scan, modifiers);
+    }
+
     @Override public void onClose() { minecraft.setScreen(parent); }
     @Override public boolean isPauseScreen() { return false; }
     private record ItemHit(int x, int y, ItemStack stack) {}
-    private record Selection(ItemStack item, boolean usages) {}
+    private record Selection(ItemStack item, boolean usages, int recipePage) {}
 }

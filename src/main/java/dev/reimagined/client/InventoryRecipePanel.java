@@ -1,5 +1,7 @@
 package dev.reimagined.client;
 
+import dev.reimagined.browser.BrowserItems;
+
 import java.util.List;
 import java.util.WeakHashMap;
 import net.minecraft.client.Minecraft;
@@ -29,17 +31,26 @@ public final class InventoryRecipePanel {
                 Minecraft.getInstance().setScreen(new RecipeBrowserScreen(screen)))
                 .tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable("reimagined.browser.title")))
                 .bounds(Math.min(screen.width - 22, x), Math.max(2, screen.getGuiTop() - 22), 20, 20).build());
-        PANELS.remove(screen);
+        Panel previous = PANELS.remove(screen);
         if (available < 72) return;
         Panel panel = new Panel(x, Math.max(24, screen.getGuiTop()), Math.min(available, 144), screen.height);
+        if (previous != null) { panel.category = previous.category; panel.page = previous.page; }
         PANELS.put(screen, panel);
         EditBox search = new EditBox(Minecraft.getInstance().font, x, panel.y, panel.width, 18,
                 Component.translatable("reimagined.browser.search"));
         search.setMaxLength(128);
+        if (previous != null && previous.search != null) search.setValue(previous.search.getValue());
         search.setHint(Component.translatable("reimagined.browser.search"));
-        search.setResponder(query -> { panel.items = RecipeCatalog.items(query, RecipeCatalog.Category.ALL); panel.page = 0; });
+        search.setResponder(query -> { panel.items = RecipeCatalog.items(query, panel.category); panel.page = 0; });
         panel.search = search;
+        panel.refresh();
         event.addListener(search);
+        event.addListener(Button.builder(panel.categoryName(), b -> {
+            var categories = BrowserItems.Category.values();
+            panel.category = categories[(panel.category.ordinal() + 1) % categories.length];
+            b.setMessage(panel.categoryName());
+            panel.refresh(); panel.page = 0;
+        }).bounds(x, panel.y + 20, panel.width, 18).build());
         event.addListener(Button.builder(Component.literal("<"), b -> panel.page = Math.max(0, panel.page - 1))
                 .bounds(x, panel.bottom, 20, 18).build());
         event.addListener(Button.builder(Component.literal(">"), b -> panel.page = Math.min(panel.pages() - 1, panel.page + 1))
@@ -51,15 +62,20 @@ public final class InventoryRecipePanel {
         if (!(event.getScreen() instanceof AbstractContainerScreen<?> screen)) return;
         Panel panel = PANELS.get(screen);
         if (panel == null) return;
+        long revision = RecipeCatalog.revision();
+        String language = Minecraft.getInstance().getLanguageManager().getSelected();
+        if (revision != panel.revision || !language.equals(panel.language)) {
+            panel.revision = revision; panel.language = language; panel.refresh();
+        }
         var graphics = event.getGuiGraphics();
         var font = Minecraft.getInstance().font;
-        graphics.fill(panel.x - 2, panel.y + 20, panel.x + panel.width + 2, panel.bottom - 2, 0xBB202428);
+        graphics.fill(panel.x - 2, panel.y + 40, panel.x + panel.width + 2, panel.bottom - 2, 0xBB202428);
         ItemStack hovered = ItemStack.EMPTY;
         for (int i = 0; i < panel.size(); i++) {
             int index = panel.page * panel.size() + i;
             if (index >= panel.items.size()) break;
             int x = panel.x + i % panel.columns * 18;
-            int y = panel.y + 24 + i / panel.columns * 18;
+            int y = panel.y + 44 + i / panel.columns * 18;
             var stack = panel.items.get(index);
             graphics.renderItem(stack, x, y);
             if (RecipeBrowserScreen.inside(event.getMouseX(), event.getMouseY(), x, y, 16, 16)) {
@@ -81,6 +97,19 @@ public final class InventoryRecipePanel {
             event.setCanceled(true);
             return;
         }
+        if (panel != null && (event.getKeyCode() == org.lwjgl.glfw.GLFW.GLFW_KEY_R
+                || event.getKeyCode() == org.lwjgl.glfw.GLFW.GLFW_KEY_U)) {
+            var mc = Minecraft.getInstance();
+            double mx = mc.mouseHandler.xpos() * screen.width / mc.getWindow().getScreenWidth();
+            double my = mc.mouseHandler.ypos() * screen.height / mc.getWindow().getScreenHeight();
+            for (int i = 0; i < panel.size() && panel.page * panel.size() + i < panel.items.size(); i++) {
+                if (RecipeBrowserScreen.inside(mx, my, panel.x + i % panel.columns * 18, panel.y + 44 + i / panel.columns * 18, 16, 16)) {
+                    mc.setScreen(new RecipeBrowserScreen(screen, panel.items.get(panel.page * panel.size() + i),
+                            event.getKeyCode() == org.lwjgl.glfw.GLFW.GLFW_KEY_U));
+                    event.setCanceled(true); return;
+                }
+            }
+        }
         var slot = screen.getSlotUnderMouse();
         if (slot != null && slot.hasItem() && (event.getKeyCode() == org.lwjgl.glfw.GLFW.GLFW_KEY_R
                 || event.getKeyCode() == org.lwjgl.glfw.GLFW.GLFW_KEY_U)) {
@@ -100,7 +129,7 @@ public final class InventoryRecipePanel {
             int index = panel.page * panel.size() + i;
             if (index >= panel.items.size()) break;
             if (RecipeBrowserScreen.inside(event.getMouseX(), event.getMouseY(), panel.x + i % panel.columns * 18,
-                    panel.y + 24 + i / panel.columns * 18, 16, 16)) {
+                    panel.y + 44 + i / panel.columns * 18, 16, 16)) {
                 Minecraft.getInstance().setScreen(new RecipeBrowserScreen(screen, panel.items.get(index), event.getButton() == 1));
                 event.setCanceled(true);
                 return;
@@ -111,15 +140,25 @@ public final class InventoryRecipePanel {
     private static final class Panel {
         final int x, y, width, columns, rows, bottom;
         int page;
+        long revision = -1;
+        String language = "";
+        BrowserItems.Category category = BrowserItems.Category.ALL;
         EditBox search;
-        List<ItemStack> items = RecipeCatalog.items("", RecipeCatalog.Category.ALL);
+        List<ItemStack> items = RecipeCatalog.items("", BrowserItems.Category.ALL);
         Panel(int x, int y, int width, int height) {
             this.x = x; this.y = y; this.width = width;
             columns = Math.max(1, width / 18);
-            rows = Math.max(1, (height - y - 50) / 18);
-            bottom = y + 26 + rows * 18;
+            rows = Math.max(1, (height - y - 70) / 18);
+            bottom = y + 46 + rows * 18;
+        }
+        net.minecraft.network.chat.Component categoryName() {
+            return Component.translatable("reimagined.browser.category." + category.name().toLowerCase(java.util.Locale.ROOT));
+        }
+        void refresh() {
+            items = RecipeCatalog.items(search == null ? "" : search.getValue(), category);
+            page = dev.reimagined.browser.navigation.BrowserPages.clamp(page, items.size(), size());
         }
         int size() { return columns * rows; }
-        int pages() { return Math.max(1, (items.size() + size() - 1) / size()); }
+        int pages() { return dev.reimagined.browser.navigation.BrowserPages.count(items.size(), size()); }
     }
 }

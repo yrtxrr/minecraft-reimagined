@@ -2,7 +2,7 @@
 
 Minecraft Java **1.21.1**, NeoForge **21.1.264**, Java **21**. One mod, no JEI/Create or other gameplay mod required.
 
-**Development status:** the full Gradle build and 12 unit tests pass. A headless NeoForge server successfully executed 32 integration GameTests, including actual seeded terrain generation. A development JAR is available at `build/libs/reimagined-0.1.0-alpha.jar`. This is not yet a fully validated playable alpha: graphical rendering, inventory UI and a real client/server connection still require client checks.
+**Development status:** the full Gradle build and 16 unit tests pass. A headless NeoForge server successfully executed 41 integration GameTests, including actual seeded terrain generation. A development JAR is available at `build/libs/reimagined-0.1.0-alpha.jar`. This is not yet a fully validated playable alpha: graphical rendering, inventory UI and a real client/server connection still require client checks.
 
 ## Develop
 
@@ -37,6 +37,6 @@ The dedicated server's first run creates its EULA/configuration files under `run
 - Combat: ordinary attacks remain vanilla. **Sneak + right-click** uses spear thrust (4s cooldown), hammer stagger (6s), dagger thrust/brief speed (2s), or halberd front sweep (5s). Specials share a saved cooldown across weapon swaps and cost 2 durability. A frontal melee shield block at 5–10 use ticks parries, staggers the attacker and saves shield durability, with a saved 1.5s lockout. Shield warmup, rear attacks and unblockable damage retain vanilla behavior.
 - Four wands: elemental ray, nature growth/healing, safe arcane step, protective ritual consuming amethyst. Mana and cooldowns are server-controlled.
 - Four 24-day seasons. `/reimagined calendar`; operator command `/reimagined season set 0..3`. Seasons follow overworld day time, including sleeping/time commands. Temperate crops grow slower in summer/winter; a glass roof within 16 blocks shelters them. No global weather overhaul yet.
-- Standalone inventory recipe browser: **R** button beside inventory, search, item categories, left-click recipes/right-click usages. Narrow screens use the full browser. Recipes come from the server-synchronized Minecraft recipe manager, including the custom milling type.
+- Standalone inventory recipe browser: **R** button beside inventory, search, item categories, left-click recipes/right-click usages. Narrow screens use the full browser. Search supports multiple words, @namespace and potion IDs; both views have categories including potion variants. R/U/Backspace navigate recipes/uses/history. Standard recipes, smithing transforms and milling use a shared display API; vanilla brewing has real potion/reagent/bottle transitions. Recipe sync invalidates cached views. Generic special recipes still need adapters; see [docs/RECIPE_BROWSER.md](docs/RECIPE_BROWSER.md).
 
 Common gameplay paths have server integration coverage; graphical behavior still needs a real client. Read [TESTING.md](TESTING.md) before relying on them. The much larger complete target is in [docs/USER_SPEC_RU.md](docs/USER_SPEC_RU.md); implementation gaps are recorded in [ROADMAP.md](ROADMAP.md).

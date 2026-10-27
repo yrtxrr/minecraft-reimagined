@@ -1,60 +1,48 @@
 package dev.reimagined.client;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import dev.reimagined.browser.BrowserRecipes;
+import dev.reimagined.browser.BrowserItems;
+import dev.reimagined.browser.RecipeDisplayAdapter;
+import dev.reimagined.browser.RecipeDisplay;
+import dev.reimagined.browser.BrowserSnapshotCache;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import java.util.List;
-import java.util.Locale;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RecipesUpdatedEvent;
 
-/** Read-only view of the synchronized recipe manager: rebuilt on demand, never stale after /reload. */
-final class RecipeCatalog {
-    enum Category { ALL, BLOCKS, EQUIPMENT, FOOD, OTHER }
-
+/** Client bridge only. Recipe matching/display building lives in the server-testable browser API. */
+@EventBusSubscriber(modid = "reimagined", value = Dist.CLIENT)
+public final class RecipeCatalog {
+    private static final BrowserSnapshotCache CACHE = new BrowserSnapshotCache();
+    private static List<RecipeDisplayAdapter> adapters = List.of();
     private RecipeCatalog() {}
 
-    static List<ItemStack> items(String query, Category category) {
-        String needle = query.toLowerCase(Locale.ROOT).strip();
-        List<ItemStack> result = new ArrayList<>();
-        for (var item : BuiltInRegistries.ITEM) {
-            ItemStack stack = item.getDefaultInstance();
-            if (stack.isEmpty()) continue;
-            Category actual = item instanceof BlockItem ? Category.BLOCKS
-                    : stack.isDamageableItem() ? Category.EQUIPMENT
-                    : stack.has(net.minecraft.core.component.DataComponents.FOOD) ? Category.FOOD : Category.OTHER;
-            if (category != Category.ALL && actual != category) continue;
-            String id = BuiltInRegistries.ITEM.getKey(item).toString();
-            if (!needle.isEmpty() && !id.contains(needle)
-                    && !stack.getHoverName().getString().toLowerCase(Locale.ROOT).contains(needle)) continue;
-            result.add(stack);
-        }
-        result.sort(Comparator.comparing(s -> BuiltInRegistries.ITEM.getKey(s.getItem()).toString()));
-        return result;
+    @SubscribeEvent public static void recipesUpdated(RecipesUpdatedEvent event) { CACHE.invalidateRecipes(); }
+    @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { CACHE.clear(); }
+    /** Client modules can opt into concrete input-dependent previews without replacing the UI. */
+    public static void setDisplayAdapters(List<RecipeDisplayAdapter> values) {
+        adapters = List.copyOf(values); CACHE.invalidateRecipes();
     }
-
-    static List<RecipeHolder<?>> recipes(ItemStack item, boolean usages) {
+    static long revision() { return snapshot().revision(); }
+    private static BrowserSnapshotCache.Snapshot snapshot() {
         var level = Minecraft.getInstance().level;
-        if (level == null) return List.of();
-        List<RecipeHolder<?>> result = new ArrayList<>();
-        for (RecipeHolder<?> holder : level.getRecipeManager().getRecipes()) {
-            var recipe = holder.value();
-            if (usages) {
-                if (recipe.getIngredients().stream().anyMatch(i -> i.test(item))) result.add(holder);
-            } else if (ItemStack.isSameItem(recipe.getResultItem(level.registryAccess()), item)) {
-                result.add(holder);
-            }
-        }
-        result.sort(Comparator.comparing(h -> h.id().toString()));
-        return result;
+        return level == null ? CACHE.clear() : CACHE.get(level, level.getRecipeManager(), level.registryAccess(), level.potionBrewing());
     }
 
-    static ItemStack ingredient(Ingredient ingredient, long tick) {
-        ItemStack[] options = ingredient.getItems();
-        return options.length == 0 ? ItemStack.EMPTY : options[(int) ((tick / 30) % options.length)];
+    static List<ItemStack> items(String query, BrowserItems.Category category) {
+        return BrowserItems.items(query, category);
     }
-
+    static List<RecipeDisplay> recipes(ItemStack item, boolean usages) {
+        var snapshot = snapshot();
+        var level = Minecraft.getInstance().level;
+        var recipes = level != null && !adapters.isEmpty()
+                ? BrowserRecipes.recipeDisplays(level.getRecipeManager(), level.registryAccess(), item, adapters) : snapshot.recipes();
+        return java.util.stream.Stream.concat(recipes.stream(), snapshot.brewing().stream())
+                .filter(display -> usages ? display.uses(item) : display.produces(item))
+                .sorted(java.util.Comparator.comparing(display -> display.id().toString())).toList();
+    }
 }

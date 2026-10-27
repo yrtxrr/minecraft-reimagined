@@ -10,7 +10,8 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
 | `research` | readable journal and personal observations | Versioned player NBT, 256 total unique registry IDs, deep-copied on clone; every200 player ticks/current book use, 6-block local scan with at most8 visibility traces |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
-| `client` | inventory item panel and recipe screen | Read-only synchronized recipe-manager data; no client item spawning/crafting authority |
+| `browser` | common display/query/cache/adapter API, brewing and smithing projection | Immutable recipe snapshots, actual Ingredient predicates, exact potion variants, no client-only imports |
+| `client` | existing inventory item panel and recipe screen | Read-only common projections; recipe-sync invalidation, world/logout lifecycle, no client crafting authority |
 | data `worldgen` | optional world preset | Stateless seeded chunk noise, built-in registry codecs |
 
 ## Network
@@ -19,7 +20,7 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 
 ## Shared recipe contract
 
-New process recipes implement vanilla `Recipe<RecipeInput>` and register a `RecipeType` and `RecipeSerializer` with Mojang MapCodec and network StreamCodec. `MillingRecipe` is the first custom implementation: ingredient, result stack, processing seconds. This uses existing data-pack reload/sync rather than a second recipe database. Future smithing, alchemy and cooking processors must use the same contract. Not all future systems exist yet; brewing and dynamic special crafting require dedicated display adapters before claiming universal browser coverage.
+New process recipes implement vanilla `Recipe<RecipeInput>` and register a `RecipeType` and `RecipeSerializer` with Mojang MapCodec and network StreamCodec. `MillingRecipe` is the first custom implementation: ingredient, result stack, processing seconds. This uses existing data-pack reload/sync rather than a second recipe database. Future smithing, alchemy and cooking processors must use the same contract. Not all future systems exist yet. Vanilla brewing now has a public-API projection and smithing transforms use the public recipe codec. Dynamic special crafting and opaque custom brewing predicates still require adapters; see docs/RECIPE_BROWSER.md.
 
 ## Performance and boundaries
 

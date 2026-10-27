@@ -35,3 +35,9 @@ Replaced chat-only guidance with a real readable written-book journal: localized
 Exercised the saved cloud setup script successfully, then full build with12unit tests and **32/32** required server GameTests. Five journal tests check real item use/network components/packet order, observer cadence/visibility/deduplication, NBT/clone and per-reader isolation, bounded valid entries/book size, and packaged EN/RU chapters. A packet class-name mismatch was corrected against Minecraft1.21.1 APIs before the final passing run. Graphical book display, GUI scale and real multiplayer/authentication remain unverified.
 
 Prepared the player JAR under ignored build/libs with SHA256; test fixtures are excluded. Per user's new organization request, stop new implementation after this checkpoint and push. Four independent proposals and reserved shared files are recorded in docs/FCC_HANDOFF.md. No tasks assigned to FCC, no FCC branches created, and no next major stage started. Main developer retains architecture, integration, testing and merges.
+
+## Built-in recipe-browser stage
+
+User assigned FCC-Codex barley in its separate branch and authorized main-browser development on feat/reimagined-alpha. Audited existing code/full spec; preserved the panel/screens and existing uses mode. Added shared server-testable display/query/cache APIs, actual vanilla brewing and exact potion variants, public-codec smithing ingredients, multi-term/@namespace/potion-ID search, panel categories, page-preserving history/R/U/Backspace navigation, per-context caching and sync/logout invalidation. Added explicit dynamic-adapter dispatch; arbitrary special recipes are still unimplemented and not presented as complete.
+
+Full build +16unit tests +41/41 real server GameTests passed. Rendering/client-network path remains unverified; documented exact remaining checks. No agriculture files or FCC branch were touched; no other major gameplay subsystem started. Details: docs/RECIPE_BROWSER.md.
