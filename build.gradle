@@ -10,7 +10,13 @@ repositories { mavenCentral() }
 neoForge {
     version = '21.1.264'
     runs {
-        client { client() }
+        client {
+            client()
+            if (project.hasProperty('quickPlayWorld')) {
+                programArgument '--quickPlaySingleplayer'
+                programArgument project.property('quickPlayWorld')
+            }
+        }
         // Optional local multiplayer smoke-test client; separate options/saves and dev identity.
         alphaPeer {
             client()

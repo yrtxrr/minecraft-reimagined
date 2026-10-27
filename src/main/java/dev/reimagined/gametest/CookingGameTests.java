@@ -171,4 +171,19 @@ public final class CookingGameTests {
         });
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void emptyPotsSleepAndExternalInspectionNeverRequestsUnloadedChunks(GameTestHelper h) {
+        var pot=pot(h);var level=h.getLevel();var state=CookingContent.POT.get().defaultBlockState();
+        h.assertTrue(CookingContent.POT.get().getTicker(level,state,CookingContent.ENTITY.get())==null,"Pots must have no per-tick block-entity ticker");
+        BlockPos absent=new BlockPos(16000000,80,16000000);
+        h.assertTrue(level.getChunkSource().getChunkNow(absent.getX()>>4,absent.getZ()>>4)==null,"Fixture requires an unloaded distant chunk");
+        int chunks=level.getChunkSource().getLoadedChunksCount();
+        h.assertTrue(state.getMenuProvider(level,absent)==null && state.getAnalogOutputSignal(level,absent)==0,"Menus/comparators fail closed on unloaded positions");
+        h.assertTrue(level.getChunkSource().getLoadedChunksCount()==chunks && level.getChunkSource().getChunkNow(absent.getX()>>4,absent.getZ()>>4)==null,"Inspection must not request or load a distant chunk");
+        h.runAfterDelay(65,()-> {
+            h.assertTrue(!level.getBlockTicks().hasScheduledTick(pot.getBlockPos(),CookingContent.POT.get()) && pot.progress()==0,"A settled empty pot must retain no periodic work");
+            h.succeed();
+        });
+    }
+
 }
