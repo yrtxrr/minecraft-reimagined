@@ -35,3 +35,9 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 ## Current ownership
 
 All development is assigned to the main developer in `feat/reimagined-alpha`; FCC-Codex no longer participates. Prior handoff documents are historical. Mechanical animation/cache and ordinary barley include graphical checks recorded in docs/ALPHA_VALIDATION.md. The cooking workstation increment has source/server coverage, native client/restart checks and a measured0/64/256-pot server scenario; see docs/COOKING.md for limits. The first research tier now has two functional stations/four advanced spells and source/server coverage; native client/performance validation is next. Subsequent content priorities include manual/wind engineering drives or exploration content. No unrelated branch is merged automatically.
+
+## Pear orchard increment
+
+Full Gradle build **19/19 JUnit** tests and a fresh official server report of **84/84 required GameTests** passed, zero failures/errors/skips. Resource check: **183 JSON files / 151 bilingual keys**, with model/texture/blockstate/recipe-result links valid. Six orchard tests cover real registration/tags/recipes and browser projection, loaded configured/placed features, bounded inner-canopy random ticking, summer ripening versus winter rejection through the real calendar, actual interaction harvest and pear entities, real leaf loot with shears, and sapling growth through the actual configured tree feature.
+
+Agriculture roadmap item 5 now has ordinary barley plus pear fruit trees; fertility/fertilizers/greenhouses and husbandry remain open. Headless checks do not cover graphical tree/leaf rendering, survival-client sapling growth, large-orchard profiling or authenticated multiplayer. Source lives on `feat/opencode-development` and is not merged into `feat/reimagined-alpha`. Details: `docs/ORCHARD.md`.

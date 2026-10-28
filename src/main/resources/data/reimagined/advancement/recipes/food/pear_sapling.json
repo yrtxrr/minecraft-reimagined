@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "reimagined:pear" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_pear" ]
+  ],
+  "rewards": {
+    "recipes": [ "reimagined:pear_sapling" ]
+  }
+}

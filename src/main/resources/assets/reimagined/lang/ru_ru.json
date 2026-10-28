@@ -142,5 +142,12 @@
   "reimagined.magic.learned": "Изучено",
   "reimagined.magic.locked": "Не изучено",
   "reimagined.magic.browser_progress": "Ваши исследования: %s/4; заклинание: %s",
-  "journal.reimagined.spell_progress": "ИССЛЕДОВАНИЯ %s/4\n\n%s\n%s\n\n%s\n%s\n\nСоздайте фокус на алтаре и фолиант на столе исследований. Прочтите его."
+  "journal.reimagined.spell_progress": "ИССЛЕДОВАНИЯ %s/4\n\n%s\n%s\n\n%s\n%s\n\nСоздайте фокус на алтаре и фолиант на столе исследований. Прочтите его.",
+  "block.reimagined.pear_leaves": "Грушевая листва",
+  "block.reimagined.pear_sapling": "Грушевый саженец",
+  "block.reimagined.pear_log": "Грушевое бревно",
+  "block.reimagined.pear_wood": "Грушевая древесина",
+  "block.reimagined.pear_planks": "Грушевые доски",
+  "item.reimagined.pear": "Груша",
+  "journal.reimagined.page.orchard": "САД\n\nГруши растут в лесах и на лугах. Привейте грушу к дубу для размножения.\n\nПлоды зреют летом и осенью; ПКМ по листве собирает урожай. Брёвна дают доски."
 }

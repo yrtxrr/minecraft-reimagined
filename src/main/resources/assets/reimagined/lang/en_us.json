@@ -142,5 +142,12 @@
   "reimagined.magic.learned": "Learned",
   "reimagined.magic.locked": "Not learned",
   "reimagined.magic.browser_progress": "Your research: %s/4; this spell: %s",
-  "journal.reimagined.spell_progress": "SPELL RESEARCH %s/4\n\n%s\n%s\n\n%s\n%s\n\nMake a focus at the altar, then a folio at the research table. Read it to learn."
+  "journal.reimagined.spell_progress": "SPELL RESEARCH %s/4\n\n%s\n%s\n\n%s\n%s\n\nMake a focus at the altar, then a folio at the research table. Read it to learn.",
+  "block.reimagined.pear_leaves": "Pear Leaves",
+  "block.reimagined.pear_sapling": "Pear Sapling",
+  "block.reimagined.pear_log": "Pear Log",
+  "block.reimagined.pear_wood": "Pear Wood",
+  "block.reimagined.pear_planks": "Pear Planks",
+  "item.reimagined.pear": "Pear",
+  "journal.reimagined.page.orchard": "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks."
 }

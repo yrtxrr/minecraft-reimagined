@@ -19,12 +19,12 @@ Coverage: all 14 item / 3 block / deer / machine / milling registry entries; all
 
 GameTest code and the empty template are excluded from the player JAR. Test server processes exit on completion; no running process is part of the prepared environment. No graphical client or online player authentication has been tested. Vanilla Authlib explicitly uses a direct Proxy.NO_PROXY connection for its public-key fetch; it logs an unavailable authentication endpoint in this cloud environment. This does not fail the headless tests and is not evidence that real online login works. `api.minecraftservices.com` and `sessionserver.mojang.com` were added to the draft allowlist; applying settings is separate from this tested server run. TLS and authentication checks remain enabled.
 
-```sh
+``sh
 source scripts/cloud-shell.sh
 ./gradlew build
 ./gradlew runGameTestServer
 python3 scripts/validate-resources.py
-```
+``
 
 CI is configured but has not run on GitHub in this session. The existing detailed manual checklist below remains required where automated tests do not cover client behavior, multiplayer or broader terrain sampling.
 
@@ -100,3 +100,9 @@ A fresh actual graphical client process reopened CookingSmoke and positively ver
 ## Spell research source checkpoint
 
 Full build19JUnit,78/78required server GameTests,141JSON/144bilingual keys passed. Ten new magic tests cover station transactions/prerequisites/costs/concurrency, remote/invalid/full/low-mana rejection, folio and personal knowledge save/death clone, selection persistence/unlock enforcement, four actual advanced spell effects/wall collision, no chunk loading/no BE ticker, recipe codecs/both browser stations, journal and progress payload/reset. Client interaction and real-runtime performance are not inferred from these checks; see docs/MAGIC_RESEARCH.md.
+
+## Pear orchard stage
+
+Full Gradle build passed with **19/19 JUnit** tests, zero failures/errors/skips. Fresh `runGameTestServer` report: **84/84 required GameTests**, zero failures/errors/skips (`run-gametest/reports/gametest.xml`, ignored). Six new `OrchardGameTests` execute real block/item registration and common tags, real crafting recipes and browser projection, loading of `reimagined:pear_tree`/`reimagined:pear_trees`, bounded fruit rules (outer canopy excluded, ripe leaves stop ticking), summer ripening and winter rejection against the actual calendar, actual right-click harvest producing pear items, leaf loot with shears, and sapling growth through the configured tree feature.
+
+Resource validation: **183 JSON files / 151 bilingual EN/RU keys** parsed and cross-checked by PowerShell (model parents, blockstate models, recipe results, textures). `python3 scripts/validate-resources.py` was not executed because no working Python interpreter is available in this checkout; the PowerShell check and real datapack loading in GameTestServer do not replace it. Graphical rendering of the tree/leaves, survival-client sapling growth, large-orchard profiling and authenticated multiplayer are not covered. No performance claim is made for large orchards.

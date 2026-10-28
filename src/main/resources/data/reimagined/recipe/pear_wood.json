@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": { "item": "reimagined:pear_log" }
+  },
+  "result": {
+    "id": "reimagined:pear_wood",
+    "count": 3
+  }
+}
