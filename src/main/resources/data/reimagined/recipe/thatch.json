@@ -1,0 +1,14 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {"item": "minecraft:wheat"}
+  },
+  "result": {
+    "id": "reimagined:thatch",
+    "count": 4
+  }
+}
