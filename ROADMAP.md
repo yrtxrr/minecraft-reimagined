@@ -34,7 +34,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-Main developer is explicitly authorized to integrate OpenCode and Antigravity into `feat/reimagined-alpha`, resolve defects and validate the shared version. Freebuff remains independent and is outside all fetch/merge/edit work. Earlier no-merge instructions are historical. Both branches are now integrated with a stale-harvest fix and preserved wheel refresh;23JUnit/98GameTests passed. Native combined validation follows. Full Alpha gates remain open.
+Main developer is explicitly authorized to integrate OpenCode and Antigravity into `feat/reimagined-alpha`, resolve defects and validate the shared version. Freebuff remains independent and is outside all fetch/merge/edit work. Earlier no-merge instructions are historical. Both branches are now integrated with a stale-harvest fix and preserved wheel refresh;23JUnit/98GameTests passed. Native combined validation passed within the documented scope. Full Alpha gates remain open.
 
 ## Latest acceptance / integration gate (2026-10-28)
 
@@ -53,4 +53,4 @@ OpenCode147c92e and Antigravity8a8d9ec histories are integrated and published, w
 
 ## Forest wildlife increment
 
-Wild boar source/server cycle now includes biome-tagged low-weight herds, ordinary pear/root-vegetable feeding/breeding, piglets, individual defence and useful vanilla loot, original renderer/localization and existing journal integration.23JUnit/103GameTests passed; native checks follow in docs/WILDLIFE.md. Next broader content priorities remain exploration/dungeons, ecology and regional world variety; no extra cooking/production tier was added. This is an incremental contribution to spec7, not completion of all creatures/biomes or the full Alpha.
+Wild boar source/server cycle now includes biome-tagged low-weight herds, ordinary pear/root-vegetable feeding/breeding, piglets, individual defence and useful vanilla loot, original renderer/localization and existing journal integration.23JUnit/103GameTests passed; native adult/breeding/retaliation and family restart checks completed with limits in docs/WILDLIFE.md. Next broader content priorities remain exploration/dungeons, ecology and regional world variety; no extra cooking/production tier was added. This is an incremental contribution to spec7, not completion of all creatures/biomes or the full Alpha.

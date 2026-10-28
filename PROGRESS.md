@@ -193,3 +193,7 @@ Real integrated client8a8d9ec passed native pear planting/bonemeal growth, ripe-
 ### Forest wildlife source/server checkpoint — 2026-10-28
 
 Added wild boar as a complete ordinary Animal cycle:low-weight forest herds, pear/carrot/beetroot lure/feed, live piglets/vanilla growth+cooldown, individual adult self-defence, harmless fleeing piglets, actual pork/Looting/burning loot, original animated quadruped/tusks, EN/RU/egg and automatic existing journal discovery. No deeper cooking/production chain, herd alert scan, custom per-tick ecosystem or dependency. Full build23JUnit/103fresh GameTests and253JSON/188keys passed, including five new fauna tests. Client acceptance follows; natural encounter frequency/dense-herd scale are not certified. Design/provenance:docs/WILDLIFE.md.
+
+### Wild boar native/restart completion —2026-10-28
+
+Actual client5cd3366 rendered/moved adults, accepted a pear, bred two ordinarily carrot-fed AI-enabled adults into a live child (vanilla advancement/cooldowns/negative age), and exercised adult retaliation after a native punch on Normal. A new client process retained both parents and the actual offspring. No source bug was exposed; controlled resources/positions, failed aiming attempts and the remaining child-close-view/audio/natural-spawn/dense-herd/multiplayer limits are explicit in docs/WILDLIFE.md. Full server checkpoint remains23JUnit/103GameTests,253JSON/188keys. Player JAR includes boar/assets and excludes every GameTest/profiler. No further major system starts in this checkpoint.
