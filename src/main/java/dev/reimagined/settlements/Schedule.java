@@ -20,23 +20,40 @@ public final class Schedule {
     private static final int EVENING_END = 20000;    // 20:00
     private static final int NIGHT_START = 22000;    // 22:00
 
+    // Rain shelter hysteresis: require sustained rain to enter SHELTER, sustained clear to exit
+    private static final int RAIN_ENTER_TICKS = 200;  // 10 seconds of rain before seeking shelter
+    private static final int RAIN_EXIT_TICKS = 400;   // 20 seconds of clear before leaving shelter
+
     private Schedule() {}
 
     /**
      * Compute the schedule state for a settler based on the current world time.
      * Returns the target state; callers apply transitions.
      */
-    public static State nextState(Mob settler, State current, int scheduleTick) {
+    public static State nextState(Mob mob, State current, int scheduleTick) {
+        Settler settler = (Settler) mob;
         long time = settler.level().getDayTime() % DAY_TICKS;
         boolean raining = settler.level().isRaining();
+        int rainTimer = settler.rainTimer();
 
-        if (raining && current != State.SHELTER) {
+        // Enter SHELTER only after sustained rain
+        if (raining && rainTimer >= RAIN_ENTER_TICKS && current != State.SHELTER) {
             return State.SHELTER;
         }
-        if (!raining && current == State.SHELTER) {
-            return State.IDLE;
+        // Exit SHELTER only after sustained clear, return to time-appropriate state
+        if (!raining && rainTimer <= -RAIN_EXIT_TICKS && current == State.SHELTER) {
+            return timeBasedState(time);
         }
 
+        // Rain takes precedence over time-based states (but with hysteresis)
+        if (raining && rainTimer >= RAIN_ENTER_TICKS) {
+            return State.SHELTER;
+        }
+
+        return timeBasedState(time);
+    }
+
+    private static State timeBasedState(long time) {
         if (time >= MORNING_START && time < WORK_START) return State.MORNING_EXIT;
         if (time >= WORK_START && time < WORK_END) return State.WORK;
         if (time >= WORK_END && time < EVENING_END) return State.EVENING_RETURN;

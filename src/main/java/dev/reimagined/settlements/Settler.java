@@ -15,7 +15,9 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.EnumSet;
 
@@ -29,6 +31,8 @@ public final class Settler extends Mob {
     private static final int BREAK_CHANCE = 2000;
     private static final int WALK_CHANCE = 4000;
     private static final int WALK_DURATION_TICKS = 400;
+    private static final int RAIN_ENTER_TICKS = 200;
+    private static final int RAIN_EXIT_TICKS = 400;
 
     private BlockPos homePos = BlockPos.ZERO;
     private BlockPos workPos = BlockPos.ZERO;
@@ -37,6 +41,7 @@ public final class Settler extends Mob {
     private int breakTimer;
     private int walkTimer;
     private boolean atWorkplace;
+    private int rainTimer;
 
     public Settler(EntityType<? extends Mob> type, Level level) { super(type, level); }
 
@@ -54,13 +59,18 @@ public final class Settler extends Mob {
     public Schedule.State scheduleState() { return scheduleState; }
     public boolean atWorkplace() { return atWorkplace; }
     public void setAtWorkplace(boolean value) { this.atWorkplace = value; }
+    public int rainTimer() { return rainTimer; }
+    public void setRainTimer(int value) { this.rainTimer = value; }
 
     @Override protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new ReturnToWorkplaceGoal(this));
-        goalSelector.addGoal(2, new ScheduleWalkGoal(this));
-        goalSelector.addGoal(3, new BreakGoal(this));
-        goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6));
+        goalSelector.addGoal(2, new ReturnHomeGoal(this));
+        goalSelector.addGoal(3, new ShelterGoal(this));
+        goalSelector.addGoal(4, new NightRestGoal(this));
+        goalSelector.addGoal(5, new ScheduleWalkGoal(this));
+        goalSelector.addGoal(6, new BreakGoal(this));
+        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6));
     }
 
     @Override
@@ -68,6 +78,15 @@ public final class Settler extends Mob {
         super.aiStep();
         if (level().isClientSide) return;
         scheduleTick++;
+        
+        // Track rain duration for shelter hysteresis
+        boolean raining = level().isRaining();
+        if (raining) {
+            rainTimer = Math.min(rainTimer + 1, RAIN_ENTER_TICKS);
+        } else {
+            rainTimer = Math.max(rainTimer - 1, -RAIN_EXIT_TICKS);
+        }
+        
         if (scheduleTick % 20 == 0) {
             Schedule.State next = Schedule.nextState(this, scheduleState, scheduleTick);
             if (next != scheduleState) {
@@ -90,6 +109,25 @@ public final class Settler extends Mob {
         return homePos.distSqr(pos) <= WORK_RADIUS * WORK_RADIUS;
     }
 
+    /** Checks if the chunk at the given position is loaded and accessible. */
+    private boolean isChunkLoaded(BlockPos pos) {
+        if (!(level() instanceof ServerLevel serverLevel)) return false;
+        ChunkPos chunkPos = new ChunkPos(pos);
+        return serverLevel.getChunkSource().chunkMap.getVisibleChunkIfPresent(chunkPos.toLong()) != null;
+    }
+
+    /** Safely gets the block state at pos, returning null if chunk is not loaded. */
+    private BlockState getBlockStateSafe(BlockPos pos) {
+        if (!isChunkLoaded(pos)) return null;
+        return level().getBlockState(pos);
+    }
+
+    /** Checks if the position has solid ground below it. */
+    private boolean hasSolidGround(BlockPos pos) {
+        BlockState state = getBlockStateSafe(pos.below());
+        return state != null && state.isSolid();
+    }
+
     /** Returns the nearest safe ground position within the settlement, for returning home after chunk reload. */
     public BlockPos nearestSafePosition(BlockPos center) {
         BlockPos best = center;
@@ -98,7 +136,7 @@ public final class Settler extends Mob {
             for (int dz = -8; dz <= 8; dz++) {
                 BlockPos candidate = center.offset(dx, 0, dz);
                 if (!isInSettlementBounds(candidate)) continue;
-                if (!level().getBlockState(candidate.below()).isSolid()) continue;
+                if (!hasSolidGround(candidate)) continue;
                 int score = Math.abs(dx) + Math.abs(dz);
                 if (score < bestScore) { best = candidate; bestScore = score; }
             }
@@ -114,10 +152,40 @@ public final class Settler extends Mob {
                     0,
                     level().random.nextInt(25) - 12);
             if (!isInSettlementBounds(candidate)) continue;
-            if (!level().getBlockState(candidate.below()).isSolid()) continue;
+            if (!hasSolidGround(candidate)) continue;
             return candidate;
         }
         return null;
+    }
+
+    /** Finds a valid shelter position near home during rain. */
+    private BlockPos findShelterPosition() {
+        // Prefer home position, then search nearby for covered area
+        BlockPos home = homePos;
+        if (isChunkLoaded(home) && hasSolidGround(home)) {
+            // Check if home has a roof (solid block above)
+            BlockState above = getBlockStateSafe(home.above());
+            BlockState above2 = getBlockStateSafe(home.above(2));
+            if (above != null && above.isSolid() || above2 != null && above2.isSolid()) {
+                return home;
+            }
+        }
+        // Search nearby for covered position
+        int attempts = 16;
+        for (int i = 0; i < attempts; i++) {
+            BlockPos candidate = homePos.offset(
+                    level().random.nextInt(17) - 8,
+                    0,
+                    level().random.nextInt(17) - 8);
+            if (!isInSettlementBounds(candidate)) continue;
+            if (!hasSolidGround(candidate)) continue;
+            BlockState above = getBlockStateSafe(candidate.above());
+            BlockState above2 = getBlockStateSafe(candidate.above(2));
+            if (above != null && above.isSolid() || above2 != null && above2.isSolid()) {
+                return candidate;
+            }
+        }
+        return home; // fallback to home even if no roof
     }
 
     /* ---------- AI goals ---------- */
@@ -129,12 +197,19 @@ public final class Settler extends Mob {
             return settler.scheduleState == Schedule.State.WORK && settler.workPos != null
                     && settler.blockPosition().distSqr(settler.workPos) > 4;
         }
-        @Override public boolean canContinueToUse() { return canUse() && settler.atWorkplace; }
+        @Override public boolean canContinueToUse() {
+            return settler.scheduleState == Schedule.State.WORK && settler.workPos != null
+                    && settler.blockPosition().distSqr(settler.workPos) > 4
+                    && settler.getNavigation().isInProgress();
+        }
         @Override public void start() {
             settler.getNavigation().moveTo(settler.workPos.getX(), settler.workPos.getY(), settler.workPos.getZ(), 1.0);
         }
         @Override public void tick() {
             if (settler.blockPosition().distSqr(settler.workPos) <= 4) settler.setAtWorkplace(true);
+            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.workPos) > 4) {
+                settler.setAtWorkplace(false);
+            }
         }
     }
 
@@ -166,6 +241,75 @@ public final class Settler extends Mob {
         @Override public void start() {
             settler.scheduleState = Schedule.State.BREAK;
             settler.breakTimer = 200;
+        }
+    }
+
+    private static final class ReturnHomeGoal extends Goal {
+        private final Settler settler;
+        ReturnHomeGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
+        @Override public boolean canUse() {
+            return settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 4;
+        }
+        @Override public boolean canContinueToUse() {
+            return settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 4
+                    && settler.getNavigation().isInProgress();
+        }
+        @Override public void start() {
+            settler.getNavigation().moveTo(settler.homePos.getX(), settler.homePos.getY(), settler.homePos.getZ(), 1.0);
+        }
+        @Override public void tick() {
+            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.homePos) > 4) {
+                BlockPos safePos = settler.nearestSafePosition(settler.homePos);
+                if (safePos != null && safePos.distSqr(settler.blockPosition()) > 1) {
+                    settler.getNavigation().moveTo(safePos.getX(), safePos.getY(), safePos.getZ(), 1.0);
+                }
+            }
+        }
+    }
+
+    private static final class ShelterGoal extends Goal {
+        private final Settler settler;
+        ShelterGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
+        @Override public boolean canUse() {
+            return settler.scheduleState == Schedule.State.SHELTER && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 4;
+        }
+        @Override public boolean canContinueToUse() {
+            return settler.scheduleState == Schedule.State.SHELTER && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 4
+                    && settler.getNavigation().isInProgress();
+        }
+        @Override public void start() {
+            BlockPos shelter = settler.findShelterPosition();
+            settler.getNavigation().moveTo(shelter.getX(), shelter.getY(), shelter.getZ(), 1.0);
+        }
+        @Override public void tick() {
+            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.homePos) > 4) {
+                BlockPos shelter = settler.findShelterPosition();
+                if (shelter.distSqr(settler.blockPosition()) > 1) {
+                    settler.getNavigation().moveTo(shelter.getX(), shelter.getY(), shelter.getZ(), 1.0);
+                }
+            }
+        }
+    }
+
+    private static final class NightRestGoal extends Goal {
+        private final Settler settler;
+        NightRestGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
+        @Override public boolean canUse() {
+            return settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 2;
+        }
+        @Override public boolean canContinueToUse() {
+            return settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
+                    && settler.blockPosition().distSqr(settler.homePos) > 2
+                    && settler.getNavigation().isInProgress();
+        }
+        @Override public void start() {
+            BlockPos safePos = settler.nearestSafePosition(settler.homePos);
+            settler.getNavigation().moveTo(safePos.getX(), safePos.getY(), safePos.getZ(), 0.8);
         }
     }
 
