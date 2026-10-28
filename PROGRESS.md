@@ -189,3 +189,7 @@ Merged7f53132 after OpenCode with the wheel-only refresh regression corrected by
 ### Combined native acceptance — 2026-10-28
 
 Real integrated client8a8d9ec passed native pear planting/bonemeal growth, ripe-leaf harvest+2pear pickup, RU sapling recipe/browser and orchard journal page11/15. Wheel+shaft visibly rotate without a mill, stop/resume from redstone; elemental ray caused actual6damage. Prior repaired Field blade survived integration. Native /reload completed. Controlled fixtures/software rendering and remaining natural-spawn/multiplayer/scale limits are explicit in docs/INTEGRATION_REVIEW.md. Both integrations are complete and published; next content increment is temperate-forest wild boars under spec7, not another cooking/production tier.
+
+### Forest wildlife source/server checkpoint — 2026-10-28
+
+Added wild boar as a complete ordinary Animal cycle:low-weight forest herds, pear/carrot/beetroot lure/feed, live piglets/vanilla growth+cooldown, individual adult self-defence, harmless fleeing piglets, actual pork/Looting/burning loot, original animated quadruped/tusks, EN/RU/egg and automatic existing journal discovery. No deeper cooking/production chain, herd alert scan, custom per-tick ecosystem or dependency. Full build23JUnit/103fresh GameTests and253JSON/188keys passed, including five new fauna tests. Client acceptance follows; natural encounter frequency/dense-herd scale are not certified. Design/provenance:docs/WILDLIFE.md.

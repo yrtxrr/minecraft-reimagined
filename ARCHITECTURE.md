@@ -89,3 +89,7 @@ The `smithing` module uses standard reloadable recipes and a seven-slot server-o
 Pear trees use vanilla worldgen/sapling/leaf lifecycle and the existing calendar. Fruit work uses inner-canopy random ticks; ripe leaves stop extra fruit work. Harvest validates the current state in a ready chunk before clearing FRUIT and issuing drops, rejecting stale callbacks/replacements. No orchard BE/global queue exists.
 
 Mechanical scan and spell-ray last-chunk caches are scoped to one synchronous scan/ray; never retain them across ticks/unload. Vanilla CachedCheck resolves milling recipes against the current manager after reload. Wheels retain the original staggered20tick refresh even without mills; removing that requester without a replacement scheduler breaks periodic revalidation. Shafts have no tickers. Existing per-level scan/queue/read/frontier/cache budgets remain unchanged. See docs/INTEGRATION_REVIEW.md for actual correctness/profile results and unresolved scale limits.
+
+## Forest wildlife
+
+Boar extends vanilla Animal with local built-in goals, tagged diet, ordinary breeding/NBT/loot and biome-tagged spawning under the existing CREATURE cap. Adult retaliation uses hurt events through vanilla target goals, with no alertOthers cascade or custom world/entity/chunk scan. Babies reject melee damage explicitly. Existing bounded journal observation picks up the registry ID; no new polling task or guide chapter is added. Assets/renderer are original and client-only. See docs/WILDLIFE.md for game rules, source research and measured/unmeasured scope.

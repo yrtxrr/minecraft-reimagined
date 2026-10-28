@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#reimagined:boar_habitat",
+  "spawners": {
+    "type": "reimagined:boar",
+    "weight": 4,
+    "minCount": 2,
+    "maxCount": 3
+  }
+}

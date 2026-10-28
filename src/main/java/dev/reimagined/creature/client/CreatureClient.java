@@ -11,10 +11,12 @@ public final class CreatureClient {
     @SubscribeEvent
     public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DeerModel.LAYER, DeerModel::layer);
+        event.registerLayerDefinition(BoarModel.LAYER, BoarModel::layer);
     }
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(CreatureContent.DEER.get(), DeerRenderer::new);
+        event.registerEntityRenderer(CreatureContent.BOAR.get(), BoarRenderer::new);
     }
     private CreatureClient() {}
 }

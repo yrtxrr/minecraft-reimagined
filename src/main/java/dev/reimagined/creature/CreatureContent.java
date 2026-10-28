@@ -25,6 +25,11 @@ public final class CreatureContent {
     public static final DeferredItem<DeferredSpawnEggItem> DEER_SPAWN_EGG = ITEMS.register("deer_spawn_egg",
             () -> new DeferredSpawnEggItem(DEER, 0x8A5F3D, 0xE5CFAC, new Item.Properties()));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<Boar>> BOAR = ENTITIES.register("boar",
+            () -> EntityType.Builder.of(Boar::new, MobCategory.CREATURE).sized(1.0f, 1.15f).clientTrackingRange(8).build("reimagined:boar"));
+    public static final DeferredItem<DeferredSpawnEggItem> BOAR_SPAWN_EGG = ITEMS.register("boar_spawn_egg",
+            () -> new DeferredSpawnEggItem(BOAR, 0x573C29, 0xE6D6AF, new Item.Properties()));
+
     public static void register(IEventBus bus) {
         ENTITIES.register(bus);
         ITEMS.register(bus);
@@ -35,16 +40,20 @@ public final class CreatureContent {
 
     private static void attributes(EntityAttributeCreationEvent event) {
         event.put(DEER.get(), Deer.attributes().build());
+        event.put(BOAR.get(), Boar.attributes().build());
     }
 
     private static void placements(RegisterSpawnPlacementsEvent event) {
+        event.register(BOAR.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
+                RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(DEER.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     private static void creativeTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) event.accept(DEER_SPAWN_EGG);
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) { event.accept(DEER_SPAWN_EGG); event.accept(BOAR_SPAWN_EGG); }
     }
 
     private CreatureContent() {}

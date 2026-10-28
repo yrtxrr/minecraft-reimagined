@@ -50,3 +50,7 @@ Agriculture roadmap item 5 now has ordinary barley plus pear fruit trees; fertil
 ## Integrated content checkpoint
 
 OpenCode147c92e and Antigravity8a8d9ec histories are integrated and published, with98GameTests/23JUnit and focused native acceptance recorded in docs/INTEGRATION_REVIEW.md. Performance comparisons are measured and qualified, not a universal speedup promise. Next playable increment:forest wildlife/wild boar with ordinary breeding, defensive behavior, loot and original renderer; avoid deeper cooking/smithing chains. Freebuff remains outside the integration.
+
+## Forest wildlife increment
+
+Wild boar source/server cycle now includes biome-tagged low-weight herds, ordinary pear/root-vegetable feeding/breeding, piglets, individual defence and useful vanilla loot, original renderer/localization and existing journal integration.23JUnit/103GameTests passed; native checks follow in docs/WILDLIFE.md. Next broader content priorities remain exploration/dungeons, ecology and regional world variety; no extra cooking/production tier was added. This is an incremental contribution to spec7, not completion of all creatures/biomes or the full Alpha.

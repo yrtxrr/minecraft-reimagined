@@ -184,5 +184,7 @@
   "block.reimagined.pear_wood": "Pear Wood",
   "block.reimagined.pear_planks": "Pear Planks",
   "item.reimagined.pear": "Pear",
-  "journal.reimagined.page.orchard": "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks."
+  "journal.reimagined.page.orchard": "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks.",
+  "entity.reimagined.boar": "Wild Boar",
+  "item.reimagined.boar_spawn_egg": "Wild Boar Spawn Egg"
 }
