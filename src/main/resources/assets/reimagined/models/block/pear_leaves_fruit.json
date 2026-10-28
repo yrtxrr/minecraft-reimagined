@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "reimagined:block/pear_leaves_fruit"
+  }
+}

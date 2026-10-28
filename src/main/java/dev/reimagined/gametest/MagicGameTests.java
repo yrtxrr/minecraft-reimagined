@@ -148,7 +148,9 @@ public final class MagicGameTests {
     @GameTest(template="empty")
     public static void journalAndProgressPayloadReflectOnlyTheReadersFiniteKnowledge(GameTestHelper h) {
         var p=player(h);SpellKnowledge.learn(p,Spell.SANCTUARY);
-        var book=JournalPages.build(p);String json=net.minecraft.network.chat.Component.Serializer.toJson(book.pages().get(11).raw(),h.getLevel().registryAccess());
+        var book=JournalPages.build(p);String json=book.pages().stream()
+                .map(page->net.minecraft.network.chat.Component.Serializer.toJson(page.raw(),h.getLevel().registryAccess()))
+                .filter(text->text.contains("spell_progress")).collect(java.util.stream.Collectors.joining());
         h.assertTrue(json.contains("spell_progress") && json.contains("learned"),"Journal must include personal study status");
         var buffer=io.netty.buffer.Unpooled.buffer();
         try {var snapshot=new MagicProgressPayload(SpellKnowledge.mask(p),2,1);MagicProgressPayload.CODEC.encode(buffer,snapshot);var decoded=MagicProgressPayload.CODEC.decode(buffer);MagicProgressPayload.receive(decoded);h.assertTrue(MagicProgressPayload.client().knows(Spell.SANCTUARY) && !MagicProgressPayload.client().knows(Spell.MAGELIGHT),"Client progress snapshot must keep individual finite unlocks");MagicProgressPayload.clear();h.assertTrue(MagicProgressPayload.client().known()==0,"Logout clear must not leak previous world's knowledge");}finally{buffer.release();MagicProgressPayload.clear();}

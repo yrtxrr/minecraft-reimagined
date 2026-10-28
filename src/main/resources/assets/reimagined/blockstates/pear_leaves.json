@@ -1,0 +1,12 @@
+{
+  "multipart": [
+    {
+      "when": { "fruit": "false" },
+      "apply": { "model": "reimagined:block/pear_leaves" }
+    },
+    {
+      "when": { "fruit": "true" },
+      "apply": { "model": "reimagined:block/pear_leaves_fruit" }
+    }
+  ]
+}

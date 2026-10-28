@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "reimagined:block/pear_wood" },
+    "axis=z": { "model": "reimagined:block/pear_wood", "x": 90 },
+    "axis=x": { "model": "reimagined:block/pear_wood", "x": 90, "y": 90 }
+  }
+}

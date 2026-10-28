@@ -25,3 +25,6 @@ Magic research: Ars Nouveau at `8f0faf35e95dcad4578f33181779e5387b29dd3d`(1.21.x
 Pinned magic research source: https://github.com/baileyholl/Ars-Nouveau/tree/8f0faf35e95dcad4578f33181779e5387b29dd3d ; license: https://github.com/baileyholl/Ars-Nouveau/blob/8f0faf35e95dcad4578f33181779e5387b29dd3d/license.txt . Architecture study only; no incorporated upstream component.
 
 Smithing research:TerraFirmaCraft at `72750e42f3e0e8b337400ff1b8468a7ff7bc786d`, LICENSE.txt EUPL1.2. Reviewed AnvilRecipe and ForgingBonus/item component architecture; no source/assets incorporated and no dependency added. New ingot/blend/bellows/forge/UI artwork is original; vanilla textures are referenced by resource ID only. https://github.com/TerraFirmaCraft/TerraFirmaCraft/tree/72750e42f3e0e8b337400ff1b8468a7ff7bc786d . Version/API and repair edge cases:docs/SMITHING.md.
+
+
+Pear orchard research: vanilla Minecraft 1.21.1 `TreeConfiguration`/`TreeGrower`/`LeavesBlock`/`SaplingBlock` and loot-table codecs were used directly through the installed NeoForge 21.1.264 APIs; vanilla oak/birch tree JSON served only as a schema reference and was not copied. No Farmer's Delight, TerraFirmaCraft, Create or other mod source/assets are incorporated and no mandatory dependency is added. All pear block/item pixel textures are original project artwork. See `docs/ORCHARD.md`.

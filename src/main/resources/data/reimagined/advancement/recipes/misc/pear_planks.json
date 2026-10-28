@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "reimagined:pear_log" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_log" ]
+  ],
+  "rewards": {
+    "recipes": [ "reimagined:pear_planks_from_log", "reimagined:pear_planks_from_wood" ]
+  }
+}

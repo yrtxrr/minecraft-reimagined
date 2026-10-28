@@ -1,0 +1,14 @@
+# Normalize line endings for a cross-platform Gradle/Minecraft project.
+# Text files are stored in the repository with LF and stay LF in the working tree.
+* text=auto eol=lf
+
+# Windows launchers keep CRLF so that cmd.exe and Git for Windows behave predictably.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets must never be converted.
+*.jar binary
+*.png binary
+*.ogg binary
+*.ttf binary
+*.zip binary

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "reimagined:block/pear_log_top",
+    "side": "reimagined:block/pear_log"
+  }
+}

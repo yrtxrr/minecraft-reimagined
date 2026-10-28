@@ -177,5 +177,12 @@
   "reimagined.forge.quality.3": "Masterwork",
   "reimagined.forge.finish.keen": "Keen edge",
   "reimagined.forge.finish.sturdy": "Sturdy binding",
-  "reimagined.forge.recipe_note": "Base quality %s. Smith rank 2 + installed bellows: +1(max 3). Hammer is reused (4 wear); coal is consumed. Output shown at base quality; actual components/wear are retained. Cannot repeat treatment."
+  "reimagined.forge.recipe_note": "Base quality %s. Smith rank 2 + installed bellows: +1(max 3). Hammer is reused (4 wear); coal is consumed. Output shown at base quality; actual components/wear are retained. Cannot repeat treatment.",
+  "block.reimagined.pear_leaves": "Pear Leaves",
+  "block.reimagined.pear_sapling": "Pear Sapling",
+  "block.reimagined.pear_log": "Pear Log",
+  "block.reimagined.pear_wood": "Pear Wood",
+  "block.reimagined.pear_planks": "Pear Planks",
+  "item.reimagined.pear": "Pear",
+  "journal.reimagined.page.orchard": "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks."
 }
