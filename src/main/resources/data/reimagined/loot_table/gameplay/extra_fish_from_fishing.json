@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "reimagined:river_perch", "weight": 5 },
+        { "type": "minecraft:item", "name": "reimagined:silver_trout", "weight": 3 },
+        { "type": "minecraft:item", "name": "reimagined:blue_mackerel", "weight": 2 }
+      ]
+    }
+  ]
+}

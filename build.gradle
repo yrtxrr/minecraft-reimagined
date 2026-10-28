@@ -12,6 +12,7 @@ neoForge {
     runs {
         client {
             client()
+            if (project.hasProperty('fishingAcceptance')) systemProperty 'reimagined.fishingAcceptance', 'true'
             if (project.hasProperty('quickPlayWorld')) {
                 programArgument '--quickPlaySingleplayer'
                 programArgument project.property('quickPlayWorld')

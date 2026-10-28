@@ -2,6 +2,7 @@ package dev.reimagined;
 
 import dev.reimagined.content.Content;
 import dev.reimagined.creature.CreatureContent;
+import dev.reimagined.fishing.FishContent;
 import dev.reimagined.engineering.EngineeringContent;
 import dev.reimagined.progression.ProgressionEvents;
 import dev.reimagined.season.Seasons;
@@ -15,6 +16,7 @@ public final class Reimagined {
     public Reimagined(IEventBus modBus) {
         Content.register(modBus);
         CreatureContent.register(modBus);
+        FishContent.register(modBus);
         EngineeringContent.register(modBus);
         dev.reimagined.agriculture.AgricultureContent.register(modBus);
         dev.reimagined.agriculture.OrchardContent.register(modBus);

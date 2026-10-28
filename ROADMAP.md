@@ -34,9 +34,9 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-Main developer is explicitly authorized to integrate OpenCode and Antigravity into `feat/reimagined-alpha`, resolve defects and validate the shared version. Freebuff remains independent and is outside all fetch/merge/edit work. Earlier no-merge instructions are historical. Both branches are now integrated with a stale-harvest fix and preserved wheel refresh;23JUnit/98GameTests passed. Native combined validation passed within the documented scope. Full Alpha gates remain open.
+Freebuff4a71f92 fish integration is now authorized and completed in `feat/reimagined-alpha`, preserving its author history. Prior OpenCode/Antigravity integrations and boar increment remain present. `feat/kilo-development` is independent and was not fetched/merged/changed. Older Freebuff exclusions below are historical. After this integration the main developer proposes priorities only; no new large mechanic starts autonomously. Full Alpha gates remain open.
 
-## Latest acceptance / integration gate (2026-10-28)
+## Historical acceptance before orchard integration (2026-10-28)
 
 Smithing's focused native forge→hit→anvil repair→full process restart path now passed; already verified blend/steel was not repeated. See docs/SMITHING.md for controlled-fixture limits. No new major system started. Independent OpenCode and Antigravity source candidates passed build/23JUnit and94/88GameTests respectively; neither branch is merged. Integration remains conditional on the source-review follow-ups and runtime/performance gates in docs/INTEGRATION_REVIEW.md. Freebuff is outside this review. Full Alpha and full specification remain incomplete.
 
@@ -54,3 +54,9 @@ OpenCode147c92e and Antigravity8a8d9ec histories are integrated and published, w
 ## Forest wildlife increment
 
 Wild boar source/server cycle now includes biome-tagged low-weight herds, ordinary pear/root-vegetable feeding/breeding, piglets, individual defence and useful vanilla loot, original renderer/localization and existing journal integration.23JUnit/103GameTests passed; native adult/breeding/retaliation and family restart checks completed with limits in docs/WILDLIFE.md. Next broader content priorities remain exploration/dungeons, ecology and regional world variety; no extra cooking/production tier was added. This is an incremental contribution to spec7, not completion of all creatures/biomes or the full Alpha.
+
+## Freebuff fishing checkpoint
+
+Three edible fish items extend ordinary vanilla fishing through one optional additive loot roll. Existing catch/treasure components and barley loot entry are preserved; furnace/smoker recipes, fishes tags,16pxmodels/textures, EN/RU and browser uses are checked. Full build23JUnit/107GameTests and focused real-client fishing verified (native salmon+SilverTrout, other two appearances confirmed server-side). These are item fish, not new swimming animal entities or regional habitats. See docs/FISHING.md.
+
+Requested remaining-spec review and five proposed priorities:docs/SPEC_PRIORITIES.md. Existing cooking/smithing/engineering systems are not expanded into more complex chains here. No Kilo merge and no next large mechanic started.

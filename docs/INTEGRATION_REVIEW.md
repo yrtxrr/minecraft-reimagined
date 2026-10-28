@@ -91,3 +91,7 @@
 Мир сохранён штатно. Нативные снимки/логи остаются ignored; исходные головы обеих веток сохранены merge-коммитами147c92e и8a8d9ec. Freebuff не затронут. Интеграция этих проверенных инкрементов завершена; полный Alpha-playthrough, физический GPU, онлайн-аутентификация/второй клиент, крупные сады/фабрики, точные packet/save rates и долгосрочная память всё ещё не сертифицированы. Короткие профили не дают общей гарантии отсутствия лагов.
 
 Повторный полный процесс клиента с кабаном подтвердил сохранённые дерево/собранные груши, затем ещё один запуск подтвердил всех трёх членов семейства и отрицательный возраст ребёнка. Wheel-only колесо+вал также возобновили ACTIVE после полной загрузки мира без жернова/взаимодействия. Это дополняет lifecycle-callback тест реальным world-restart; отдельная физическая выгрузка только одного чанка по-прежнему не выдаётся за выполненную.
+
+## Subsequent Freebuff integration
+
+A later explicit user request authorizes Freebuff4a71f92 integration afterc2bc853. Historical exclusions in this report no longer apply to Freebuff; Kilo remains independent and untouched. Fish implementation, fixes, full107test/native acceptance and limitations:docs/FISHING.md. Remaining specification proposals (no new implementation):docs/SPEC_PRIORITIES.md.

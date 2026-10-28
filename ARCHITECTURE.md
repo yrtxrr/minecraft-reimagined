@@ -93,3 +93,7 @@ Mechanical scan and spell-ray last-chunk caches are scoped to one synchronous sc
 ## Forest wildlife
 
 Boar extends vanilla Animal with local built-in goals, tagged diet, ordinary breeding/NBT/loot and biome-tagged spawning under the existing CREATURE cap. Adult retaliation uses hurt events through vanilla target goals, with no alertOthers cascade or custom world/entity/chunk scan. Babies reject melee damage explicitly. Existing bounded journal observation picks up the registry ID; no new polling task or guide chapter is added. Assets/renderer are original and client-only. See docs/WILDLIFE.md for game rules, source research and measured/unmeasured scope.
+
+## Additive fishing items
+
+Freebuff's three fish use standard item/food registration, additive item tags, vanilla smelting/smoking and the shared browser. A supported NeoForge add_table modifier targets only the fishing root and optionally appends one roll from a three-entry table. No vanilla loot table replacement, gameplay ticker/cache/world scan/chunk load or new payload is introduced. Existing global loot entries remain. Deterministic raw-control comparisons in tests establish prefix preservation without changing production loot calls. Native bite observation is opt-in dev-only and excluded from the player JAR. See docs/FISHING.md for semantics/provenance and limits.
