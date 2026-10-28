@@ -207,3 +207,7 @@ Real native LureIIIrod casts/reels produced cod, vanilla junk, salmon, cod, then
 ### Freebuff boulder integration —2026-10-28
 
 Starting60b7a4a, merged missingdf7a223 only; fishing4a71f92 was already an ancestor and is not reapplied. Rare vanilla mossy forest_rock decoration uses one1/18candidate in forest-tagged biomes, no density multiplier. Full build23JUnit/110fresh GameTests passed, including original biome registration plus real soil placement/bounded output and4096rarity-filter samples. No source branch changed. Kilo integration follows under the latest explicit authorization. Details:docs/AGENT_CONTENT_INTEGRATION.md.
+
+### Kilo source/server integration checkpoint —2026-10-28
+
+Integrated missingafc5bd3/1835d41/25e4ea7 with history after Freebuff boulders856a569. Completed missing thatch/clover resources/loot, actual NeoForge compostables data map, vanilla flower tags and sparse bounded clover generation. Preserved main translations rather than incoming RU encoding corruption. Rare blocks now render in the journal, use one loaded-only sight ray instead of a volume scan, and fit the100page cap; original two-list API/v1saves retain compatibility. Real clone/save/reentry/visibility/max-book and content tests passed:25JUnit/118GameTests,284JSON/197keys. No agent branch changed and no new major mechanic; native check next. Details:docs/AGENT_CONTENT_INTEGRATION.md.

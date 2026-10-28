@@ -1,0 +1,25 @@
+{
+  "values": {
+    "reimagined:barley_seeds": {
+      "chance": 0.3
+    },
+    "reimagined:barley": {
+      "chance": 0.65
+    },
+    "reimagined:thatch": {
+      "chance": 0.85
+    },
+    "reimagined:clover": {
+      "chance": 0.3
+    },
+    "reimagined:pear_sapling": {
+      "chance": 0.3
+    },
+    "reimagined:pear_leaves": {
+      "chance": 0.3
+    },
+    "reimagined:pear": {
+      "chance": 0.65
+    }
+  }
+}

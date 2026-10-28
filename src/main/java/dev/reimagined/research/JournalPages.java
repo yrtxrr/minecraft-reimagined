@@ -15,7 +15,7 @@ public final class JournalPages {
     public static WrittenBookContent build(ServerPlayer reader) {
         Discoveries discoveries = Discoveries.read(reader);
         List<Filterable<Component>> pages = new ArrayList<>();
-        pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page.introduction", discoveries.biomes().size(), discoveries.creatures().size())));
+        pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page.introduction", discoveries.biomes().size(), discoveries.creatures().size(), discoveries.blocks().size())));
         var current = reader.serverLevel().getBiome(reader.blockPosition());
         ResourceLocation currentId = current.unwrapKey().orElseThrow().location();
         pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page.current_biome",
@@ -31,23 +31,25 @@ public final class JournalPages {
                 Component.translatable(first.translationKey()),spellStatus(reader,first),
                 Component.translatable(second.translationKey()),spellStatus(reader,second))));
         }
-        catalogue(pages, discoveries.biomes(), "biomes", "biome");
-        catalogue(pages, discoveries.creatures(), "creatures", "entity");
-        // 13 guide/progress pages + at most 87 catalogue pages for the combined discovery cap of 256.
+        int pageSize=JournalPageBudget.entriesPerPage(discoveries.biomes().size(),discoveries.creatures().size(),discoveries.blocks().size());
+        catalogue(pages, discoveries.biomes(), "biomes", "biome",pageSize);
+        catalogue(pages, discoveries.creatures(), "creatures", "entity",pageSize);
+        catalogue(pages, discoveries.blocks(), "blocks", "block",pageSize);
+        // Keep normal three-entry pages; pack four only when the three catalogues would reach100pages.
         return new WrittenBookContent(Filterable.passThrough("Minecraft: Reimagined"), "Reimagined", 0, List.copyOf(pages), true);
     }
     private static Component spellStatus(ServerPlayer player,dev.reimagined.magic.Spell spell) {
         return Component.translatable(dev.reimagined.magic.SpellKnowledge.knows(player,spell)?"reimagined.magic.learned":"reimagined.magic.locked");
     }
-    private static void catalogue(List<Filterable<Component>> pages, List<ResourceLocation> entries, String chapter, String prefix) {
+    private static void catalogue(List<Filterable<Component>> pages, List<ResourceLocation> entries, String chapter, String prefix,int pageSize) {
         if (entries.isEmpty()) {
             pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page." + chapter)
                     .append("\n\n").append(Component.translatable("journal.reimagined.page.undiscovered"))));
             return;
         }
-        for (int start = 0; start < entries.size(); start += 3) {
+        for (int start = 0; start < entries.size(); start += pageSize) {
             MutableComponent page = Component.translatable("journal.reimagined.page." + chapter).append("\n");
-            for (ResourceLocation id : entries.subList(start, Math.min(entries.size(), start + 3))) {
+            for (ResourceLocation id : entries.subList(start, Math.min(entries.size(), start + pageSize))) {
                 String fallback = id.getPath().replace('_', ' ');
                 if (fallback.length() > 36) fallback = fallback.substring(0, 33) + "...";
                 page.append("\n• ").append(Component.translatableWithFallback(

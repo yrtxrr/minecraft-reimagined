@@ -73,7 +73,7 @@
   "tooltip.reimagined.special.dagger": "Присесть + использовать: быстрый выпад и манёвр.",
   "tooltip.reimagined.special.halberd": "Присесть + использовать: взмах по трём целям впереди.",
   "tooltip.reimagined.special_cooldown": "Общее восстановление приёма: %s с; расход прочности: 2.",
-  "journal.reimagined.page.introduction": "ПОЛЕВОЙ ЖУРНАЛ\n\nИсследуйте мир: записывайте встреченных существ и посещённые биомы.\n\nБиомов: %s\nСуществ: %s\n\nОткройте книгу снова, чтобы обновить записи.",
+  "journal.reimagined.page.introduction": "ПОЛЕВОЙ ЖУРНАЛ\n\nИсследуйте мир: записывайте встреченных существ и посещённые биомы.\n\nБиомов: %s\nСуществ: %s\n\nОткройте книгу снова, чтобы обновить записи.\nБлоков: %s",
   "journal.reimagined.page.seasons": "ВРЕМЕНА ГОДА\n\nГод длится 96 дней: четыре сезона по 24 дня.\n\n/reimagined calendar показывает дату. Сезонный рост урожая зависит от местного биома.",
   "journal.reimagined.page.skills": "НАВЫКИ\n\nДействия развивают десять деревьев. Уровни бесконечны, но каждое дерево имеет лишь три улучшения.\n\n/reimagined skills\n/reimagined skills unlock <дерево>",
   "journal.reimagined.page.recipes": "РЕЦЕПТЫ\n\nОткройте инвентарь: сбоку есть браузер предметов с поиском и фильтрами. ЛКМ: изготовление, ПКМ: применение.\n\nЕсть крафт, готовка и помол.",
@@ -190,5 +190,10 @@
   "item.reimagined.pear": "Груша",
   "journal.reimagined.page.orchard": "САД\n\nГруши растут в лесах и на лугах. Привейте грушу к дубу для размножения.\n\nПлоды зреют летом и осенью; ПКМ по листве собирает урожай. Брёвна дают доски.",
   "entity.reimagined.boar": "Дикий кабан",
-  "item.reimagined.boar_spawn_egg": "Яйцо призыва дикого кабана"
+  "item.reimagined.boar_spawn_egg": "Яйцо призыва дикого кабана",
+  "block.reimagined.thatch": "Соломенный блок",
+  "block.reimagined.clover": "Дикий клевер",
+  "journal.reimagined.blocks": "Блоков: %s",
+  "journal.reimagined.block_list": "Открытия блоков",
+  "journal.reimagined.page.blocks": "Редкие блоки"
 }

@@ -38,7 +38,7 @@ public final class MagicGameTests {
         var menu=new MagicStationMenu(1,player.getInventory(),entity,entity.research());player.containerMenu=menu;return menu;
     }
     private static void observations(FakePlayer player) {
-        new Discoveries(List.of(ResourceLocation.parse("minecraft:plains"),ResourceLocation.parse("minecraft:desert")),List.of(ResourceLocation.parse("minecraft:cow"))).save(player);
+        new Discoveries(List.of(ResourceLocation.parse("minecraft:plains"),ResourceLocation.parse("minecraft:desert")),List.of(ResourceLocation.parse("minecraft:cow")), List.of()).save(player);
     }
     private static void inputs(MagicStationBlockEntity entity,Item first,Item second,Item third) {
         entity.setItem(0,new ItemStack(first));entity.setItem(1,new ItemStack(second));entity.setItem(2,new ItemStack(third));
@@ -169,3 +169,4 @@ public final class MagicGameTests {
     }
 
 }
+
