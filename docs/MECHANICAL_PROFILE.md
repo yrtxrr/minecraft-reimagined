@@ -40,3 +40,18 @@ The after-run still had104.555ms and96.891ms whole ticks at64 components. Their 
 At64 the after-run's weighted allocation samples totalled36.95MiB per measured30s. No measured-window GC events were recorded. These are sampling/short-run observations, not exact allocation counters, retained-memory evidence or a long-term stability test. Large factories, physical GPU rendering and online multiplayer remain outside this profile.
 
 Reproduce the follow-up with a fresh disposable marked world using `./gradlew runMechanicalProfile -PprofileWarmupTicks=600 -PprofileLabel=alpha-loaded -PprofileRevision=<revision>`, then analyze the complete report with scripts/analyze-mechanical-profile.py. New recordings disable initial environment/system-property/JVM command-line snapshots; curated whitelisted settings remain in the JSON report. Raw files remain ignored.
+
+## Integration comparison, 2026-10-28
+
+Baseline20250ec; candidate147c92e plus Antigravity7f53132 and the wheel-ticker preservation fix. Same harness, fresh flat seed12345 worlds,1089loaded chunks,4active processors/2GiB on the same Xeon8573C cloud host with4CPU quota. Both use600warmup+600measured ticks per phase. Profiles ran sequentially without builds/clients during measurement. Each recording verified600custom tick events and all mills produced112/448flour at16/64components.
+
+|Components|Before mean/p99/max ms|After mean/p99/max ms|>50ms before/after|After post-bus mean ms|
+|---|---|---|---|---|
+|0|1.011/7.574/99.996|2.214/48.405/129.439|1/6|0.090|
+|16|0.885/6.787/14.068|3.161/51.183/342.119|0/7|0.274|
+|64|1.049/9.314/13.721|0.993/6.294/66.150|0/1|0.092|
+
+No uniform mechanical speedup is established:0/16tails are worse in the after run, while64mean/p99 are lower. The342ms16-component window samples vanilla EventBus and chunk ticking; another132ms window also samples our existing redstone path. Sampling cannot assign the entire delay or exclude module contributions. The66ms64-component window correlates with vanilla chunk saves and a63msG1pause; post-bus work there is small. No new synchronous chunk-generation path was observed. These are short/noisy comparisons, not proof that every long tick is fixed. The new redstone map adds bounded allocations; retain the performance caveat.
+
+At64 (before), weighted allocation samples 42.00MiB/measured window; event counts 0 GC. At64 (after), weighted allocation samples 44.71MiB/measured window; event counts 2 GC. 
+Weighted sampling is not an exact allocation or retained-memory comparison. No clients were present; network/save traffic rates were not counted independently. No claim of lower packets, saves, stable large-factory memory or physical GPU performance follows. Raw files remain ignored. See docs/SPELL_ACCESS_PROFILE.md for the separate changed-ray workload.

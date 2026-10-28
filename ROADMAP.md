@@ -25,7 +25,7 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 2. Engineering: animated wheels and bounded shared networks implemented; extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
 3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
 4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, extend the verified readable/discovery journal with research progression, further spell tiers/stations beyond the implemented four-spell research tier (altar/table, discovery gates, personal knowledge, journal/browser and focused client/server checks complete), first deterministic smithing cycle implemented (steel, two finishes, three bounded qualities, hammer/bellows and standard repairs); further alloys/stations/equipment tiers remain.
-5. Agriculture: ordinary barley with seasonal hooks, harvest and milling implemented; further crops/fruit trees, fertility/fertilizers/greenhouses, husbandry. Heated cooking pot, five connected meals, browser/menu and hopper automation implemented; expand cooking variety after focused runtime validation, without mandatory thirst/disease/micronutrients.
+5. Agriculture: ordinary barley with seasonal hooks, harvest and milling implemented; pear orchards now integrated; fertility/fertilizers/greenhouses and husbandry remain. Heated cooking pot, five connected meals, browser/menu and hopper automation implemented; no further cooking stages planned for this priority; next content favors world variety/exploration rather than deeper production chains.
 6. Content/civilizations: cultures, NPC states/cities, reputation/citizenship, diplomacy/trade/armies, persistent unloaded-region simulation. Player cannot found a state. Protect player terrain from NPC wars.
 7. Exploration: original mobs/animations, room-connected dungeons/puzzles/mini-bosses, Nether/End biomes and independent bosses/artifacts, retaining dragon and wither.
 8. Transport/economy: carts/caravans/sailing/ships, linked minecarts/switches/loading stations, roads/geography/economy integration.
@@ -34,7 +34,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-Main developer owns the new smithing cycle and its focused validation in `feat/reimagined-alpha`. OpenCode develops pear orchards independently; Antigravity handles existing-system performance/testing. Do not overlap their files or merge their branches. Shared entry-point/language/documentation edits are additive only. FCC-Codex handoffs are historical. The smithing source/server checkpoint has23JUnit/88GameTests; native client validation follows. Prior Alpha gates remain open. See docs/SMITHING.md and docs/MAGIC_RESEARCH.md for current feature limits.
+Main developer is explicitly authorized to integrate OpenCode and Antigravity into `feat/reimagined-alpha`, resolve defects and validate the shared version. Freebuff remains independent and is outside all fetch/merge/edit work. Earlier no-merge instructions are historical. Both branches are now integrated with a stale-harvest fix and preserved wheel refresh;23JUnit/98GameTests passed. Native combined validation follows. Full Alpha gates remain open.
 
 ## Latest acceptance / integration gate (2026-10-28)
 

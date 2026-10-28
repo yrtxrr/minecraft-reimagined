@@ -83,3 +83,9 @@ The `magic` module adds manual recipe-driven altar/research stations with standa
 ## Manual smithing
 
 The `smithing` module uses standard reloadable recipes and a seven-slot server-owned manual forge. Steel production reuses the vanilla blast furnace. No BE ticker/world scan/profile changes exist. Quality is bounded by metal, rank and bellows; finishes preserve item components/wear and change built-in durability/attack attributes once. Per-stack nondefault durability and existing forging state reject repeat processing, including vanilla grid-repair metadata loss. Native anvil repair preserves worked equipment. See docs/SMITHING.md for costs/lifecycle/browser preview limits and Antigravity profiling handoff.
+
+## Integrated orchard and bounded-access caches
+
+Pear trees use vanilla worldgen/sapling/leaf lifecycle and the existing calendar. Fruit work uses inner-canopy random ticks; ripe leaves stop extra fruit work. Harvest validates the current state in a ready chunk before clearing FRUIT and issuing drops, rejecting stale callbacks/replacements. No orchard BE/global queue exists.
+
+Mechanical scan and spell-ray last-chunk caches are scoped to one synchronous scan/ray; never retain them across ticks/unload. Vanilla CachedCheck resolves milling recipes against the current manager after reload. Wheels retain the original staggered20tick refresh even without mills; removing that requester without a replacement scheduler breaks periodic revalidation. Shafts have no tickers. Existing per-level scan/queue/read/frontier/cache budgets remain unchanged. See docs/INTEGRATION_REVIEW.md for actual correctness/profile results and unresolved scale limits.

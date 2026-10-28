@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -90,9 +91,18 @@ public final class MechanicalNetwork {
         private int reads;
         private boolean unloaded;
         private boolean exhausted;
+        private long cachedChunkKey = Long.MIN_VALUE;
+        private LevelChunk cachedChunk;
         LoadedSignals(Level level) { this(level, Set.of()); }
         LoadedSignals(Level level, Set<Long> unavailableChunks) { this.level = level; this.unavailableChunks = unavailableChunks; }
-        boolean loaded(BlockPos pos) { return !unavailableChunks.contains(ChunkPos.asLong(pos)) && MechanicalWorldAccess.loaded(level, pos); }
+        private LevelChunk chunkAt(BlockPos pos) {
+            long key = ChunkPos.asLong(pos);
+            if (key == cachedChunkKey) return cachedChunk;
+            cachedChunkKey = key;
+            if (unavailableChunks.contains(key)) return cachedChunk = null;
+            return cachedChunk = MechanicalWorldAccess.chunk(level, pos);
+        }
+        boolean loaded(BlockPos pos) { return chunkAt(pos) != null; }
         private boolean readable(BlockPos pos) {
             if (reads >= MAX_READS) { exhausted = true; return false; }
             reads++;
@@ -101,15 +111,15 @@ public final class MechanicalNetwork {
         }
         @Override public BlockState getBlockState(BlockPos pos) {
             if (!readable(pos)) return Blocks.AIR.defaultBlockState();
-            var chunk = MechanicalWorldAccess.chunk(level, pos);
+            var chunk = chunkAt(pos);
             return chunk == null ? Blocks.AIR.defaultBlockState() : chunk.getBlockState(pos);
         }
         @Override public FluidState getFluidState(BlockPos pos) {
             if (!readable(pos)) return Fluids.EMPTY.defaultFluidState();
-            var chunk = MechanicalWorldAccess.chunk(level, pos);
+            var chunk = chunkAt(pos);
             return chunk == null ? Fluids.EMPTY.defaultFluidState() : chunk.getFluidState(pos);
         }
-        @Override public BlockEntity getBlockEntity(BlockPos pos) { return readable(pos) ? MechanicalWorldAccess.blockEntity(level, pos) : null; }
+        @Override public BlockEntity getBlockEntity(BlockPos pos) { if (!readable(pos)) return null; var chunk = chunkAt(pos); return chunk == null ? null : chunk.getBlockEntity(pos); }
         @Override public int getHeight() { return level.getHeight(); }
         @Override public int getMinBuildHeight() { return level.getMinBuildHeight(); }
     }

@@ -9,3 +9,14 @@ JVM4active processors/2GiB. Runtime JSON records revision, phase counts, wall ti
 JFR profile recordings cover measured windows only, include600custom events each, and disable initial environment/system-property/JVM command-line snapshot events. Analyze with `python3 scripts/analyze-spell-access-profile.py <report.json> --jfr "$JAVA_HOME/bin/jfr"`. The analyzer requires complete phases/nonempty recordings and exactly600workload events, then reports execution samples, weighted allocation samples and GC event counts. Weighted bytes are sampling estimates, not exact allocation totals. Absence of GC events does not prove zero GC cost or leak freedom.
 
 The baseline uses147c92e's old ray-access implementation plus the same build task/probe. Successful real-server baseline completed and the analyzer verified both600event recordings. The after comparison and integration decision are recorded in docs/INTEGRATION_REVIEW.md once executed.
+
+## Executed before/after comparison — 2026-10-28
+
+Before:147c92e's old ray access plus the identical probe/task. After:147c92e+7f53132 with preserved wheel refresh. Fresh matched flat worlds, seed12345/view4/simulation4, Xeon8573C/4CPU cloud quota, Java21.0.8/4active processors/2GiB. Runs sequential, without other clients/builds/profiles during measurement. All four JFR recordings passed600event validation.
+
+|Rays/tick|Before direct workload mean/p99/max ms|After direct workload mean/p99/max ms|Observed TPS before/after|
+|---|---|---|---|
+|0|0.001/0.001/0.562|0.009/0.001/4.973|20.380/20.498|
+|256|2.347/25.581/331.888|0.559/2.596/118.010|20.161/20.042|
+
+At256rays, mean/p99 were lower in this pair; this is not a statistically established universal speedup. Both still contain long ticks/workload outliers. Weighted allocation samples were322.86MiB before and291.03MiB after; these are estimates, not precise allocated bytes. CPU samples containing SpellWorldAccess.ray numbered40before/18after; sampling rates differ, so these counts alone do not quantify speedup. The after0phase observed one GC; neither256phase observed GC events. Long-session retained memory, full spells, AI battles, physical rendering and live network/save rates remain outside this probe.
