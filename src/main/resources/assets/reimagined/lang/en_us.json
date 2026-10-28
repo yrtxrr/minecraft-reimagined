@@ -195,5 +195,11 @@
   "block.reimagined.clover": "Clover",
   "journal.reimagined.blocks": "%s blocks found",
   "journal.reimagined.block_list": "Block discoveries",
-  "journal.reimagined.page.blocks": "Rare blocks"
+  "journal.reimagined.page.blocks": "Rare blocks",
+  "entity.reimagined.otter": "Otter",
+  "item.reimagined.otter_spawn_egg": "Otter Spawn Egg",
+  "entity.reimagined.badger": "Badger",
+  "item.reimagined.badger_spawn_egg": "Badger Spawn Egg",
+  "entity.reimagined.marmot": "Marmot",
+  "item.reimagined.marmot_spawn_egg": "Marmot Spawn Egg"
 }

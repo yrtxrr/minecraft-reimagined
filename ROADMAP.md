@@ -34,7 +34,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-Remaining ready Freebuff/Kilo changes are now integrated into `feat/reimagined-alpha`:df7a223boulders andafc5bd3/1835d41/25e4ea7thatch/clover/journal. Fishing4a71f92 was already present and not reapplied. Source agent branches remain unchanged. Only integration validation/documentation is authorized now; do not start another major mechanic. Full Alpha gates remain open. Latest acceptance:docs/AGENT_CONTENT_INTEGRATION.md.
+Ready Freebuff/Kilo content is integrated through Kilo820e5db, with prior thatch/clover/journal changes preserved rather than repeated. Agent branches and existing worktrees remain unchanged. Current authorization covers only integration repairs and focused validation, no next major system. Fauna/plant details and acceptance limits:docs/KILO_FAUNA_INTEGRATION.md; prior content:docs/AGENT_CONTENT_INTEGRATION.md. Full Alpha gates remain open.
 
 ## Historical acceptance before orchard integration (2026-10-28)
 
@@ -64,3 +64,8 @@ Requested remaining-spec review and five proposed priorities:docs/SPEC_PRIORITIE
 ## Completed remaining-agent integration
 
 Rare forest/birch boulders (one1/18attempt), obtainable wild clover and thatch resources/recipe/loot/actual compost data map are integrated with histories. Block discoveries are visible in the journal and passed real death/remote-respawn/client-process restart, alongside old-save/clone/max-page server checks. Final25JUnit/118GameTests and284JSON/197keys. Native natural generation/alpha fix and scope:docs/AGENT_CONTENT_INTEGRATION.md. No next major system started. Major geography/civilization/transport/dungeon/late-dimension gaps and full Alpha/multiplayer/scale gates remain.
+
+
+## Kilo fauna and nature checkpoint
+
+History-preserving integration of1002d09/18eeada/78e5134/820e5db adds three biome-scoped animals, corrected optional behavior and rare grass/fern groups. Amphibious otter surface swimming/bank rest/return to water, actual covered badger travel, day-active/night-resting/fleeing marmots and occasional deer head turns coexist with ordinary safety/breeding/food goals. River surface spawn placement, grassy marmot habitats, missing renderers and invalid plant codecs/localization repaired. Existing deer/boar/clover/boulders/journal remain. Full build25JUnit/132GameTests and299JSON/203keys passed. Native and measured-scale scope, natural-spawn/audio/multiplayer/long-survival gaps:docs/KILO_FAUNA_INTEGRATION.md. No new major system started; playable Alpha is not declared complete.

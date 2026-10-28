@@ -35,7 +35,7 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
-Current user authorization: finish integration of Freebuff's boulders atdf7a223 and Kilo's thatch/clover/journal commitsafc5bd3/1835d41/25e4ea7 into `feat/reimagined-alpha`, preserving source history and fixing integration defects. Freebuff fishing4a71f92 is already integrated and must not be reimported. Do not push to, rewrite or edit either agent branch. Earlier Kilo exclusions are superseded by this explicit request. No new major mechanics: finish validation and document remaining gaps. Push completed checkpoints only to the main working branch, without force.
+Current user authorization: review and integrate Kilo820e5db and only missing ancestors into `feat/reimagined-alpha`; repair fauna behavior/rendering and sparse grass/fern worldgen, run build/JUnit/GameTests and native checks when available. Prior Kilo thatch/clover/journal and Freebuff content are already integrated and must not be duplicated. Preserve both agent branches, history and existing worktrees. No unrelated major systems. Publish only the verified target branch without force.
 
 Before a major mechanic, inspect relevant open implementations (Create, TerraFirmaCraft, Farmer's Delight, JEI/EMI and others as appropriate). Evaluate architecture, aggregate cost and NeoForge 1.21.1 compatibility. Reuse only when licenses and attribution requirements permit it; document pinned sources, licenses and provenance in THIRD_PARTY_NOTICES.md. Otherwise implement the relevant technical principles independently. Do not copy protected assets or add mandatory mod dependencies without user consent.
 

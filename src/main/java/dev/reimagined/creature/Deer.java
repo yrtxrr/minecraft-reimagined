@@ -22,7 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 
-/** A timid forest herbivore. AI uses Minecraft's bounded, pathfinding goals. */
 public final class Deer extends Animal {
     public Deer(EntityType<? extends Animal> type, Level level) { super(type, level); }
 
@@ -42,13 +41,18 @@ public final class Deer extends Animal {
         goalSelector.addGoal(4, new TemptGoal(this, 1.1, Ingredient.of(Items.SWEET_BERRIES), false));
         goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6));
-        goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        goalSelector.addGoal(7, new FaunaGoals.LookAround(this));
+        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6));
+        goalSelector.addGoal(9, new RandomLookAroundGoal(this));
     }
+
+    boolean lookingAround;
+    public boolean isLookingAround() { return lookingAround; }
 
     @Override public boolean isFood(ItemStack stack) { return stack.is(Items.SWEET_BERRIES); }
 
     @Override public Deer getBreedOffspring(ServerLevel level, AgeableMob partner) {
         return CreatureContent.DEER.get().create(level);
     }
+
 }

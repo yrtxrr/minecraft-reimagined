@@ -195,5 +195,11 @@
   "block.reimagined.clover": "Дикий клевер",
   "journal.reimagined.blocks": "Блоков: %s",
   "journal.reimagined.block_list": "Открытия блоков",
-  "journal.reimagined.page.blocks": "Редкие блоки"
+  "journal.reimagined.page.blocks": "Редкие блоки",
+  "entity.reimagined.otter": "Выдра",
+  "item.reimagined.otter_spawn_egg": "Яйцо призыва выдры",
+  "entity.reimagined.badger": "Барсук",
+  "item.reimagined.badger_spawn_egg": "Яйцо призыва барсука",
+  "entity.reimagined.marmot": "Сурок",
+  "item.reimagined.marmot_spawn_egg": "Яйцо призыва сурка"
 }

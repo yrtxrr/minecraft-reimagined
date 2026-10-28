@@ -1,0 +1,13 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": [
+    "minecraft:river",
+    "minecraft:frozen_river"
+  ],
+  "spawners": {
+    "type": "reimagined:otter",
+    "weight": 6,
+    "minCount": 1,
+    "maxCount": 2
+  }
+}

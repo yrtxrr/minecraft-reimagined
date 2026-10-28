@@ -12,11 +12,16 @@ public final class CreatureClient {
     public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DeerModel.LAYER, DeerModel::layer);
         event.registerLayerDefinition(BoarModel.LAYER, BoarModel::layer);
+        for (String species : new String[]{"otter","badger","marmot"})
+            event.registerLayerDefinition(SmallFaunaModel.layerId(species), () -> SmallFaunaModel.layer(species));
     }
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(CreatureContent.DEER.get(), DeerRenderer::new);
         event.registerEntityRenderer(CreatureContent.BOAR.get(), BoarRenderer::new);
+        event.registerEntityRenderer(CreatureContent.OTTER.get(), c -> new SmallFaunaRenderer<>(c,"otter"));
+        event.registerEntityRenderer(CreatureContent.BADGER.get(), c -> new SmallFaunaRenderer<>(c,"badger"));
+        event.registerEntityRenderer(CreatureContent.MARMOT.get(), c -> new SmallFaunaRenderer<>(c,"marmot"));
     }
     private CreatureClient() {}
 }
