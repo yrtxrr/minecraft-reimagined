@@ -35,7 +35,7 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
-Current user authorization: review and integrate Kilo820e5db and only missing ancestors into `feat/reimagined-alpha`; repair fauna behavior/rendering and sparse grass/fern worldgen, run build/JUnit/GameTests and native checks when available. Prior Kilo thatch/clover/journal and Freebuff content are already integrated and must not be duplicated. Preserve both agent branches, history and existing worktrees. No unrelated major systems. Publish only the verified target branch without force.
+Current user authorization: review and integrate only missing e9af309/65f11a0 from `feat/kilo-world-polish` into `feat/reimagined-alpha`, repair tests/recipes if necessary and execute focused crop/cooking native acceptance plus the full build/JUnit/GameTests. Kilo fauna820e5db and all prior content are already integrated and must not be duplicated. Preserve source branches and existing worktrees. No new major systems. Publish the verified target branch without force.
 
 Before a major mechanic, inspect relevant open implementations (Create, TerraFirmaCraft, Farmer's Delight, JEI/EMI and others as appropriate). Evaluate architecture, aggregate cost and NeoForge 1.21.1 compatibility. Reuse only when licenses and attribution requirements permit it; document pinned sources, licenses and provenance in THIRD_PARTY_NOTICES.md. Otherwise implement the relevant technical principles independently. Do not copy protected assets or add mandatory mod dependencies without user consent.
 

@@ -140,4 +140,45 @@ public final class AgricultureGameTests {
             && displays.stream().anyMatch(d -> d.uses(grain) && d.result().is(Items.BREAD)), "Existing browser must expose barley uses without a special crop adapter");
         h.succeed();
     }
+    @GameTest(template = "empty")
+    public static void newPlantsCompostCorrectly(GameTestHelper h) {
+        var items=List.of(AgricultureContent.CLOVER_ITEM.get(),AgricultureContent.THATCH_ITEM.get(),
+                AgricultureContent.BARLEY_SEEDS.get(),AgricultureContent.BARLEY.get());
+        float[] chances={.3F,.85F,.3F,.65F};
+        for(int i=0;i<items.size();i++) {
+            var item=items.get(i);
+            var data=item.builtInRegistryHolder().getData(net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps.COMPOSTABLES);
+            h.assertTrue(data!=null && data.chance()==chances[i],"Live item data map must retain intended compost chance");
+            h.setBlock(CROP,Blocks.COMPOSTER);var stack=new ItemStack(item);
+            var result=ComposterBlock.insertItem(null,h.getBlockState(CROP),h.getLevel(),stack,h.absolutePos(CROP));
+            h.assertTrue(stack.isEmpty() && result.getValue(ComposterBlock.LEVEL)==1,"Actual composting consumes the item and fills the first layer");
+        }
+        h.succeed();
+    }
+    @GameTest(template = "empty")
+    public static void barleyGrowsOnMoistFarmland(GameTestHelper h) {
+        var crop=AgricultureContent.BARLEY_CROP.get();var level=h.getLevel();
+        var dry=h.absolutePos(new BlockPos(3,3,3));var wet=h.absolutePos(new BlockPos(10,3,3));
+        for(var center:List.of(dry,wet)) {
+            for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)
+                level.setBlock(center.below().offset(x,0,z),Blocks.FARMLAND.defaultBlockState()
+                        .setValue(FarmBlock.MOISTURE,center.equals(wet)?7:0),Block.UPDATE_ALL);
+            level.setBlock(center.above(),Blocks.GLASS.defaultBlockState(),Block.UPDATE_ALL);
+            level.setBlock(center.above(2),Blocks.SEA_LANTERN.defaultBlockState(),Block.UPDATE_ALL);
+        }
+        var dryRandom=net.minecraft.util.RandomSource.create(65309);
+        var wetRandom=net.minecraft.util.RandomSource.create(65309);
+        int dryGrown=0,wetGrown=0;
+        for(int i=0;i<512;i++) {
+            level.setBlock(dry,crop.defaultBlockState(),Block.UPDATE_CLIENTS);
+            level.setBlock(wet,crop.defaultBlockState(),Block.UPDATE_CLIENTS);
+            crop.defaultBlockState().randomTick(level,dry,dryRandom);
+            crop.defaultBlockState().randomTick(level,wet,wetRandom);
+            if(crop.getAge(level.getBlockState(dry))>0)dryGrown++;
+            if(crop.getAge(level.getBlockState(wet))>0)wetGrown++;
+        }
+        h.assertTrue(dryGrown>0 && wetGrown>dryGrown*1.8 && wetGrown<512,
+                "Real seeded random growth must be faster on hydrated soil, not merely allow placement: dry="+dryGrown+", wet="+wetGrown);
+        h.succeed();
+    }
 }

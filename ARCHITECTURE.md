@@ -107,3 +107,7 @@ Discovery v1NBT adds Blocks without discarding old catalogues; two-list source c
 ## Small-fauna AI integration
 
 Kilo's otter/badger/marmot use ordinary Animal lifecycle/vanilla safety, breeding and temptation. Optional swimming/rest/shelter/look/night goals own explicit movement/look/jump flags and yield to safety/feeding; no independent entity-wide tick timer or custom network payload. Loaded-only local searches are throttled, staggered and capped:81bank candidates,363water candidates,243shelter candidates; at most one path/search after24block FULL-readiness check. Grass/fern patches run only in vanilla chunk decoration with rarity8/10 and12/8trials. Source bounds and runtime/client acceptance are distinct:docs/KILO_FAUNA_INTEGRATION.md.
+
+## World-polish verification checkpoint
+
+Kilo e9af309/65f11a0 extends QA only; both proposed meal recipes already existed and retain their canonical bytes. Tests use active NeoForge compost item data maps, bounded512paired real crop random ticks and scheduled cooking of the two reviewed meals. Player JAR remains identical tod861718, so no additional production polling/sync/cache/generation cost is introduced. Native crop/cooking acceptance and exact limits:docs/KILO_WORLD_POLISH_INTEGRATION.md.

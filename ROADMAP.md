@@ -69,3 +69,7 @@ Rare forest/birch boulders (one1/18attempt), obtainable wild clover and thatch r
 ## Kilo fauna and nature checkpoint
 
 History-preserving integration of1002d09/18eeada/78e5134/820e5db adds three biome-scoped animals, corrected optional behavior and rare grass/fern groups. Amphibious otter surface swimming/bank rest/return to water, actual covered badger travel, day-active/night-resting/fleeing marmots and occasional deer head turns coexist with ordinary safety/breeding/food goals. River surface spawn placement, grassy marmot habitats, missing renderers and invalid plant codecs/localization repaired. Existing deer/boar/clover/boulders/journal remain. Full build25JUnit/132GameTests and299JSON/203keys passed. Native and measured-scale scope, natural-spawn/audio/multiplayer/long-survival gaps:docs/KILO_FAUNA_INTEGRATION.md. No new major system started; playable Alpha is not declared complete.
+
+## Kilo world-polish QA checkpoint
+
+Missing e9af309/65f11a0 history integrated afterd861718; existing barley and five meals are not duplicated.25JUnit/136GameTests passed with live composting, moisture-sensitive actual growth and two-meal scheduled cooking checks. Native scope/remaining Alpha gates:docs/KILO_WORLD_POLISH_INTEGRATION.md. This checkpoint adds QA coverage, no production mechanics or additional runtime work; earlier long-tick, survival/multiplayer/physical-hardware gates remain open.

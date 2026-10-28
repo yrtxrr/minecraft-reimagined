@@ -43,6 +43,40 @@ public final class CookingGameTests {
         h.assertTrue(cooking.getResultItem(level.registryAccess()).getCount()==1,"Recipe outputs must be independent copies");
         h.succeed();
     }
+    @GameTest(template="empty")
+    public static void allCookingRecipesRegistered(GameTestHelper h) {
+        var manager=h.getLevel().getRecipeManager();
+        for (String id : List.of("barley_porridge","vegetable_stew","hunters_stew","fish_chowder","mushroom_dumplings")) {
+            var recipe=manager.byKey(ResourceLocation.parse("reimagined:cooking/"+id));
+            h.assertTrue(recipe.isPresent() && recipe.get().value() instanceof CookingRecipe,
+                    "Cooking recipe "+id+" must be registered");
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=380)
+    public static void bothReviewedMealsActuallyCookAndConsumeExactlyOneBatch(GameTestHelper h) {
+        var positions=List.of(new BlockPos(4,3,4),new BlockPos(9,3,4));
+        var inputs=List.of(List.of(EngineeringContent.FLOUR.get(),Items.BROWN_MUSHROOM,Items.RED_MUSHROOM),
+                List.of(Items.CARROT,Items.POTATO,Items.BEETROOT));
+        var expected=List.of(CookingContent.MUSHROOM_DUMPLINGS.get(),CookingContent.VEGETABLE_STEW.get());
+        var pots=new ArrayList<CookingPotBlockEntity>();
+        for(int n=0;n<2;n++) {
+            var pos=positions.get(n);h.setBlock(pos.below(),Blocks.MAGMA_BLOCK);h.setBlock(pos,CookingContent.POT.get());
+            var pot=(CookingPotBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));pots.add(pot);
+            for(int slot=0;slot<3;slot++)pot.setItem(slot,new ItemStack(inputs.get(n).get(slot)));
+            pot.setItem(3,new ItemStack(Items.BOWL));
+        }
+        h.runAtTickTime(100,()-> {
+            for(var pot:pots)h.assertTrue(pot.getItem(4).isEmpty() && pot.progress()>0,"Both16second recipes must do timed work before yielding a meal");
+        });
+        h.succeedWhen(()-> {
+            for(int n=0;n<2;n++) {
+                var pot=pots.get(n);
+                h.assertTrue(pot.getItem(4).is(expected.get(n)) && pot.getItem(4).getCount()==1,"Actual heated scheduled cooking must yield the specified meal");
+                for(int slot=0;slot<4;slot++)h.assertTrue(pot.getItem(slot).isEmpty(),"Exactly one of every ingredient and one bowl consumed");
+            }
+        });
+    }
     @GameTest(template="empty",timeoutTicks=300)
     public static void actualScheduledCookingConsumesOneBatchAndOneBowl(GameTestHelper h) {
         var pot = pot(h); porridge(pot,1);
