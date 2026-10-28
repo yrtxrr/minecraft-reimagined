@@ -108,3 +108,9 @@ Final magic checkpoint:19JUnit/79required GameTests,141JSON/152bilingual keys pa
 ## New smithing module correctness
 
 Full build23JUnit/88required GameTests passed. Four new arithmetic tests include10000wear-fraction cases and overflow limits; nine new smithing GameTests cover actual blast-furnace steel, component/attribute/wear preservation, finite quality/bellows, resource/remote/concurrent actions, vanilla anvil/grid repair anti-stacking, saved inventories/items, drops, all46recipes/browser/codecs and recipe reload denial. Existing tests/profilers are not edited; running the required integration runner is focused integration verification, not Antigravity performance work. Source correctness is separate from client/performance readiness. See docs/SMITHING.md.
+
+## Smithing native completion and branch compatibility (2026-10-28)
+
+On75e5960, real client verified actual forge UI output (312durability, quality2/keen, retained name/custom data), a fully charged7damage hit, complete vanilla anvil repair preserving the+1modifier, and persistence after a full client process restart. Fuel1/hammer4wear/bellows retained in the saved forge. Previously checked blend/steel was not repeated. Controlled rank/resources/XP and software-rendering limits:docs/SMITHING.md.
+
+Separate proposed source resolutions with OpenCode c33617d and Antigravity7f53132 passed Gradle build/23JUnit each and fresh94/94 versus88/88GameTests; resource validator248JSON/186keys versus205JSON/179keys. These ran in temporary archive copies, not merged branches. Actual combined candidate, orchard graphics/scale, wheel-only refresh/milling-cache reload additions and after-optimization profile remain open. See docs/INTEGRATION_REVIEW.md for conflicts, exact revisions, procedure and acceptance gates. Main source/JAR code is unchanged from75e5960.

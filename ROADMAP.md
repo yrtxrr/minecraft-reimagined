@@ -35,3 +35,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 ## Current ownership
 
 Main developer owns the new smithing cycle and its focused validation in `feat/reimagined-alpha`. OpenCode develops pear orchards independently; Antigravity handles existing-system performance/testing. Do not overlap their files or merge their branches. Shared entry-point/language/documentation edits are additive only. FCC-Codex handoffs are historical. The smithing source/server checkpoint has23JUnit/88GameTests; native client validation follows. Prior Alpha gates remain open. See docs/SMITHING.md and docs/MAGIC_RESEARCH.md for current feature limits.
+
+## Latest acceptance / integration gate (2026-10-28)
+
+Smithing's focused native forge→hit→anvil repair→full process restart path now passed; already verified blend/steel was not repeated. See docs/SMITHING.md for controlled-fixture limits. No new major system started. Independent OpenCode and Antigravity source candidates passed build/23JUnit and94/88GameTests respectively; neither branch is merged. Integration remains conditional on the source-review follow-ups and runtime/performance gates in docs/INTEGRATION_REVIEW.md. Freebuff is outside this review. Full Alpha and full specification remain incomplete.
