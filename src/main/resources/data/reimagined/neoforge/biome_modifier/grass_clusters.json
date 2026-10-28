@@ -1,0 +1,12 @@
+﻿{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:meadow",
+    "minecraft:forest",
+    "minecraft:flower_forest"
+  ],
+  "features": [ "reimagined:grass_clusters" ],
+  "step": "vegetal_decoration"
+}
