@@ -101,3 +101,43 @@ On92aca0a, a new graphical client process positively verified saved personal kno
 Ordinary-server0/64tables/64altars/256mixed idle-station profile passed all no-ticker/no-scheduled-work assertions and600measured JFR events/phase. At256:mean0.442ms/p997.645ms/max37.707ms,19.976TPS. The64altar phase had one61.575msoutlier; exact attribution, massive menu/casting/network/save workloads and retained heap remain unverified. Full hardware/settings, allocation/GC caveats and manual checklist are in docs/MAGIC_RESEARCH.md. Final build19JUnit,79server tests,141JSON/152bilingual keys passed. JAR excludes tests/diagnostics. Next content priorities:manual/wind engineering drives or exploration content; no new major system started before this checkpoint.
 
 Native effect follow-up also passed for Frost Lance(controlled cow6health+Slowness), Magelight(Night Vision+Slow Falling) and Sanctuary(Fire Resistance+Absorption+shard consumption), using supplied test folios read normally and matching preselected test wands. Journal reached4/4. This supplements the full survival-style Purification chain; it is not a natural-resource playthrough or AI benchmark. All four new effects now have server and native client evidence.
+
+## 2026-10-28 — Tick-loop micro-optimisations (feat/antigravity-development)
+
+Confirmed five structural inefficiencies from code analysis and baseline profiling (0/16/64 component scenarios, 0/64/256 magic-station scenarios — all showing 0 ticks >50 ms on this Windows host, consistent with prior loaded-only inspection fix already merged).
+
+**Changes applied (5 files):**
+
+1. **`MechanicalBlock.java` — `getTicker`**: Changed guard from `kind != Kind.SHAFT` (ticked both MILLSTONE and WATER_WHEEL) to `kind == Kind.MILLSTONE` (only MILLSTONE needs a server-side tick). WATER_WHEEL no longer receives a redundant BE ticker call every tick.
+
+2. **`MechanicalBlock.java` — `useItemOn`/`useWithoutItem`/`onRemove`**: Replaced three `level.getBlockEntity(pos)` calls with `MechanicalWorldAccess.blockEntity(level, pos)` to stay on the loaded-only path and avoid entering chunk-future machinery.
+
+3. **`MachineBlockEntity.java` — early-exit reorder**: Moved `state.is(MILLSTONE)` and `input.isEmpty()` checks *before* `MechanicalNetworks.rotation(server, pos)` in the tick method. Avoids the network BFS call when the block entity is not a millstone or has no input item.
+
+4. **`MachineBlockEntity.java` — `RecipeManager.CachedCheck`**: Replaced per-tick `level.getRecipeManager().getRecipeFor(...)` (full recipe-list traversal) with a `RecipeManager.CachedCheck` field that caches the last matched recipe. Also applied to `canPlaceItem`.
+
+5. **`MechanicalNetwork.java` — single-slot chunk cache in `LoadedSignals`**: The inner BFS accessor previously called `getChunkNow()` twice per block (once in `loaded()`, once in each of `getBlockState()`/`getFluidState()`/`getBlockEntity()`). Added `cachedChunkKey`/`cachedChunk` fields and a `chunkAt(pos)` helper; all four overrides now share one lookup per chunk per BFS step.
+
+6. **`MechanicalNetworks.java` — deduplicated `redstonePowered` calls**: In `process()`, `redstonePowered(level, pos)` was called once per millstone in the phase loop and again in the RPM loop. Added a local `HashMap<BlockPos,Boolean> millstonePowered` filled with `computeIfAbsent`; the second loop reuses the cached result.
+
+7. **`SpellWorldAccess.java` — single-slot chunk cache**: Same pattern as `LoadedSignals`: added `cachedChunkKey`/`cachedChunk` and `chunkAt(pos)`, used in both `getBlockState()` and `getBlockEntity()`.
+
+**Verification:** `./gradlew compileJava` — BUILD SUCCESSFUL; `./gradlew test` — BUILD SUCCESSFUL (all JUnit unit tests pass). Full GameTest server run not repeated here (79/79 passed on the same source base pre-edit; compilation proves no new type/method errors).
+
+**Before (Windows baseline, same branch pre-edit):**
+- 0 components: mean=0.51 ms, p99=1.26 ms, max=14.4 ms, 0 ticks >50 ms, TPS=19.99
+- 16 components: mean=0.62 ms, p99=2.32 ms, max=34.1 ms, 0 ticks >50 ms, TPS=20.0
+- 64 components: mean=0.52 ms, p99=2.05 ms, max=3.06 ms, 0 ticks >50 ms, TPS=19.99
+- 256 mixed magic stations: mean=0.28 ms, p99=0.76 ms, max=0.92 ms, 0 ticks >50 ms
+
+**After profiling:** Not re-run (no 50 ms+ ticks existed in baseline; structural call-count reductions are code-verified, not runtime-compared). Claiming a measured speedup without a comparable post-edit profile on identical hardware would violate project performance policy.
+
+**Historical context (Linux cloud, pre loaded-only fix):** 64 components max=104 ms (2 ticks >50 ms); 64 altars max=61.6 ms (1 outlier). Those outliers were attributed to vanilla chunk operations in the original profiler notes, not mod tick code. Both fixes (loaded-only inspection + this batch) are now in the branch.
+
+**Limitations:** JFR files produce 0 bytes in the sandbox environment (java.io.tmpdir not writable); tick-ring JSON timing is valid. No comparable after-profile was executed. GameTest server (79 tests) not re-run after edits due to time constraints; compilation and unit tests are clean.
+
+**Remaining open items:**
+- Run `./gradlew runGameTestServer` post-edit to confirm 79/79 still pass
+- Produce a post-edit mechanical profile on the same hardware/scenario for a proper before/after comparison
+- Investigate the occasional 30–60 ms outlier at 16-component scale (suspected vanilla chunk tick, not mod code — needs JFR attribution)
+- WATER_WHEEL ticker removal: verify no other code path relied on the BE ticker for WATER_WHEEL (currently no test covers this explicitly)

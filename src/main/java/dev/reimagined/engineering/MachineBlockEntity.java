@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,6 +23,7 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     private static final int[] NO_SLOTS = {};
     private static final int[] INPUT_SLOTS = {0};
     private static final int[] OUTPUT_SLOTS = {1};
+    private final RecipeManager.CachedCheck<SingleRecipeInput, MillingRecipe> recipeCheck = RecipeManager.createCheck(EngineeringContent.MILLING.get());
     private ItemStack input = ItemStack.EMPTY;
     private ItemStack output = ItemStack.EMPTY;
     private int progress;
@@ -35,9 +37,10 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
         if (level.getGameTime() % 20 != Math.floorMod(pos.asLong(), 20)) return;
         if (!(level instanceof ServerLevel server)) return;
         Rotation network = MechanicalNetworks.rotation(server, pos);
+        if (!state.is(EngineeringContent.MILLSTONE.get()) || machine.input.isEmpty()) return;
         boolean running = network.running() && !MechanicalNetwork.redstonePowered(level, pos);
-        if (!state.is(EngineeringContent.MILLSTONE.get()) || !running || machine.input.isEmpty()) return;
-        var recipe = level.getRecipeManager().getRecipeFor(EngineeringContent.MILLING.get(), new SingleRecipeInput(machine.input), level);
+        if (!running) return;
+        var recipe = machine.recipeCheck.getRecipeFor(new SingleRecipeInput(machine.input), level);
         if (recipe.isEmpty()) {
             if (machine.progress != 0 || !machine.currentRecipe.isEmpty()) { machine.resetProgress(); machine.setChanged(); }
             return;
@@ -153,7 +156,7 @@ public final class MachineBlockEntity extends BlockEntity implements WorldlyCont
     private void resetProgress() { progress = 0; currentRecipe = ""; }
     @Override public boolean canPlaceItem(int slot, ItemStack stack) {
         return isMillstone() && slot == 0 && !stack.isEmpty() && level != null
-                && level.getRecipeManager().getRecipeFor(EngineeringContent.MILLING.get(), new SingleRecipeInput(stack), level).isPresent();
+                && recipeCheck.getRecipeFor(new SingleRecipeInput(stack), level).isPresent();
     }
     @Override public int[] getSlotsForFace(Direction side) {
         return !isMillstone() ? NO_SLOTS : side == Direction.DOWN ? OUTPUT_SLOTS : INPUT_SLOTS;

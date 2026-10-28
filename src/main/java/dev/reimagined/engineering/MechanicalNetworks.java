@@ -169,10 +169,11 @@ public final class MechanicalNetworks {
             double phase = 0;
             BlockPos representative = null;
             boolean movingRepresentative = false;
+            var millstonePowered = new HashMap<BlockPos, Boolean>();
             for (BlockPos pos : entry.nodes) {
                 if (!MechanicalWorldAccess.loaded(level, pos) || !(MechanicalWorldAccess.blockEntity(level, pos) instanceof MachineBlockEntity machine)) continue;
                 boolean moving = machine.getBlockState().getValue(MechanicalBlock.ACTIVE)
-                        && !(machine.isMillstone() && MechanicalNetwork.redstonePowered(level, pos));
+                        && !millstonePowered.computeIfAbsent(pos, p -> machine.isMillstone() && MechanicalNetwork.redstonePowered(level, p));
                 if (representative == null || moving && !movingRepresentative
                         || moving == movingRepresentative && pos.compareTo(representative) < 0) {
                     representative = pos; movingRepresentative = moving; phase = machine.rotationAngle(0);
@@ -181,7 +182,7 @@ public final class MechanicalNetworks {
             for (BlockPos pos : entry.nodes) {
                 if (!MechanicalWorldAccess.loaded(level, pos) || !(MechanicalWorldAccess.blockEntity(level, pos) instanceof MachineBlockEntity machine)) continue;
                 int rpm = entry.rotation.speed();
-                if (machine.isMillstone() && MechanicalNetwork.redstonePowered(level, pos)) rpm = 0;
+                if (machine.isMillstone() && millstonePowered.computeIfAbsent(pos, p -> MechanicalNetwork.redstonePowered(level, p))) rpm = 0;
                 machine.applyRotation(rpm, rpm == 0 ? machine.rotationAngle(0) : phase, now);
             }
         }

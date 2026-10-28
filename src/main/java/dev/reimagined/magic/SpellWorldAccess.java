@@ -12,14 +12,22 @@ import net.minecraft.world.phys.*;
 /** Loaded-only view: rays collide with unavailable terrain rather than requesting a chunk future. */
 public final class SpellWorldAccess implements BlockGetter {
     private final ServerLevel level;
+    private long cachedChunkKey = Long.MIN_VALUE;
+    private net.minecraft.world.level.chunk.LevelChunk cachedChunk;
     public SpellWorldAccess(ServerLevel level) {this.level=level;}
+    private net.minecraft.world.level.chunk.LevelChunk chunkAt(BlockPos pos) {
+        long key = net.minecraft.world.level.ChunkPos.asLong(pos);
+        if (key == cachedChunkKey) return cachedChunk;
+        cachedChunkKey = key;
+        return cachedChunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
+    }
     @Override public BlockState getBlockState(BlockPos pos) {
-        var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+        var chunk=chunkAt(pos);
         return chunk==null?Blocks.BARRIER.defaultBlockState():chunk.getBlockState(pos);
     }
     @Override public FluidState getFluidState(BlockPos pos) {return getBlockState(pos).getFluidState();}
     @Override public BlockEntity getBlockEntity(BlockPos pos) {
-        var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+        var chunk=chunkAt(pos);
         return chunk==null?null:chunk.getBlockEntity(pos);
     }
     @Override public int getHeight() {return level.getHeight();}
