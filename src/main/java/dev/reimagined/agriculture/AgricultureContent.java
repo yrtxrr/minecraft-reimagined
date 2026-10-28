@@ -5,7 +5,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.*;
 
 public final class AgricultureContent {
@@ -27,11 +26,7 @@ public final class AgricultureContent {
     private AgricultureContent() {}
     public static void register(IEventBus bus) {
         BLOCKS.register(bus); ITEMS.register(bus);
-        bus.addListener((BuildCreativeModeTabContentsEvent event) -> {
-            if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) { event.accept(BARLEY_SEEDS); event.accept(CLOVER_ITEM); }
-            if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) event.accept(BARLEY);
-            if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(THATCH_ITEM);
-        });
+
         bus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(BARLEY_SEEDS.get(), 0.3F);
             ComposterBlock.COMPOSTABLES.put(BARLEY.get(), 0.65F);

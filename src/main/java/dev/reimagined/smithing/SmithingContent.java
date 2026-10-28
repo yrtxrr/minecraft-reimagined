@@ -37,10 +37,7 @@ public final class SmithingContent {
     private SmithingContent() {}
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);MENUS.register(bus);TYPES.register(bus);SERIALIZERS.register(bus);
-        bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event)-> {
-            if(event.getTabKey()==CreativeModeTabs.FUNCTIONAL_BLOCKS){event.accept(FORGE_ITEM);event.accept(BELLOWS);}
-            if(event.getTabKey()==CreativeModeTabs.INGREDIENTS){event.accept(CARBON_IRON);event.accept(STEEL);}
-        });
+
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.ItemTooltipEvent event)-> {
             if(!event.getItemStack().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).contains(ForgedEquipment.KEY))return;
             var data=ForgedEquipment.data(event.getItemStack());int quality=data.getInt("Quality");

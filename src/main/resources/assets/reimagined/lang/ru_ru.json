@@ -201,5 +201,9 @@
   "entity.reimagined.badger": "Барсук",
   "item.reimagined.badger_spawn_egg": "Яйцо призыва барсука",
   "entity.reimagined.marmot": "Сурок",
-  "item.reimagined.marmot_spawn_egg": "Яйцо призыва сурка"
+  "item.reimagined.marmot_spawn_egg": "Яйцо призыва сурка",
+  "itemGroup.reimagined.nature": "Reimagined: Природа и животные",
+  "itemGroup.reimagined.food": "Reimagined: Ферма и еда",
+  "itemGroup.reimagined.engineering": "Reimagined: Техника и оружие",
+  "itemGroup.reimagined.magic": "Reimagined: Магия и исследования"
 }

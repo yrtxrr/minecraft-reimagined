@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "reimagined:pear_sapling",
+    "reimagined:pear_leaves",
+    "reimagined:pear_log",
+    "reimagined:pear_wood",
+    "reimagined:pear_planks",
+    "reimagined:thatch",
+    "reimagined:clover",
+    "reimagined:deer_spawn_egg",
+    "reimagined:boar_spawn_egg",
+    "reimagined:otter_spawn_egg",
+    "reimagined:badger_spawn_egg",
+    "reimagined:marmot_spawn_egg"
+  ]
+}

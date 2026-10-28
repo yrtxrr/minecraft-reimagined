@@ -1,10 +1,8 @@
 package dev.reimagined.fishing;
 
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -23,16 +21,9 @@ public final class FishContent {
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
-        bus.addListener(FishContent::creativeTab);
     }
 
-    private static void creativeTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(RIVER_PERCH);
-            event.accept(SILVER_TROUT);
-            event.accept(BLUE_MACKEREL);
-        }
-    }
+
 
     private FishContent() {}
 }

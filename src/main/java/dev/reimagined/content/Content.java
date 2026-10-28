@@ -5,11 +5,9 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraft.world.item.CreativeModeTabs;
 
 public final class Content {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("reimagined");
@@ -34,17 +32,10 @@ public final class Content {
         ITEMS.register(bus);
         CombatEvents.register();
         dev.reimagined.research.ResearchEvents.register();
-        bus.addListener(Content::creative);
         NeoForge.EVENT_BUS.addListener(Content::tick);
         NeoForge.EVENT_BUS.addListener(Content::clonePlayer);
     }
-    private static void creative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(RESEARCH_JOURNAL);
-            event.accept(SPEAR); event.accept(HAMMER); event.accept(DAGGER); event.accept(HALBERD);
-            event.accept(ELEMENTAL_WAND); event.accept(NATURE_WAND); event.accept(ARCANE_WAND); event.accept(RITUAL_WAND);
-        }
-    }
+
     private static void clonePlayer(net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone event) {
         SpellWand.copyState(event.getOriginal(), event.getEntity());
         CombatState.copyState(event.getOriginal(), event.getEntity());

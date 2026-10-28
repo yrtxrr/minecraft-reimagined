@@ -35,7 +35,7 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
-Current user authorization: review and integrate only missing e9af309/65f11a0 from `feat/kilo-world-polish` into `feat/reimagined-alpha`, repair tests/recipes if necessary and execute focused crop/cooking native acceptance plus the full build/JUnit/GameTests. Kilo fauna820e5db and all prior content are already integrated and must not be duplicated. Preserve source branches and existing worktrees. No new major systems. Publish the verified target branch without force.
+Current user authorization: visually audit existing resources without bulk art replacement, remove the bespoke recipe UI and add optional real JEI compatibility; additionally implement extensible localized creative categories as a separate verified commit. Preserve all items, blocks, recipes and gameplay. Do not touch Kilo settlements branches/worktrees. Publish completed verified stages to feat/reimagined-alpha without force.
 
 Before a major mechanic, inspect relevant open implementations (Create, TerraFirmaCraft, Farmer's Delight, JEI/EMI and others as appropriate). Evaluate architecture, aggregate cost and NeoForge 1.21.1 compatibility. Reuse only when licenses and attribution requirements permit it; document pinned sources, licenses and provenance in THIRD_PARTY_NOTICES.md. Otherwise implement the relevant technical principles independently. Do not copy protected assets or add mandatory mod dependencies without user consent.
 

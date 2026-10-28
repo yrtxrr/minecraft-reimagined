@@ -224,3 +224,7 @@ Reviewed the incoming ancestry against published e7e6969. Prior25e4ea7/thatch/cl
 ## Kilo world polish —2026-10-28
 
 Reviewed e9af309/65f11a0 againstd861718. They add tests, not missing farming mechanics/meals; both meal JSONs were already present and are preserved without incoming BOM-only reformatting. Corrected compost tests to live Item data maps and real insertion, replaced placement-only moist-soil check with512paired actual random-growth trials, retained five-recipe registration and added real scheduled cooking/consumption for dumplings/stew. Full build25JUnit/136GameTests and299JSON/203keys passed, including all fauna/nature regressions. Production JAR is byte-identical; no performance improvement claimed. Actual Survival client seed placement, natural soil hydration/random growth, bonemeal maturation and heated-pot meal interaction:docs/KILO_WORLD_POLISH_INTEGRATION.md. No new large system; source branches/worktrees preserved.
+
+## Creative catalogue
+
+Added four standard NeoForge tabs covering51registered items exactly once:12nature/wildlife,13farming/food,11engineering/equipment,15magic/research. Ordered mergeable item tags support future additions; vanilla-category injection removed, search retained.25JUnit/137GameTests passed, including complete item coverage/order/nonduplication and all previous regressions. Actual RU client page2icons/categories/content inspected. No item/recipe/gameplay changes; separate commit from the pending JEI/visual-audit work. Details:docs/CREATIVE_TABS.md.

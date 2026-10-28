@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "reimagined:water_wheel",
+    "reimagined:shaft",
+    "reimagined:millstone",
+    "reimagined:carbon_iron_blend",
+    "reimagined:steel_ingot",
+    "reimagined:smithing_forge",
+    "reimagined:smithing_bellows",
+    "reimagined:iron_hammer",
+    "reimagined:iron_spear",
+    "reimagined:iron_dagger",
+    "reimagined:iron_halberd"
+  ]
+}

@@ -15,6 +15,7 @@ public final class Reimagined {
     public static final String MOD_ID = "reimagined";
     public Reimagined(IEventBus modBus) {
         Content.register(modBus);
+        dev.reimagined.content.ReimaginedTabs.register(modBus);
         CreatureContent.register(modBus);
         FishContent.register(modBus);
         EngineeringContent.register(modBus);

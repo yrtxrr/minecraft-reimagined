@@ -201,5 +201,9 @@
   "entity.reimagined.badger": "Badger",
   "item.reimagined.badger_spawn_egg": "Badger Spawn Egg",
   "entity.reimagined.marmot": "Marmot",
-  "item.reimagined.marmot_spawn_egg": "Marmot Spawn Egg"
+  "item.reimagined.marmot_spawn_egg": "Marmot Spawn Egg",
+  "itemGroup.reimagined.nature": "Reimagined: Nature & Wildlife",
+  "itemGroup.reimagined.food": "Reimagined: Farming & Food",
+  "itemGroup.reimagined.engineering": "Reimagined: Engineering & Gear",
+  "itemGroup.reimagined.magic": "Reimagined: Magic & Research"
 }

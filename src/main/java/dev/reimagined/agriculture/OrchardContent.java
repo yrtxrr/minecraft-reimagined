@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -66,19 +64,7 @@ public final class OrchardContent {
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
-        bus.addListener((BuildCreativeModeTabContentsEvent event) -> {
-            if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-                event.accept(PEAR_SAPLING_ITEM);
-                event.accept(PEAR_LEAVES_ITEM);
-                event.accept(PEAR_LOG_ITEM);
-            }
-            if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-                event.accept(PEAR_LOG_ITEM);
-                event.accept(PEAR_WOOD_ITEM);
-                event.accept(PEAR_PLANKS_ITEM);
-            }
-            if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) event.accept(PEAR);
-        });
+
         bus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
             net.minecraft.world.level.block.ComposterBlock.COMPOSTABLES.put(PEAR_SAPLING_ITEM.get(), 0.3F);
             net.minecraft.world.level.block.ComposterBlock.COMPOSTABLES.put(PEAR_LEAVES_ITEM.get(), 0.3F);

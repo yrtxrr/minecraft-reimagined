@@ -45,13 +45,7 @@ public final class CookingContent {
         bus.addListener((net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) ->
             event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, ENTITY.get(),
                 (pot, side) -> side == null ? null : pot.handler(side)));
-        bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
-            if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) event.accept(POT_ITEM);
-            if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-                event.accept(BARLEY_PORRIDGE); event.accept(VEGETABLE_STEW); event.accept(HUNTERS_STEW);
-                event.accept(FISH_CHOWDER); event.accept(MUSHROOM_DUMPLINGS);
-            }
-        });
+
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent event) -> CookingPotBlockEntity.recipesReloaded());
     }
 }

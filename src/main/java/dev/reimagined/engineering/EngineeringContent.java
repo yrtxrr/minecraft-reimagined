@@ -3,7 +3,6 @@ package dev.reimagined.engineering;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -44,11 +43,6 @@ public final class EngineeringContent {
                 event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, MACHINE.get(),
                         (machine, side) -> machine.isMillstone() && side != null
                                 ? new net.neoforged.neoforge.items.wrapper.SidedInvWrapper(machine, side) : null));
-        bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
-            if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-                event.accept(WATER_WHEEL); event.accept(SHAFT); event.accept(MILLSTONE);
-            }
-            if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) event.accept(FLOUR);
-        });
+
     }
 }

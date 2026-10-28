@@ -47,11 +47,7 @@ public final class MagicContent {
     private static DeferredHolder<RecipeType<?>,RecipeType<MagicRecipe>> type(String id) { return TYPES.register(id,()->new RecipeType<>() { @Override public String toString() {return "reimagined:"+id;} }); }
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);MENUS.register(bus);TYPES.register(bus);SERIALIZERS.register(bus);
-        bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event)-> {
-            if(event.getTabKey()==CreativeModeTabs.FUNCTIONAL_BLOCKS) {event.accept(RESEARCH_TABLE);event.accept(ARCANE_ALTAR);}
-            if(event.getTabKey()==CreativeModeTabs.INGREDIENTS) {event.accept(EMBER_FOCUS);event.accept(VERDANT_FOCUS);event.accept(SPATIAL_FOCUS);event.accept(WARD_FOCUS);}
-            if(event.getTabKey()==CreativeModeTabs.TOOLS_AND_UTILITIES) {event.accept(FROST_FOLIO);event.accept(PURIFICATION_FOLIO);event.accept(MAGELIGHT_FOLIO);event.accept(SANCTUARY_FOLIO);}
-        });
+
         bus.addListener((net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent event)->event.registrar("1").playToClient(
                 MagicProgressPayload.TYPE,MagicProgressPayload.CODEC,(payload,context)->MagicProgressPayload.receive(payload)));
         var game=net.neoforged.neoforge.common.NeoForge.EVENT_BUS;

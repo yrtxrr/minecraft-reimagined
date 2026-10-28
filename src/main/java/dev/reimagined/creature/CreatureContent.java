@@ -5,12 +5,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -48,7 +46,6 @@ public final class CreatureContent {
         ITEMS.register(bus);
         bus.addListener(CreatureContent::attributes);
         bus.addListener(CreatureContent::placements);
-        bus.addListener(CreatureContent::creativeTab);
     }
 
     private static void attributes(EntityAttributeCreationEvent event) {
@@ -76,9 +73,7 @@ public final class CreatureContent {
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
-    private static void creativeTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) { event.accept(DEER_SPAWN_EGG); event.accept(BOAR_SPAWN_EGG); event.accept(MARMOT_SPAWN_EGG); event.accept(BADGER_SPAWN_EGG); event.accept(OTTER_SPAWN_EGG); }
-    }
+
 
     private CreatureContent() {}
 }

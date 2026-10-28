@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "reimagined:research_journal",
+    "reimagined:elemental_wand",
+    "reimagined:nature_wand",
+    "reimagined:arcane_wand",
+    "reimagined:ritual_wand",
+    "reimagined:research_table",
+    "reimagined:arcane_altar",
+    "reimagined:ember_focus",
+    "reimagined:verdant_focus",
+    "reimagined:spatial_focus",
+    "reimagined:ward_focus",
+    "reimagined:frost_lance_folio",
+    "reimagined:purification_folio",
+    "reimagined:magelight_folio",
+    "reimagined:sanctuary_folio"
+  ]
+}
