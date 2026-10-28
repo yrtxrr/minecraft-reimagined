@@ -43,6 +43,16 @@ public final class CookingGameTests {
         h.assertTrue(cooking.getResultItem(level.registryAccess()).getCount()==1,"Recipe outputs must be independent copies");
         h.succeed();
     }
+    @GameTest(template="empty")
+    public static void allCookingRecipesRegistered(GameTestHelper h) {
+        var manager=h.getLevel().getRecipeManager();
+        for (String id : List.of("barley_porridge","vegetable_stew","hunters_stew","fish_chowder","mushroom_dumplings")) {
+            var recipe=manager.byKey(ResourceLocation.parse("reimagined:cooking/"+id));
+            h.assertTrue(recipe.isPresent() && recipe.get().value() instanceof CookingRecipe,
+                    "Cooking recipe "+id+" must be registered");
+        }
+        h.succeed();
+    }
     @GameTest(template="empty",timeoutTicks=300)
     public static void actualScheduledCookingConsumesOneBatchAndOneBowl(GameTestHelper h) {
         var pot = pot(h); porridge(pot,1);
