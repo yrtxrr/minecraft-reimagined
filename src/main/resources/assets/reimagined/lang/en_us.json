@@ -187,4 +187,7 @@
     "journal.reimagined.page.orchard":  "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks."
 ,
   "block.reimagined.thatch": "Thatch"
+,
+  "block.reimagined.clover": "Clover",
+  "block.reimagined.thatch": "Thatch"
 }
