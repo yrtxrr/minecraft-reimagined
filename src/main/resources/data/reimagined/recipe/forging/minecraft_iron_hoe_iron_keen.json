@@ -1,0 +1,12 @@
+{
+  "type": "reimagined:forging",
+  "equipment": "minecraft:iron_hoe",
+  "metal": {
+    "tag": "c:ingots/iron"
+  },
+  "treatment": {
+    "item": "minecraft:flint"
+  },
+  "material_quality": 1,
+  "sturdy": false
+}

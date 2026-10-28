@@ -1,0 +1,12 @@
+{
+  "type": "reimagined:forging",
+  "equipment": "reimagined:iron_halberd",
+  "metal": {
+    "tag": "c:ingots/iron"
+  },
+  "treatment": {
+    "item": "minecraft:flint"
+  },
+  "material_quality": 1,
+  "sturdy": false
+}

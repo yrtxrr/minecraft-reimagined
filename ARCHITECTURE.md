@@ -1,6 +1,6 @@
 # Architecture
 
-Single entry point: `dev.reimagined.Reimagined`. Each module registers its own deferred registries through the mod event bus; gameplay hooks use the NeoForge game bus. The main developer owns all modules and integration in feat/reimagined-alpha. No upstream gameplay-mod code is embedded.
+Single entry point: `dev.reimagined.Reimagined`. Each module registers its own deferred registries through the mod event bus; gameplay hooks use the NeoForge game bus. Task ownership follows AGENTS.md:main developer handles the independent smithing increment/integration, OpenCode pear orchards and Antigravity existing-system performance/testing. No upstream gameplay-mod code is embedded.
 
 | Module | Responsibility | State / authority |
 |---|---|---|
@@ -58,7 +58,7 @@ FCC handoff reviews must include the same cost contract and actual profiling evi
 
 Engineering now uses the per-dimension bounded cache/scheduler described in [MECHANICAL_SYSTEM.md](docs/MECHANICAL_SYSTEM.md). Passive shaft block entities have no tickers. Server-authoritative changed-motion snapshots feed a client BER with reload-cached rotor quads; stopped phases persist across saves and require topology revalidation before resuming. Earlier references to mechanical caching as future work are superseded by this implementation.
 
-Before major features, review existing open implementations, pinned licenses and NeoForge compatibility. Reuse licensed components when proportionate, otherwise apply learned principles independently. Record provenance and attribution; never assume code licenses cover art. New mandatory mod dependencies require user agreement. Current development is solely on feat/reimagined-alpha; historical FCC ownership restrictions no longer apply.
+Before major features, review existing open implementations, pinned licenses and NeoForge compatibility. Reuse licensed components when proportionate, otherwise apply learned principles independently. Record provenance and attribution; never assume code licenses cover art. New mandatory mod dependencies require user agreement. Main feature work stays on feat/reimagined-alpha; OpenCode/Antigravity assignments in AGENTS.md supersede historical sole/FCC ownership. No unrelated branches are merged.
 
 ## Ordinary agriculture
 
@@ -79,3 +79,7 @@ Cooking uses the shared vanilla recipe contract and an independently registered 
 ## Spell research
 
 The `magic` module adds manual recipe-driven altar/research stations with standard saved containers and two vanilla recipe types. No BE tickers or global station queues exist. Server menu transactions enforce current recipes, nearby owner/lock, resources, discovery counts and output capacity. Four new finite unlocks use versioned personal NBT; selected spells use item custom data and share existing school cooldowns/mana. Owner-only changed/initial snapshots feed client progress, cleared on logout. See docs/MAGIC_RESEARCH.md for performance/loaded-only ray contracts, provenance and validation limits.
+
+## Manual smithing
+
+The `smithing` module uses standard reloadable recipes and a seven-slot server-owned manual forge. Steel production reuses the vanilla blast furnace. No BE ticker/world scan/profile changes exist. Quality is bounded by metal, rank and bellows; finishes preserve item components/wear and change built-in durability/attack attributes once. Per-stack nondefault durability and existing forging state reject repeat processing, including vanilla grid-repair metadata loss. Native anvil repair preserves worked equipment. See docs/SMITHING.md for costs/lifecycle/browser preview limits and Antigravity profiling handoff.

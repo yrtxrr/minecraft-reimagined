@@ -35,7 +35,7 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
-The user now assigns all development to the main developer on `feat/reimagined-alpha`. FCC-Codex no longer participates; earlier handoff reservations are historical. Preserve existing work and do not merge unrelated branches automatically.
+Current user assignments: main developer implements the independent smithing cycle in `feat/reimagined-alpha`; OpenCode owns pear orchards; Antigravity owns performance work and testing of existing systems. Do not edit orchard/agriculture implementations, existing mechanical networks/profilers or existing test suites for unrelated work. New-module tests remain part of this task. Shared entry-point, language and progress files receive only necessary additive changes. Do not merge their branches. FCC-Codex handoffs are historical.
 
 Before a major mechanic, inspect relevant open implementations (Create, TerraFirmaCraft, Farmer's Delight, JEI/EMI and others as appropriate). Evaluate architecture, aggregate cost and NeoForge 1.21.1 compatibility. Reuse only when licenses and attribution requirements permit it; document pinned sources, licenses and provenance in THIRD_PARTY_NOTICES.md. Otherwise implement the relevant technical principles independently. Do not copy protected assets or add mandatory mod dependencies without user consent.
 

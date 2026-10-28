@@ -1,0 +1,12 @@
+{
+  "type": "reimagined:forging",
+  "equipment": "minecraft:iron_sword",
+  "metal": {
+    "tag": "c:ingots/iron"
+  },
+  "treatment": {
+    "item": "minecraft:leather"
+  },
+  "material_quality": 1,
+  "sturdy": true
+}

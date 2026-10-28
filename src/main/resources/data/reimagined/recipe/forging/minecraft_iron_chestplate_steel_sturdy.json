@@ -1,0 +1,12 @@
+{
+  "type": "reimagined:forging",
+  "equipment": "minecraft:iron_chestplate",
+  "metal": {
+    "tag": "c:ingots/steel"
+  },
+  "treatment": {
+    "item": "minecraft:leather"
+  },
+  "material_quality": 2,
+  "sturdy": true
+}
