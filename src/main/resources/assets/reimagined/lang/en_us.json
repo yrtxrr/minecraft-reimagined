@@ -186,11 +186,7 @@
     "item.reimagined.pear":  "Pear",
     "journal.reimagined.page.orchard":  "ORCHARD\n\nPear trees grow in forests and meadows. Graft a pear with an oak sapling for more.\n\nFruit ripens in summer and autumn; right-click leaves to harvest. Pear logs make planks."
 ,
-  "block.reimagined.thatch": "Thatch"
-,
   "block.reimagined.clover": "Clover",
-  "block.reimagined.thatch": "Thatch"
-,
   "journal.reimagined.blocks": "%s blocks found",
   "journal.reimagined.block_list": "Block discoveries"
 ,
@@ -200,4 +196,5 @@
   "item.reimagined.badger_spawn_egg": "Badger Spawn Egg",
   "entity.reimagined.marmot": "Marmot",
   "item.reimagined.marmot_spawn_egg": "Marmot Spawn Egg"
-}
+}\n
+
