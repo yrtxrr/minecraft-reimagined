@@ -23,6 +23,10 @@ public final class CookingContent {
             new CookingPotBlock(BlockBehaviour.Properties.of().strength(2.5F).sound(SoundType.METAL).noOcclusion()));
     public static final DeferredItem<BlockItem> POT_ITEM = ITEMS.register("cooking_pot", () -> new BlockItem(POT.get(), new Item.Properties()));
     public static final DeferredItem<Item> BARLEY_PORRIDGE = meal("barley_porridge", 7, .6F);
+    public static final DeferredItem<Item> RYE_BREAD = meal("rye_bread", 6, .5F);
+    public static final DeferredItem<Item> OAT_PORRIDGE = meal("oat_porridge", 7, .6F);
+    public static final DeferredItem<Item> CABBAGE_SOUP = meal("cabbage_soup", 8, .7F);
+    public static final DeferredItem<Item> ONION_SOUP = meal("onion_soup", 7, .65F);
     public static final DeferredItem<Item> VEGETABLE_STEW = meal("vegetable_stew", 9, .7F);
     public static final DeferredItem<Item> HUNTERS_STEW = meal("hunters_stew", 11, .8F);
     public static final DeferredItem<Item> FISH_CHOWDER = meal("fish_chowder", 10, .8F);
@@ -48,7 +52,8 @@ public final class CookingContent {
         bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
             if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) event.accept(POT_ITEM);
             if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-                event.accept(BARLEY_PORRIDGE); event.accept(VEGETABLE_STEW); event.accept(HUNTERS_STEW);
+                event.accept(BARLEY_PORRIDGE); event.accept(RYE_BREAD); event.accept(OAT_PORRIDGE);
+                event.accept(CABBAGE_SOUP); event.accept(ONION_SOUP); event.accept(VEGETABLE_STEW); event.accept(HUNTERS_STEW);
                 event.accept(FISH_CHOWDER); event.accept(MUSHROOM_DUMPLINGS);
             }
         });
