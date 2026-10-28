@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.Set;
 
-/** A local observation every ten seconds, with at most eight visibility traces; no remote simulation. */
+/** Local periodic/book-use observation:64creature candidates,8visibility rays and one6block sight ray. */
 public final class ResearchEvents {
     private static final Set<Block> RARE_BLOCKS = Set.of(
             Blocks.AMETHYST_CLUSTER, Blocks.BUDDING_AMETHYST, Blocks.CALCITE, Blocks.TUFF,
@@ -42,7 +42,8 @@ public final class ResearchEvents {
             level.getEntities().get(net.minecraft.world.level.entity.EntityTypeTest.forClass(LivingEntity.class),player.getBoundingBox().inflate(6),entity->{
                 examined[0]++;
                 if (!(entity instanceof Player) && entity.isAlive() && !entity.isSpectator()
-                        && !found[0].creatures().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()))) {
+                        && !found[0].creatures().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()))
+                        && player.getEyePosition().distanceToSqr(entity.getEyePosition())<=256) {
                     traces[0]++;
                     var hit=new dev.reimagined.magic.SpellWorldAccess(level).clip(new net.minecraft.world.level.ClipContext(
                             player.getEyePosition(),entity.getEyePosition(),net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,player));

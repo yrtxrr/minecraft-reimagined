@@ -97,3 +97,9 @@ Boar extends vanilla Animal with local built-in goals, tagged diet, ordinary bre
 ## Additive fishing items
 
 Freebuff's three fish use standard item/food registration, additive item tags, vanilla smelting/smoking and the shared browser. A supported NeoForge add_table modifier targets only the fishing root and optionally appends one roll from a three-entry table. No vanilla loot table replacement, gameplay ticker/cache/world scan/chunk load or new payload is introduced. Existing global loot entries remain. Deterministic raw-control comparisons in tests establish prefix preservation without changing production loot calls. Native bite observation is opt-in dev-only and excluded from the player JAR. See docs/FISHING.md for semantics/provenance and limits.
+
+## Integrated agent decorations and block discoveries
+
+Boulders/clover use standard chunk decoration:single rarity18forest-rock candidate and rarity8clover patch with12bounded trials. No production world scan/ticker or synchronous player-tick terrain generation. Clover's cross model explicitly uses cutout and follows the vanilla outline offset. Compostability uses NeoForge's item data map; legacy Java-map writes alone are not the1.21.1runtime contract.
+
+Discovery v1NBT adds Blocks without discarding old catalogues; two-list source construction stays supported. Player clone deep-copies all fields. Periodic and journal-use observation caps64creature candidates/eight loaded-only visibility rays (each<=16blocks) plus one six-block rare-block sight ray. Nearby FULL readiness guards biome lookup; unknown chunks fail closed. The journal budgets all three catalogues under the vanilla100page cap and uses four entries only near that cap. Details/tests/native limits:docs/AGENT_CONTENT_INTEGRATION.md.

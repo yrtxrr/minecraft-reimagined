@@ -17,9 +17,9 @@ import net.minecraft.world.entity.player.Player;
 public record Discoveries(List<ResourceLocation> biomes, List<ResourceLocation> creatures, List<ResourceLocation> blocks) {
     public static final String DATA_KEY = "reimagined_discoveries_v1";
     public static final int LIMIT = 256;
-    public Discoveries { 
-        biomes = List.copyOf(biomes); 
-        creatures = List.copyOf(creatures); 
+    public Discoveries {
+        biomes = List.copyOf(biomes);
+        creatures = List.copyOf(creatures);
         blocks = List.copyOf(blocks != null ? blocks : List.of());
     }
     /** Preserve the original two-catalogue source API and old saves. */

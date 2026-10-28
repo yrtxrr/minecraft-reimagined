@@ -194,4 +194,3 @@ public final class ResearchGameTests {
         helper.succeed();
     }
 }
-

@@ -73,7 +73,7 @@
   "tooltip.reimagined.special.dagger": "Sneak + use: quick thrust and brief footwork.",
   "tooltip.reimagined.special.halberd": "Sneak + use: sweep up to three targets in front.",
   "tooltip.reimagined.special_cooldown": "Shared special cooldown: %ss; costs 2 durability.",
-  "journal.reimagined.page.introduction": "FIELD JOURNAL\n\nExplore to record nearby creatures and visited biomes.\n\nBiomes: %s\nCreatures: %s\n\nOpen again to refresh your notes.\nBlocks: %s",
+  "journal.reimagined.page.introduction": "FIELD JOURNAL\n\nExplore biomes, creatures\nand rare blocks.\n\nBiomes: %s\nCreatures: %s\nBlocks: %s\n\nReopen to refresh.",
   "journal.reimagined.page.seasons": "SEASONS\n\nA year lasts 96 days: four seasons of 24 days.\n\nUse /reimagined calendar to check the date. Seasonal crop growth depends on the local biome.",
   "journal.reimagined.page.skills": "SKILLS\n\nActions train ten skill trees. Levels continue indefinitely, but each tree has only three upgrade ranks.\n\n/reimagined skills\n/reimagined skills unlock <tree>",
   "journal.reimagined.page.recipes": "RECIPES\n\nOpen inventory for the item browser. Search and filter; left click an item for recipes and right click for uses.\n\nThe browser includes crafting, cooking and milling.",

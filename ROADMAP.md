@@ -34,7 +34,7 @@ Each increment requires a passing build, relevant automated tests, a meaningful 
 
 ## Current ownership
 
-Freebuff4a71f92 fish integration is now authorized and completed in `feat/reimagined-alpha`, preserving its author history. Prior OpenCode/Antigravity integrations and boar increment remain present. `feat/kilo-development` is independent and was not fetched/merged/changed. Older Freebuff exclusions below are historical. After this integration the main developer proposes priorities only; no new large mechanic starts autonomously. Full Alpha gates remain open.
+Remaining ready Freebuff/Kilo changes are now integrated into `feat/reimagined-alpha`:df7a223boulders andafc5bd3/1835d41/25e4ea7thatch/clover/journal. Fishing4a71f92 was already present and not reapplied. Source agent branches remain unchanged. Only integration validation/documentation is authorized now; do not start another major mechanic. Full Alpha gates remain open. Latest acceptance:docs/AGENT_CONTENT_INTEGRATION.md.
 
 ## Historical acceptance before orchard integration (2026-10-28)
 
@@ -60,3 +60,7 @@ Wild boar source/server cycle now includes biome-tagged low-weight herds, ordina
 Three edible fish items extend ordinary vanilla fishing through one optional additive loot roll. Existing catch/treasure components and barley loot entry are preserved; furnace/smoker recipes, fishes tags,16pxmodels/textures, EN/RU and browser uses are checked. Full build23JUnit/107GameTests and focused real-client fishing verified (native salmon+SilverTrout, other two appearances confirmed server-side). These are item fish, not new swimming animal entities or regional habitats. See docs/FISHING.md.
 
 Requested remaining-spec review and five proposed priorities:docs/SPEC_PRIORITIES.md. Existing cooking/smithing/engineering systems are not expanded into more complex chains here. No Kilo merge and no next large mechanic started.
+
+## Completed remaining-agent integration
+
+Rare forest/birch boulders (one1/18attempt), obtainable wild clover and thatch resources/recipe/loot/actual compost data map are integrated with histories. Block discoveries are visible in the journal and passed real death/remote-respawn/client-process restart, alongside old-save/clone/max-page server checks. Final25JUnit/118GameTests and284JSON/197keys. Native natural generation/alpha fix and scope:docs/AGENT_CONTENT_INTEGRATION.md. No next major system started. Major geography/civilization/transport/dungeon/late-dimension gaps and full Alpha/multiplayer/scale gates remain.

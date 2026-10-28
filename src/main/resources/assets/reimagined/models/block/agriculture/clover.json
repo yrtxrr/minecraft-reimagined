@@ -2,5 +2,6 @@
   "parent": "minecraft:block/cross",
   "textures": {
     "cross": "reimagined:block/agriculture/clover"
-  }
+  },
+  "render_type": "minecraft:cutout"
 }

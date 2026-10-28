@@ -1,6 +1,6 @@
 # Remaining specification: proposed priorities after Freebuff
 
-Review based on docs/USER_SPEC_RU.md and the implemented sources/ROADMAP at this integration. This is a proposal, **not the start of another mechanic**. Kilo's branch was deliberately not inspected or merged; confirm its ownership before allocating any of these areas.
+Review based on docs/USER_SPEC_RU.md and the implemented sources/ROADMAP at this integration. This is a proposal, **not the start of another mechanic**. This proposal predates the subsequent Freebuff/Kilo content integration, now recorded in docs/AGENT_CONTENT_INTEGRATION.md. No new major mechanic has been started; future allocations require a new user task.
 
 | Priority | Direction and spec sections | First bounded playable increment | Scope guard |
 |---|---|---|---|
