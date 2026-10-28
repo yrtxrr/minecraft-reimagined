@@ -1,6 +1,7 @@
 package dev.reimagined.settlements;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -173,6 +174,24 @@ public final class Settler extends Mob {
 
     @Override
     public void setCustomName(Component name) { super.setCustomName(name); }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("HomeX", homePos.getX());
+        tag.putInt("HomeY", homePos.getY());
+        tag.putInt("HomeZ", homePos.getZ());
+        tag.putInt("WorkX", workPos.getX());
+        tag.putInt("WorkY", workPos.getY());
+        tag.putInt("WorkZ", workPos.getZ());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.homePos = new BlockPos(tag.getInt("HomeX"), tag.getInt("HomeY"), tag.getInt("HomeZ"));
+        this.workPos = new BlockPos(tag.getInt("WorkX"), tag.getInt("WorkY"), tag.getInt("WorkZ"));
+    }
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {}

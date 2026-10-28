@@ -195,5 +195,8 @@
   "block.reimagined.clover": "Clover",
   "journal.reimagined.blocks": "%s blocks found",
   "journal.reimagined.block_list": "Block discoveries",
-  "journal.reimagined.page.blocks": "Rare blocks"
+  "journal.reimagined.page.blocks": "Rare blocks",
+  "entity.reimagined.settler": "Settler",
+  "item.reimagined.settler_spawn_egg": "Settler Spawn Egg",
+  "message.reimagined.settler_greeting": "Greetings from %s."
 }

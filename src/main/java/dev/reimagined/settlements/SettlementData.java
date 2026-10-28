@@ -37,7 +37,8 @@ public final class SettlementData extends SavedData {
                     new BlockPos(entry.getInt("HomeX"), entry.getInt("HomeY"), entry.getInt("HomeZ")),
                     new BlockPos(entry.getInt("WorkX"), entry.getInt("WorkY"), entry.getInt("WorkZ")),
                     entry.getString("Profession"),
-                    0, 0
+                    entry.getInt("TradeTick"),
+                    entry.getInt("Stock")
             );
             data.settlers.add(record);
         }
@@ -59,6 +60,8 @@ public final class SettlementData extends SavedData {
             entry.putInt("WorkY", r.work.getY());
             entry.putInt("WorkZ", r.work.getZ());
             entry.putString("Profession", r.profession);
+            entry.putInt("TradeTick", r.tradeTick);
+            entry.putInt("Stock", r.stock);
             list.add(entry);
         }
         tag.put("Settlers", list);

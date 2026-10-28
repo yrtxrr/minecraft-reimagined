@@ -195,5 +195,8 @@
   "block.reimagined.clover": "Дикий клевер",
   "journal.reimagined.blocks": "Блоков: %s",
   "journal.reimagined.block_list": "Открытия блоков",
-  "journal.reimagined.page.blocks": "Редкие блоки"
+  "journal.reimagined.page.blocks": "Редкие блоки",
+  "entity.reimagined.settler": "Поселенец",
+  "item.reimagined.settler_spawn_egg": "Яйцо призыва поселенца",
+  "message.reimagined.settler_greeting": "Приветствие от %s."
 }
