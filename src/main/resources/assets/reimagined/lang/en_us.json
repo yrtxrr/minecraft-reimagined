@@ -77,7 +77,7 @@
   "journal.reimagined.page.skills": "SKILLS\n\nActions train ten skill trees. Levels continue indefinitely, but each tree has only three upgrade ranks.\n\n/reimagined skills\n/reimagined skills unlock <tree>",
   "journal.reimagined.page.recipes": "RECIPES\n\nOpen inventory for the item browser. Search and filter; left click an item for recipes and right click for uses.\n\nThe browser includes crafting, cooking and milling.",
   "journal.reimagined.page.engineering": "ENGINEERING\n\nFlowing water turns a water wheel. Connect its axis to shafts and a millstone.\n\nWheels supply 16 load; mills use 8. Overload stops rotation. Hoppers automate milling.",
-  "journal.reimagined.page.magic": "MAGIC\n\nFour basic spells stay available. Altar focuses + paper + lapis yield research folios. Observe2biomes/1creature first. Read a folio to learn. Sneak-use a wand to select. Rituals need amethyst.",
+  "journal.reimagined.page.magic": "MAGIC\n\nBasic spells stay available. Create altar focuses, then table folios. Record 2 biomes / 1 creature first. Read a folio to learn. Sneak-use a wand to select. Rituals need amethyst.",
   "journal.reimagined.page.combat": "COMBAT\n\nLeft click attacks normally. Sneak + right click uses a weapon special. Specials share a cooldown and cost durability.\n\nRaise a shield just before a melee hit to parry.",
   "journal.reimagined.page.biomes": "VISITED BIOMES",
   "journal.reimagined.page.creatures": "OBSERVED CREATURES",
@@ -142,5 +142,13 @@
   "reimagined.magic.learned": "Learned",
   "reimagined.magic.locked": "Not learned",
   "reimagined.magic.browser_progress": "Your research: %s/4; this spell: %s",
-  "journal.reimagined.spell_progress": "SPELL RESEARCH %s/4\n\n%s\n%s\n\n%s\n%s\n\nMake a focus at the altar, then a folio at the research table. Read it to learn."
+  "journal.reimagined.spell_progress": "SPELL RESEARCH %s/4\n\n%s\n%s\n\n%s\n%s\n\nMake a focus at the altar, then a folio at the research table. Read it to learn.",
+  "tooltip.reimagined.spell.spark": "A loaded-only ray:6 base magic damage, up to 16 blocks.",
+  "tooltip.reimagined.spell.growth": "Grows the targeted plant or heals 4 health when wounded.",
+  "tooltip.reimagined.spell.blink": "Safe short teleport up to 8 blocks; requires loaded terrain and footing.",
+  "tooltip.reimagined.spell.blessing": "Nearby allies: Resistance 30 s, Regeneration 5 s. Costs one amethyst shard.",
+  "tooltip.reimagined.spell.frost_lance": "Ray:4 base magic damage and SlownessI for 6 s. Walls block it.",
+  "tooltip.reimagined.spell.purification": "Cleanses poison, wither and hunger; RegenerationI for 6 s.",
+  "tooltip.reimagined.spell.magelight": "Night Vision for 60 s and Slow Falling for 10 s.",
+  "tooltip.reimagined.spell.sanctuary": "Fire Resistance and AbsorptionI for 30 s. Costs one amethyst shard."
 }

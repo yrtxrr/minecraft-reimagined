@@ -22,7 +22,8 @@ import org.slf4j.LoggerFactory;
 /** Opt-in normal-server development profile, never packaged in the player mod. */
 @EventBusSubscriber(modid="reimagined")
 public final class CookingProfile {
-    private static final boolean ENABLED=Boolean.getBoolean("reimagined.cookingProfile");
+    private static final boolean MAGIC=Boolean.getBoolean("reimagined.magicProfile");
+    private static final boolean ENABLED=MAGIC || Boolean.getBoolean("reimagined.cookingProfile");
     private static final int[] COUNTS={0,64,64,256};
     private static final int WARMUP=200, MEASURE=600;
     private static Run run;
@@ -60,7 +61,7 @@ public final class CookingProfile {
             if(server.getPlayerList().getPlayerCount()!=0)throw new IllegalStateException("No players allowed in isolated profile");
             for(String cmd:List.of("gamerule spawnChunkRadius 4","gamerule doMobSpawning false","gamerule doDaylightCycle false","gamerule doWeatherCycle false","weather clear"))
                 server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),cmd);
-            name="cooking-"+System.currentTimeMillis();Files.createDirectories(Path.of("reports"));path=Path.of("reports",name+".json");
+            name=(MAGIC?"magic-stations-":"cooking-")+System.currentTimeMillis();Files.createDirectories(Path.of("reports"));path=Path.of("reports",name+".json");
             report.addProperty("revision",System.getProperty("reimagined.profileRevision","working-tree"));
             report.addProperty("startedUtc",Instant.now().toString());report.addProperty("java",System.getProperty("java.runtime.version"));
             report.addProperty("minecraft","1.21.1");report.addProperty("neoforge","21.1.264");
@@ -68,6 +69,7 @@ public final class CookingProfile {
             report.addProperty("seed",level.getSeed());report.addProperty("viewDistance",server.getPlayerList().getViewDistance());report.addProperty("simulationDistance",server.getPlayerList().getSimulationDistance());
             report.addProperty("warmupTicks",WARMUP);report.addProperty("measureTicks",MEASURE);
             report.addProperty("notes","Ordinary20TPS server, no clients. Same loaded region; phase0empty,phase1:64empty pots,phase2:64cooking,phase3:256cooking. Magma heat,64barley/apple/bowls each. Setup capped16pots/tick, no forced chunk access. Empty-time reset for headless activity. JFR profile warmup+measurement, no arbitrary env/properties/CLI capture. Per-tick vanilla ring, not averaged TickTime. No forcedGC; heap is not retained-memory proof. No network/save-frequency instrumentation.");
+            if(MAGIC)report.addProperty("notes","Normal20TPS server, same loaded region. Phases0baseline/64research tables/64altars/256mixed stations, all idle. No container viewers or clients; verifies zero station tickers/scheduled work. Existing pots/count fields and CookingTick JFR schema retained for the shared analyzer; this is not a cooking or spell-casting workload. Setup/cleanup16stations per tick, no chunk generation/force loading. No arbitrary env/property/CLI JFR capture. No claim about open-menu, client networking, casting, retained-memory or long-session scale.");
             report.add("phases",phases);
         }
         void next()throws Exception {
@@ -97,9 +99,9 @@ public final class CookingProfile {
                     BlockPos pos=origin.offset(-24+(setup%16)*3,4,-24+(setup/16)*3);
                     var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
                     if(chunk==null || !level.shouldTickBlocksAt(net.minecraft.world.level.ChunkPos.asLong(pos)))throw new IllegalStateException("Fixture not ready/ticking");
-                    level.setBlock(pos.below(),Blocks.MAGMA_BLOCK.defaultBlockState(),Block.UPDATE_ALL);
-                    level.setBlock(pos,CookingContent.POT.get().defaultBlockState(),Block.UPDATE_ALL);positions.add(pos);
-                    if(phase>=2) {
+                    level.setBlock(pos.below(),(MAGIC?Blocks.STONE:Blocks.MAGMA_BLOCK).defaultBlockState(),Block.UPDATE_ALL);
+                    level.setBlock(pos,(MAGIC?(phase==1 || phase==3 && setup%2==0?dev.reimagined.magic.MagicContent.RESEARCH_TABLE.get():dev.reimagined.magic.MagicContent.ARCANE_ALTAR.get()):CookingContent.POT.get()).defaultBlockState(),Block.UPDATE_ALL);positions.add(pos);
+                    if(phase>=2 && !MAGIC) {
                         var pot=(CookingPotBlockEntity)chunk.getBlockEntity(pos);
                         pot.setItem(0,new ItemStack(AgricultureContent.BARLEY.get(),64));pot.setItem(1,new ItemStack(Items.APPLE,64));pot.setItem(3,new ItemStack(Items.BOWL,64));
                     }
@@ -123,6 +125,12 @@ public final class CookingProfile {
             long elapsed=System.nanoTime()-measureStart;Instant measurementEndUtc=Instant.now();int working=0,outputs=0;
             for(BlockPos pos:positions) {
                 var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+                if(MAGIC) {
+                    if(chunk==null || !(chunk.getBlockEntity(pos) instanceof dev.reimagined.magic.MagicStationBlockEntity station) || !station.isEmpty()
+                            || ((dev.reimagined.magic.MagicStationBlock)station.getBlockState().getBlock()).getTicker(level,station.getBlockState(),dev.reimagined.magic.MagicContent.STATION.get())!=null
+                            || level.getBlockTicks().hasScheduledTick(pos,station.getBlockState().getBlock()))throw new IllegalStateException("Idle station scheduled work or missing inventory");
+                    continue;
+                }
                 if(chunk==null || !(chunk.getBlockEntity(pos) instanceof CookingPotBlockEntity))throw new IllegalStateException("Measured pot missing");
                 var pot=(CookingPotBlockEntity)chunk.getBlockEntity(pos);ItemStack result=pot.getItem(4);
                 if(result.is(CookingContent.BARLEY_PORRIDGE.get())) {working++;outputs+=result.getCount();}
@@ -132,7 +140,8 @@ public final class CookingProfile {
                     throw new IllegalStateException("Every pot must actually cook3meals, consuming matching inputs and bowls");
             }
             long[] sorted=times.clone();Arrays.sort(sorted);
-            JsonObject data=new JsonObject();data.addProperty("phase",phase);data.addProperty("pots",COUNTS[phase]);data.addProperty("active",phase>=2);
+            JsonObject data=new JsonObject();data.addProperty("phase",phase);data.addProperty("pots",COUNTS[phase]);data.addProperty("active",phase>=2 && !MAGIC);
+            if(MAGIC)data.addProperty("stationKind",phase==0?"none":phase==1?"research":phase==2?"altar":"mixed");
             data.addProperty("measurementStartUtc",measurementStartUtc.toString());data.addProperty("measurementEndUtc",measurementEndUtc.toString());
             data.addProperty("ticks",counter);data.addProperty("wallSeconds",elapsed/1e9);data.addProperty("tps",counter*1e9/elapsed);
             data.addProperty("meanMs",Arrays.stream(sorted).average().orElseThrow()/1e6);data.addProperty("p95Ms",sorted[569]/1e6);data.addProperty("p99Ms",sorted[593]/1e6);data.addProperty("maxMs",sorted[599]/1e6);

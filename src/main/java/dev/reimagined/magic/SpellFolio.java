@@ -26,6 +26,7 @@ public final class SpellFolio extends Item {
     }
     @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> tooltip,TooltipFlag flag) {
         tooltip.add(Component.translatable(spell.translationKey()));
+        tooltip.add(Component.translatable(spell.descriptionKey()));
         tooltip.add(Component.translatable("tooltip.reimagined.spell_folio"));
     }
 }

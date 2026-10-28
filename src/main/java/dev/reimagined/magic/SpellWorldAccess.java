@@ -18,13 +18,27 @@ public final class SpellWorldAccess implements BlockGetter {
         return chunk==null?Blocks.BARRIER.defaultBlockState():chunk.getBlockState(pos);
     }
     @Override public FluidState getFluidState(BlockPos pos) {return getBlockState(pos).getFluidState();}
-    @Override public BlockEntity getBlockEntity(BlockPos pos) {return null;}
+    @Override public BlockEntity getBlockEntity(BlockPos pos) {
+        var chunk=level.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+        return chunk==null?null:chunk.getBlockEntity(pos);
+    }
     @Override public int getHeight() {return level.getHeight();}
     @Override public int getMinBuildHeight() {return level.getMinBuildHeight();}
     public static BlockHitResult ray(ServerPlayer player,int range,ClipContext.Block mode) {
         if(range<1 || range>16)throw new IllegalArgumentException("Spell ray range exceeds budget");
         var start=player.getEyePosition();
         return new SpellWorldAccess(player.serverLevel()).clip(new ClipContext(start,start.add(player.getLookAngle().scale(range)),mode,ClipContext.Fluid.NONE,player));
+    }
+    public static java.util.List<net.minecraft.world.entity.LivingEntity> candidates(ServerPlayer player,Vec3 limit) {
+        var result=new java.util.ArrayList<net.minecraft.world.entity.LivingEntity>(64);
+        var delta=limit.subtract(player.getEyePosition());
+        if(delta.length()>16.001)throw new IllegalArgumentException("Target range exceeds spell budget");
+        player.serverLevel().getEntities().get(net.minecraft.world.level.entity.EntityTypeTest.forClass(net.minecraft.world.entity.LivingEntity.class),
+                player.getBoundingBox().expandTowards(delta).inflate(1),entity-> {
+                    result.add(entity);
+                    return result.size()>=64?net.minecraft.util.AbortableIterationConsumer.Continuation.ABORT:net.minecraft.util.AbortableIterationConsumer.Continuation.CONTINUE;
+                });
+        return result;
     }
     public static boolean loadedBox(ServerLevel level,AABB box) {
         int x0=net.minecraft.util.Mth.floor(box.minX)>>4,x1=net.minecraft.util.Mth.floor(box.maxX)>>4;

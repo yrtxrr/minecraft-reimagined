@@ -13,10 +13,10 @@ public final class SpellKnowledge {
         var tag=player.getPersistentData().getCompound(KEY);
         return tag.getInt("Version")==1 ? tag.getInt("Known") & ALL_ADVANCED : 0;
     }
-    public static boolean knows(Player player,Spell spell) { return spell.basic || (mask(player)&(1<<spell.ordinal()))!=0; }
+    public static boolean knows(Player player,Spell spell) { return spell.basic || (mask(player)&spell.bit)!=0; }
     public static boolean learn(ServerPlayer player,Spell spell) {
         if(knows(player,spell))return false;
-        var tag=new CompoundTag();tag.putInt("Version",1);tag.putInt("Known",mask(player)|(1<<spell.ordinal()));
+        var tag=new CompoundTag();tag.putInt("Version",1);tag.putInt("Known",mask(player)|spell.bit);
         player.getPersistentData().put(KEY,tag);MagicProgressPayload.sync(player);return true;
     }
     public static void copy(Player original,Player replacement) {

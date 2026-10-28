@@ -95,7 +95,8 @@ public final class MagicGameTests {
         h.assertTrue(item.selected(stack)==Spell.MAGELIGHT,"Second selection returns learned advanced spell");
         var encoded=stack.save(h.getLevel().registryAccess());var decoded=ItemStack.parse(h.getLevel().registryAccess(),encoded).orElseThrow();
         h.assertTrue(item.selected(decoded)==Spell.MAGELIGHT,"Selected spell must survive item NBT/component transport");
-        h.assertTrue(item.use(h.getLevel(),p,InteractionHand.MAIN_HAND).getResult().consumesAction() && p.hasEffect(MobEffects.NIGHT_VISION) && p.hasEffect(MobEffects.SLOW_FALLING) && SpellWand.mana(p)==80,"Magelight must apply real bounded effects and cost");h.succeed();
+        h.assertTrue(item.use(h.getLevel(),p,InteractionHand.MAIN_HAND).getResult().consumesAction() && p.hasEffect(MobEffects.NIGHT_VISION) && p.hasEffect(MobEffects.SLOW_FALLING) && SpellWand.mana(p)==80,"Magelight must apply real bounded effects and cost");p.setShiftKeyDown(true);item.use(h.getLevel(),p,InteractionHand.MAIN_HAND);p.setShiftKeyDown(false);
+        h.assertTrue(item.selected(stack)==Spell.BLINK && item.use(h.getLevel(),p,InteractionHand.MAIN_HAND).getResult()==InteractionResult.FAIL && SpellWand.mana(p)==80,"Changing the selected spell must not bypass shared school cooldowns");h.succeed();
     }
     @GameTest(template="empty")
     public static void purificationAndSanctuaryApplyRealEffectsAndRespectRitualResources(GameTestHelper h) {
@@ -153,4 +154,16 @@ public final class MagicGameTests {
         try {var snapshot=new MagicProgressPayload(SpellKnowledge.mask(p),2,1);MagicProgressPayload.CODEC.encode(buffer,snapshot);var decoded=MagicProgressPayload.CODEC.decode(buffer);MagicProgressPayload.receive(decoded);h.assertTrue(MagicProgressPayload.client().knows(Spell.SANCTUARY) && !MagicProgressPayload.client().knows(Spell.MAGELIGHT),"Client progress snapshot must keep individual finite unlocks");MagicProgressPayload.clear();h.assertTrue(MagicProgressPayload.client().known()==0,"Logout clear must not leak previous world's knowledge");}finally{buffer.release();MagicProgressPayload.clear();}
         h.succeed();
     }
+    @GameTest(template="empty")
+    public static void denseSpellTargetQueriesStopAtTheExplicitCandidateBudget(GameTestHelper h) {
+        var p=player(h);p.setPos(h.absolutePos(new BlockPos(4,3,1)).getCenter());p.setYRot(0);
+        for(int i=0;i<96;i++) {
+            var stand=EntityType.ARMOR_STAND.create(h.getLevel());stand.setPos(h.absolutePos(new BlockPos(4,3,4)).getCenter());h.getLevel().addFreshEntity(stand);
+        }
+        var found=SpellWorldAccess.candidates(p,p.getEyePosition().add(0,0,8));
+        h.assertTrue(found.size()==64,"Production spatial-index traversal must abort at64visited living entities even in a crowded scene");
+        h.assertTrue(Spell.FROST_LANCE.bit==16 && Spell.SANCTUARY.bit==128,"Saved knowledge bits are explicit stable IDs, not enum positions");
+        h.succeed();
+    }
+
 }

@@ -28,12 +28,7 @@ import net.minecraft.world.phys.Vec3;
 
 /** Server-authoritative spells: clients only request use and receive vanilla updates/particles. */
 public final class SpellWand extends Item {
-    public enum School {
-        ELEMENTAL(20, 30), NATURE(25, 100), ARCANE(30, 80), RITUAL(40, 200);
-        final int cost;
-        final int cooldown;
-        School(int cost, int cooldown) { this.cost = cost; this.cooldown = cooldown; }
-    }
+    public enum School { ELEMENTAL, NATURE, ARCANE, RITUAL }
     private static final String MANA = "reimagined_mana";
     private static final String REGEN = "reimagined_mana_tick";
     private static final String COOLDOWN = "reimagined_spell_ready_";
@@ -118,16 +113,10 @@ public final class SpellWand extends Item {
     private static boolean elemental(ServerPlayer player,boolean frost) {
         ServerLevel level = player.serverLevel();
         Vec3 start = player.getEyePosition();
-        Vec3 end = start.add(player.getLookAngle().scale(16));
         var block = SpellWorldAccess.ray(player,16,ClipContext.Block.COLLIDER);
         final Vec3 wallLimit = block.getLocation();
         Vec3 limit = wallLimit;
-        var candidates=new java.util.ArrayList<LivingEntity>(64);
-        level.getEntities().get(net.minecraft.world.level.entity.EntityTypeTest.forClass(LivingEntity.class),
-                player.getBoundingBox().expandTowards(limit.subtract(start)).inflate(1),entity-> {
-                    candidates.add(entity);
-                    return candidates.size()>=64?net.minecraft.util.AbortableIterationConsumer.Continuation.ABORT:net.minecraft.util.AbortableIterationConsumer.Continuation.CONTINUE;
-                });
+        var candidates=SpellWorldAccess.candidates(player,wallLimit);
         var target=candidates.stream().filter(entity->entity!=player && entity.isAlive() && !entity.isAlliedTo(player)
                 && (!(entity instanceof Player other) || player.canHarmPlayer(other)))
                 .filter(entity->entity.getBoundingBox().inflate(.25).clip(start,wallLimit).isPresent())
@@ -231,9 +220,9 @@ public final class SpellWand extends Item {
     }
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.reimagined." + school.name().toLowerCase(java.util.Locale.ROOT)));
         Spell spell=selected(stack);
         tooltip.add(Component.translatable(spell.translationKey()));
+        tooltip.add(Component.translatable(spell.descriptionKey()));
         tooltip.add(Component.translatable("tooltip.reimagined.mana_cost", spell.cost, spell.cooldown / 20.0));
         tooltip.add(Component.translatable("tooltip.reimagined.spell_cycle"));
     }

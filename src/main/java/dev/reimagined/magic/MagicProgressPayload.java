@@ -19,7 +19,7 @@ public record MagicProgressPayload(int known,int biomes,int creatures) implement
     public static MagicProgressPayload client() { return client; }
     public static void receive(MagicProgressPayload payload) { client=payload; }
     public static void clear() { client=new MagicProgressPayload(0,0,0); }
-    public boolean knows(Spell spell) { return spell.basic || (known&(1<<spell.ordinal()))!=0; }
+    public boolean knows(Spell spell) { return spell.basic || (known&spell.bit)!=0; }
     public static void sync(ServerPlayer player) {
         var discoveries=Discoveries.read(player);
         if(player.connection!=null)PacketDistributor.sendToPlayer(player,new MagicProgressPayload(SpellKnowledge.mask(player),discoveries.biomes().size(),discoveries.creatures().size()));
