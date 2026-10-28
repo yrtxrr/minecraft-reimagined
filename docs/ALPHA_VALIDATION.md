@@ -43,3 +43,7 @@ The final server-only loaded-read/index correction followed the graphical sessio
 ## Cooking content follow-up
 
 The subsequent heated-pot increment received separate native Russian menu/model/browser/eating and full-client-process persistence checks, plus real-server scaling scenarios. See [COOKING.md](COOKING.md) for scope/results. Earlier Alpha gates and unverified multiplayer/standalone/physical-hardware limits are unchanged; this is not a full Alpha re-certification.
+
+## First spell research tier
+
+A later focused increment adds two stations and four personally researched spells. The native Purification chain, live journal/browser progress, selected tooltip and full client-process knowledge/selection persistence were checked. Other advanced effects received server tests and subsequent controlled native effect checks through supplied folios; journal reached4/4. See [MAGIC_RESEARCH.md](MAGIC_RESEARCH.md) for79GameTests and the idle-station benchmark scope. These checks do not close prior full Alpha survival/authenticated multiplayer/physical-hardware/standalone-install gates.

@@ -147,8 +147,8 @@
   "tooltip.reimagined.spell.growth": "Ускоряет рост выбранного растения или лечит 4 здоровья при ранении.",
   "tooltip.reimagined.spell.blink": "Безопасный скачок до 8 блоков по загруженной местности с опорой.",
   "tooltip.reimagined.spell.blessing": "Союзники рядом: сопротивление 30 с, регенерация 5 с. Расходует осколок аметиста.",
-  "tooltip.reimagined.spell.frost_lance": "Луч:4 базового магического урона и замедлениеI на 6 с. Не проходит сквозь стены.",
-  "tooltip.reimagined.spell.purification": "Снимает отравление, иссушение и голод; регенерацияI на 6 с.",
+  "tooltip.reimagined.spell.frost_lance": "Луч:4 базового магического урона и замедление I на 6 с. Не проходит сквозь стены.",
+  "tooltip.reimagined.spell.purification": "Снимает отравление, иссушение и голод; регенерация I на 6 с.",
   "tooltip.reimagined.spell.magelight": "Ночное зрение на 60 с и плавное падение на 10 с.",
-  "tooltip.reimagined.spell.sanctuary": "Огнестойкость и поглощениеI на 30 с. Расходует осколок аметиста."
+  "tooltip.reimagined.spell.sanctuary": "Огнестойкость и поглощение I на 30 с. Расходует осколок аметиста."
 }

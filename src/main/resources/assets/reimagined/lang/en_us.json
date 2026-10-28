@@ -147,8 +147,8 @@
   "tooltip.reimagined.spell.growth": "Grows the targeted plant or heals 4 health when wounded.",
   "tooltip.reimagined.spell.blink": "Safe short teleport up to 8 blocks; requires loaded terrain and footing.",
   "tooltip.reimagined.spell.blessing": "Nearby allies: Resistance 30 s, Regeneration 5 s. Costs one amethyst shard.",
-  "tooltip.reimagined.spell.frost_lance": "Ray:4 base magic damage and SlownessI for 6 s. Walls block it.",
-  "tooltip.reimagined.spell.purification": "Cleanses poison, wither and hunger; RegenerationI for 6 s.",
+  "tooltip.reimagined.spell.frost_lance": "Ray:4 base magic damage and Slowness I for 6 s. Walls block it.",
+  "tooltip.reimagined.spell.purification": "Cleanses poison, wither and hunger; Regeneration I for 6 s.",
   "tooltip.reimagined.spell.magelight": "Night Vision for 60 s and Slow Falling for 10 s.",
-  "tooltip.reimagined.spell.sanctuary": "Fire Resistance and AbsorptionI for 30 s. Costs one amethyst shard."
+  "tooltip.reimagined.spell.sanctuary": "Fire Resistance and Absorption I for 30 s. Costs one amethyst shard."
 }
