@@ -190,4 +190,7 @@
 ,
   "block.reimagined.clover": "Clover",
   "block.reimagined.thatch": "Thatch"
+,
+  "journal.reimagined.blocks": "%s blocks found",
+  "journal.reimagined.block_list": "Block discoveries"
 }

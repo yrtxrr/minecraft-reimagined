@@ -190,4 +190,7 @@
 ,
   "block.reimagined.clover": "Клевер",
   "block.reimagined.thatch": "Тростниковая солома"
+,
+  "journal.reimagined.blocks": "%s найденных блоков",
+  "journal.reimagined.block_list": "Открытия блоков"
 }

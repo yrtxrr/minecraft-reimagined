@@ -129,7 +129,7 @@ public final class ResearchGameTests {
     public static void discoveriesSurviveSaveLoadAndDeathAndBooksFollowReader(GameTestHelper helper) {
         Reader original = new Reader(helper);
         ResourceLocation biome = helper.getLevel().getBiome(original.blockPosition()).unwrapKey().orElseThrow().location();
-        new Discoveries(List.of(biome), List.of(ResourceLocation.fromNamespaceAndPath("reimagined", "deer"))).save(original);
+        new Discoveries(List.of(biome), List.of(ResourceLocation.fromNamespaceAndPath("reimagined", "deer")), List.of()).save(original);
         Discoveries expected = Discoveries.read(original);
         Reader restored = new Reader(helper);
         restored.load(original.saveWithoutId(new CompoundTag()));
@@ -194,3 +194,4 @@ public final class ResearchGameTests {
         helper.succeed();
     }
 }
+
