@@ -41,6 +41,15 @@ neoForge {
             jvmArgument '-Xmx2G'
             jvmArgument '-XX:ActiveProcessorCount=4'
         }
+        spellAccessProfile {
+            server()
+            programArgument '--nogui'
+            gameDirectory = file('run-spell-access-profile')
+            systemProperty 'reimagined.spellAccessProfile', 'true'
+            systemProperty 'reimagined.profileRevision', project.findProperty('profileRevision') ?: 'working-tree'
+            jvmArgument '-Xmx2G'
+            jvmArgument '-XX:ActiveProcessorCount=4'
+        }
         magicProfile {
             server()
             programArgument '--nogui'
