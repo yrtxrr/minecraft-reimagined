@@ -111,3 +111,7 @@ Kilo's otter/badger/marmot use ordinary Animal lifecycle/vanilla safety, breedin
 ## World-polish verification checkpoint
 
 Kilo e9af309/65f11a0 extends QA only; both proposed meal recipes already existed and retain their canonical bytes. Tests use active NeoForge compost item data maps, bounded512paired real crop random ticks and scheduled cooking of the two reviewed meals. Player JAR remains identical tod861718, so no additional production polling/sync/cache/generation cost is introduced. Native crop/cooking acceptance and exact limits:docs/KILO_WORLD_POLISH_INTEGRATION.md.
+
+## Recipe presentation ownership after UI removal
+
+No Reimagined screen/sidebar/search key handler owns recipe browsing. Ordinary recipe book and station menus remain. Tested read-only recipe projections retain their data contract, but no client event/tick/cache registration uses them. JEI will own its optional catalogue lifecycle; custom categories must use real registered recipes and remain server-authority neutral. Only explicit dev opt-in resolves JEI; no required runtime metadata/bundled JEI. Official-source access blocker and unimplemented category work:docs/JEI_MIGRATION.md.

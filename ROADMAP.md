@@ -73,3 +73,7 @@ History-preserving integration of1002d09/18eeada/78e5134/820e5db adds three biom
 ## Kilo world-polish QA checkpoint
 
 Missing e9af309/65f11a0 history integrated afterd861718; existing barley and five meals are not duplicated.25JUnit/136GameTests passed with live composting, moisture-sensitive actual growth and two-meal scheduled cooking checks. Native scope/remaining Alpha gates:docs/KILO_WORLD_POLISH_INTEGRATION.md. This checkpoint adds QA coverage, no production mechanics or additional runtime work; earlier long-tick, survival/multiplayer/physical-hardware gates remain open.
+
+## Recipe UI migration status
+
+The bespoke item/recipe screen and inventory overlay are removed. Creative categories fromcb4cbc2remain. Real recipes/stations and recipe metadata tests remain;21JUnit/133GameTests pass. Optional JEI dev launch prepared but no released JAR/API could be fetched (official Maven CONNECT403). JEI custom process categories and client-with-JEI acceptance remain pending; historical browser implementation milestones above are not the current UI. Details:docs/JEI_MIGRATION.md. No Kilo integration or new gameplay subsystem.

@@ -228,3 +228,7 @@ Reviewed e9af309/65f11a0 againstd861718. They add tests, not missing farming mec
 ## Creative catalogue
 
 Added four standard NeoForge tabs covering51registered items exactly once:12nature/wildlife,13farming/food,11engineering/equipment,15magic/research. Ordered mergeable item tags support future additions; vanilla-category injection removed, search retained.25JUnit/137GameTests passed, including complete item coverage/order/nonduplication and all previous regressions. Actual RU client page2icons/categories/content inspected. No item/recipe/gameplay changes; separate commit from the pending JEI/visual-audit work. Details:docs/CREATIVE_TABS.md.
+
+## Removal of bespoke recipe UI
+
+Removed the standalone browser, inventory sidebar/R entry, R/U interception, item search/navigation and world cache plus their obsolete UI-only tests. Real recipes, station menus/mechanics and tested read-only recipe projections retained. Journal text no longer directs players to a removed screen. Default build has no JEI dependency; an explicit -PwithJei/-PjeiVersion dev opt-in is prepared. Official Maven HTTPS CONNECT is blocked with403, so no JEI runtime/custom-category compatibility is claimed. Build21JUnit/133GameTests,303JSON/190keys passed. Exact deletion inventory, network requirement and remaining integration plan:docs/JEI_MIGRATION.md.

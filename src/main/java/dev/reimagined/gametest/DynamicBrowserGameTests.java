@@ -62,21 +62,4 @@ public final class DynamicBrowserGameTests {
             "An arbitrary subclass must not be assigned invented vanilla semantics");
         h.succeed();
     }
-    @GameTest(template = "empty")
-    public static void specialRecipeIndexRefreshesAndClearsWithSnapshotLifecycle(GameTestHelper h) {
-        var level = h.getLevel(); var holder = recipe(h);
-        var manager = new RecipeManager(level.registryAccess());
-        manager.replaceRecipes(List.of(holder));
-        var cache = new BrowserSnapshotCache(); Object world = new Object();
-        var first = cache.get(world, manager, level.registryAccess(), level.potionBrewing());
-        h.assertTrue(first.shulkerColoring().isPresent()
-            && cache.get(world, manager, level.registryAccess(), level.potionBrewing()) == first, "Unchanged reads must reuse the special recipe index");
-        manager.replaceRecipes(List.of());
-        var second = cache.get(world, manager, level.registryAccess(), level.potionBrewing());
-        h.assertTrue(second.revision() > first.revision() && second.shulkerColoring().isEmpty(), "Removed/reloaded recipes must disappear without reconnecting");
-        manager.replaceRecipes(List.of(holder)); cache.invalidateRecipes();
-        h.assertTrue(cache.get(world, manager, level.registryAccess(), level.potionBrewing()).shulkerColoring().isPresent(), "Explicit recipe sync must restore a new index");
-        h.assertTrue(cache.clear().shulkerColoring().isEmpty(), "Logout must release recipe references");
-        h.succeed();
-    }
 }

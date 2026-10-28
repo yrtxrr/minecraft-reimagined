@@ -87,6 +87,22 @@ neoForge {
     }
     mods { reimagined { sourceSet sourceSets.main } }
 }
+// Explicit development opt-in; default builds/servers do not resolve or require JEI.
+// Supply a verified published four-part version after official Maven access is allowed.
+def withJei = providers.gradleProperty('withJei').map { it.isEmpty() || it.toBoolean() }.getOrElse(false)
+if (withJei) {
+    def jeiVersion = providers.gradleProperty('jeiVersion').orNull
+    if (jeiVersion == null || !(jeiVersion ==~ /19\.\d+\.\d+\.\d+/))
+        throw new GradleException('Use -PwithJei -PjeiVersion=<published 19.x.y.build for Minecraft 1.21.1 NeoForge>. No version is guessed.')
+    repositories {
+        maven {
+            url = uri('https://maven.blamejared.com')
+            content { includeGroup 'mezz.jei'; includeGroup 'net.mezzdev.config' }
+        }
+    }
+    dependencies { runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${jeiVersion}" }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
