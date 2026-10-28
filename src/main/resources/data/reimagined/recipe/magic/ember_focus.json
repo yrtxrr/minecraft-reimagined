@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:arcane_infusion",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "id": "reimagined:ember_focus",
+    "count": 1
+  },
+  "mana": 15
+}

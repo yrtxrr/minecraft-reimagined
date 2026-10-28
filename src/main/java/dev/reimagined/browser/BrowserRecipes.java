@@ -65,6 +65,7 @@ public final class BrowserRecipes {
                         Ingredient.CODEC.parse(ops, json.get("addition")).getOrThrow());
                 note = Component.translatable("reimagined.browser.smithing_note");
             }
+            if (recipe instanceof dev.reimagined.magic.MagicRecipe magic) note = magic.note();
             if (recipe instanceof dev.reimagined.cooking.CookingRecipe cooking)
                 note = Component.translatable("reimagined.browser.cooking_note", cooking.seconds());
             // Dynamic recipes with no concrete output/ingredients require an explicit adapter.

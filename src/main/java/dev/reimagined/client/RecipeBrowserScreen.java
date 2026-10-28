@@ -216,10 +216,16 @@ public final class RecipeBrowserScreen extends Screen {
                 recipeItems.add(new ItemHit(x + 28, outputY + 12, station));
                 if (inside(mouseX, mouseY, x + 28, outputY + 12, 16, 16)) hovered = station;
             }
+            net.minecraft.network.chat.Component displayNote=recipe.note();
+            if(output.getItem() instanceof dev.reimagined.magic.SpellFolio folio) {
+                var progress=dev.reimagined.magic.MagicProgressPayload.client();
+                displayNote=displayNote.copy().append("\n").append(Component.translatable("reimagined.magic.browser_progress",
+                    Integer.bitCount(progress.known()),Component.translatable(progress.knows(folio.spell)?"reimagined.magic.learned":"reimagined.magic.locked")));
+            }
             int noteY = outputY + 34;
-            if (noteY < height - 32 && !recipe.note().getString().isEmpty()) {
+            if (noteY < height - 32 && !displayNote.getString().isEmpty()) {
                 graphics.enableScissor(x, noteY, width - 8, height - 32);
-                graphics.drawWordWrap(font, recipe.note(), x, noteY, Math.max(40, width - x - 8), 0xBBBBBB);
+                graphics.drawWordWrap(font, displayNote, x, noteY, Math.max(40, width - x - 8), 0xBBBBBB);
                 graphics.disableScissor();
             }
             graphics.drawString(font, (recipePage + 1) + "/" + recipes.size(), gridWidth + 72, height - 22, 0xFFFFFF);

@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:arcane_infusion",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "reimagined:ward_focus",
+    "count": 1
+  },
+  "mana": 15
+}

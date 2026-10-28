@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:arcane_infusion",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "reimagined:barley"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "id": "reimagined:verdant_focus",
+    "count": 1
+  },
+  "mana": 15
+}

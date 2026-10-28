@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "reimagined:cooking_pot"
+    "reimagined:cooking_pot",
+    "reimagined:arcane_altar"
   ]
 }

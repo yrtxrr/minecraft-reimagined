@@ -23,10 +23,21 @@ public final class JournalPages {
                 String.format(java.util.Locale.ROOT, "%.2f", current.value().getBaseTemperature()))));
         for (String chapter : List.of("seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "cooking"))
             pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page." + chapter)));
+        for(int part=0;part<2;part++) {
+            var first=dev.reimagined.magic.Spell.values()[4+part*2];
+            var second=dev.reimagined.magic.Spell.values()[5+part*2];
+            pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.spell_progress",
+                Integer.bitCount(dev.reimagined.magic.SpellKnowledge.mask(reader)),
+                Component.translatable(first.translationKey()),spellStatus(reader,first),
+                Component.translatable(second.translationKey()),spellStatus(reader,second))));
+        }
         catalogue(pages, discoveries.biomes(), "biomes", "biome");
         catalogue(pages, discoveries.creatures(), "creatures", "entity");
-        // 10 guide pages + at most 87 catalogue pages for the combined discovery cap of 256.
+        // 12 guide/progress pages + at most 87 catalogue pages for the combined discovery cap of 256.
         return new WrittenBookContent(Filterable.passThrough("Minecraft: Reimagined"), "Reimagined", 0, List.copyOf(pages), true);
+    }
+    private static Component spellStatus(ServerPlayer player,dev.reimagined.magic.Spell spell) {
+        return Component.translatable(dev.reimagined.magic.SpellKnowledge.knows(player,spell)?"reimagined.magic.learned":"reimagined.magic.locked");
     }
     private static void catalogue(List<Filterable<Component>> pages, List<ResourceLocation> entries, String chapter, String prefix) {
         if (entries.isEmpty()) {

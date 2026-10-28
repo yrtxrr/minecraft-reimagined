@@ -51,7 +51,9 @@ public record Discoveries(List<ResourceLocation> biomes, List<ResourceLocation> 
         tag.putInt("Version", 1);
         tag.put("Biomes", strings(biomes));
         tag.put("Creatures", strings(creatures));
+        if(tag.equals(player.getPersistentData().getCompound(DATA_KEY)))return;
         player.getPersistentData().put(DATA_KEY, tag);
+        if (player instanceof net.minecraft.server.level.ServerPlayer server) dev.reimagined.magic.MagicProgressPayload.sync(server);
     }
     private static ListTag strings(List<ResourceLocation> values) {
         ListTag result = new ListTag();

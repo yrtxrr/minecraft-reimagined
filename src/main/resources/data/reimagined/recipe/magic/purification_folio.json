@@ -1,0 +1,21 @@
+{
+  "type": "reimagined:spell_research",
+  "ingredients": [
+    {
+      "item": "reimagined:verdant_focus"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "result": {
+    "id": "reimagined:purification_folio",
+    "count": 1
+  },
+  "mana": 20,
+  "biomes": 2,
+  "creatures": 1
+}

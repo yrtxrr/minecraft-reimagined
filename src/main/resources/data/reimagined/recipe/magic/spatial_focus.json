@@ -1,0 +1,19 @@
+{
+  "type": "reimagined:arcane_infusion",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "result": {
+    "id": "reimagined:spatial_focus",
+    "count": 1
+  },
+  "mana": 15
+}

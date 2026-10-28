@@ -75,3 +75,7 @@ JFR investigation exposed a1.21.1 API trap:ServerChunkCache.hasChunk/Level.hasCh
 ## Cooking workstation
 
 Cooking uses the shared vanilla recipe contract and an independently registered menu/container. Pots have no BE ticker: empty pots sleep, active pots use staggered20-tick scheduled steps, blocked nonempty pots retry every100ticks with memoized recipe matches. Heat reads stay in one already-ready chunk/column, at most2blocks; there are no chunk tickets, world scans or catch-up loops. Reload epoch and inventory changes invalidate matches; progress/NBT/automation remain server-owned. See [COOKING.md](docs/COOKING.md) for lifecycle, resource provenance and actual validation limits.
+
+## Spell research
+
+The `magic` module adds manual recipe-driven altar/research stations with standard saved containers and two vanilla recipe types. No BE tickers or global station queues exist. Server menu transactions enforce current recipes, nearby owner/lock, resources, discovery counts and output capacity. Four new finite unlocks use versioned personal NBT; selected spells use item custom data and share existing school cooldowns/mana. Owner-only changed/initial snapshots feed client progress, cleared on logout. See docs/MAGIC_RESEARCH.md for performance/loaded-only ray contracts, provenance and validation limits.
