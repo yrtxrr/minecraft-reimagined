@@ -23,6 +23,7 @@ public final class SettlementGameTests {
     public static void settlerDataPersistsAcrossSaveLoad(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var data = SettlementData.get(level);
+        data.clear();
 
         UUID uuid = UUID.randomUUID();
         BlockPos home = new BlockPos(100, 64, 200);
@@ -61,6 +62,7 @@ public final class SettlementGameTests {
     public static void multipleSettlersPersistAcrossSaveLoad(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var data = SettlementData.get(level);
+        data.clear();
 
         UUID uuid1 = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
@@ -101,6 +103,7 @@ public final class SettlementGameTests {
     public static void removedSettlerDoesNotReappearAfterLoad(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var data = SettlementData.get(level);
+        data.clear();
 
         UUID uuid = UUID.randomUUID();
         data.registerSettler(uuid, new BlockPos(0, 64, 0), new BlockPos(10, 64, 10), "commoner");
@@ -124,6 +127,7 @@ public final class SettlementGameTests {
     public static void settlerEntityHomeWorkPersistAcrossSaveLoad(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var data = SettlementData.get(level);
+        data.clear();
 
         UUID uuid = UUID.randomUUID();
         BlockPos home = new BlockPos(10, 2, 10);

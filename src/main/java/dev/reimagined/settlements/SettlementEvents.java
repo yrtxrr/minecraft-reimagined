@@ -58,10 +58,13 @@ public final class SettlementEvents {
         ServerLevel server = event.getServer().overworld();
         var data = SettlementData.get(server);
         long time = server.getDayTime();
+        boolean dirty = false;
         for (SettlementData.SettlerRecord record : data.settlers()) {
             if (time % 400 == 0 && record.tradeTick > 0) {
                 record.tradeTick--;
+                dirty = true;
             }
         }
+        if (dirty) data.setDirty();
     }
 }

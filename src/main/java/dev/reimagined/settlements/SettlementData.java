@@ -87,6 +87,12 @@ public final class SettlementData extends SavedData {
 
     public List<SettlerRecord> settlers() { return settlers; }
 
+    public void clear() {
+        settlers.clear();
+        nextSettlerId = 1;
+        setDirty();
+    }
+
     public static final class SettlerRecord {
         public final UUID uuid;
         public final BlockPos home;
