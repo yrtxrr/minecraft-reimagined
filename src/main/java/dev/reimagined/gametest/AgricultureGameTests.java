@@ -140,4 +140,26 @@ public final class AgricultureGameTests {
             && displays.stream().anyMatch(d -> d.uses(grain) && d.result().is(Items.BREAD)), "Existing browser must expose barley uses without a special crop adapter");
         h.succeed();
     }
+    @GameTest(template = "empty")
+    public static void newPlantsCompostCorrectly(GameTestHelper h) {
+        h.assertTrue(ComposterBlock.COMPOSTABLES.getFloat(AgricultureContent.CLOVER.get()) == 0.3F,
+                "Clover must compost at 0.3");
+        h.assertTrue(ComposterBlock.COMPOSTABLES.getFloat(AgricultureContent.THATCH.get()) == 0.85F,
+                "Thatch must compost at 0.85");
+        h.assertTrue(ComposterBlock.COMPOSTABLES.getFloat(AgricultureContent.BARLEY_SEEDS.get()) == 0.3F,
+                "Barley seeds must compost at 0.3");
+        h.assertTrue(ComposterBlock.COMPOSTABLES.getFloat(AgricultureContent.BARLEY.get()) == 0.65F,
+                "Barley grain must compost at 0.65");
+        h.succeed();
+    }
+    @GameTest(template = "empty")
+    public static void barleyGrowsOnMoistFarmland(GameTestHelper h) {
+        h.setBlock(CROP.below(), Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, 7));
+        h.setBlock(CROP, AgricultureContent.BARLEY_CROP.get());
+        var level = h.getLevel();
+        var pos = h.absolutePos(CROP);
+        var state = level.getBlockState(pos);
+        h.assertTrue(state.is(AgricultureContent.BARLEY_CROP.get()), "Barley must place on moist farmland");
+        h.succeed();
+    }
 }
