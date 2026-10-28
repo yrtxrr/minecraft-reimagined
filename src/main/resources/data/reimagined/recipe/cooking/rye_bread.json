@@ -1,0 +1,16 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    {
+      "item": "reimagined:rye"
+    },
+    {
+      "item": "reimagined:rye"
+    }
+  ],
+  "result": {
+    "id": "reimagined:rye_bread",
+    "count": 1
+  },
+  "seconds": 10
+}
