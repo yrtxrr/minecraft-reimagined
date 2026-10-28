@@ -193,4 +193,11 @@
 ,
   "journal.reimagined.blocks": "%s найденных блоков",
   "journal.reimagined.block_list": "Открытия блоков"
+,
+  "entity.reimagined.otter": "Выдра",
+  "item.reimagined.otter_spawn_egg": "Яйцо призыва выдры",
+  "entity.reimagined.badger": "Барсук",
+  "item.reimagined.badger_spawn_egg": "Яйцо призыва барсука",
+  "entity.reimagined.marmot": "Сурок",
+  "item.reimagined.marmot_spawn_egg": "Яйцо призыва сурка"
 }

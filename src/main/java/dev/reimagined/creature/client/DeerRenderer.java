@@ -6,9 +6,19 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public final class DeerRenderer extends MobRenderer<Deer, DeerModel> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("reimagined", "textures/entity/deer.png");
+    private final ResourceLocation texture;
+
     public DeerRenderer(EntityRendererProvider.Context context) {
-        super(context, new DeerModel(context.bakeLayer(DeerModel.LAYER)), 0.5f);
+        this(context, ResourceLocation.fromNamespaceAndPath("reimagined", "textures/entity/deer.png"));
     }
-    @Override public ResourceLocation getTextureLocation(Deer deer) { return TEXTURE; }
+
+    public DeerRenderer(EntityRendererProvider.Context context, ResourceLocation texture) {
+        super(context, new DeerModel(context.bakeLayer(DeerModel.LAYER)), 0.5f);
+        this.texture = texture;
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(Deer entity) {
+        return texture;
+    }
 }
