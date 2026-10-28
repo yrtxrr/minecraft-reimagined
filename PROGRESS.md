@@ -232,3 +232,7 @@ Added four standard NeoForge tabs covering51registered items exactly once:12natu
 ## Removal of bespoke recipe UI
 
 Removed the standalone browser, inventory sidebar/R entry, R/U interception, item search/navigation and world cache plus their obsolete UI-only tests. Real recipes, station menus/mechanics and tested read-only recipe projections retained. Journal text no longer directs players to a removed screen. Default build has no JEI dependency; an explicit -PwithJei/-PjeiVersion dev opt-in is prepared. Official Maven HTTPS CONNECT is blocked with403, so no JEI runtime/custom-category compatibility is claimed. Build21JUnit/133GameTests,303JSON/190keys passed. Exact deletion inventory, network requirement and remaining integration plan:docs/JEI_MIGRATION.md.
+
+## Visual audit and five-animal plan
+
+Committed inventory of57textures/84JSON models/15blockstates, with dimensions/references/SHA256and a standard-library reproducibility checker. Reused the actual prior57-image inspection to prioritize badger/otter/marmot/deer/boar, specify a coherent Minecraft-scale art direction and identify mesh/UV limits, including tiny SmallFauna faces and deer overlapping UV pixels. Acceptance requires real same-view before/after and movement/baby checks; no source texture/model/animation changed or new quality claim. Details:docs/VISUAL_AUDIT.md. Inventory/resource validation passed; gameplay checks remain21JUnit/133GameTests from the preceding code stage.

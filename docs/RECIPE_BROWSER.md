@@ -1,3 +1,5 @@
+> Historical design/acceptance record. The bespoke screen, inventory panel, search/navigation and client cache were removed in9b554d2. This document does not describe the current UI; see [JEI_MIGRATION.md](JEI_MIGRATION.md). Real recipe projections remain, but a JEI custom-category plugin is pending.
+
 # Built-in recipe browser — display and brewing stage
 
 This extends the existing inventory panel/full-screen browser; it does not replace crafting or grant client crafting authority. No JEI/EMI dependency is added.
