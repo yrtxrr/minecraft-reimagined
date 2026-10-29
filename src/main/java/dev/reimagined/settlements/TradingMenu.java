@@ -169,22 +169,54 @@ public final class TradingMenu extends AbstractContainerMenu {
     public int getMaxUses() { return tradeData.get(1); }
 
     public boolean executeTrade(Player player) {
-        var offerOpt = getOffer();
-        if (offerOpt.isEmpty()) return false;
-        var offer = offerOpt.get();
+        return executeTrade(player, selectedTradeIndex, currentTradeCount);
+    }
+
+    public boolean executeTrade(Player player, int tradeIndex, int tradeCount) {
+        if (tradeIndex < 0) return false;
+        List<TradeOffer> offers = getOffers();
+        if (tradeIndex >= offers.size()) return false;
+        var offer = offers.get(tradeIndex);
         if (!offer.canTrade()) return false;
-        if (currentTradeCount <= 0) return false;
+        if (tradeCount <= 0) return false;
 
         ItemStack input = inputSlot.getItem(0);
         if (input.isEmpty() || !ItemStack.isSameItemSameComponents(input, offer.input)) return false;
-        if (input.getCount() < offer.input.getCount() * currentTradeCount) return false;
+        if (input.getCount() < offer.input.getCount() * tradeCount) return false;
 
         ItemStack output = offer.output.copy();
-        output.setCount(offer.output.getCount() * currentTradeCount);
+        output.setCount(offer.output.getCount() * tradeCount);
 
         if (!player.getInventory().add(output)) return false;
 
-        input.shrink(offer.input.getCount() * currentTradeCount);
+        input.shrink(offer.input.getCount() * tradeCount);
+        if (input.isEmpty()) inputSlot.setItem(0, ItemStack.EMPTY);
+
+        offer.use();
+        updateOutput();
+        return true;
+    }
+
+    // Test-only execute that bypasses player inventory check
+    public boolean executeTradeForTesting(int tradeIndex, int tradeCount) {
+        if (tradeIndex < 0) return false;
+        List<TradeOffer> offers = getOffers();
+        if (tradeIndex >= offers.size()) return false;
+        var offer = offers.get(tradeIndex);
+        if (!offer.canTrade()) return false;
+        if (tradeCount <= 0) return false;
+
+        ItemStack input = inputSlot.getItem(0);
+        if (input.isEmpty() || !ItemStack.isSameItemSameComponents(input, offer.input)) return false;
+        if (input.getCount() < offer.input.getCount() * tradeCount) return false;
+
+        ItemStack output = offer.output.copy();
+        output.setCount(offer.output.getCount() * tradeCount);
+
+        // Put output in output slot (slot 1) instead of player inventory
+        outputSlot.setItem(0, output);
+
+        input.shrink(offer.input.getCount() * tradeCount);
         if (input.isEmpty()) inputSlot.setItem(0, ItemStack.EMPTY);
 
         offer.use();

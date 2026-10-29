@@ -4,6 +4,7 @@ import dev.reimagined.settlements.SettlementContent;
 import dev.reimagined.settlements.TradeData;
 import dev.reimagined.settlements.TradeOffer;
 import dev.reimagined.settlements.TradingMenu;
+import dev.reimagined.settlements.network.TradeExecutePayload;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -11,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -57,9 +59,7 @@ public final class TradingScreen extends AbstractContainerScreen<TradingMenu> {
 
         executeButton = addRenderableWidget(Button.builder(Component.translatable("gui.reimagined.trade.execute"), b -> {
             if (menu.getSelectedTradeIndex() >= 0 && menu.getCurrentTradeCount() > 0) {
-                if (minecraft != null && minecraft.player != null) {
-                    menu.executeTrade(minecraft.player);
-                }
+                PacketDistributor.sendToServer(new TradeExecutePayload(menu.getSelectedTradeIndex(), menu.getCurrentTradeCount()));
             }
         }).bounds(x + 10, y + 55, 100, 20).build());
     }

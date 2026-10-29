@@ -1,5 +1,6 @@
 package dev.reimagined.settlements;
 
+import dev.reimagined.settlements.network.SettlementNetwork;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -33,6 +34,7 @@ public final class SettlementContent {
         bus.addListener(SettlementContent::attributes);
         bus.addListener(SettlementContent::creativeTab);
         SettlementEvents.register();
+        SettlementNetwork.register(bus);
     }
 
     private static void attributes(EntityAttributeCreationEvent event) {
