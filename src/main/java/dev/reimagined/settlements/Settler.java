@@ -29,7 +29,7 @@ import java.util.EnumSet;
  * bounded daily schedule, return to their workplace, take short breaks, and
  * remain inside their home settlement bounds.
  */
-public final class Settler extends Mob implements MenuProvider {
+public final class Settler extends Mob implements MenuProvider, net.minecraft.world.item.trading.Merchant {
     private static final int WORK_RADIUS = 48;
     private static final int BREAK_CHANCE = 2000;
     private static final int WALK_CHANCE = 4000;
@@ -354,8 +354,46 @@ public final class Settler extends Mob implements MenuProvider {
         return Component.translatable("entity.reimagined.settler");
     }
 
-    @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return new TradingMenu(id, inventory, (ServerLevel) level(), getUUID());
+    private Player tradingPlayer;
+    private net.minecraft.world.item.trading.MerchantOffers activeOffers;
+
+    @Override public void setTradingPlayer(Player player) {
+        tradingPlayer = player;
+        if (player == null) activeOffers = null;
+    }
+    @Override public Player getTradingPlayer() { return tradingPlayer; }
+    @Override public net.minecraft.world.item.trading.MerchantOffers getOffers() {
+        if (!(level() instanceof ServerLevel server)) return new net.minecraft.world.item.trading.MerchantOffers();
+        if (activeOffers == null) {
+            var record = SettlementData.get(server).findSettler(getUUID());
+            activeOffers = TradeData.get(server).offersFor(server,getUUID(),record == null ? "commoner" : record.profession);
+        }
+        return activeOffers;
+    }
+    @Override public void overrideOffers(net.minecraft.world.item.trading.MerchantOffers offers) {}
+    @Override public void notifyTrade(net.minecraft.world.item.trading.MerchantOffer offer) {
+        if (level() instanceof ServerLevel server && getOffers().contains(offer)) {
+            offer.increaseUses(); TradeData.get(server).setDirty();
+        }
+    }
+    @Override public void notifyTradeUpdated(ItemStack stack) {}
+    @Override public int getVillagerXp() { return 0; }
+    @Override public void overrideXp(int value) {}
+    @Override public boolean showProgressBar() { return false; }
+    @Override public boolean canRestock() { return true; }
+    @Override public boolean isClientSide() { return level().isClientSide; }
+    @Override public net.minecraft.sounds.SoundEvent getNotifyTradeSound() { return net.minecraft.sounds.SoundEvents.VILLAGER_YES; }
+
+    @Override public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new TradingMenu(id, inventory, this);
+    }
+
+    @Override public void openTradingScreen(Player player, Component title, int merchantLevel) {
+        if (!(player instanceof net.minecraft.server.level.ServerPlayer) || !isAlive()
+                || player.isSpectator() || player.distanceToSqr(this)>64 || tradingPlayer != null) return;
+        setTradingPlayer(player);
+        var menuId = player.openMenu(this);
+        if (menuId.isPresent()) player.sendMerchantOffers(menuId.getAsInt(),getOffers(),1,0,false,true);
+        else setTradingPlayer(null);
     }
 }

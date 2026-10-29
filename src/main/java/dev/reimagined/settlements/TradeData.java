@@ -17,7 +17,33 @@ import java.util.List;
  * Persists across world reloads so trading progress is not lost.
  */
 public final class TradeData extends SavedData {
-    private final List<TradeOffer> offers = new ArrayList<>();
+    private final List<TradeOffer> offers = new ArrayList<>(); // Legacy profession catalogue, retained for v1 saves.
+    private final java.util.Map<java.util.UUID, NpcStock> npcStocks = new java.util.HashMap<>();
+    private record NpcStock(String profession, net.minecraft.world.item.trading.MerchantOffers offers, long[] restockDay) {}
+
+    /** One lazy restock per advancing work day. No polling of unloaded NPC records. */
+    public net.minecraft.world.item.trading.MerchantOffers offersFor(ServerLevel level, java.util.UUID id, String profession) {
+        long day = Math.floorDiv(level.getDayTime() - 8000L, 24000L);
+        NpcStock stock = npcStocks.get(id);
+        if (stock == null) {
+            initializeOffersForProfession(level, profession);
+            var actual = new net.minecraft.world.item.trading.MerchantOffers();
+            for (TradeOffer source : offers) if (source.profession.equals(profession) && !source.input.isEmpty() && !source.output.isEmpty()) {
+                actual.add(new net.minecraft.world.item.trading.MerchantOffer(
+                    new net.minecraft.world.item.trading.ItemCost(source.input.getItem(), source.input.getCount()),
+                    java.util.Optional.empty(), source.output.copy(), Math.clamp(source.uses(),0,source.maxUses), source.maxUses, 0, 0F));
+            }
+            stock = new NpcStock(profession, actual, new long[]{day});
+            npcStocks.put(id,stock); setDirty();
+        } else if (day > stock.restockDay()[0]) {
+            for (var offer : stock.offers()) offer.resetUses();
+            stock.restockDay()[0] = day; setDirty();
+        }
+        return stock.offers();
+    }
+
+    public void removeStock(java.util.UUID id) { if (npcStocks.remove(id) != null) setDirty(); }
+
 
     public static TradeData get(ServerLevel level) {
         return level.getServer().overworld().getDataStorage().computeIfAbsent(
@@ -40,6 +66,14 @@ public final class TradeData extends SavedData {
             offer.setOwner(data);
             data.offers.add(offer);
         }
+        var ops = registries.createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE);
+        for (var entryTag : tag.getList("NpcOffers",10)) {
+            CompoundTag entry = (CompoundTag)entryTag;
+            if (!entry.hasUUID("Uuid")) continue;
+            var decoded = net.minecraft.world.item.trading.MerchantOffers.CODEC.parse(ops,entry.getCompound("Offers")).result();
+            decoded.ifPresent(value -> data.npcStocks.put(entry.getUUID("Uuid"),
+                new NpcStock(entry.getString("Profession"), value, new long[]{entry.getLong("RestockDay")})));
+        }
         return data;
     }
 
@@ -57,13 +91,22 @@ public final class TradeData extends SavedData {
             list.add(entry);
         }
         tag.put("Offers", list);
+        var stocks = new ListTag();
+        var ops = registries.createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE);
+        npcStocks.forEach((id,stock) -> {
+            var entry = new CompoundTag(); entry.putUUID("Uuid",id); entry.putString("Profession",stock.profession());
+            entry.putLong("RestockDay",stock.restockDay()[0]);
+            entry.put("Offers",net.minecraft.world.item.trading.MerchantOffers.CODEC.encodeStart(ops,stock.offers()).getOrThrow());
+            stocks.add(entry);
+        });
+        tag.put("NpcOffers",stocks);
         return tag;
     }
 
     public List<TradeOffer> offers() { return offers; }
 
     public void clear() {
-        offers.clear();
+        offers.clear(); npcStocks.clear();
         setDirty();
     }
 

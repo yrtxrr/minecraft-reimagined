@@ -23,13 +23,10 @@ public final class SettlementContent {
             () -> EntityType.Builder.of(Settler::new, MobCategory.MISC).sized(0.6f, 1.8f).clientTrackingRange(10).build("reimagined:settler"));
     public static final DeferredItem<DeferredSpawnEggItem> SETTLER_SPAWN_EGG = ITEMS.register("settler_spawn_egg",
             () -> new DeferredSpawnEggItem(SETTLER, 0x7F5F3F, 0xD4B88F, new Item.Properties()));
-    public static final DeferredHolder<MenuType<?>, MenuType<TradingMenu>> TRADING_MENU = MENUS.register("trading",
-            () -> new MenuType<>(TradingMenu::new, FeatureFlags.VANILLA_SET));
-
     public static void register(IEventBus bus) {
         ENTITIES.register(bus);
         ITEMS.register(bus);
-        MENUS.register(bus);
+
         bus.addListener(SettlementContent::attributes);
         bus.addListener(SettlementContent::creativeTab);
         SettlementEvents.register();

@@ -22,7 +22,7 @@ public final class SettlementEvents {
         NeoForge.EVENT_BUS.addListener(SettlementEvents::onJoin);
         NeoForge.EVENT_BUS.addListener(SettlementEvents::onDeath);
         NeoForge.EVENT_BUS.addListener(SettlementEvents::onInteract);
-        NeoForge.EVENT_BUS.addListener(SettlementEvents::onTick);
+
     }
 
     private static void onJoin(EntityJoinLevelEvent event) {
@@ -46,6 +46,7 @@ public final class SettlementEvents {
         if (!(event.getEntity() instanceof Settler settler)) return;
         if (!(settler.level() instanceof ServerLevel server)) return;
         SettlementData.get(server).removeSettler(settler.getUUID());
+        TradeData.get(server).removeStock(settler.getUUID());
     }
 
     private static void onInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
@@ -55,32 +56,9 @@ public final class SettlementEvents {
         if (player.isShiftKeyDown()) {
             player.displayClientMessage(Component.translatable("message.reimagined.settler_greeting", "Settler"), false);
         } else {
-            player.openMenu(settler);
+            settler.openTradingScreen(player,settler.getDisplayName(),1);
         }
         event.setCanceled(true);
     }
 
-    private static void onTick(ServerTickEvent.Post event) {
-        ServerLevel server = event.getServer().overworld();
-        var data = SettlementData.get(server);
-        var tradeData = TradeData.get(server);
-        long time = server.getDayTime();
-        boolean dirty = false;
-        for (SettlementData.SettlerRecord record : data.settlers()) {
-            if (time % 400 == 0 && record.tradeTick > 0) {
-                record.tradeTick--;
-                dirty = true;
-            }
-        }
-        if (dirty) data.setDirty();
-
-        // Restock trades at the start of each work day (8:00)
-        if (time % 24000 == 8000) {
-            for (TradeOffer offer : tradeData.offers()) {
-                if (offer.uses() > 0) {
-                    offer.restock();
-                }
-            }
-        }
-    }
 }
