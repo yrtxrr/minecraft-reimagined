@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_honey_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "minecraft:honey_bottle" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_honey_bottle" ]
+  ],
+  "rewards": {
+    "recipes": [ "reimagined:honeyed_pear", "reimagined:honey_cake" ]
+  }
+}

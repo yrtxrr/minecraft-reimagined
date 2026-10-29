@@ -106,3 +106,19 @@ Full build19JUnit,78/78required server GameTests,141JSON/144bilingual keys passe
 Full Gradle build passed with **19/19 JUnit** tests, zero failures/errors/skips. Fresh `runGameTestServer` report: **84/84 required GameTests**, zero failures/errors/skips (`run-gametest/reports/gametest.xml`, ignored). Six new `OrchardGameTests` execute real block/item registration and common tags, real crafting recipes and browser projection, loading of `reimagined:pear_tree`/`reimagined:pear_trees`, bounded fruit rules (outer canopy excluded, ripe leaves stop ticking), summer ripening and winter rejection against the actual calendar, actual right-click harvest producing pear items, leaf loot with shears, and sapling growth through the configured tree feature.
 
 Resource validation: **183 JSON files / 151 bilingual EN/RU keys** parsed and cross-checked by PowerShell (model parents, blockstate models, recipe results, textures). `python3 scripts/validate-resources.py` was not executed because no working Python interpreter is available in this checkout; the PowerShell check and real datapack loading in GameTestServer do not replace it. Graphical rendering of the tree/leaves, survival-client sapling growth, large-orchard profiling and authenticated multiplayer are not covered. No performance claim is made for large orchards.
+
+## Beekeeping checkpoint - 2026-10-29 (feat/opencode-development)
+
+Source: vanilla-hive beekeeping with a persisted frame attachment, bee smoker, wax milling, wax block, two honey meals, advancements, EN/RU text and an original journal chapter. Details and limits: `docs/BEEKEEPING.md`.
+
+Executed on this Windows checkout with the pinned JDK 21 (`JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot`):
+
+- `.\gradlew.bat build` - **BUILD SUCCESSFUL**, **19/19 JUnit tests**, 0 failures/errors/skips (`build/test-results/test/*.xml`).
+- `.\gradlew.bat runGameTestServer` - fresh `run-gametest/reports/gametest.xml`: **92/92 declared and executed GameTests, 0 failures/errors/skips** (8 new beekeeping tests).
+- `python scripts/validate-resources.py` with `PYTHONUTF8=1` - **205 JSON files / 164 bilingual keys**, model/texture/blockstate/recipe-result links and acyclic density references valid. Without `PYTHONUTF8` the default Windows cp1251 decoder rejects UTF-8 resources; that is a shell-environment issue, not a resource defect.
+
+`bash` is not installed in this checkout, so `bash scripts/verify-integration.sh` could not run. Its report check was reproduced directly in Python against the fresh XML: expected tests are counted from `@GameTest(` declarations, and the script fails on any missing, extra, failed or skipped test. This is equivalent report validation but is not the same command.
+
+New tests: `BeekeepingGameTests` covers registration/hoe tag/attachment/all recipes; the three-frame cap and hive NBT persistence; real interaction installation, full-hive and non-hive rejection, and frame recovery on the break event; a smoked full-hive harvest (bottle, comb per frame, colony retained, angry bees calmed, durability); unripe and frameless hives; air use with cooldown; real pot cooking of both meals with glass-bottle/bucket remainders, bowl consumption and eating; and browser projection, `ItemStack` network codec and packaged EN/RU keys.
+
+Not covered: rendered textures/tooltips/smoke particles, survival-client harvesting, large-apiary profiling/TPS, explosion frame loss, and authenticated multiplayer. No performance-readiness claim is made.

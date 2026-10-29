@@ -19,6 +19,7 @@ public final class Reimagined {
         dev.reimagined.agriculture.AgricultureContent.register(modBus);
         dev.reimagined.agriculture.OrchardContent.register(modBus);
         dev.reimagined.cooking.CookingContent.register(modBus);
+        dev.reimagined.beekeeping.BeekeepingContent.register(modBus);
         dev.reimagined.magic.MagicContent.register(modBus);
         ProgressionEvents.register();
         Seasons.register(modBus);

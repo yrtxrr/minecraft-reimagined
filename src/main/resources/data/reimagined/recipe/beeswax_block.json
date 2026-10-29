@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "W": { "item": "reimagined:beeswax" }
+  },
+  "result": {
+    "id": "reimagined:beeswax_block",
+    "count": 1
+  }
+}
