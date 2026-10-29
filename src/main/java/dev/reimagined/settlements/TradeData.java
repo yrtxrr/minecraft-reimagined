@@ -62,6 +62,11 @@ public final class TradeData extends SavedData {
 
     public List<TradeOffer> offers() { return offers; }
 
+    public void clear() {
+        offers.clear();
+        setDirty();
+    }
+
     public TradeOffer findOffer(String profession, ItemStack input) {
         for (TradeOffer o : offers) {
             if (o.profession.equals(profession) && ItemStack.isSameItemSameComponents(o.input, input)) return o;
