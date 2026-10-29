@@ -167,3 +167,26 @@ Minecraft1.21.1/NeoForge21.1.264 native client, disposable DeerTextureReview, Xv
 Recheck with `source scripts/cloud-shell.sh`, `./gradlew build`, `./gradlew test --rerun`, `bash scripts/verify-integration.sh`, `python3 scripts/validate-resources.py` and `python3 scripts/inventory-visual-resources.py --check`. JUnit/GameTests validate the existing gameplay regressions, not pixel quality; only the native checks support the visual findings. No measured performance or physical-GPU/multiplayer claim.
 
 Final deer checkpoint checks: build successful; fresh21JUnit/133GameTests passed,303JSON/190bilingual keys and57PNG/84models/15blockstates inventory validated.
+
+## Beekeeping checkpoint - 2026-10-29 (feat/opencode-development)
+
+Source: vanilla-hive beekeeping with a persisted frame attachment, bee smoker, wax milling, wax block, two honey meals, advancements, EN/RU text and an original journal chapter. Details and limits: `docs/BEEKEEPING.md`.
+
+Executed on this Windows checkout with the pinned JDK 21 (`JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot`):
+
+- `.\gradlew.bat build` - **BUILD SUCCESSFUL**, **19/19 JUnit tests**, 0 failures/errors/skips (`build/test-results/test/*.xml`).
+- `.\gradlew.bat runGameTestServer` - fresh `run-gametest/reports/gametest.xml`: **92/92 declared and executed GameTests, 0 failures/errors/skips** (8 new beekeeping tests).
+- `python scripts/validate-resources.py` with `PYTHONUTF8=1` - **205 JSON files / 164 bilingual keys**, model/texture/blockstate/recipe-result links and acyclic density references valid. Without `PYTHONUTF8` the default Windows cp1251 decoder rejects UTF-8 resources; that is a shell-environment issue, not a resource defect.
+
+`bash` is not installed in this checkout, so `bash scripts/verify-integration.sh` could not run. Its report check was reproduced directly in Python against the fresh XML: expected tests are counted from `@GameTest(` declarations, and the script fails on any missing, extra, failed or skipped test. This is equivalent report validation but is not the same command.
+
+New tests: `BeekeepingGameTests` covers registration/hoe tag/attachment/all recipes; the three-frame cap and hive NBT persistence; real interaction installation, full-hive and non-hive rejection, and frame recovery on the break event; a smoked full-hive harvest (bottle, comb per frame, colony retained, angry bees calmed, durability); unripe and frameless hives; air use with cooldown; real pot cooking of both meals with glass-bottle/bucket remainders, bowl consumption and eating; and browser projection, `ItemStack` network codec and packaged EN/RU keys.
+
+Not covered: rendered textures/tooltips/smoke particles, survival-client harvesting, large-apiary profiling/TPS, explosion frame loss, and authenticated multiplayer. No performance-readiness claim is made.
+
+
+## Agent integration candidate — 2026-10-29 (main publication blocked)
+
+Freebuff c6a0cb9 is history-preserving merge1a82150: build,21freshJUnit and133GameTests passed. OpenCode090a2cc beekeeping is merged into the local candidate with creative-category,14-page journal budget, reloadable wax composting and bounded/cooldown smoker corrections. Combined build/21JUnit/143GameTests and324JSON/203keys/63PNG inventory passed; all133base tests plus8author tests retained,2integration tests added. Native installation/harvest, Survival durability, creative food icons and /reload checked; a second client process retained3frames, harvested hive state and smoker damage1.
+
+Kilo23a515f was **not merged**: missing renderer, disconnected client/server trade UI, unprotected output/incorrect quantities and unbounded/ticket-based NPC work are critical blockers. Do not present all-three integration or Alpha as complete. origin/feat/reimagined-alpha stays0c30793; verified partial work is saved only on integration/agents-review-0c30793. Details, source evidence, limits and next gates:docs/AGENT_INTEGRATION_REVIEW.md.

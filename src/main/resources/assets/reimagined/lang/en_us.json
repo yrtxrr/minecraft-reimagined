@@ -188,5 +188,18 @@
   "itemGroup.reimagined.nature": "Reimagined: Nature & Wildlife",
   "itemGroup.reimagined.food": "Reimagined: Farming & Food",
   "itemGroup.reimagined.engineering": "Reimagined: Engineering & Gear",
-  "itemGroup.reimagined.magic": "Reimagined: Magic & Research"
+  "itemGroup.reimagined.magic": "Reimagined: Magic & Research",
+  "block.reimagined.beeswax_block": "Beeswax Block",
+  "item.reimagined.beeswax": "Beeswax",
+  "item.reimagined.bee_frame": "Hive Frame",
+  "item.reimagined.bee_smoker": "Bee Smoker",
+  "item.reimagined.honeyed_pear": "Honeyed Pear",
+  "item.reimagined.honey_cake": "Honey Cake",
+  "tooltip.reimagined.bee_frame": "Right-click a hive or nest to install up to 3. Each frame adds honeycomb.",
+  "tooltip.reimagined.bee_smoker": "Use on a full hive to harvest safely; use in air to calm angry bees.",
+  "message.reimagined.bee_frames_full": "This hive already holds three frames.",
+  "message.reimagined.bee_frames_installed": "Frame installed: %s/%s",
+  "message.reimagined.bee_smoker_idle": "Nothing to harvest here yet.",
+  "message.reimagined.bee_smoker_calm": "Calmed bees: %s",
+  "journal.reimagined.page.beekeeping": "BEEKEEPING\n\nHives and nests fill with honey; harvest with bottles or a smoker.\n\nFrames add honeycomb. Mill honeycomb into wax."
 }

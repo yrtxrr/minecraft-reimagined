@@ -83,6 +83,24 @@ public final class WorldFeatureGameTests {
         h.assertTrue(!desert.value().getGenerationSettings().hasFeature(feature),"No boulders injected into deserts");h.succeed();
     }
     @GameTest(template="empty")
+    public static void boulderWaterFilterRejectsFloodedSurfaceAndAcceptsDrainedGround(GameTestHelper h) {
+        var feature=h.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolderOrThrow(BOULDER).value();
+        var context=new net.minecraft.world.level.levelgen.placement.PlacementContext(h.getLevel(),h.getLevel().getChunkSource().getGenerator(),java.util.Optional.of(feature));
+        // Above the GameTest protective roof: otherwise its solid barrier masks both heightmaps.
+        var p=new net.minecraft.core.BlockPos(7,26,7);
+        for(int y=25;y<=32;y++)h.setBlock(p.atY(y),net.minecraft.world.level.block.Blocks.AIR);
+        h.setBlock(p.atY(24),net.minecraft.world.level.block.Blocks.DIRT);
+        var random=net.minecraft.util.RandomSource.create(18);
+        var filter=feature.placement().get(2);
+        h.assertTrue(filter.getPositions(context,random,h.absolutePos(p)).count()==1,"Dry ground accepts a single position");
+        for(int y=25;y<=27;y++)h.setBlock(p.atY(y),net.minecraft.world.level.block.Blocks.WATER);
+        h.assertTrue(filter.getPositions(context,random,h.absolutePos(p)).count()==0,"Actual heightmaps must reject a submerged surface: water="+h.getBlockState(p)+" floor="+context.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR,h.absolutePos(p).getX(),h.absolutePos(p).getZ())+" surface="+context.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,h.absolutePos(p).getX(),h.absolutePos(p).getZ()));
+        for(int y=25;y<=27;y++)h.setBlock(p.atY(y),net.minecraft.world.level.block.Blocks.AIR);
+        h.assertTrue(filter.getPositions(context,random,h.absolutePos(p)).count()==1,"Draining the same column must restore eligibility");
+        h.succeed();
+    }
+
+    @GameTest(template="empty")
     public static void actualBoulderFeatureCreatesBoundedMossyRockOnSoil(GameTestHelper h) {
         for(int x=1;x<=13;x++)for(int z=1;z<=13;z++) h.setBlock(new net.minecraft.core.BlockPos(x,2,z),net.minecraft.world.level.block.Blocks.DIRT);
         var key=ResourceKey.create(Registries.CONFIGURED_FEATURE,BOULDER_ID);

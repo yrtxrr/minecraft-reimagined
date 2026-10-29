@@ -188,5 +188,18 @@
   "itemGroup.reimagined.nature": "Reimagined: Природа и животные",
   "itemGroup.reimagined.food": "Reimagined: Ферма и еда",
   "itemGroup.reimagined.engineering": "Reimagined: Техника и оружие",
-  "itemGroup.reimagined.magic": "Reimagined: Магия и исследования"
+  "itemGroup.reimagined.magic": "Reimagined: Магия и исследования",
+  "block.reimagined.beeswax_block": "Блок воска",
+  "item.reimagined.beeswax": "Пчелиный воск",
+  "item.reimagined.bee_frame": "Пчелиная рамка",
+  "item.reimagined.bee_smoker": "Дымокур",
+  "item.reimagined.honeyed_pear": "Груша в меду",
+  "item.reimagined.honey_cake": "Медовый пирог",
+  "tooltip.reimagined.bee_frame": "ПКМ по улью или гнезду, чтобы вставить до 3 рамок. Каждая добавляет соты.",
+  "tooltip.reimagined.bee_smoker": "ПКМ по полному улью безопасно собирает мёд; в воздухе успокаивает пчёл.",
+  "message.reimagined.bee_frames_full": "В этом улье уже три рамки.",
+  "message.reimagined.bee_frames_installed": "Рамка установлена: %s/%s",
+  "message.reimagined.bee_smoker_idle": "Здесь пока нечего собирать.",
+  "message.reimagined.bee_smoker_calm": "Успокоено пчёл: %s",
+  "journal.reimagined.page.beekeeping": "ПЧЕЛОВОДСТВО\n\nУльи и гнёзда наполняются мёдом; собирайте бутылочками или дымокуром.\n\nРамки дают больше сотов. Соты мелют в воск."
 }

@@ -21,7 +21,7 @@ public final class JournalPages {
         pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page.current_biome",
                 Component.translatableWithFallback("biome." + currentId.getNamespace() + "." + currentId.getPath().replace('/', '.'), currentId.getPath().replace('_', ' ')),
                 String.format(java.util.Locale.ROOT, "%.2f", current.value().getBaseTemperature()))));
-        for (String chapter : List.of("seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "cooking", "orchard"))
+        for (String chapter : List.of("seasons", "skills", "recipes", "engineering", "magic", "combat", "wildlife", "cooking", "orchard", "beekeeping"))
             pages.add(Filterable.passThrough(Component.translatable("journal.reimagined.page." + chapter)));
         for(int part=0;part<2;part++) {
             var first=dev.reimagined.magic.Spell.values()[4+part*2];

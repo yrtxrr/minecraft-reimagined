@@ -7,7 +7,8 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `season` | 96-day calendar, local crop growth, calendar commands | Overworld SavedData stores versioned offset; overworld day time is authoritative |
 | `progression` | 10 skills, uncapped XP/levels, finite mastery | Player persistent NBT, decimal BigInteger, copied on player clone; server event XP and commands |
 | `engineering` | water flow, axial connectivity, bounded load, milling | Shared bounded component scheduler; motion snapshots/client BER; milling every20 ticks staggered by position; NBT inventory/progress; WorldlyContainer and sided IItemHandler |
-| `cooking` | heated cooking pot, five meals, menu and sided automation | Server scheduled block ticks, reload-aware recipe hit/miss cache; NBT contents/progress; vanilla menu deltas |
+| `cooking` | heated cooking pot, seven meals, menu and sided automation | Server scheduled block ticks, reload-aware recipe hit/miss cache; NBT contents/progress; vanilla menu deltas |
+| `beekeeping` | hive frames, bee smoker, wax and honey meals on vanilla hives | NeoForge `reimagined:hive_frames` attachment on the real `BeehiveBlockEntity`; server-authoritative interaction/break events; no ticker or scan |
 | `content` | weapons/specials/parry, four wand schools | Server use/damage events, bounded mana, shared saved special/parry cooldowns copied on death |
 | `research` | readable journal and personal observations | Versioned player NBT, 256 total unique registry IDs, deep-copied on clone; every200 player ticks/current book use, 6-block local scan with at most8 visibility traces |
 | `creature` | Deer entity and natural spawning | Vanilla entity persistence/pathfinding; client model registration isolated by Dist.CLIENT |
@@ -23,9 +24,13 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 
 New process recipes implement vanilla `Recipe<RecipeInput>` and register a `RecipeType` and `RecipeSerializer` with Mojang MapCodec and network StreamCodec. `MillingRecipe` is the first custom implementation: ingredient, result stack, processing seconds. This uses existing data-pack reload/sync rather than a second recipe database. Future smithing, alchemy and cooking processors must use the same contract. Not all future systems exist yet. Vanilla brewing now has a public-API projection and smithing transforms use the public recipe codec. Dynamic special crafting and opaque custom brewing predicates still require adapters; see docs/RECIPE_BROWSER.md.
 
+## Beekeeping state
+
+Beekeeping adds no block entity and no saved-data file. The only new persistent state is an `AttachmentType<Integer>` (`reimagined:hive_frames`) attached to the vanilla `BeehiveBlockEntity`; it is serialized inside the block entity's ordinary NBT when non-zero and removed when the last frame is taken. Installation and frame recovery are server-authoritative `PlayerInteractEvent.RightClickBlock` / `BlockEvent.BreakEvent` handlers. Because explosions and piston removal do not fire the player break event, frames are lost on those paths; a global hive index was rejected as a larger and staler alternative. The smoker is a normal durable item; its only world query is one bounded entity box on explicit use.
+
 ## Performance and boundaries
 
-No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Remote civilization simulation and climate weather effects are future work; no placeholder simulation is presented as complete.
+No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Beekeeping adds no recurring work at all: vanilla bee AI and random ticking remain the only hive activity, and frame state is O(1) per hive. Remote civilization simulation and climate weather effects are future work; no placeholder simulation is presented as complete.
 
 Player state is server-owned. There is no state-level player kingdom creation API and no NPC war terrain destruction. Both civilizations and wars remain unimplemented.
 
@@ -120,3 +125,8 @@ No Reimagined screen/sidebar/search key handler owns recipe browsing. Ordinary r
 ## Deer rendering attachment contract
 
 DeerModel keeps neck and head as separate root parts rendered through the same cached head-part list. Both receive the vanilla baby head transform, while inherited QuadrupedModel setupAnim rotates only the head. This preserves the neck/shoulder joint during extreme pitch and avoids splitting the baby neck into the half-scale torso pass. Ears/antlers remain head children; antler visibility is explicitly reset for every deer so the shared renderer cannot leak baby state to adults. Approved head5×5×6and neck3×5×3dimensions are fixed. Antler UV50,16is separate from body UV0,18; the atlas remains64×64. No server tick/network/world-generation work is introduced. Native acceptance and remaining limits:docs/DEER_VISUAL_ACCEPTANCE.md.
+
+
+## Beekeeping integration contract
+
+Vanilla hive block-entity attachments persist up to3frames; no second bee/hive/ticker/index is registered. Player interactions own installation/recovery/harvest and a loaded-entity-only local calm query. Hive and air uses share20ticks of cooldown; EntityType.BEE query aborts after64matching bees. Wax composting uses the NeoForge item data map, not a legacy map write. Six content entries join the existing food creative tag; the journal includes14fixed pages and retains all three personal catalogues. Native/automatic verification and blocked Kilo architecture review:docs/AGENT_INTEGRATION_REVIEW.md. These bounds are not a measured large-apiary TPS guarantee.

@@ -1,0 +1,13 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    { "item": "reimagined:pear" },
+    { "item": "minecraft:honey_bottle" },
+    { "item": "reimagined:barley" }
+  ],
+  "result": {
+    "id": "reimagined:honeyed_pear",
+    "count": 1
+  },
+  "seconds": 12
+}

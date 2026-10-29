@@ -20,6 +20,9 @@
     },
     "reimagined:pear": {
       "chance": 0.65
+    },
+    "reimagined:beeswax": {
+      "chance": 0.3
     }
   }
 }
