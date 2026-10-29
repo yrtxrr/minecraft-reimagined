@@ -1,3 +1,5 @@
+> Historical candidate report. Current combined integration status: [FINAL_AGENT_INTEGRATION.md](FINAL_AGENT_INTEGRATION.md). The previously blocked Kilo23a515f/alternate29ba004 are not substituted for verified c31544c.
+
 # Интеграция Freebuff / OpenCode / Kilo — 2026-10-29
 
 ## Статус и Git

@@ -130,3 +130,8 @@ DeerModel keeps neck and head as separate root parts rendered through the same c
 ## Beekeeping integration contract
 
 Vanilla hive block-entity attachments persist up to3frames; no second bee/hive/ticker/index is registered. Player interactions own installation/recovery/harvest and a loaded-entity-only local calm query. Hive and air uses share20ticks of cooldown; EntityType.BEE query aborts after64matching bees. Wax composting uses the NeoForge item data map, not a legacy map write. Six content entries join the existing food creative tag; the journal includes14fixed pages and retains all three personal catalogues. Native/automatic verification and blocked Kilo architecture review:docs/AGENT_INTEGRATION_REVIEW.md. These bounds are not a measured large-apiary TPS guarantee.
+
+
+## Settlement trade and navigation contract
+
+TradingMenu subclasses vanilla MerchantMenu. Existing profession catalogue feeds UUID-owned MerchantOffers in TradeData SavedData; offer packet/selection/result clicks are vanilla server paths. One buyer per NPC, alive/dimension/range/spectator checks, whole-result capacity before shift/pickup and stock consumption per actual result prevent client minting/partial-failure output. Restock is lazy and monotonically day-guarded, not an all-record tick scan. SettlerNavigation guards the entire vanilla path region using ready getChunkNow reads, bounds range/padding/targets and throttles all requests/recomputations40ticks with UUID staggering. QA profile code is opt-in and excluded from player JAR, releasing entity references on completion/stop. Measured load and limits:docs/SETTLEMENT_REMEDIATION.md.

@@ -95,6 +95,7 @@ models,models/item/research_table.json,,,fa3a53ab90b94a92cc0d456f82d066d4676d7ae
 models,models/item/ritual_wand.json,,,0435121ab1c3770469f40898734458e96979f2d8672d0957fb93fd6a7ea335e1,minecraft:item/handheld;reimagined:item/ritual_wand
 models,models/item/river_perch.json,,,65a665799f19b8c1dac3799f0965306127abe03e3008b767f86b655e2f992928,minecraft:item/generated;reimagined:item/river_perch
 models,models/item/sanctuary_folio.json,,,75bdc3705c865e9044ada29889e99b491f1d46febdf5b6d7308737f41b0a7051,minecraft:item/generated;reimagined:item/sanctuary_folio
+models,models/item/settler_spawn_egg.json,,,957f27db60f190bb1e2b4a834042ffca0aede1aea6d11e9859562a04e7412639,minecraft:item/template_spawn_egg
 models,models/item/shaft.json,,,30f2cf2112a44705d40b528f62413062991769a59f943a4a8267af3e46b02bc9,reimagined:block/shaft
 models,models/item/silver_trout.json,,,cf5dc56e4785cb366faf06e8d5a4ef96fd996d47bd12691fbe817d551f999588,minecraft:item/generated;reimagined:item/silver_trout
 models,models/item/smithing_bellows.json,,,170a72ef71c5b28d0970a482b3c8b6e3af8b6bda0161680a909a5dc9ca391c0b,minecraft:item/generated;reimagined:item/smithing_bellows
@@ -133,6 +134,7 @@ textures,textures/entity/otter.png,64,64,41b4d9c49697cac51b80798ed3831e7bd83e47a
 textures,textures/gui/cooking_pot.png,176,158,b65c3d54897ccb22c4872d1465a285530afc219f6a5bf84735bea90b43f1c779,
 textures,textures/gui/magic_station.png,176,226,b7fc5063be9daee03647d2db5db0aaa9329154b49a92732f02daff79c4f1c94e,
 textures,textures/gui/smithing_forge.png,176,232,56959b8f5268f8c478cd0bda4d2c1454c2531dc5af64b4030efef722515bc9d8,
+textures,textures/gui/trading.png,176,158,b65c3d54897ccb22c4872d1465a285530afc219f6a5bf84735bea90b43f1c779,
 textures,textures/item/arcane_wand.png,16,16,171a27936f01519148e2983e773a6f80231a90beea2ba82b7f778f0065253755,
 textures,textures/item/barley.png,16,16,5cddbb68fd06bc94ad8f8cefcc128f783229e0171bec0e96c03121e5af14c4a2,
 textures,textures/item/barley_porridge.png,16,16,2b9a9bfbaa605b16f26c15bab1a883d5a6b3623665857ee34f5563542fa658e9,

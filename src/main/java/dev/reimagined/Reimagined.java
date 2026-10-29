@@ -25,6 +25,7 @@ public final class Reimagined {
         dev.reimagined.beekeeping.BeekeepingContent.register(modBus);
         dev.reimagined.magic.MagicContent.register(modBus);
         dev.reimagined.smithing.SmithingContent.register(modBus);
+        dev.reimagined.settlements.SettlementContent.register(modBus);
         ProgressionEvents.register();
         Seasons.register(modBus);
     }
