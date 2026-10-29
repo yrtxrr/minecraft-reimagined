@@ -102,7 +102,30 @@ public final class SettlementTradingGameTests {
             level.setDayTime(32000);h.assertTrue(restored.offersFor(level,a,"farmer").get(0).getUses()==0,"Next work day restocks once");
             restored.offersFor(level,a,"farmer").get(0).increaseUses();
             h.assertTrue(restored.offersFor(level,a,"farmer").get(0).getUses()==1,"Repeated same-day access cannot restock again");
+            var resident=npc(h);resident.getOffers().get(0).increaseUses();
+            level.setDayTime(56000);resident.setTradingPlayer(new Customer(h));
+            h.assertTrue(resident.getOffers().get(0).getUses()==0,"Opening a new session refreshes the previous cached preview at the day boundary");
         } finally {level.setDayTime(old);}
         h.succeed();
+    }    @GameTest(template="empty")
+    public static void exhaustedStockCannotBeBypassedAndEggHasOneCreativeCategory(GameTestHelper h) {
+        var s=npc(h);var p=new Customer(h);var m=menu(s,p);m.setSelectionHint(0);
+        int max=s.getOffers().get(0).getMaxUses();
+        for(int n=0;n<max;n++) {
+            m.getSlot(0).set(new ItemStack(Items.WHEAT,20));m.slotsChanged(m.getSlot(0).container);
+            m.clicked(2,0,ClickType.PICKUP,p);
+        }
+        h.assertTrue(m.getCarried().getCount()==max && s.getOffers().get(0).getUses()==max,"Each paid result consumes exactly one stock unit");
+        m.getSlot(0).set(new ItemStack(Items.WHEAT,20));m.slotsChanged(m.getSlot(0).container);m.clicked(2,0,ClickType.PICKUP,p);
+        h.assertTrue(m.getCarried().getCount()==max && m.getSlot(0).getItem().getCount()==20,"Exhausted offer cannot charge or yield goods again");
+        h.assertTrue(!s.removeWhenFarAway(1000000),"Settlers persist like residents rather than random hostile mobs");
+        net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(net.minecraft.world.flag.FeatureFlags.VANILLA_SET,true,h.getLevel().registryAccess());
+        int categories=0;
+        for(var tab:net.minecraft.core.registries.BuiltInRegistries.CREATIVE_MODE_TAB)
+            if(tab.getType()==net.minecraft.world.item.CreativeModeTab.Type.CATEGORY)
+                categories+=(int)tab.getDisplayItems().stream().filter(stack->stack.is(SettlementContent.SETTLER_SPAWN_EGG.get())).count();
+        h.assertTrue(categories==1,"Spawn egg appears in exactly one category, independent of the search tab");
+        h.succeed();
     }
+
 }

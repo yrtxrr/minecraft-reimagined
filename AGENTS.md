@@ -35,7 +35,9 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
-Current authorization: fix settlement/trade blockers only in feat/kilo-settlements-economy, starting23a515f. Commit and push completed stages to this branch, without merges or changes to Codex/main branches. The user explicitly supersedes the historical agent-branch exclusion for this task. Keep existing professions, schedules and persistence; use supported vanilla merchant APIs rather than duplicate unsafe client purchases.
+Current recovery authorization: preserve the verified local settlement implementation on codex/settlement-safety-recovery-63cdf1b. Do not modify or push the agent source branches, do not merge, and never force push. Remote Kilo is now29ba004; that alternate implementation was not tested by this checkpoint. This supersedes the previous branch-specific implementation authorization below.
+
+Previous implementation authorization: fix settlement/trade blockers only in feat/kilo-settlements-economy, starting23a515f. Commit and push completed stages to this branch, without merges or changes to Codex/main branches. The user explicitly supersedes the historical agent-branch exclusion for this task. Keep existing professions, schedules and persistence; use supported vanilla merchant APIs rather than duplicate unsafe client purchases.
 
 Historical authorization: finish integration of Freebuff's boulders atdf7a223 and Kilo's thatch/clover/journal commitsafc5bd3/1835d41/25e4ea7 into `feat/reimagined-alpha`, preserving source history and fixing integration defects. Freebuff fishing4a71f92 is already integrated and must not be reimported. Do not push to, rewrite or edit either agent branch. Earlier Kilo exclusions are superseded by this explicit request. No new major mechanics: finish validation and document remaining gaps. Push completed checkpoints only to the main working branch, without force.
 

@@ -299,6 +299,8 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         }
     }
 
+    @Override public boolean removeWhenFarAway(double distance) { return false; }
+
     @Override
     public boolean canFreeze() { return false; }
 
@@ -341,8 +343,8 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
     private net.minecraft.world.item.trading.MerchantOffers activeOffers;
 
     @Override public void setTradingPlayer(Player player) {
+        if (tradingPlayer != player || player == null) activeOffers = null;
         tradingPlayer = player;
-        if (player == null) activeOffers = null;
     }
     @Override public Player getTradingPlayer() { return tradingPlayer; }
     @Override public net.minecraft.world.item.trading.MerchantOffers getOffers() {
@@ -373,7 +375,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
 
     @Override public void openTradingScreen(Player player, Component title, int merchantLevel) {
         if (!(player instanceof net.minecraft.server.level.ServerPlayer) || !isAlive()
-                || player.isSpectator() || player.distanceToSqr(this)>64 || tradingPlayer != null) return;
+                || player.level()!=level() || player.isSpectator() || player.distanceToSqr(this)>64 || tradingPlayer != null) return;
         setTradingPlayer(player);
         var menuId = player.openMenu(this);
         if (menuId.isPresent()) player.sendMerchantOffers(menuId.getAsInt(),getOffers(),1,0,false,true);
