@@ -27,6 +27,8 @@ public final class CookingContent {
     public static final DeferredItem<Item> HUNTERS_STEW = meal("hunters_stew", 11, .8F);
     public static final DeferredItem<Item> FISH_CHOWDER = meal("fish_chowder", 10, .8F);
     public static final DeferredItem<Item> MUSHROOM_DUMPLINGS = meal("mushroom_dumplings", 9, .75F);
+    public static final DeferredItem<Item> HONEYED_PEAR = meal("honeyed_pear", 9, .85F);
+    public static final DeferredItem<Item> HONEY_CAKE = meal("honey_cake", 10, .9F);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CookingPotBlockEntity>> ENTITY = ENTITIES.register("cooking_pot",
             () -> BlockEntityType.Builder.of(CookingPotBlockEntity::new, POT.get()).build(null));
     public static final DeferredHolder<MenuType<?>, MenuType<CookingPotMenu>> MENU = MENUS.register("cooking_pot",

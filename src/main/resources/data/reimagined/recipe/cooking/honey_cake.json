@@ -1,0 +1,13 @@
+{
+  "type": "reimagined:cooking",
+  "ingredients": [
+    { "item": "reimagined:flour" },
+    { "item": "minecraft:honey_bottle" },
+    { "item": "minecraft:milk_bucket" }
+  ],
+  "result": {
+    "id": "reimagined:honey_cake",
+    "count": 1
+  },
+  "seconds": 16
+}

@@ -143,7 +143,7 @@ public final class CookingGameTests {
         h.assertTrue(remaining.is(Items.BOWL) && player.getFoodData().getFoodLevel()==7,"Actual food consumption must restore nutrition and return one bowl");
         var displays=BrowserRecipes.recipeDisplays(h.getLevel().getRecipeManager(),h.getLevel().registryAccess(),ItemStack.EMPTY,List.of());
         var cooking=displays.stream().filter(d->d.station().is(CookingContent.POT_ITEM.get())).toList();
-        h.assertTrue(cooking.size()==5 && cooking.stream().allMatch(d->d.uses(new ItemStack(Items.BOWL)) && !d.note().getString().isEmpty()),"Every meal must expose ingredients, required bowl, station and time");
+        h.assertTrue(cooking.size()==7 && cooking.stream().allMatch(d->d.uses(new ItemStack(Items.BOWL)) && !d.note().getString().isEmpty()),"Every meal must expose ingredients, required bowl, station and time");
         h.assertTrue(cooking.stream().anyMatch(d->d.uses(new ItemStack(EngineeringContent.FLOUR.get())) && d.result().is(CookingContent.MUSHROOM_DUMPLINGS.get())),"Milled flour must link to cooking in uses mode");
         h.succeed();
     }

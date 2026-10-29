@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "tag": "minecraft:planks" },
+    { "tag": "minecraft:planks" },
+    { "item": "reimagined:beeswax" },
+    { "item": "minecraft:string" }
+  ],
+  "result": {
+    "id": "reimagined:bee_frame",
+    "count": 2
+  }
+}

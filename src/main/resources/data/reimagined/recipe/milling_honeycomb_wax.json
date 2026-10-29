@@ -1,0 +1,11 @@
+{
+  "type": "reimagined:milling",
+  "ingredient": {
+    "item": "minecraft:honeycomb"
+  },
+  "result": {
+    "id": "reimagined:beeswax",
+    "count": 1
+  },
+  "seconds": 6
+}

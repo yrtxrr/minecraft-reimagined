@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_beeswax": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "reimagined:beeswax" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_beeswax" ]
+  ],
+  "rewards": {
+    "recipes": [ "reimagined:bee_smoker" ]
+  }
+}
