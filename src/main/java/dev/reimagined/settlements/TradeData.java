@@ -1,10 +1,12 @@
 package dev.reimagined.settlements;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public final class TradeData extends SavedData {
         ListTag list = tag.getList("Offers", 10);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entry = list.getCompound(i);
-            TradeOffer offer = data.new TradeOffer(
+            TradeOffer offer = new TradeOffer(
                     entry.getString("Profession"),
                     ItemStack.parseOptional(registries, entry.getCompound("Input")),
                     ItemStack.parseOptional(registries, entry.getCompound("Output")),
@@ -35,6 +37,7 @@ public final class TradeData extends SavedData {
                     entry.getInt("Uses"),
                     entry.getInt("RestockTick")
             );
+            offer.setOwner(data);
             data.offers.add(offer);
         }
         return data;
@@ -49,8 +52,8 @@ public final class TradeData extends SavedData {
             entry.put("Input", o.input.save(registries));
             entry.put("Output", o.output.save(registries));
             entry.putInt("MaxUses", o.maxUses);
-            entry.putInt("Uses", o.uses);
-            entry.putInt("RestockTick", o.restockTick);
+            entry.putInt("Uses", o.uses());
+            entry.putInt("RestockTick", o.restockTick());
             list.add(entry);
         }
         tag.put("Offers", list);
@@ -67,31 +70,60 @@ public final class TradeData extends SavedData {
     }
 
     public void addOffer(String profession, ItemStack input, ItemStack output, int maxUses) {
-        offers.add(new TradeOffer(profession, input.copy(), output.copy(), maxUses, 0, 0));
+        TradeOffer offer = new TradeOffer(profession, input.copy(), output.copy(), maxUses, 0, 0);
+        offer.setOwner(this);
+        offers.add(offer);
         setDirty();
     }
 
-    public final class TradeOffer {
-        public final String profession;
-        public final ItemStack input;
-        public final ItemStack output;
-        public final int maxUses;
-        private int uses;
-        private int restockTick;
+    public static void initializeOffersForProfession(ServerLevel level, String profession) {
+        var data = TradeData.get(level);
+        boolean hasOffers = data.offers().stream().anyMatch(o -> o.profession.equals(profession));
+        if (hasOffers) return;
 
-        public TradeOffer(String profession, ItemStack input, ItemStack output, int maxUses, int uses, int restockTick) {
-            this.profession = profession;
-            this.input = input;
-            this.output = output;
-            this.maxUses = maxUses;
-            this.uses = uses;
-            this.restockTick = restockTick;
+        switch (profession) {
+            case "farmer" -> {
+                data.addOffer("farmer", new ItemStack(Items.WHEAT, 20), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("farmer", new ItemStack(Items.CARROT, 20), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("farmer", new ItemStack(Items.POTATO, 20), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("farmer", new ItemStack(Items.BEETROOT, 20), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("farmer", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.BREAD, 6), 12);
+                data.addOffer("farmer", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.COOKIE, 8), 12);
+            }
+            case "fisher" -> {
+                data.addOffer("fisher", new ItemStack(Items.COD, 10), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("fisher", new ItemStack(Items.SALMON, 6), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("fisher", new ItemStack(Items.EMERALD, 2), new ItemStack(Items.FISHING_ROD, 1), 3);
+                data.addOffer("fisher", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.COOKED_COD, 6), 12);
+                data.addOffer("fisher", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.COOKED_SALMON, 6), 12);
+            }
+            case "blacksmith" -> {
+                data.addOffer("blacksmith", new ItemStack(Items.IRON_INGOT, 4), new ItemStack(Items.EMERALD, 1), 12);
+                data.addOffer("blacksmith", new ItemStack(Items.GOLD_INGOT, 4), new ItemStack(Items.EMERALD, 1), 12);
+                data.addOffer("blacksmith", new ItemStack(Items.DIAMOND, 1), new ItemStack(Items.EMERALD, 3), 8);
+                data.addOffer("blacksmith", new ItemStack(Items.EMERALD, 6), new ItemStack(Items.IRON_SWORD, 1), 3);
+                data.addOffer("blacksmith", new ItemStack(Items.EMERALD, 10), new ItemStack(Items.DIAMOND_SWORD, 1), 2);
+                data.addOffer("blacksmith", new ItemStack(Items.EMERALD, 4), new ItemStack(Items.IRON_PICKAXE, 1), 3);
+            }
+            case "librarian" -> {
+                data.addOffer("librarian", new ItemStack(Items.PAPER, 24), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("librarian", new ItemStack(Items.BOOK, 4), new ItemStack(Items.EMERALD, 1), 12);
+                data.addOffer("librarian", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.ENCHANTED_BOOK, 1), 8);
+                data.addOffer("librarian", new ItemStack(Items.EMERALD, 5), new ItemStack(Items.BOOKSHELF, 1), 12);
+                data.addOffer("librarian", new ItemStack(Items.EMERALD, 2), new ItemStack(Items.GLASS, 4), 12);
+            }
+            case "butcher" -> {
+                data.addOffer("butcher", new ItemStack(Items.BEEF, 10), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("butcher", new ItemStack(Items.PORKCHOP, 10), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("butcher", new ItemStack(Items.CHICKEN, 14), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("butcher", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.COOKED_BEEF, 6), 12);
+                data.addOffer("butcher", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.COOKED_PORKCHOP, 6), 12);
+            }
+            default -> {
+                data.addOffer("commoner", new ItemStack(Items.STICK, 32), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("commoner", new ItemStack(Items.COAL, 16), new ItemStack(Items.EMERALD, 1), 16);
+                data.addOffer("commoner", new ItemStack(Items.EMERALD, 1), new ItemStack(Items.APPLE, 4), 12);
+            }
         }
-
-        public boolean canTrade() { return uses < maxUses; }
-        public int uses() { return uses; }
-        public int restockTick() { return restockTick; }
-        public void use() { uses++; TradeData.this.setDirty(); }
-        public void restock() { uses = 0; TradeData.this.setDirty(); }
     }
 }

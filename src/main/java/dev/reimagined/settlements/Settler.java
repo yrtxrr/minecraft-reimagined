@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -12,7 +13,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ChunkPos;
@@ -26,7 +29,7 @@ import java.util.EnumSet;
  * bounded daily schedule, return to their workplace, take short breaks, and
  * remain inside their home settlement bounds.
  */
-public final class Settler extends Mob {
+public final class Settler extends Mob implements MenuProvider {
     private static final int WORK_RADIUS = 48;
     private static final int BREAK_CHANCE = 2000;
     private static final int WALK_CHANCE = 4000;
@@ -345,4 +348,14 @@ public final class Settler extends Mob {
 
     @Override
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {}
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("entity.reimagined.settler");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new TradingMenu(id, inventory, (ServerLevel) level(), getUUID());
+    }
 }

@@ -38,6 +38,8 @@ public final class SettlementEvents {
             settler.setWork(settler.blockPosition());
             data.registerSettler(settler.getUUID(), settler.blockPosition(), settler.blockPosition(), "commoner");
         }
+        String profession = record != null ? record.profession : "commoner";
+        TradeData.initializeOffersForProfession(server, profession);
     }
 
     private static void onDeath(LivingDeathEvent event) {
@@ -46,17 +48,22 @@ public final class SettlementEvents {
         SettlementData.get(server).removeSettler(settler.getUUID());
     }
 
-    private static void onInteract(PlayerInteractEvent.EntityInteract event) {
+    private static void onInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
         if (!(event.getTarget() instanceof Settler settler)) return;
         if (!(settler.level() instanceof ServerLevel server)) return;
         Player player = event.getEntity();
-        ItemStack held = player.getItemInHand(event.getHand());
-        player.displayClientMessage(Component.translatable("message.reimagined.settler_greeting", "Settler"), false);
+        if (player.isShiftKeyDown()) {
+            player.displayClientMessage(Component.translatable("message.reimagined.settler_greeting", "Settler"), false);
+        } else {
+            player.openMenu(settler);
+        }
+        event.setCanceled(true);
     }
 
     private static void onTick(ServerTickEvent.Post event) {
         ServerLevel server = event.getServer().overworld();
         var data = SettlementData.get(server);
+        var tradeData = TradeData.get(server);
         long time = server.getDayTime();
         boolean dirty = false;
         for (SettlementData.SettlerRecord record : data.settlers()) {
@@ -66,5 +73,14 @@ public final class SettlementEvents {
             }
         }
         if (dirty) data.setDirty();
+
+        // Restock trades at the start of each work day (8:00)
+        if (time % 24000 == 8000) {
+            for (TradeOffer offer : tradeData.offers()) {
+                if (offer.uses() > 0) {
+                    offer.restock();
+                }
+            }
+        }
     }
 }
