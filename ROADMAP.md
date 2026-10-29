@@ -77,3 +77,11 @@ Missing e9af309/65f11a0 history integrated afterd861718; existing barley and fiv
 ## Recipe UI migration status
 
 The bespoke item/recipe screen and inventory overlay are removed. Creative categories fromcb4cbc2remain. Real recipes/stations and recipe metadata tests remain;21JUnit/133GameTests pass. Optional JEI dev launch prepared but no released JAR/API could be fetched (official Maven CONNECT403). JEI custom process categories and client-with-JEI acceptance remain pending; historical browser implementation milestones above are not the current UI. Details:docs/JEI_MIGRATION.md. No Kilo integration or new gameplay subsystem.
+
+
+## Deer visual checkpoint
+
+- [x] Approved deer proportions/64pxtexture, independent antler UV, anchored neck and fawn antler visibility.
+- [x] Native adult/fawn views, extreme pitch and ordinary AI stepping up/down controlled uneven ground; source/server checks recorded in docs/DEER_VISUAL_ACCEPTANCE.md.
+- [ ] Remaining animal/other texture revisions require separate user approval; no mass replacement in this checkpoint.
+- Existing physical-hardware, multiplayer, long-survival and full-Alpha gates remain open. JEI is still deferred; no new gameplay system started.

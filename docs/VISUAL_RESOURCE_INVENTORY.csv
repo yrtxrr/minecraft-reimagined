@@ -118,7 +118,7 @@ textures,textures/block/pear_planks.png,16,16,2ed76eb72a518dca83810db62685409e48
 textures,textures/block/pear_sapling.png,16,16,c9c506aa103196446d0946f17a19d69714264028ef80359ee1a410bfe885f02c,
 textures,textures/entity/badger.png,64,64,41b4d9c49697cac51b80798ed3831e7bd83e47ada3fad7b8c74e33336742d05e,
 textures,textures/entity/boar.png,64,64,1d6913e4cd56bbb8e36aa19ce93878db487250558a0e5307c213209ef04e4026,
-textures,textures/entity/deer.png,64,64,41b4d9c49697cac51b80798ed3831e7bd83e47ada3fad7b8c74e33336742d05e,
+textures,textures/entity/deer.png,64,64,31eec08b8a7891fdb326aa583b722484ab51b3cbc8a31dca00061916b86cc2d9,
 textures,textures/entity/marmot.png,64,64,41b4d9c49697cac51b80798ed3831e7bd83e47ada3fad7b8c74e33336742d05e,
 textures,textures/entity/otter.png,64,64,41b4d9c49697cac51b80798ed3831e7bd83e47ada3fad7b8c74e33336742d05e,
 textures,textures/gui/cooking_pot.png,176,158,b65c3d54897ccb22c4872d1465a285530afc219f6a5bf84735bea90b43f1c779,

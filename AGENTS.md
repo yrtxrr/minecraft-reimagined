@@ -35,6 +35,8 @@ Keep `ROADMAP.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `TESTING.md` and `THIRD_PAR
 
 ## Ownership and upstream research
 
+Current visual scope: finalize only the user-approved deer head5×5×6, neck5 and isolated antler UV after native adult/fawn/extreme-pose/uneven-ground checks. Do not change other animals, NPCs, trade, beekeeping or world generation. Further animal art requires separate approval. JEI is deferred because official Maven remains blocked.
+
 Current user authorization: continue from the published creative-tab checkpoint cb4cbc2 without repeating it. Remove the bespoke recipe UI while preserving recipes/gameplay; prepare optional JEI compatibility only through official accessible sources. If official access returns403, report the required access and continue independent work without bypassing restrictions. Prepare the five-animal texture plan from the existing57-image audit; do not replace art without visual verification. Test/commit/push each independent completed stage. Do not touch Kilo branches/worktrees.
 
 Before a major mechanic, inspect relevant open implementations (Create, TerraFirmaCraft, Farmer's Delight, JEI/EMI and others as appropriate). Evaluate architecture, aggregate cost and NeoForge 1.21.1 compatibility. Reuse only when licenses and attribution requirements permit it; document pinned sources, licenses and provenance in THIRD_PARTY_NOTICES.md. Otherwise implement the relevant technical principles independently. Do not copy protected assets or add mandatory mod dependencies without user consent.

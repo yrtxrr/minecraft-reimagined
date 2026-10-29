@@ -115,3 +115,8 @@ Kilo e9af309/65f11a0 extends QA only; both proposed meal recipes already existed
 ## Recipe presentation ownership after UI removal
 
 No Reimagined screen/sidebar/search key handler owns recipe browsing. Ordinary recipe book and station menus remain. Tested read-only recipe projections retain their data contract, but no client event/tick/cache registration uses them. JEI will own its optional catalogue lifecycle; custom categories must use real registered recipes and remain server-authority neutral. Only explicit dev opt-in resolves JEI; no required runtime metadata/bundled JEI. Official-source access blocker and unimplemented category work:docs/JEI_MIGRATION.md.
+
+
+## Deer rendering attachment contract
+
+DeerModel keeps neck and head as separate root parts rendered through the same cached head-part list. Both receive the vanilla baby head transform, while inherited QuadrupedModel setupAnim rotates only the head. This preserves the neck/shoulder joint during extreme pitch and avoids splitting the baby neck into the half-scale torso pass. Ears/antlers remain head children; antler visibility is explicitly reset for every deer so the shared renderer cannot leak baby state to adults. Approved head5×5×6and neck3×5×3dimensions are fixed. Antler UV50,16is separate from body UV0,18; the atlas remains64×64. No server tick/network/world-generation work is introduced. Native acceptance and remaining limits:docs/DEER_VISUAL_ACCEPTANCE.md.

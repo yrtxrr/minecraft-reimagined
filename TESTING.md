@@ -158,3 +158,12 @@ Creative catalogue:full build25JUnit/137GameTests passed; new live registry/tab 
 Bespoke recipe UI removal:clean build21JUnit/133required GameTests passed, no failures/skips;303JSON/190keys validated. The4JUnit and4GameTests removed covered only deleted search/history/pagination/cache code; real recipe and gameplay coverage remains. A JEI runtime run is blocked by proxy CONNECT403to the official Maven; default no-JEI build does not resolve it. Native no-JEI checks are recorded in docs/JEI_MIGRATION.md.
 
 Visual plan only:python3 scripts/inventory-visual-resources.py --check and scripts/validate-resources.py passed. All57PNG and all JSON models/blockstates match cb4cbc2byte-for-byte; no texture replacement/new-render acceptance claimed. No repeated full gameplay run for this documentation/inventory stage; previous21JUnit/133GameTests remain the code acceptance.
+
+
+## Deer visual acceptance — 2026-10-29
+
+Minecraft1.21.1/NeoForge21.1.264 native client, disposable DeerTextureReview, Xvfb/Mesa software rendering, no JEI or resource-pack override. Adult/fawn front/side/back, ±90°forced pitch, age reversal and AI-enabled ascent/descent on one-block steps inspected after the neck attachment fix. Static NoAI stress poses are distinguished from ordinary TemptGoal motion. Head/neck/ears remain connected; fawn antlers hide and adult antlers return. Original approved box dimensions retained. Exact fixtures/results/limits:docs/DEER_VISUAL_ACCEPTANCE.md. Screenshots/worlds/logs remain out of Git.
+
+Recheck with `source scripts/cloud-shell.sh`, `./gradlew build`, `./gradlew test --rerun`, `bash scripts/verify-integration.sh`, `python3 scripts/validate-resources.py` and `python3 scripts/inventory-visual-resources.py --check`. JUnit/GameTests validate the existing gameplay regressions, not pixel quality; only the native checks support the visual findings. No measured performance or physical-GPU/multiplayer claim.
+
+Final deer checkpoint checks: build successful; fresh21JUnit/133GameTests passed,303JSON/190bilingual keys and57PNG/84models/15blockstates inventory validated.

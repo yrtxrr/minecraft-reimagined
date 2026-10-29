@@ -236,3 +236,10 @@ Removed the standalone browser, inventory sidebar/R entry, R/U interception, ite
 ## Visual audit and five-animal plan
 
 Committed inventory of57textures/84JSON models/15blockstates, with dimensions/references/SHA256and a standard-library reproducibility checker. Reused the actual prior57-image inspection to prioritize badger/otter/marmot/deer/boar, specify a coherent Minecraft-scale art direction and identify mesh/UV limits, including tiny SmallFauna faces and deer overlapping UV pixels. Acceptance requires real same-view before/after and movement/baby checks; no source texture/model/animation changed or new quality claim. Details:docs/VISUAL_AUDIT.md. Inventory/resource validation passed; gameplay checks remain21JUnit/133GameTests from the preceding code stage.
+
+
+## Deer visual acceptance — 2026-10-29
+
+Finalized the user-approved deer head5×5×6/neck5 and isolated antler UV with the retained original27-color64×64texture draft. Native adult/fawn views exposed a neck/shoulder gap at extreme pitch and adult antlers on fawns; fixed attachment by rendering an anchored neck through the same baby transform as the head, and reset age-dependent antler visibility on every setupAnim. Neutral approved proportions, body/legs/AI remain. Real client checked three views, age reversal, forced±90°pitch and ordinary AI ascent/descent on one-block steps for adults/fawns; no visible attachment/UV failures after correction. No other animal/NPC/trade/beekeeping/world-generation changes. Full verification and limits:docs/DEER_VISUAL_ACCEPTANCE.md. Other animals still require separate approval; JEI remains deferred by official Maven403.
+
+Final deer checkpoint checks: build successful; fresh21JUnit/133GameTests passed,303JSON/190bilingual keys and57PNG/84models/15blockstates inventory validated.
