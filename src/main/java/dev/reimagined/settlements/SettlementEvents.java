@@ -51,6 +51,10 @@ public final class SettlementEvents {
 
     private static void onInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
         if (!(event.getTarget() instanceof Settler settler) || event.getHand()!=net.minecraft.world.InteractionHand.MAIN_HAND) return;
+        // Client must consume this interaction too, otherwise held-item use falls through
+        // after the server opens the menu (e.g. a smoker loses durability / applies smoke).
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
         if (!(settler.level() instanceof ServerLevel server)) return;
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) {
@@ -58,8 +62,6 @@ public final class SettlementEvents {
         } else {
             settler.openTradingScreen(player,settler.getDisplayName(),1);
         }
-        event.setCanceled(true);
-        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
     }
 
 }

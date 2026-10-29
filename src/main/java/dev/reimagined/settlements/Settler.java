@@ -86,7 +86,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         super.aiStep();
         if (level().isClientSide) return;
         scheduleTick++;
-        
+
         // Track rain duration for shelter hysteresis
         boolean raining = level().isRaining();
         if (raining) {
@@ -94,7 +94,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         } else {
             rainTimer = Math.max(rainTimer - 1, -RAIN_EXIT_TICKS);
         }
-        
+
         if ((scheduleTick + getId()) % 20 == 0) {
             Schedule.State next = Schedule.nextState(this, scheduleState, scheduleTick);
             if (next != scheduleState) {

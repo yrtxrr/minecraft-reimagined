@@ -181,11 +181,11 @@ public final class SettlementGameTests {
         var offers = tradeData.offers().stream().filter(o -> o.profession.equals("farmer")).toList();
 
         helper.assertTrue(offers.size() >= 6, "Farmer should have at least 6 trade offers");
-        
+
         // Verify specific offers exist
         boolean hasWheat = offers.stream().anyMatch(o -> o.input.is(Items.WHEAT) && o.output.is(Items.EMERALD));
         boolean hasBread = offers.stream().anyMatch(o -> o.input.is(Items.EMERALD) && o.output.is(Items.BREAD));
-        
+
         helper.assertTrue(hasWheat, "Farmer should buy wheat for emeralds");
         helper.assertTrue(hasBread, "Farmer should sell bread for emeralds");
 
@@ -206,11 +206,11 @@ public final class SettlementGameTests {
 
         var tradeData = TradeData.get(level);
         var offer = tradeData.findOffer("farmer", new ItemStack(Items.WHEAT, 20));
-        
+
         helper.assertTrue(offer != null, "Wheat trade offer must exist");
         int initialUses = offer.uses();
         int maxUses = offer.maxUses;
-        
+
         helper.assertTrue(initialUses == 0, "Initial uses should be 0");
         helper.assertTrue(maxUses > 0, "Max uses should be positive");
 
@@ -243,7 +243,7 @@ public final class SettlementGameTests {
 
         var tradeData = TradeData.get(level);
         var offer = tradeData.findOffer("farmer", new ItemStack(Items.WHEAT, 20));
-        
+
         // Exhaust the trade
         for (int i = 0; i < offer.maxUses; i++) {
             offer.use();
@@ -273,7 +273,7 @@ public final class SettlementGameTests {
         var tradeData = TradeData.get(level);
         var offer = tradeData.findOffer("blacksmith", new ItemStack(Items.IRON_INGOT, 4));
         helper.assertTrue(offer != null, "Iron ingot trade offer must exist");
-        
+
         // Use the trade a few times
         offer.use();
         offer.use();
@@ -306,31 +306,31 @@ public final class SettlementGameTests {
 
         UUID uuid1 = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
-        
+
         data.registerSettler(uuid1, new BlockPos(0, 64, 0), new BlockPos(10, 64, 10), "farmer");
         data.registerSettler(uuid2, new BlockPos(100, 64, 100), new BlockPos(110, 64, 110), "fisher");
-        
+
         TradeData.initializeOffersForProfession(level, "farmer");
         TradeData.initializeOffersForProfession(level, "fisher");
 
         var tradeData = TradeData.get(level);
-        
+
         // Verify farmer offers
         var farmerOffers = tradeData.offers().stream().filter(o -> o.profession.equals("farmer")).toList();
         var fisherOffers = tradeData.offers().stream().filter(o -> o.profession.equals("fisher")).toList();
-        
+
         helper.assertTrue(farmerOffers.size() >= 6, "Farmer should have offers");
         helper.assertTrue(fisherOffers.size() >= 5, "Fisher should have offers");
 
         // Use a farmer trade
         var wheatOffer = tradeData.findOffer("farmer", new ItemStack(Items.WHEAT, 20));
         var codOffer = tradeData.findOffer("fisher", new ItemStack(Items.COD, 10));
-        
+
         helper.assertTrue(wheatOffer != null, "Wheat offer must exist");
         helper.assertTrue(codOffer != null, "Cod offer must exist");
-        
+
         wheatOffer.use();
-        
+
         // Fisher trades should be unaffected
         helper.assertTrue(wheatOffer.uses() == 1, "Farmer trade should be used");
         helper.assertTrue(codOffer.uses() == 0, "Fisher trade should be untouched");
@@ -354,11 +354,11 @@ public final class SettlementGameTests {
         var offers = tradeData.offers().stream().filter(o -> o.profession.equals("commoner")).toList();
 
         helper.assertTrue(offers.size() >= 3, "Commoner should have at least 3 trade offers");
-        
+
         boolean hasStick = offers.stream().anyMatch(o -> o.input.is(Items.STICK) && o.output.is(Items.EMERALD));
         boolean hasCoal = offers.stream().anyMatch(o -> o.input.is(Items.COAL) && o.output.is(Items.EMERALD));
         boolean hasApple = offers.stream().anyMatch(o -> o.input.is(Items.EMERALD) && o.output.is(Items.APPLE));
-        
+
         helper.assertTrue(hasStick, "Commoner should buy sticks for emeralds");
         helper.assertTrue(hasCoal, "Commoner should buy coal for emeralds");
         helper.assertTrue(hasApple, "Commoner should sell apples for emeralds");
