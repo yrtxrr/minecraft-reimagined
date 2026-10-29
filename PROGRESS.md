@@ -1,5 +1,11 @@
 # Progress
 
+## 2026-10-29 — rare mountain iron vein
+
+Reviewed `docs/USER_SPEC_RU.md`, roadmap and existing world generation. The suggested fallen trees, stumps and clearings are not specified as required natural features; the geology section does explicitly call for small veins and large deposits. Added one small vanilla iron ore feature, placed in the vanilla `underground_ores` step only for `minecraft:is_mountain` biomes, with a 1-in-12 rarity filter and uniform Y=20–112 placement. It is additive to ordinary ore generation, uses standard configured/placed feature and NeoForge biome-modifier data, and adds no tick-time work or structure edits. This is a biome-local small vein, not regional geology or a large deposit. English/Russian names and world-generation scope/roadmap notes were updated.
+
+Validation: `./gradlew build --max-workers=1` passed; the resource validator passed for 220 JSON resources, local model/texture references and 184 bilingual keys; fresh NeoForge GameTestServer passed all 93/93 tests, including two new tests that verify exact mountain-tag membership and actual iron-ore replacement in stone. The first build attempt failed because parallel Gradle test workers could not load `GradleWorkerMain`; rerunning with the existing local Gradle cache and one worker passed without disabling tests. A graphical Minecraft client/display was unavailable in this Windows checkout, so no screenshot or in-game visual observation of the vein is claimed. This does not complete broad geological provinces/large deposits or full-spec world-generation work.
+
 ## 2026-10-27 — initial implementation
 
 Started from a verified empty GitHub repository. Preserved the complete specification; split implementation across independent modules and integrated registrations centrally.
