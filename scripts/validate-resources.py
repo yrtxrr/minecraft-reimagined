@@ -7,7 +7,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
 files = sorted(resources.rglob('*.json')) + [resources / 'pack.mcmeta']
-documents = {p: json.loads(p.read_text()) for p in files}
+documents = {p: json.loads(p.read_text(encoding='utf-8')) for p in files}
 errors = []
 
 def require(path, context):
@@ -34,14 +34,14 @@ for path, data in documents.items():
             require(resources / 'assets/reimagined/models/item' / (result['id'].split(':')[1] + '.json'), path.name)
 
 # Translation completeness and format placeholders must match across shipped languages.
-locales = [json.loads((resources / f'assets/reimagined/lang/{locale}.json').read_text()) for locale in ('en_us', 'ru_ru')]
+locales = [json.loads((resources / f'assets/reimagined/lang/{locale}.json').read_text(encoding='utf-8')) for locale in ('en_us', 'ru_ru')]
 for key in set(locales[0]) | set(locales[1]):
     if not all(key in locale for locale in locales):
         errors.append(f'Translation missing: {key}')
     elif re.findall(r'%(?:\d+\$)?[sdif]', locales[0][key]) != re.findall(r'%(?:\d+\$)?[sdif]', locales[1][key]):
         errors.append(f'Translation format mismatch: {key}')
 for source in (root / 'src/main/java').rglob('*.java'):
-    for key in re.findall(r'Component.translatable\("([^"\n]+)"', source.read_text()):
+    for key in re.findall(r'Component.translatable\("([^"\n]+)"', source.read_text(encoding='utf-8')):
         if key.endswith('.') or not any(key.startswith(p) for p in ('reimagined.', 'message.reimagined.', 'hud.reimagined.', 'tooltip.reimagined.', 'journal.reimagined.')):
             continue
         if key not in locales[0]: errors.append(f'{source.name}: missing translation {key}')

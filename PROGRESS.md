@@ -258,3 +258,19 @@ Checks on this source: full Gradle build with **19/19 JUnit tests**, fresh offic
 Freebuff c6a0cb9 is history-preserving merge1a82150: build,21freshJUnit and133GameTests passed. OpenCode090a2cc beekeeping is merged into the local candidate with creative-category,14-page journal budget, reloadable wax composting and bounded/cooldown smoker corrections. Combined build/21JUnit/143GameTests and324JSON/203keys/63PNG inventory passed; all133base tests plus8author tests retained,2integration tests added. Native installation/harvest, Survival durability, creative food icons and /reload checked; a second client process retained3frames, harvested hive state and smoker damage1.
 
 Kilo23a515f was **not merged**: missing renderer, disconnected client/server trade UI, unprotected output/incorrect quantities and unbounded/ticket-based NPC work are critical blockers. Do not present all-three integration or Alpha as complete. origin/feat/reimagined-alpha stays0c30793; verified partial work is saved only on integration/agents-review-0c30793. Details, source evidence, limits and next gates:docs/AGENT_INTEGRATION_REVIEW.md.
+
+## Settlement trade safety checkpoint
+
+On feat/kilo-settlements-economy only: keep professions/legacy catalogue, bridge settlers to vanilla MerchantMenu, MerchantOffers packets and payment/result slots. NPC stock is UUID-owned SavedData, lazily restocked once per advancing work day. Removed the unsafe custom client purchase implementation; standard merchant quantity/shift-click behavior is used. Full-inventory shift result is preflighted before mutation. Added real ServerPlayer/menu/selection-packet/payment/replay/stock persistence tests. build and132GameTests passed. Renderer/AI/client/profile follow; no merge into Codex branches.
+
+
+## Settlement renderer and loaded-only navigation checkpoint
+
+Added SettlerModel/Renderer backed by the installed vanilla villager model and referenced texture; no asset copying. Spawn egg has a real model and integration-ready nature tag, with vanilla fallback only where the mod nature tab is absent. Removed global per-tick record/restock loop; per-UUID restock is lazy/day-guarded. Navigation guards the exact vanilla region with getChunkNow and throttles all path/recompute entry points40ticks; shelter is real loaded roof/air/ground with bounded search and proper rain hysteresis. Trade pause owns movement. No merge; final native/profile acceptance follows.
+
+
+## Settlement audit remediation — 2026-10-29
+
+Only feat/kilo-settlements-economy: no merge/Codex branch changes. Preserved professions/prices/old save fields; vanilla merchant packets and result slots now own server trades, with full-result capacity checks. Per-UUID stock persists and lazily restocks once per work day. Renderer/model/reference vanilla texture and nonduplicated spawn egg are registered. Navigation checks the full vanilla path region through getChunkNow, throttles40ticks and never uses tickets as FULL proof; no global per-tick SavedData scan.
+
+Final build/25freshJUnit/134GameTests passed,286JSON/200bilingual keys validated;128original tests retained and6added. Native Survival64sticks→2emeralds, model rendering and actual client-process reentry/persisted uses=[2,0,0] verified. Real integrated-server600sample load:1NPC mean1.863/p99=9.627ms;33NPC mean3.504/p99=38.438/max85.935ms. This is not a lag-free or before/after optimization claim; a separate long stall outside samples remains unexplained. Exact scopes, procedure, JFR limitations and remaining integration gates:docs/SETTLEMENT_REMEDIATION.md.

@@ -185,6 +185,9 @@
   "item.reimagined.badger_spawn_egg": "Badger Spawn Egg",
   "entity.reimagined.marmot": "Marmot",
   "item.reimagined.marmot_spawn_egg": "Marmot Spawn Egg",
+  "entity.reimagined.settler": "Settler",
+  "item.reimagined.settler_spawn_egg": "Settler Spawn Egg",
+  "message.reimagined.settler_greeting": "Greetings from %s.",
   "itemGroup.reimagined.nature": "Reimagined: Nature & Wildlife",
   "itemGroup.reimagined.food": "Reimagined: Farming & Food",
   "itemGroup.reimagined.engineering": "Reimagined: Engineering & Gear",
@@ -202,4 +205,5 @@
   "message.reimagined.bee_smoker_idle": "Nothing to harvest here yet.",
   "message.reimagined.bee_smoker_calm": "Calmed bees: %s",
   "journal.reimagined.page.beekeeping": "BEEKEEPING\n\nHives and nests fill with honey; harvest with bottles or a smoker.\n\nFrames add honeycomb. Mill honeycomb into wax."
+}
 }

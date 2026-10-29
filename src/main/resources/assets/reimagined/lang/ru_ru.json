@@ -185,6 +185,9 @@
   "item.reimagined.badger_spawn_egg": "Яйцо призыва барсука",
   "entity.reimagined.marmot": "Сурок",
   "item.reimagined.marmot_spawn_egg": "Яйцо призыва сурка",
+  "entity.reimagined.settler": "Поселенец",
+  "item.reimagined.settler_spawn_egg": "Яйцо призыва поселенца",
+  "message.reimagined.settler_greeting": "Приветствие от %s.",
   "itemGroup.reimagined.nature": "Reimagined: Природа и животные",
   "itemGroup.reimagined.food": "Reimagined: Ферма и еда",
   "itemGroup.reimagined.engineering": "Reimagined: Техника и оружие",
@@ -202,4 +205,5 @@
   "message.reimagined.bee_smoker_idle": "Здесь пока нечего собирать.",
   "message.reimagined.bee_smoker_calm": "Успокоено пчёл: %s",
   "journal.reimagined.page.beekeeping": "ПЧЕЛОВОДСТВО\n\nУльи и гнёзда наполняются мёдом; собирайте бутылочками или дымокуром.\n\nРамки дают больше сотов. Соты мелют в воск."
+}
 }
