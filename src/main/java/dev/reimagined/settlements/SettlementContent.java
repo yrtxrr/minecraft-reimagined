@@ -37,7 +37,9 @@ public final class SettlementContent {
     }
 
     private static void creativeTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) { event.accept(SETTLER_SPAWN_EGG); }
+        if (net.minecraft.core.registries.BuiltInRegistries.CREATIVE_MODE_TAB.getOptional(
+                net.minecraft.resources.ResourceLocation.parse("reimagined:nature")).isEmpty()
+                && event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) { event.accept(SETTLER_SPAWN_EGG); }
     }
 
     private SettlementContent() {}

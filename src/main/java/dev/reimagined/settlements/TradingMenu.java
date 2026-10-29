@@ -15,6 +15,22 @@ public final class TradingMenu extends MerchantMenu {
         return super.stillValid(player) && settler.isAlive() && player.level()==settler.level()
             && player.distanceToSqr(settler)<=64 && !player.isSpectator();
     }
+    @Override public void clicked(int slot,int button,net.minecraft.world.inventory.ClickType type,Player player) {
+        if (!stillValid(player)) return;
+        if (slot==2) {
+            slotsChanged(getSlot(0).container);
+            var result=getSlot(2).getItem();
+            if (result.isEmpty()) return;
+            if (type==net.minecraft.world.inventory.ClickType.PICKUP) {
+                var carried=getCarried();
+                if (!carried.isEmpty() && (!ItemStack.isSameItemSameComponents(carried,result)
+                    || carried.getCount()+result.getCount()>carried.getMaxStackSize())) return;
+            } else if (type==net.minecraft.world.inventory.ClickType.SWAP) {
+                if (button<0 || button>8 || !player.getInventory().getItem(button).isEmpty()) return;
+            } else if (type!=net.minecraft.world.inventory.ClickType.QUICK_MOVE) return;
+        }
+        super.clicked(slot,button,type,player);
+    }
     @Override public ItemStack quickMoveStack(Player player,int index) {
         if (!stillValid(player) || index<0 || index>=slots.size()) return ItemStack.EMPTY;
         if (index==2) {

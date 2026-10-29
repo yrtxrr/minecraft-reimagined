@@ -18,9 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.EnumSet;
 
@@ -45,6 +43,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
     private int walkTimer;
     private boolean atWorkplace;
     private int rainTimer;
+    private int nextShelterSearch;
 
     public Settler(EntityType<? extends Mob> type, Level level) { super(type, level); }
 
@@ -67,13 +66,19 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
 
     @Override protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new ReturnToWorkplaceGoal(this));
-        goalSelector.addGoal(2, new ReturnHomeGoal(this));
-        goalSelector.addGoal(3, new ShelterGoal(this));
-        goalSelector.addGoal(4, new NightRestGoal(this));
-        goalSelector.addGoal(5, new ScheduleWalkGoal(this));
-        goalSelector.addGoal(6, new BreakGoal(this));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6));
+        goalSelector.addGoal(1, new Goal() {
+            {setFlags(EnumSet.of(Flag.MOVE,Flag.LOOK));}
+            @Override public boolean canUse() { return tradingPlayer!=null; }
+            @Override public boolean canContinueToUse() { return tradingPlayer!=null; }
+            @Override public void start() { getNavigation().stop(); }
+        });
+        goalSelector.addGoal(2, new ReturnToWorkplaceGoal(this));
+        goalSelector.addGoal(3, new ReturnHomeGoal(this));
+        goalSelector.addGoal(4, new ShelterGoal(this));
+        goalSelector.addGoal(5, new NightRestGoal(this));
+        goalSelector.addGoal(6, new ScheduleWalkGoal(this));
+        goalSelector.addGoal(7, new BreakGoal(this));
+        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6));
     }
 
     @Override
@@ -90,7 +95,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
             rainTimer = Math.max(rainTimer - 1, -RAIN_EXIT_TICKS);
         }
         
-        if (scheduleTick % 20 == 0) {
+        if ((scheduleTick + getId()) % 20 == 0) {
             Schedule.State next = Schedule.nextState(this, scheduleState, scheduleTick);
             if (next != scheduleState) {
                 scheduleState = next;
@@ -101,7 +106,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         if (walkTimer > 0) walkTimer--;
 
         // Keep movement bounded: pull the settler back toward home if it strays too far.
-        if (homePos != null && homePos.distSqr(blockPosition()) > WORK_RADIUS * WORK_RADIUS
+        if (tradingPlayer == null && pathReady() && homePos != null && homePos.distSqr(blockPosition()) > WORK_RADIUS * WORK_RADIUS
                 && !getNavigation().isInProgress()) {
             getNavigation().moveTo(homePos.getX(), homePos.getY(), homePos.getZ(), 1.0);
         }
@@ -112,23 +117,24 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         return homePos.distSqr(pos) <= WORK_RADIUS * WORK_RADIUS;
     }
 
-    /** Checks if the chunk at the given position is loaded and accessible. */
-    private boolean isChunkLoaded(BlockPos pos) {
-        if (!(level() instanceof ServerLevel serverLevel)) return false;
-        ChunkPos chunkPos = new ChunkPos(pos);
-        return serverLevel.getChunkSource().chunkMap.getVisibleChunkIfPresent(chunkPos.toLong()) != null;
+    @Override protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(Level level) {
+        return new SettlerNavigation(this,level);
     }
-
-    /** Safely gets the block state at pos, returning null if chunk is not loaded. */
+    private boolean pathReady() { return ((SettlerNavigation)getNavigation()).ready(); }
+    private boolean isChunkLoaded(BlockPos pos) {
+        return level() instanceof ServerLevel server && server.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4)!=null;
+    }
     private BlockState getBlockStateSafe(BlockPos pos) {
-        if (!isChunkLoaded(pos)) return null;
-        return level().getBlockState(pos);
+        if (!(level() instanceof ServerLevel server)) return null;
+        var chunk=server.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+        return chunk==null?null:chunk.getBlockState(pos);
     }
 
     /** Checks if the position has solid ground below it. */
     private boolean hasSolidGround(BlockPos pos) {
         BlockState state = getBlockStateSafe(pos.below());
-        return state != null && state.isSolid();
+        var feet=getBlockStateSafe(pos);var head=getBlockStateSafe(pos.above());
+        return state != null && state.isSolid() && feet!=null && feet.isAir() && head!=null && head.isAir();
     }
 
     /** Returns the nearest safe ground position within the settlement, for returning home after chunk reload. */
@@ -161,34 +167,19 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         return null;
     }
 
-    /** Finds a valid shelter position near home during rain. */
+    private boolean isCovered(BlockPos pos) {
+        if (!(level() instanceof ServerLevel server)) return false;
+        var chunk=server.getChunkSource().getChunkNow(pos.getX()>>4,pos.getZ()>>4);
+        return chunk!=null && chunk.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING,
+            pos.getX()&15,pos.getZ()&15)>pos.getY()+1;
+    }
     private BlockPos findShelterPosition() {
-        // Prefer home position, then search nearby for covered area
-        BlockPos home = homePos;
-        if (isChunkLoaded(home) && hasSolidGround(home)) {
-            // Check if home has a roof (solid block above)
-            BlockState above = getBlockStateSafe(home.above());
-            BlockState above2 = getBlockStateSafe(home.above(2));
-            if (above != null && above.isSolid() || above2 != null && above2.isSolid()) {
-                return home;
-            }
+        if (hasSolidGround(homePos) && isCovered(homePos)) return homePos;
+        for(int n=0;n<16;n++) {
+            var p=homePos.offset(level().random.nextInt(17)-8,0,level().random.nextInt(17)-8);
+            if(isInSettlementBounds(p) && hasSolidGround(p) && isCovered(p))return p;
         }
-        // Search nearby for covered position
-        int attempts = 16;
-        for (int i = 0; i < attempts; i++) {
-            BlockPos candidate = homePos.offset(
-                    level().random.nextInt(17) - 8,
-                    0,
-                    level().random.nextInt(17) - 8);
-            if (!isInSettlementBounds(candidate)) continue;
-            if (!hasSolidGround(candidate)) continue;
-            BlockState above = getBlockStateSafe(candidate.above());
-            BlockState above2 = getBlockStateSafe(candidate.above(2));
-            if (above != null && above.isSolid() || above2 != null && above2.isSolid()) {
-                return candidate;
-            }
-        }
-        return home; // fallback to home even if no roof
+        return null;
     }
 
     /* ---------- AI goals ---------- */
@@ -197,11 +188,11 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         private final Settler settler;
         ReturnToWorkplaceGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
-            return settler.scheduleState == Schedule.State.WORK && settler.workPos != null
+            return settler.pathReady() && settler.tradingPlayer == null && settler.scheduleState == Schedule.State.WORK && settler.workPos != null
                     && settler.blockPosition().distSqr(settler.workPos) > 4;
         }
         @Override public boolean canContinueToUse() {
-            return settler.scheduleState == Schedule.State.WORK && settler.workPos != null
+            return settler.tradingPlayer == null && settler.scheduleState == Schedule.State.WORK && settler.workPos != null
                     && settler.blockPosition().distSqr(settler.workPos) > 4
                     && settler.getNavigation().isInProgress();
         }
@@ -210,7 +201,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         }
         @Override public void tick() {
             if (settler.blockPosition().distSqr(settler.workPos) <= 4) settler.setAtWorkplace(true);
-            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.workPos) > 4) {
+            if (settler.pathReady() && !settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.workPos) > 4) {
                 settler.setAtWorkplace(false);
             }
         }
@@ -220,6 +211,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         private final Settler settler;
         ScheduleWalkGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
+            if (!settler.pathReady() || settler.tradingPlayer != null) return false;
             if (settler.scheduleState != Schedule.State.IDLE && settler.scheduleState != Schedule.State.BREAK) return false;
             if (settler.level().random.nextInt(WALK_CHANCE) != 0) return false;
             return settler.walkTimer <= 0;
@@ -238,7 +230,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         private final Settler settler;
         BreakGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
-            return settler.scheduleState == Schedule.State.WORK && settler.breakTimer <= 0
+            return settler.pathReady() && settler.tradingPlayer == null && settler.scheduleState == Schedule.State.WORK && settler.breakTimer <= 0
                     && settler.level().random.nextInt(BREAK_CHANCE) == 0;
         }
         @Override public void start() {
@@ -251,11 +243,11 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         private final Settler settler;
         ReturnHomeGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
-            return settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
+            return settler.pathReady() && settler.tradingPlayer == null && settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
                     && settler.blockPosition().distSqr(settler.homePos) > 4;
         }
         @Override public boolean canContinueToUse() {
-            return settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
+            return settler.tradingPlayer == null && settler.scheduleState == Schedule.State.EVENING_RETURN && settler.homePos != null
                     && settler.blockPosition().distSqr(settler.homePos) > 4
                     && settler.getNavigation().isInProgress();
         }
@@ -263,7 +255,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
             settler.getNavigation().moveTo(settler.homePos.getX(), settler.homePos.getY(), settler.homePos.getZ(), 1.0);
         }
         @Override public void tick() {
-            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.homePos) > 4) {
+            if (settler.pathReady() && !settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.homePos) > 4) {
                 BlockPos safePos = settler.nearestSafePosition(settler.homePos);
                 if (safePos != null && safePos.distSqr(settler.blockPosition()) > 1) {
                     settler.getNavigation().moveTo(safePos.getX(), safePos.getY(), safePos.getZ(), 1.0);
@@ -274,27 +266,18 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
 
     private static final class ShelterGoal extends Goal {
         private final Settler settler;
-        ShelterGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
+        ShelterGoal(Settler s) { settler=s;setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
-            return settler.scheduleState == Schedule.State.SHELTER && settler.homePos != null
-                    && settler.blockPosition().distSqr(settler.homePos) > 4;
+            return settler.tradingPlayer==null && settler.pathReady() && settler.tickCount>=settler.nextShelterSearch
+                && settler.scheduleState==Schedule.State.SHELTER && !settler.isCovered(settler.blockPosition());
         }
         @Override public boolean canContinueToUse() {
-            return settler.scheduleState == Schedule.State.SHELTER && settler.homePos != null
-                    && settler.blockPosition().distSqr(settler.homePos) > 4
-                    && settler.getNavigation().isInProgress();
+            return settler.tradingPlayer==null && settler.scheduleState==Schedule.State.SHELTER
+                && settler.getNavigation().isInProgress() && !settler.isCovered(settler.blockPosition());
         }
         @Override public void start() {
-            BlockPos shelter = settler.findShelterPosition();
-            settler.getNavigation().moveTo(shelter.getX(), shelter.getY(), shelter.getZ(), 1.0);
-        }
-        @Override public void tick() {
-            if (!settler.getNavigation().isInProgress() && settler.blockPosition().distSqr(settler.homePos) > 4) {
-                BlockPos shelter = settler.findShelterPosition();
-                if (shelter.distSqr(settler.blockPosition()) > 1) {
-                    settler.getNavigation().moveTo(shelter.getX(), shelter.getY(), shelter.getZ(), 1.0);
-                }
-            }
+            var target=settler.findShelterPosition();settler.nextShelterSearch=settler.tickCount+40;
+            if(target!=null)settler.getNavigation().moveTo(target.getX(),target.getY(),target.getZ(),1);
         }
     }
 
@@ -302,11 +285,11 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
         private final Settler settler;
         NightRestGoal(Settler settler) { this.settler = settler; setFlags(EnumSet.of(Flag.MOVE)); }
         @Override public boolean canUse() {
-            return settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
+            return settler.pathReady() && settler.tradingPlayer == null && settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
                     && settler.blockPosition().distSqr(settler.homePos) > 2;
         }
         @Override public boolean canContinueToUse() {
-            return settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
+            return settler.tradingPlayer == null && settler.scheduleState == Schedule.State.NIGHT_REST && settler.homePos != null
                     && settler.blockPosition().distSqr(settler.homePos) > 2
                     && settler.getNavigation().isInProgress();
         }

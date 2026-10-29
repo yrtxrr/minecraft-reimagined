@@ -220,3 +220,8 @@ Combined client acceptance completed in a fresh seed12345vanilla-noise world: na
 ## Settlement trade safety checkpoint
 
 On feat/kilo-settlements-economy only: keep professions/legacy catalogue, bridge settlers to vanilla MerchantMenu, MerchantOffers packets and payment/result slots. NPC stock is UUID-owned SavedData, lazily restocked once per advancing work day. Removed the unsafe custom client purchase implementation; standard merchant quantity/shift-click behavior is used. Full-inventory shift result is preflighted before mutation. Added real ServerPlayer/menu/selection-packet/payment/replay/stock persistence tests. build and132GameTests passed. Renderer/AI/client/profile follow; no merge into Codex branches.
+
+
+## Settlement renderer and loaded-only navigation checkpoint
+
+Added SettlerModel/Renderer backed by the installed vanilla villager model and referenced texture; no asset copying. Spawn egg has a real model and integration-ready nature tag, with vanilla fallback only where the mod nature tab is absent. Removed global per-tick record/restock loop; per-UUID restock is lazy/day-guarded. Navigation guards the exact vanilla region with getChunkNow and throttles all path/recompute entry points40ticks; shelter is real loaded roof/air/ground with bounded search and proper rain hysteresis. Trade pause owns movement. No merge; final native/profile acceptance follows.

@@ -63,6 +63,10 @@ public final class SettlementTradingGameTests {
         m.clicked(2,0,ClickType.QUICK_MOVE,p);
         h.assertTrue(p.getInventory().getItem(0).getCount()==61 && m.getSlot(0).getItem().getCount()==2
             && s.getOffers().get(4).getUses()==0,"Room for only3of6bread must cause no partial insertion, payment or stock mutation");
+        m.setCarried(new ItemStack(Items.BREAD,62));m.clicked(2,0,ClickType.PICKUP,p);
+        h.assertTrue(m.getCarried().getCount()==62 && m.getSlot(0).getItem().getCount()==2 && s.getOffers().get(4).getUses()==0,
+            "Cursor room for only2of6bread cannot cause partial purchase");
+        m.setCarried(ItemStack.EMPTY);
         p.getInventory().setItem(0,ItemStack.EMPTY);m.clicked(2,0,ClickType.QUICK_MOVE,p);
         h.assertTrue(p.getInventory().getItem(0).is(Items.BREAD) && p.getInventory().getItem(0).getCount()==12
             && m.getSlot(0).getItem().isEmpty() && s.getOffers().get(4).getUses()==2,"Shift-click buys multiple fully paid outputs");

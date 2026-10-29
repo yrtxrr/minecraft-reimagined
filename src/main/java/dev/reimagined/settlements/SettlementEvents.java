@@ -50,15 +50,16 @@ public final class SettlementEvents {
     }
 
     private static void onInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
-        if (!(event.getTarget() instanceof Settler settler)) return;
+        if (!(event.getTarget() instanceof Settler settler) || event.getHand()!=net.minecraft.world.InteractionHand.MAIN_HAND) return;
         if (!(settler.level() instanceof ServerLevel server)) return;
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) {
-            player.displayClientMessage(Component.translatable("message.reimagined.settler_greeting", "Settler"), false);
+            player.displayClientMessage(Component.translatable("message.reimagined.settler_greeting", settler.getDisplayName()), false);
         } else {
             settler.openTradingScreen(player,settler.getDisplayName(),1);
         }
         event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
     }
 
 }

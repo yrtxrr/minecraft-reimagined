@@ -45,6 +45,8 @@ public final class Schedule {
             return timeBasedState(time);
         }
 
+        if (current == State.SHELTER && rainTimer > -RAIN_EXIT_TICKS) return State.SHELTER;
+
         // Rain takes precedence over time-based states (but with hysteresis)
         if (raining && rainTimer >= RAIN_ENTER_TICKS) {
             return State.SHELTER;
