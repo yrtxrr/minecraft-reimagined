@@ -1,0 +1,1 @@
+Kilo cbc7a5f drafts remain in their original Git branch/history, not in the installed profile. Active independently implemented first chapter: modpack/overrides/config/ftbquests/quests. There is no KubeJS Java.type quest registration. See docs/QUEST_RUNTIME_INTEGRATION.md.

@@ -10,6 +10,8 @@ import re
 import shutil
 import ssl
 import sys
+import subprocess
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -454,6 +456,18 @@ def java_mod_ids(path):
     return []  # Library/datapack wrapper with explicit NeoForge metadata selection, not guessed support.
 
 
+
+def validate_downloaded_pins(records,downloaded,output):
+    pins=[r for r in records.values() if r.get('pin_source')=='pack/mods.json']
+    if not pins:return
+    with tempfile.TemporaryDirectory(prefix='pin-check-',dir=output) as directory:
+        directory=Path(directory)
+        for record in pins:shutil.copyfile(downloaded[record['key']],directory/record['file']['filename'])
+        result=subprocess.run([sys.executable,str(ROOT/'scripts/validate-modpack.py'),'--mods',str(directory)],capture_output=True,text=True,encoding='utf-8',env={**os.environ,'PYTHONUTF8':'1'})
+        if result.returncode:raise Blocked('Pinned JAR hash/dependency inspection failed: '+result.stdout+result.stderr)
+        (output/'PIN_VALIDATION.txt').write_text(result.stdout,encoding='utf-8')
+
+
 def install(plan, output, transport, core, allow_incomplete=False):
     records, missing = validate_plan(plan,allow_incomplete)
     if not core.is_file() or not zipfile.is_zipfile(core):
@@ -472,6 +486,7 @@ def install(plan, output, transport, core, allow_incomplete=False):
                 raise Blocked('Duplicate Java mod ID '+ident+' from '+key+' and '+seen_ids[ident])
             seen_ids[ident]=key
         downloaded[key]=path
+    validate_downloaded_pins(records,downloaded,output)
     for side in ('client','server'):
         dest=output/side; (dest/'mods').mkdir(parents=True)
         shutil.copy2(core,dest/'mods/reimagined-0.1.0-alpha.jar')
@@ -483,6 +498,8 @@ def install(plan, output, transport, core, allow_incomplete=False):
             shutil.copytree(overrides,dest,dirs_exist_ok=True)
         else:
             shutil.copy2(ROOT/'modpack/server/server.properties',dest/'server.properties')
+            ftb=overrides/'config/ftbquests'
+            if ftb.is_dir():shutil.copytree(ftb,dest/'config/ftbquests')
             shutil.copytree(overrides/'kubejs',dest/'kubejs',ignore=shutil.ignore_patterns('client_scripts'))
         shutil.copy2(ROOT/('modpack/jvm-args.txt' if side=='client' else 'modpack/server/jvm-args.txt'),dest/'jvm-args.txt')
         (dest/'PROFILE_STATUS.txt').write_text('CANDIDATE — NOT RUNTIME VERIFIED\nMissing targets: '+', '.join(missing)+'\nMinecraft1.21.1 NeoForge21.1.264 Java21\nNo EULA accepted. No worlds provided.\n',encoding='utf-8')

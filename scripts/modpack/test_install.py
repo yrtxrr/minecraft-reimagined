@@ -149,6 +149,7 @@ class ProfilesTests(unittest.TestCase):
         m.install(self.plan,out,self.t,self.core,True)
         self.assertTrue((out/'client/mods/root-v1.jar').exists());self.assertFalse((out/'server/mods/root-v1.jar').exists())
         self.assertFalse((out/'server/options.txt').exists());self.assertFalse((out/'server/eula.txt').exists())
+        self.assertTrue((out/'server/config/ftbquests/quests/chapters/reimagined_intro.snbt').is_file())
         with zipfile.ZipFile(out/'Reimagined-candidate.mrpack') as z:
             index=json.loads(z.read('modrinth.index.json'));self.assertEqual(m.NF,index['dependencies']['neoforge']);self.assertEqual('unsupported',index['files'][0]['env']['server'])
         self.assertFalse(json.loads((out/'installed.lock.json').read_text())['runtime_verified'])

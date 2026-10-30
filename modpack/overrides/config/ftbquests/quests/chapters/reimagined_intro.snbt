@@ -1,0 +1,217 @@
+{
+  "id": "5245494D00000100",
+  "filename": "reimagined_intro",
+  "group": "",
+  "order_index": 0,
+  "quests": [
+    {
+      "id": "5245494D00000101",
+      "x": 0,
+      "y": 0,
+      "dependencies": [],
+      "tasks": [
+        {
+          "id": "5245494D10000101",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_craft"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000101",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:crafting_table"
+      }
+    },
+    {
+      "id": "5245494D00000102",
+      "x": 2,
+      "y": 0,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000102",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_tool"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000102",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:wooden_pickaxe"
+      }
+    },
+    {
+      "id": "5245494D00000103",
+      "x": 4,
+      "y": 0,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000103",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_shelter"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000103",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:red_bed"
+      }
+    },
+    {
+      "id": "5245494D00000104",
+      "x": 6,
+      "y": 0,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000104",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_meal"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000104",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:bread"
+      }
+    },
+    {
+      "id": "5245494D00000105",
+      "x": 0,
+      "y": 2,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000105",
+          "type": "advancement",
+          "advancement": "reimagined:quests/journal_read"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000105",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "reimagined:research_journal"
+      }
+    },
+    {
+      "id": "5245494D00000106",
+      "x": 2,
+      "y": 2,
+      "dependencies": [
+        "5245494D00000102"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000106",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_ore"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000106",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:iron_ore"
+      }
+    },
+    {
+      "id": "5245494D00000107",
+      "x": 4,
+      "y": 2,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000107",
+          "type": "advancement",
+          "advancement": "reimagined:quests/first_trade"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000107",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:emerald"
+      }
+    },
+    {
+      "id": "5245494D00000108",
+      "x": 6,
+      "y": 2,
+      "dependencies": [
+        "5245494D00000101"
+      ],
+      "tasks": [
+        {
+          "id": "5245494D10000108",
+          "type": "checkmark"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "5245494D20000108",
+          "type": "xp",
+          "xp": 25,
+          "team_reward": false
+        }
+      ],
+      "icon": {
+        "id": "minecraft:compass"
+      }
+    }
+  ],
+  "icon": {
+    "id": "reimagined:research_journal"
+  },
+  "progression_mode": "flexible"
+}

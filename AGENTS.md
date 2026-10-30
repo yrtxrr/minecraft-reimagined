@@ -1,3 +1,7 @@
+# Current solo-development priority
+
+Kilo has stopped. Do not merge its unverified technical implementation automatically. Its cbc7a5f docs are design input; the current native first-chapter/advancement bridge is independently implemented against reviewed FTB1.21.1 source. Finish actual first-chapter runtime acceptance before later chapters. Preserve Freebuffc20c6a6, v2Settlers+Aggregates and pre-migration backups. Consult concrete working pack/mod implementations before complex integration; record source/license/provenance, copy no unlicensed code/text/assets. Keep the two-player scope and only publish the current integration branch. Historical roles/merge instructions below are superseded.
+
 # Current integration authorization
 
 Work on integration/modpack-agents-21cdd49. Integrate reviewed current Freebuff/Kilo commits with history and tests preserved. Do not push main/source branches. Unify mod version management with pack/mods.json and keep one settlement SavedData owner; no EULA acceptance. Prioritize playable two-player external-mod profile, actual tests/runtime and honest limits. This supersedes historical branch/no-merge restrictions below.

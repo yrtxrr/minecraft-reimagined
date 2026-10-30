@@ -1,0 +1,43 @@
+{
+  "quest.5245494D00000101.title": "First steps",
+  "quest.5245494D00000101.quest_desc": [
+    "Craft your first item. Then make a crafting table to begin building your base."
+  ],
+  "quest.5245494D00000102.title": "First tools",
+  "quest.5245494D00000102.quest_desc": [
+    "Craft a tool, for example a wooden pickaxe or axe."
+  ],
+  "quest.5245494D00000103.title": "Shelter",
+  "quest.5245494D00000103.quest_desc": [
+    "Place a bed somewhere safe and sleep. The vanilla sleep advancement is the evidence."
+  ],
+  "quest.5245494D00000104.title": "Food and nature",
+  "quest.5245494D00000104.quest_desc": [
+    "Eat food. Smelting metal, fishing and killing enemies do not count as eating."
+  ],
+  "quest.5245494D00000105.title": "Seasons and knowledge",
+  "quest.5245494D00000105.quest_desc": [
+    "Open the research journal. With Serene Seasons, use its calendar; the legacy HUD may differ."
+  ],
+  "quest.5245494D00000106.title": "Underground",
+  "quest.5245494D00000106.quest_desc": [
+    "Mine an ore block. Bring torches and a suitable pickaxe."
+  ],
+  "quest.5245494D00000107.title": "First contact",
+  "quest.5245494D00000107.quest_desc": [
+    "Complete a paid trade with a villager or settler. Opening the menu or holding an emerald is not enough."
+  ],
+  "quest.5245494D00000108.title": "Choose your path",
+  "quest.5245494D00000108.quest_desc": [
+    "Explore technology and magic. Confirm that you are ready to choose a path; both can be developed. This does not lock recipes or require every other quest."
+  ],
+  "chapter.5245494D00000100.title": "First steps",
+  "task.5245494D10000101.title": "First steps",
+  "task.5245494D10000102.title": "First tools",
+  "task.5245494D10000103.title": "Shelter",
+  "task.5245494D10000104.title": "Food and nature",
+  "task.5245494D10000105.title": "Seasons and knowledge",
+  "task.5245494D10000106.title": "Underground",
+  "task.5245494D10000107.title": "First contact",
+  "task.5245494D10000108.title": "Choose your path"
+}

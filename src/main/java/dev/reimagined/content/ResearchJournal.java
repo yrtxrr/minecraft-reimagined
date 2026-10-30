@@ -32,6 +32,7 @@ public final class ResearchJournal extends WrittenBookItem {
             reader.connection.send(new ClientboundContainerSetSlotPacket(-2, 0, slot, stack.copy()));
             reader.connection.send(new ClientboundOpenBookPacket(hand));
             reader.awardStat(Stats.ITEM_USED.get(this));
+            dev.reimagined.quest.QuestIntegration.mark(reader,"journal_read");
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }

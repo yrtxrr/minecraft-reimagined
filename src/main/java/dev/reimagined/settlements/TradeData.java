@@ -26,9 +26,13 @@ public final class TradeData extends SavedData {
         long day = Math.floorDiv(level.getDayTime() - 8000L, 24000L);
         NpcStock stock = npcStocks.get(id);
         if (stock == null) {
-            initializeOffersForProfession(level, profession);
+            String catalogue=switch(profession) {
+                case "farmer","fisher","blacksmith","librarian","butcher" -> profession;
+                default -> "commoner";
+            };
+            initializeOffersForProfession(level, catalogue);
             var actual = new net.minecraft.world.item.trading.MerchantOffers();
-            for (TradeOffer source : offers) if (source.profession.equals(profession) && !source.input.isEmpty() && !source.output.isEmpty()) {
+            for (TradeOffer source : offers) if (source.profession.equals(catalogue) && !source.input.isEmpty() && !source.output.isEmpty()) {
                 actual.add(new net.minecraft.world.item.trading.MerchantOffer(
                     new net.minecraft.world.item.trading.ItemCost(source.input.getItem(), source.input.getCount()),
                     java.util.Optional.empty(), source.output.copy(), Math.clamp(source.uses(),0,source.maxUses), source.maxUses, 0, 0F));

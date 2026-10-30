@@ -90,6 +90,9 @@ def main():
                 payload[f'{prefix}/{path.relative_to(PACK / "overrides").as_posix()}'] = path
     else:
         payload[f'{prefix}/server.properties'] = PACK / 'server/server.properties'
+        for path in sorted((PACK / 'overrides/config/ftbquests').rglob('*')):
+            if path.is_file() and not path.is_symlink():
+                payload[f'{prefix}/config/ftbquests/{path.relative_to(PACK / "overrides/config/ftbquests").as_posix()}'] = path
         for path in sorted((PACK / 'overrides/kubejs').rglob('*')):
             if path.is_file() and 'client_scripts' not in path.parts and not path.is_symlink():
                 payload[f'{prefix}/kubejs/{path.relative_to(PACK / "overrides/kubejs").as_posix()}'] = path

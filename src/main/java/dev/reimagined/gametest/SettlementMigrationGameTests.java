@@ -62,6 +62,9 @@ public final class SettlementMigrationGameTests {
         var aggregates=b().getList("Settlements",10);aggregates.getCompound(0).putString("Era","future_era");source.put("Settlements",aggregates);
         var loaded=load(h,source);
         h.assertTrue(loaded.settlers().getFirst().profession.equals("future_profession"),"Unknown profession is never erased");
+        var catalogue=new dev.reimagined.settlements.TradeData();
+        catalogue.addOffer("commoner",new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STICK,32),new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD),16);
+        h.assertTrue(!catalogue.offersFor(h.getLevel(),loaded.settlers().getFirst().uuid,"future_profession").isEmpty(),"Unrecognized stored profession gets safe commoner offers without erasing its ID");
         h.assertTrue(loaded.civilizations().all().iterator().next().era()==dev.reimagined.civilization.TechEra.FRONTIER,"Unknown era follows existing safe fallback");
         var future=save(h,loaded);future.putInt("Version",3);boolean refused=false;try{load(h,future);}catch(IllegalStateException expected){refused=true;}
         h.assertTrue(refused,"Future save must not be overwritten by older codec");h.succeed();

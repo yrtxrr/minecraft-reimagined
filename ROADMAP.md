@@ -148,3 +148,7 @@ Freebuff59326be imported with single world-save owner and canonical25pin manifes
 ### Freebuff final c20c6a6 migration checkpoint
 
 Updated final handoff/merge plan/fixtures. Version2 now writes Settlers+Aggregates, one SavedData key, first-wins duplicates and no forced write on load. Content-addressed verified .dat/.dat_old backups before legacy migration; failed backup refuses migration. Build,36JUnit and178GameTests pass;42installer tests retained. Native old-world load/backup/NPC+inventory/founding observed, X11BadDrawable on shutdown prevents clean-restart claim. See docs/MODPACK_AGENT_INTEGRATION.md; full external runtime still uses Freebuff99test evidence pending local reproduction.
+
+## Solo priority after Kilo retirement
+
+Freebuff c20c6a6 history preserved at479c1b6 with backed-up Version2 ownership. Independent native first chapter implemented from reviewed source, no automatic Kilo implementation merge. Next gate: install actual FTB+dependencies and technologies on Windows/allowed network, first-bookGUI/team/reward/death/save/restart acceptance, full185GameTests with external set, ordinaryDefault terrain/dimensions/new chunks/two clients/profile. Do not start chapter2 or new large systems before first chapter works in actual game. All40candidates remain; conditional magic alternatives must have actual NeoForge release pins before activation.

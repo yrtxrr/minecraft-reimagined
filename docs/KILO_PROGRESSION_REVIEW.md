@@ -1,3 +1,7 @@
+# Current solo implementation checkpoint
+
+Kilo is no longer working on this project. cbc7a5f has NOT been merged as a parent. The reviewed technical rewrite and native chapter are documented in QUEST_RUNTIME_INTEGRATION.md; old technical blockers below describe the unaccepted candidate. Native advancement/server tests pass, actual FTB GUI/team/runtime remains pending. Design docs retained; unverified startup scripts/SNBT drafts were not imported into active profiles.
+
 # Адресная проверка Kilo cbc7a5f —2026-10-30
 
 Remote `feat/reimagined-progression`=cbc7a5f84dfe847da452437ac826c037749eef0d, базаa9c7423. Проверены **изменения самого коммита**, а не весь расходящийся ancestral diff:18файлов,8заданий,1описание главы,скрипт,QuestIntegration и4design docs. Исходная ветка не менялась; merge/cherry-pick не выполнен. Локальная Core-линия содержит22a4f48/совместный тест и новый bootstrap; полный merge старой ветки вернул бы лишние различия. Прежде переноса нужен адресный адаптированный коммит с сохранением авторства.

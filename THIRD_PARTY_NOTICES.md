@@ -60,3 +60,7 @@ Settlement rendering uses Minecraft1.21.1 VillagerModel/ModelLayers.VILLAGER by 
 ## Modpack migration2026-10-30
 
 No third-party code/assets/JAR added by the Core foundation. Official catalog/source probes are blocked403; target candidate metadata/license fields remain unverified in modpack/mod-registry.json. All target names identify prospective upstream projects, not bundled dependencies. Personal use does not imply permission to redistribute. Local build archives include only existing Reimagined code/resources and original configuration/integration glue; external artifact lock requires explicit source/license/personal-use confirmation before packaging.
+
+## Targeted quest-source research (2026-10-30)
+
+Reviewed https://github.com/FTBTeam/FTB-Quests at dc94c46a6a9ae806fb5921159513448fcedc8816 (1.21.1/main, source2101.1.37) for its published native data/API contract. Reviewed https://github.com/AllTheMods/ATM-10 at827e3610c356922e59412834d4b08ca5b16a6ce0 for a working NeoForge1.21.1 schema13 quest configuration. ATM quest/script README is All Rights Reserved; no permission inferred, no quest text/reward balance/script/code/assets copied. Reimagined native chapter text/IDs/layout and vanilla advancement bridge are original project work using technical field names/contracts. No external binaries added via Git. Kilo cbc7a5f design docs retained as this project's attributed design material; unverified Java.type/registration code is not activated. See docs/QUEST_RUNTIME_INTEGRATION.md.

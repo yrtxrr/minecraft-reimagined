@@ -1,0 +1,10 @@
+{
+  "version": 13,
+  "fallback_locale": "en_us",
+  "default_consume_items": false,
+  "default_reward_team": false,
+  "default_autoclaim_rewards": "disabled",
+  "progression_mode": "flexible",
+  "detection_delay": 60,
+  "pause_game": false
+}

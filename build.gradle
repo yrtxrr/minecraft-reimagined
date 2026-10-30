@@ -118,3 +118,8 @@ tasks.named('jar') {
     exclude 'dev/reimagined/cooking/profile/**'
     exclude 'data/reimagined/structure/empty.nbt'
 }
+
+// One editable FTB chapter source, also exposed to resource/advancement integration tests.
+tasks.named('processResources') {
+    from('modpack/overrides/config/ftbquests/quests') { into 'data/reimagined/quest_book' }
+}

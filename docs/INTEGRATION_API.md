@@ -1,3 +1,7 @@
+# Current quest integration contract
+
+Solo maintenance: Kilo has stopped. Native FTB chapter and reviewed server bridge: QUEST_RUNTIME_INTEGRATION.md. SettlementQuestEvent remains Freebuff's overworld/server-thread event; consume kind.id strings, not enum ordinals/names. No speculative player/biome/dimension fields added. Shared5facts live in QuestSignals of the same Version2 settlement owner, no extra population/era registry. Personal actions use actor UUID/Player persistent data and vanilla advancements; FTB Teams owns shared task/reward state. Historical role assignments below are superseded.
+
 # Контракт первого этапа для Kilo / Freebuff
 
 Сохранён modId/namespace `reimagined`: Reimagined Core — новое назначение существующего мода, не второй дублирующий JAR. Не переименовывать registry/NBT IDs. API в `dev.reimagined.core`, common-side, без зависимостей от KubeJS/FTB/MCA.

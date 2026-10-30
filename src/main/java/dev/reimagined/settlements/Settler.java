@@ -359,6 +359,7 @@ public final class Settler extends Mob implements MenuProvider, net.minecraft.wo
     @Override public void notifyTrade(net.minecraft.world.item.trading.MerchantOffer offer) {
         if (level() instanceof ServerLevel server && getOffers().contains(offer)) {
             offer.increaseUses(); TradeData.get(server).setDirty();
+            if(tradingPlayer instanceof net.minecraft.server.level.ServerPlayer player)dev.reimagined.quest.QuestIntegration.mark(player,"first_trade");
         }
     }
     @Override public void notifyTradeUpdated(ItemStack stack) {}

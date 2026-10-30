@@ -252,3 +252,7 @@ Latest59326be combat/season corrections preserved. Joint no-external build and17
 ### Freebuff final c20c6a6 migration checkpoint
 
 Updated final handoff/merge plan/fixtures. Version2 now writes Settlers+Aggregates, one SavedData key, first-wins duplicates and no forced write on load. Content-addressed verified .dat/.dat_old backups before legacy migration; failed backup refuses migration. Build,36JUnit and178GameTests pass;42installer tests retained. Native old-world load/backup/NPC+inventory/founding observed, X11BadDrawable on shutdown prevents clean-restart claim. See docs/MODPACK_AGENT_INTEGRATION.md; full external runtime still uses Freebuff99test evidence pending local reproduction.
+
+## Solo native quest implementation acceptance
+
+Build passes with40JUnit,185/185GameTests,0failures/skips. All original current tests retained; four previously existing navigation unit tests/helpers from a9c7423 were reviewed and retained without restoring browser UI. Seven quest GameTests check actual criterion state, failed/paid MerchantMenu transaction, food vs smelting, native sleep/journal use, canceled/incorrect-tool ore events, two ServerPlayer clone/actor isolation, shared signals persistence/replay and native config/real icons/advancement references. Native source schema13/8quests/25IDs/bilingual graph verified independently. These server players are not2network clients and FTB binary/GUI/reward claims have not run.42installer tests and5legacy assembler tests pass;25known pins validate structurally, actual bytes here still blocked.

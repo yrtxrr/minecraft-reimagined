@@ -18,6 +18,13 @@ import java.util.UUID;
 public final class SettlementData extends SavedData {
     private static final org.slf4j.Logger LOGGER=org.slf4j.LoggerFactory.getLogger(SettlementData.class);
     private String migrationWarning="";
+    private final java.util.Set<String> questSignals=new java.util.TreeSet<>();
+    public java.util.Set<String> questSignals() { return java.util.Set.copyOf(questSignals); }
+    public boolean recordQuestSignal(String id) {
+        boolean known=false;for(var type:dev.reimagined.civilization.QuestSignalType.values())if(type.id.equals(id))known=true;
+        if(!known || !questSignals.add(id))return false;
+        setDirty();return true;
+    }
     public String migrationWarning() { return migrationWarning; }
 
     private final List<SettlerRecord> settlers = new ArrayList<>();
@@ -58,6 +65,20 @@ public final class SettlementData extends SavedData {
         if(version!=2) {
             boolean npc=tag.contains("Settlers",9), remote=tag.contains("Aggregates",9)||tag.contains("Settlements",9)||tag.contains("Civilizations",10);
             if(!npc || !remote)data.migrationWarning="Settlement legacy migration: missing "+(!npc&&!remote?"both tiers":!npc?"NPC tier":"aggregate tier")+"; only present data preserved, no recovery invented";
+        }
+        var signals=tag.getList("QuestSignals",8);
+        for(int i=0;i<Math.min(5,signals.size());i++) {
+            String id=signals.getString(i);
+            for(var type:dev.reimagined.civilization.QuestSignalType.values())if(type.id.equals(id))data.questSignals.add(id);
+        }
+        // Explicit announcement flags are historical facts; replay them without reposting events
+        // or inventing milestones whose old payload did not prove the transition.
+        var records=aggregates.getList("Settlements",10);
+        for(int i=0;i<Math.min(64,records.size());i++) {
+            var aggregate=records.getCompound(i);
+            if(aggregate.getBoolean("FoundedAnnounced"))data.questSignals.add("settlement_founded");
+            if(aggregate.getBoolean("FirstTradeAnnounced"))data.questSignals.add("settlement_first_trade");
+            if((aggregate.getInt("EraAnnouncedMask") & ~1)!=0)data.questSignals.add("settlement_era_advanced");
         }
         java.util.Set<UUID> seen=new java.util.HashSet<>();
         ListTag list = tag.getList("Settlers", 10);
@@ -109,6 +130,7 @@ public final class SettlementData extends SavedData {
         }
         tag.put("Settlers", list);
         tag.put("Aggregates", civilizations.save(new CompoundTag(),registries).getList("Settlements",10));
+        var signals=new ListTag();questSignals.forEach(id->signals.add(net.minecraft.nbt.StringTag.valueOf(id)));tag.put("QuestSignals",signals);
         tag.remove("Settlements");tag.remove("Civilizations");
         return tag;
     }

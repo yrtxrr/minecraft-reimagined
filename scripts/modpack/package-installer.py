@@ -19,16 +19,16 @@ files={
 }
 for name in ['install.py','Install-Reimagined.ps1','test_install.py']:
     files['scripts/modpack/'+name]=root/'scripts/modpack'/name
-for name in ['mod-registry.json','source-bindings.json','INSTALL_WINDOWS.md','jvm-args.txt']:
+for name in ['mod-registry.json','source-bindings.json','INSTALL_WINDOWS.md','VERIFY_WINDOWS.md','jvm-args.txt']:
     files['modpack/'+name]=root/'modpack'/name
 for directory in ['overrides','server']:
     for path in sorted((root/'modpack'/directory).rglob('*')):
         if path.is_file() and not path.is_symlink():
             files[path.relative_to(root).as_posix()]=path
 files['pack/mods.json']=root/'pack/mods.json'
-for name in ['fetch-modpack.py','validate-modpack.py']:
+for name in ['fetch-modpack.py','validate-modpack.py','validate-quests.py','check-gametest-report.py']:
     files['scripts/'+name]=root/'scripts'/name
-for name in ['MOD_DOWNLOAD_DIAGNOSTICS.md','KILO_PROGRESSION_REVIEW.md']:
+for name in ['MOD_DOWNLOAD_DIAGNOSTICS.md','KILO_PROGRESSION_REVIEW.md','QUEST_RUNTIME_INTEGRATION.md','MODPACK_AGENT_INTEGRATION.md']:
     files['docs/'+name]=root/'docs'/name
 manifest=dict(revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),
               purpose='Official-source Windows installer, NOT an installed/tested full modpack',

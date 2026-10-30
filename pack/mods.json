@@ -127,7 +127,9 @@
       "sha512": "6c02b8b269269d5aa84cb03bf824a1b5d52838e806c2fec8727eb4049925592dac9bb65c996858751fbb722f22ac59c4be09860e1f01e8f7b97c95be3faf7a57",
       "size": 1023751,
       "released": "2026-10-14",
-      "dependencies": [],
+      "dependencies": [
+        "VDI2Ytax"
+      ],
       "projectId": "XaDC71GB",
       "candidateId": null,
       "sides": [
@@ -306,7 +308,9 @@
       "sha512": "a2a7ebd8a0d101ec6c470ad6451b6fd86f526cd88f188cd6afe9673580be7264567be76f2d2ab19194c5332cbbe56eec2e67b359c34b610d65c9d4733aff9ad8",
       "size": 2283529,
       "released": "2026-05-09",
-      "dependencies": [],
+      "dependencies": [
+        "twkfQtEc"
+      ],
       "projectId": "AtjxBimt",
       "candidateId": "immersive-weathering-renewed",
       "sides": [
@@ -466,7 +470,8 @@
       "size": 451757,
       "released": "2026-09-11",
       "dependencies": [
-        "XaDC71GB"
+        "XaDC71GB",
+        "VDI2Ytax"
       ],
       "projectId": "lWDHr9jE",
       "candidateId": "tectonic",
