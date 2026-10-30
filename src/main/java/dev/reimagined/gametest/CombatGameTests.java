@@ -15,7 +15,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
@@ -62,8 +63,9 @@ public final class CombatGameTests {
             for (int i = 0; i < ticks; i++) updateUsingItem(getUseItem());
         }
     }
-    private static Villager target(GameTestHelper helper, int x, int z) {
-        Villager target = helper.spawn(EntityType.VILLAGER, new BlockPos(x, 3, z));
+    private static Mob target(GameTestHelper helper, int x, int z) {
+        // MCA Reborn replaces villager damage handling, so combat fixtures use an ordinary hostile.
+        Zombie target = helper.spawn(EntityType.ZOMBIE, new BlockPos(x, 3, z));
         target.setNoAi(true);
         return target;
     }
@@ -79,7 +81,7 @@ public final class CombatGameTests {
         fighter.setItemInHand(InteractionHand.MAIN_HAND, spear);
         helper.assertTrue(Content.SPEAR.get().use(helper.getLevel(), fighter, InteractionHand.MAIN_HAND).getResult() == InteractionResult.PASS,
                 "Ordinary right click must pass so offhand shields can be raised");
-        Villager victim = target(helper, 3, 7);
+        Mob victim = target(helper, 3, 7);
         fighter.setShiftKeyDown(true);
         fighter.resetAttackStrengthTicker();
         helper.assertTrue(Content.SPEAR.get().use(helper.getLevel(), fighter, InteractionHand.MAIN_HAND).getResult() == InteractionResult.FAIL
@@ -102,7 +104,7 @@ public final class CombatGameTests {
         Fighter fighter = new Fighter(helper);
         fighter.setShiftKeyDown(true);
         fighter.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Content.SPEAR.get()));
-        Villager victim = target(helper, 3, 6);
+        Mob victim = target(helper, 3, 6);
         helper.setBlock(new BlockPos(3, 4, 5), Blocks.STONE);
         Content.SPEAR.get().use(helper.getLevel(), fighter, InteractionHand.MAIN_HAND);
         helper.assertTrue(victim.getHealth() == victim.getMaxHealth(), "A stone wall must stop special attack damage");
@@ -125,7 +127,7 @@ public final class CombatGameTests {
         Fighter hammer = new Fighter(helper);
         hammer.setShiftKeyDown(true);
         hammer.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Content.HAMMER.get()));
-        Villager victim = target(helper, 3, 5);
+        Mob victim = target(helper, 3, 5);
         Content.HAMMER.get().use(helper.getLevel(), hammer, InteractionHand.MAIN_HAND);
         helper.assertTrue(victim.getHealth() < victim.getMaxHealth() && victim.hasEffect(MobEffects.MOVEMENT_SLOWDOWN),
                 "Hammer special must damage and stagger the front target");
@@ -134,7 +136,7 @@ public final class CombatGameTests {
         Fighter dagger = new Fighter(helper);
         dagger.setShiftKeyDown(true);
         dagger.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Content.DAGGER.get()));
-        Villager next = target(helper, 3, 5);
+        Mob next = target(helper, 3, 5);
         Content.DAGGER.get().use(helper.getLevel(), dagger, InteractionHand.MAIN_HAND);
         helper.assertTrue(next.getHealth() < next.getMaxHealth() && dagger.hasEffect(MobEffects.MOVEMENT_SPEED),
                 "Dagger special must combine a short thrust with brief footwork speed");
@@ -145,10 +147,10 @@ public final class CombatGameTests {
         Fighter fighter = new Fighter(helper);
         fighter.setShiftKeyDown(true);
         fighter.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Content.HALBERD.get()));
-        Villager left = target(helper, 2, 5);
-        Villager middle = target(helper, 3, 5);
-        Villager right = target(helper, 4, 5);
-        Villager behind = target(helper, 3, 1);
+        Mob left = target(helper, 2, 5);
+        Mob middle = target(helper, 3, 5);
+        Mob right = target(helper, 4, 5);
+        Mob behind = target(helper, 3, 1);
         Content.HALBERD.get().use(helper.getLevel(), fighter, InteractionHand.MAIN_HAND);
         helper.assertTrue(left.getHealth() < left.getMaxHealth() && middle.getHealth() < middle.getMaxHealth()
                 && right.getHealth() < right.getMaxHealth(), "Halberd must strike three real enemies in its front arc");

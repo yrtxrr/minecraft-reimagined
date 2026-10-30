@@ -226,5 +226,28 @@ class FullCatalogTests(unittest.TestCase):
         plan=m.resolve(registry,bindings,Denied());self.assertEqual(40,len(plan['targets']));self.assertEqual([],plan['mods'])
         self.assertTrue(all('CONNECT403' in t['reason'] for t in plan['targets']))
 
+
+class PinnedManifestTests(unittest.TestCase):
+    def test_verified_manifest_dependency_closure_and_hashes(self):
+        records,targets,all_targets=m.pinned_records(m.ROOT/'pack/mods.json',True)
+        self.assertEqual(25,len(records))
+        self.assertTrue(all(len(r['file']['hashes']['sha512'])==128 for r in records.values()))
+        self.assertTrue(all(d in records for r in records.values() for d in r['dependencies']))
+    def test_pinned_only_plan_never_requests_catalog(self):
+        class Offline:
+            def json(self,url):raise AssertionError('Pinned-only must not request API')
+        registry=json.loads((m.ROOT/'modpack/mod-registry.json').read_text())
+        bindings=json.loads((m.ROOT/'modpack/source-bindings.json').read_text())
+        plan=m.resolve(registry,bindings,Offline(),pinned=m.ROOT/'pack/mods.json',pinned_only=True,include_optional=True)
+        self.assertEqual(40,len(plan['targets']));self.assertEqual(25,len(m.validate_plan(plan,True)[0]))
+    def test_optional_cold_sweat_is_explicit_and_end_choice_preserved(self):
+        class Offline:
+            def json(self,url):raise AssertionError()
+        registry=json.loads((m.ROOT/'modpack/mod-registry.json').read_text());bindings=json.loads((m.ROOT/'modpack/source-bindings.json').read_text())
+        plan=m.resolve(registry,bindings,Offline(),end='betterend',pinned=m.ROOT/'pack/mods.json',pinned_only=True)
+        self.assertTrue(any(t['id']=='cold-sweat' and t['status']=='optional-not-selected' for t in plan['targets']))
+        self.assertFalse(any(r['name']=='Nullscape' for r in plan['mods']))
+        m.validate_plan(plan,True)
+
 if __name__=='__main__':unittest.main()
 

@@ -1,3 +1,7 @@
+# Current integration authorization
+
+Work on integration/modpack-agents-21cdd49. Integrate reviewed current Freebuff/Kilo commits with history and tests preserved. Do not push main/source branches. Unify mod version management with pack/mods.json and keep one settlement SavedData owner; no EULA acceptance. Prioritize playable two-player external-mod profile, actual tests/runtime and honest limits. This supersedes historical branch/no-merge restrictions below.
+
 # Installation-first priority (2026-10-30)
 
 Do not expand Core-only gameplay while third-party installation is blocked. Maintain all40target candidates and an official-source Windows install path. Source restrictions must not be bypassed. Kilo progression cbc7a5f has blocking FTB quest review in docs/KILO_PROGRESSION_REVIEW.md; no merge until actual compatibility/action/team checks pass. Review Freebuff separately when ready. Keep all existing tests/save compatibility and distinguish candidate metadata/hash checks from actual client/server runtime.

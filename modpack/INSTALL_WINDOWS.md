@@ -1,3 +1,16 @@
+# Проверенный внешний базис Freebuff
+
+Точный источник версий/URL/SHA512/зависимостей — **pack/mods.json** (25файлов, ColdSweat optional). Это не Core-only. Исторический cloud CONNECT403 не отменяет server evidence Freebuff59326be:25модов/99GameTests. После объединения требуется повторный запуск всех файлов; здесь он пока блокирован скачиванием.
+
+Для установки именно этого состава без повторного latest resolve:
+
+```powershell
+.\scripts\modpack\Install-Reimagined.ps1 -OutputDirectory C:\Games\Reimagined25 -PinnedOnly -IncludeOptional
+.\scripts\modpack\Install-Reimagined.ps1 -OutputDirectory C:\Games\Reimagined25 -UseExistingPlan -InstallAvailable
+```
+
+Без IncludeOptional ставится24файла, ColdSweat явно помечен optional-not-selected. Остальные40кандидатов не удалены: техномоды/FTB/магия/оптимизаторы пока не входят в эти25пинов. Для поиска **добавочных** релизов используйте resolve без PinnedOnly: уже проверенные пины остаются фиксированными; conflicting dependency отклоняется. Nullscape теперь выбран по умолчанию из проверенного набора, BetterEnd остаётся альтернативой. scripts/fetch-modpack.py использует тот же manifest/transport, отдельного ручного lock нет.
+
 # Установка настоящих сторонних модов на Windows
 
 Этот комплект — **установщик-кандидат**, а не очередной Core-only игровой архив. Он получает реальные официальные релизы и зависимости **в вашей сети**. В облаке каталоги/CDN блокируются CONNECT403; поэтому внешние JAR не вложены и состав не объявлен проверенным в Minecraft. Все40кандидатов остаются в отчёте. Nullscape — альтернатива BetterEnd, не второй одновременный provider.

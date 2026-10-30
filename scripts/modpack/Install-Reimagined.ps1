@@ -2,12 +2,14 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)][string]$OutputDirectory,
-    [ValidateSet('betterend','nullscape')][string]$End = 'betterend',
+    [ValidateSet('betterend','nullscape')][string]$End = 'nullscape',
     [string]$CoreJar = '',
     [string]$Bindings = '',
     [switch]$Install,
     [switch]$InstallAvailable,
     [switch]$UseExistingPlan,
+    [switch]$PinnedOnly,
+    [switch]$IncludeOptional,
     [switch]$AllowBeta
 )
 $ErrorActionPreference = 'Stop'
@@ -30,6 +32,8 @@ if (-not $CoreJar) { $CoreJar = Join-Path $repoRoot 'payload/reimagined-0.1.0-al
 if (-not $UseExistingPlan) {
     $resolveArguments = @($scriptPath, 'resolve', '--output', $outputPath, '--end', $End)
     if ($Bindings) { $resolveArguments += @('--bindings', $Bindings) }
+    if ($PinnedOnly) { $resolveArguments += '--pinned-only' }
+    if ($IncludeOptional) { $resolveArguments += '--include-optional' }
     if ($AllowBeta) { $resolveArguments += '--allow-beta' }
     & $python @pyArguments @resolveArguments
     $resolveExit = $LASTEXITCODE

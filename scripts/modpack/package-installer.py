@@ -25,6 +25,9 @@ for directory in ['overrides','server']:
     for path in sorted((root/'modpack'/directory).rglob('*')):
         if path.is_file() and not path.is_symlink():
             files[path.relative_to(root).as_posix()]=path
+files['pack/mods.json']=root/'pack/mods.json'
+for name in ['fetch-modpack.py','validate-modpack.py']:
+    files['scripts/'+name]=root/'scripts'/name
 for name in ['MOD_DOWNLOAD_DIAGNOSTICS.md','KILO_PROGRESSION_REVIEW.md']:
     files['docs/'+name]=root/'docs'/name
 manifest=dict(revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),

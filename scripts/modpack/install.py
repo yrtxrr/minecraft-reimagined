@@ -313,17 +313,54 @@ class Resolver:
         return result
 
 
-def resolve(registry, bindings, transport, end='betterend', allow_beta=False):
+
+def pinned_records(path, include_optional=False):
+    manifest=json.loads(path.read_text(encoding='utf-8'))
+    if (manifest['minecraft'],manifest['neoforge'])!=(MC,NF):raise Blocked('Pinned manifest platform mismatch')
+    records={};targets={};all_targets={}
+    for entry in manifest['mods']:
+        if entry.get('candidateId'):all_targets[entry['candidateId']]=entry
+        if not entry['required'] and not include_optional:continue
+        key='modrinth:'+entry['projectId']
+        if key in records:raise Blocked('Duplicate pinned project')
+        safe_url(entry['url'],FILE_HOSTS)
+        if not re.fullmatch('[0-9a-f]{128}',entry['sha512']):raise Blocked('Invalid pinned SHA512')
+        records[key]=dict(key=key,source='modrinth',project_id=entry['projectId'],name=entry['name'],version_id=entry['versionId'],version=entry['version'],minecraft=MC,loader='neoforge',sides=entry['sides'],license=entry['license'],source_url='https://modrinth.com/mod/'+entry['slug'],file=dict(url=entry['url'],filename=entry['filename'],hashes={'sha512':entry['sha512']},size=entry['size']),dependencies=['modrinth:'+x for x in entry['dependencies']],optional_dependencies=[],pin_source='pack/mods.json')
+        if entry.get('candidateId'):targets[entry['candidateId']]=key
+    for record in records.values():
+        if any(dep not in records for dep in record['dependencies']):raise Blocked('Pinned dependency closure incomplete')
+    return records,targets,all_targets
+
+
+def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pinned=None, pinned_only=False, include_optional=False):
     expected = {m['id'] for m in registry['mods']}
     if len(expected) != 40 or expected != set(bindings['targets']):
         raise Blocked('Registry/bindings must cover all 40 unique candidates')
     resolver = Resolver(transport, bindings, allow_beta)
+    pinned_targets={};all_pinned={}
+    if pinned is not None:
+        resolver.selected,pinned_targets,all_pinned=pinned_records(pinned,include_optional)
+    for candidate,key in list(pinned_targets.items()):
+        if (candidate=='nullscape' and end!='nullscape') or (candidate=='betterend-new-dawn' and end=='nullscape'):
+            resolver.selected.pop(key,None);pinned_targets.pop(candidate)
     report = []
     for target in registry['mods']:
         selected = not (target['id'] == 'nullscape' and end != 'nullscape' or target['id'] == 'betterend-new-dawn' and end == 'nullscape')
         before = copy.deepcopy(resolver.selected), copy.deepcopy(resolver.constraints)
+        if not selected and target['id'] in all_pinned:
+            entry=all_pinned[target['id']]
+            report.append(dict(id=target['id'],name=target['name'],selected=False,status='available-alternative-not-selected',version=entry['version'],version_id=entry['versionId']))
+            continue
+        if target['id'] in all_pinned and not all_pinned[target['id']]['required'] and target['id'] not in pinned_targets:
+            report.append(dict(id=target['id'],name=target['name'],selected=False,status='optional-not-selected',reason='Pinned optional mod; enable include_optional explicitly'))
+            continue
         try:
-            key = resolver.target(target, bindings['targets'][target['id']])
+            if target['id'] in pinned_targets:
+                key=pinned_targets[target['id']]
+            elif pinned_only:
+                raise Blocked('Not in verified pack/mods.json; retained candidate, no invented pin')
+            else:
+                key = resolver.target(target, bindings['targets'][target['id']])
             record = resolver.selected[key]
             report.append(dict(id=target['id'], name=target['name'], selected=selected,
                                status='resolved' if selected else 'available-alternative-not-selected', key=key,
@@ -483,16 +520,18 @@ def main():
     parser.add_argument('--bindings',type=Path,default=ROOT/'modpack/source-bindings.json')
     parser.add_argument('--plan',type=Path)
     parser.add_argument('--core-jar',type=Path,default=ROOT/'payload/reimagined-0.1.0-alpha.jar')
-    parser.add_argument('--end',choices=['betterend','nullscape'],default='betterend')
+    parser.add_argument('--end',choices=['betterend','nullscape'],default='nullscape')
     parser.add_argument('--allow-beta',action='store_true')
     parser.add_argument('--allow-incomplete',action='store_true')
+    parser.add_argument('--pinned-only',action='store_true')
+    parser.add_argument('--include-optional',action='store_true')
     args=parser.parse_args()
     transport=Transport(os.environ.get('CURSEFORGE_API_KEY'))
     try:
         if args.command=='resolve':
             registry=json.loads((ROOT/'modpack/mod-registry.json').read_text(encoding='utf-8'))
             bindings=json.loads(args.bindings.read_text(encoding='utf-8'))
-            plan=resolve(registry,bindings,transport,args.end,args.allow_beta)
+            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional)
             write_reports(plan,args.output)
             missing=sum(t['selected'] and t['status']!='resolved' for t in plan['targets'])
             print(f'Checked all {len(plan["targets"])} candidates; resolved {len(plan["mods"])} artifacts, unresolved selected targets {missing}. See INSTALL_REPORT.md')

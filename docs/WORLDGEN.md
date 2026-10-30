@@ -23,8 +23,10 @@ noise functions or modify worlds created with another preset.
 - Surface rules provide sand, red sand, exposed stone, snowy peak surfaces,
   grass/dirt, gravel underwater, deepslate and a sealed bedrock floor.
 - Existing vanilla biomes, vegetation, ore features and structures are supplied
-  by Minecraft's registry data. The generator derives all noise from the world's
-  seed; there is no mutable global random state or per-tick world simulation.
+  by Minecraft's registry data. A rare small mountain iron vein is an additive
+  NeoForge biome feature using vanilla ore codecs; ordinary ore generation is
+  retained. The generator derives all noise from the world's seed; there is no
+  mutable global random state or per-tick world simulation.
 
 All distributed density functions, surface rules and JSON configurations are
 original expressions. Vanilla registry IDs are runtime references; no third-party
@@ -35,7 +37,9 @@ mod code, textures or extracted Mojang configuration blobs are included.
 This is an initial continental terrain preset, **not** the complete generation
 system from the project specification. It does not yet implement physical
 watersheds, connected hydrological rivers, lake/delta planning, new geological
-strata, ore provinces, new biomes or geography-aware settlement placement.
+strata, broad ore provinces, new biomes or geography-aware settlement placement.
+The small mountain iron vein is a limited biome-local resource, not a regional
+geological province, a large deposit, or a replacement for vanilla ores.
 Vanilla biome placement was designed for vanilla terrain; biome/elevation and
 structure-placement tuning still needs in-game sampling across many seeds.
 

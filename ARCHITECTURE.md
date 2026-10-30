@@ -15,6 +15,7 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `browser` | common display/query/cache/adapter API, brewing and smithing projection | Immutable recipe snapshots, actual Ingredient predicates, exact potion variants, no client-only imports |
 | `client` | existing inventory item panel and recipe screen | Read-only common projections; recipe-sync invalidation, world/logout lifecycle, no client crafting authority |
 | data `worldgen` | optional world preset | Stateless seeded chunk noise, built-in registry codecs |
+| `civilization` | abstract settlements, bounded remote simulation, quest signals | Overworld `SavedData`; ≤64 settlements; staggered 100-tick pass; no world access |
 
 ## Network
 
@@ -31,6 +32,7 @@ Beekeeping adds no block entity and no saved-data file. The only new persistent 
 ## Performance and boundaries
 
 No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Beekeeping adds no recurring work at all: vanilla bee AI and random ticking remain the only hive activity, and frame state is O(1) per hive. Remote civilization simulation and climate weather effects are future work; no placeholder simulation is presented as complete.
+No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. An abstract remote settlement simulation now exists (see "Abstract civilizations" below); local NPCs/buildings, inter-settlement trade, diplomacy and climate weather effects are still future work.
 
 Player state is server-owned. There is no state-level player kingdom creation API and no NPC war terrain destruction. Both civilizations and wars remain unimplemented.
 
@@ -144,3 +146,8 @@ Settler EntityInteract consumes the main-hand action on client and server. Only 
 ## Personal modpack boundary —2026-10-30
 
 See docs/ARCHITECTURE.md and docs/INTEGRATION_API.md. The current task targets1–2players, not public-server scaling. Preserve legacy modules/IDs/SavedData; use configuration/KubeJS/verified mods before extra Java. Core adds only a256-ID personal integration ledger,7independent era flags and synchronous transition signals. No tick loop/world scans/new network channel. Adapter factories are lazy and disabled/missing mods never resolve optional classes. Player clone copies only its owned key. Client-only mods are excluded by explicit verified side metadata from server packages. Official source403 leaves all40target candidates uninstalled, not declared incompatible.
+## Abstract civilizations and the single-player modpack
+
+`civilization` is the first world-layer module. It stores settlements in overworld `SavedData` and advances them without touching the level: no chunk, block, entity or player query exists in the simulation path. Every 100 ticks a round-robin pass advances at most 16 settlements by at most 6 simulated hours each, so the cost is bounded integer arithmetic (96 hour-steps worst case) rather than work proportional to world size. One-time quest signals are saved before they are posted, so a reload cannot repeat them. Founding is operator-only; nothing is placed in the world, and player bases are not modified.
+
+The pack itself is configuration, not bundled content: `pack/mods.json` pins Modrinth version IDs, filenames, CDN URLs and SHA-512 for Terralith, Tectonic, Lithostitched, Apollo's Library, Naturalist, Serene Seasons, GlitchCore, Immersive Weathering: Renewed, Moonlight Lib, Farmer's Delight, Incendium, Nullscape, the YUNG's suite, Better Archeology, Cataclysm and their libraries, plus MCA Reborn, Guard Villagers and optional Cold Sweat. `scripts/fetch-modpack.py` downloads to an ignored directory; `scripts/validate-modpack.py` re-checks file hashes and the required dependency closure offline. Pack compatibility is currently metadata-level evidence, not a launched pack. See [MODPACK.md](docs/MODPACK.md), [CIVILIZATION_DESIGN.md](docs/CIVILIZATION_DESIGN.md) and [WORLD_PERFORMANCE.md](docs/WORLD_PERFORMANCE.md).

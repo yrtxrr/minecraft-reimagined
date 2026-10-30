@@ -16,22 +16,56 @@ import java.util.UUID;
  * trade data across world reloads. Stored in the overworld SavedData storage.
  */
 public final class SettlementData extends SavedData {
-    private static final String VERSION = "1";
+    private static final org.slf4j.Logger LOGGER=org.slf4j.LoggerFactory.getLogger(SettlementData.class);
+    private String migrationWarning="";
+    public String migrationWarning() { return migrationWarning; }
 
     private final List<SettlerRecord> settlers = new ArrayList<>();
     private int nextSettlerId = 1;
+    private dev.reimagined.civilization.SettlementData civilizations = new dev.reimagined.civilization.SettlementData();
+    public SettlementData() { civilizations.bindOwner(this::setDirty); }
+    public dev.reimagined.civilization.SettlementData civilizations() { return civilizations; }
 
     public static SettlementData get(ServerLevel level) {
         return level.getServer().overworld().getDataStorage().computeIfAbsent(
-                new Factory<>(SettlementData::new, SettlementData::load), "reimagined_settlements");
+                new Factory<>(SettlementData::new, (tag,registries) -> {
+                    if(version(tag)!=2) {
+                        var directory=level.getServer().getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("data");
+                        try {
+                            for(String file:List.of("reimagined_settlements.dat","reimagined_settlements.dat_old")) {
+                                var source=directory.resolve(file);
+                                if(java.nio.file.Files.exists(source))LOGGER.info("Settlement migration backup: {}",SettlementSaveBackup.preserve(source));
+                            }
+                        } catch(java.io.IOException failure) { throw new IllegalStateException("Settlement backup failed; migration refused",failure); }
+                    }
+                    var loaded=load(tag,registries);
+                    if(!loaded.migrationWarning.isEmpty())LOGGER.warn(loaded.migrationWarning);
+                    return loaded;
+                }), "reimagined_settlements");
     }
 
     public static SettlementData load(CompoundTag tag, HolderLookup.Provider registries) {
         SettlementData data = new SettlementData();
-        data.nextSettlerId = tag.getInt("NextSettlerId");
+        int version=version(tag);
+        if(version>2 || version<0)throw new IllegalStateException("Unsupported settlement version; refusing overwrite");
+        data.nextSettlerId = Math.max(1,tag.getInt("NextSettlerId"));
+        CompoundTag aggregates=new CompoundTag();
+        if(tag.contains("Aggregates",9)) aggregates.put("Settlements",tag.getList("Aggregates",10).copy());
+        else if(tag.contains("Civilizations",10)) aggregates=tag.getCompound("Civilizations");
+        else aggregates=tag;
+        data.civilizations=dev.reimagined.civilization.SettlementData.load(aggregates,registries);
+        data.civilizations.bindOwner(data::setDirty);
+        if(version!=2) {
+            boolean npc=tag.contains("Settlers",9), remote=tag.contains("Aggregates",9)||tag.contains("Settlements",9)||tag.contains("Civilizations",10);
+            if(!npc || !remote)data.migrationWarning="Settlement legacy migration: missing "+(!npc&&!remote?"both tiers":!npc?"NPC tier":"aggregate tier")+"; only present data preserved, no recovery invented";
+        }
+        java.util.Set<UUID> seen=new java.util.HashSet<>();
         ListTag list = tag.getList("Settlers", 10);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entry = list.getCompound(i);
+            if(!entry.hasUUID("Uuid") || !seen.add(entry.getUUID("Uuid"))) {
+                data.migrationWarning += "; invalid/duplicate NPC UUID dropped (first wins)"; continue;
+            }
             SettlerRecord record = new SettlerRecord(
                     entry.getUUID("Uuid"),
                     new BlockPos(entry.getInt("HomeX"), entry.getInt("HomeY"), entry.getInt("HomeZ")),
@@ -42,12 +76,21 @@ public final class SettlementData extends SavedData {
             );
             data.settlers.add(record);
         }
+        if(data.civilizations.duplicateCount()>0)data.migrationWarning += "; duplicate aggregate UUID dropped (first wins)";
         return data;
+    }
+    private static int version(CompoundTag tag) {
+        if(!tag.contains("Version"))return 0;
+        if(tag.contains("Version",8)) {
+            try{return Integer.parseInt(tag.getString("Version"));}catch(NumberFormatException bad){throw new IllegalStateException("Unknown settlement version",bad);}
+        }
+        if(!tag.contains("Version",99))throw new IllegalStateException("Invalid settlement version type");
+        return tag.getInt("Version");
     }
 
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        tag.putString("Version", VERSION);
+        tag.putInt("Version", 2);
         tag.putInt("NextSettlerId", nextSettlerId);
         ListTag list = new ListTag();
         for (SettlerRecord r : settlers) {
@@ -65,6 +108,8 @@ public final class SettlementData extends SavedData {
             list.add(entry);
         }
         tag.put("Settlers", list);
+        tag.put("Aggregates", civilizations.save(new CompoundTag(),registries).getList("Settlements",10));
+        tag.remove("Settlements");tag.remove("Civilizations");
         return tag;
     }
 

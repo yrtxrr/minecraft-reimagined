@@ -20,8 +20,15 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class Seasons {
+    /**
+     * Serene Seasons already applies its own seasonal crop growth. When both mods are installed we
+     * keep our calendar/HUD but leave crop growth entirely to Serene Seasons instead of stacking
+     * two independent growth modifiers on the same random tick.
+     */
+    private static boolean sereneSeasonsLoaded;
     private Seasons() {}
     public static void register(IEventBus modBus) {
+        sereneSeasonsLoaded = net.neoforged.fml.ModList.get().isLoaded("sereneseasons");
         modBus.addListener(Seasons::payloads);
         NeoForge.EVENT_BUS.addListener(Seasons::tick);
         NeoForge.EVENT_BUS.addListener(Seasons::login);
@@ -42,6 +49,7 @@ public final class Seasons {
             PacketDistributor.sendToPlayer(player, new CalendarPayload(CalendarData.get(player.serverLevel()).day(player.serverLevel())));
     }
     private static void grow(CropGrowEvent.Pre event) {
+        if (sereneSeasonsLoaded) return;
         if (!(event.getLevel() instanceof net.minecraft.server.level.ServerLevel level) || level.dimension() != Level.OVERWORLD) return;
         var pos = event.getPos();
         long day = CalendarData.get(level).day(level);

@@ -23,7 +23,7 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 
 1. Recipe presentation:bespoke inventory UI/search/history removed. Complete optional JEI custom-process categories, reload/lifecycle checks and native client acceptance after official artifact access is available. Vanilla recipe book/station menus and real recipe/projection logic remain. See docs/JEI_MIGRATION.md.
 2. Engineering: animated wheels and bounded shared networks implemented; extend verified millstone hopper/capability automation to future machines, manual/wind drives, gear ratios, saw/press/crusher, pumps/lifts, redstone control refinement.
-3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. Current noise preset is not a watershed simulation.
+3. World: true watershed rivers/deltas, climate regions and regional geology/deposits, resource geography, ocean currents/archipelagos, settlement placement. A rare, small iron vein is now added to mountain biomes through the vanilla ore-generation pipeline; it is not regional geology or a large deposit. Current noise preset is not a watershed simulation.
 4. RPG: richer finite skill trees and UI, refine verified parry/special attacks and add shield/armor variants, extend the verified readable/discovery journal with research progression, further spell tiers/stations beyond the implemented four-spell research tier (altar/table, discovery gates, personal knowledge, journal/browser and focused client/server checks complete), first deterministic smithing cycle implemented (steel, two finishes, three bounded qualities, hammer/bellows and standard repairs); further alloys/stations/equipment tiers remain.
 5. Agriculture: ordinary barley with seasonal hooks, harvest and milling implemented; pear orchards now integrated; fertility/fertilizers/greenhouses and husbandry remain. Heated cooking pot, five connected meals, browser/menu and hopper automation implemented; no further cooking stages planned for this priority; next content favors world variety/exploration rather than deeper production chains.
 
@@ -34,6 +34,17 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 8. Transport/economy: carts/caravans/sailing/ships, linked minecarts/switches/loading stations, roads/geography/economy integration.
 
 Each increment requires a passing build, relevant automated tests, a meaningful game/server check and a Git checkpoint. No milestone is satisfied by documentation alone.
+
+## World, single-player pack and civilization prototype — `feat/reimagined-world`
+
+- [x] Audit existing worldgen/fauna/village systems; nothing removed. Deer spawns and the mountain vein now use vanilla biome tags so Terralith biomes inherit them.
+- [x] Pin a NeoForge 1.21.1 pack (`pack/mods.json`) with hashes and a downloader: Terralith, Tectonic, Lithostitched, Apollo's Library, Naturalist, Serene Seasons, GlitchCore, Immersive Weathering: Renewed, Moonlight Lib, Farmer's Delight, Incendium, Nullscape, YUNG's Better Dungeons/Mineshafts/Strongholds, Better Archeology, Cataclysm and libraries, MCA Reborn, Guard Villagers, optional Cold Sweat.
+- [x] Fix load-blocking dependencies the first manifest missed (Apollo's Library, Moonlight Lib); offline validator proves 25/25 hashes and a complete required dependency closure.
+- [x] Abstract settlement prototype: seven types, four eras, food/material/knowledge/treasury economy, population/housing growth, starvation, era advancement, persisted `SavedData`, bounded remote pass without chunk access, deduped quest signals, operator commands, 9 unit tests and 6 GameTests.
+- [ ] Launch the actual pack: Default world with Terralith/Tectonic, Nether with Incendium, End with Nullscape; measure chunk-generation spikes and spawn balance (EULA must be accepted by the user).
+- [ ] Unify the Reimagined calendar with Serene Seasons instead of deferring growth while two HUDs disagree.
+- [ ] Local settlement tier: NPCs/buildings near players integrated with MCA/Guard Villagers, plot/road records, player-claim protection and destructive-work switch.
+- [ ] Inter-settlement trade, professions, diplomacy/alliances/conflicts, technology/magic research, natural founding; post-dragon End progression.
 
 ## Current ownership
 
@@ -129,3 +140,11 @@ Published candidate only; no main/source-branch update. Repeat32NPC profile had 
 - Official-source resolver/Windows wrapper ready for local use; all40candidates retained with explicit unresolved reasons and one End-provider selection. Core-only expansion stopped.
 - Download actual files locally → inspect INSTALL_REPORT/installed.lock → import generated candidate.mrpack/client-server folders → new-world/save/restart/two-account/runtime/profile acceptance. Unknown catalog sides/identities/version conflicts stop, never silently substitute Fabric/Forge or a different magic mod.
 - Kilo cbc7a5f not merge-ready; fix actual FTB export/tasks/rewards/team semantics after verified FTB installation, preserve author. Freebuff world change to review/integrate separately, not folded into installer.
+
+## Agent integration checkpoint
+
+Freebuff59326be imported with single world-save owner and canonical25pin manifest. Pending: fixed Kilo FTB integration, technology/quest/optimization releases, full joint runtime/new world/restart/two clients. Keep40candidates, no new major gameplay systems before these gates.
+
+### Freebuff final c20c6a6 migration checkpoint
+
+Updated final handoff/merge plan/fixtures. Version2 now writes Settlers+Aggregates, one SavedData key, first-wins duplicates and no forced write on load. Content-addressed verified .dat/.dat_old backups before legacy migration; failed backup refuses migration. Build,36JUnit and178GameTests pass;42installer tests retained. Native old-world load/backup/NPC+inventory/founding observed, X11BadDrawable on shutdown prevents clean-restart claim. See docs/MODPACK_AGENT_INTEGRATION.md; full external runtime still uses Freebuff99test evidence pending local reproduction.

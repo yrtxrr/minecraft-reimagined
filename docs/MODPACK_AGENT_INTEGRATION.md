@@ -1,0 +1,21 @@
+# Объединение агентов: checkpoint Freebuff
+
+База21cdd49, integration/modpack-agents-21cdd49. Actual remote Freebuffc20c6a6 (финальный handoff; код59326be), Kilo cbc7a5f. Обычный merge Freebuff сохраняет историю/авторство; исходные ветки не изменяются. Все прежние тесты и исправленные Zombies/SereneSeasons fixtures сохранены, не возвращены старые цели MCA.
+
+Выявлен критический конфликт: оба класса SettlementData регистрировали один disk key reimagined_settlements. Исправлен единый владелец — старый settlements.SettlementData сохраняет NPC как прежде и Version=2 с Settlers и Aggregates. civilization.SettlementData — фасад состояния Freebuff, больше не регистрируется отдельно; population/economy/era принадлежат ему, dirty делегирован владельцу. Читаются и старые NPC-only, и Freebuff-only root Settlements; новый GameTest проверяет оба формата и общий roundtrip. Нет второго authoritative реестра/потери NPC/новых зданий.
+
+pack/mods.json — единственный источник25фиксированных версий, dependencies и SHA512. Windows backend/fetch wrapper используют его; registry40целей содержит ссылки на пины, а не копии версий. Планы/installed.lock генерируются, не являются вторым ручным реестром. Клиентские/common стороны этих25явно заявлены как common distribution; серверная загрузка — evidence Freebuff, графический совместный запуск ещё pending. ColdSweat optional, Nullscape preferred, остальные цели остаются в отчёте.
+
+На объединённой версии build/36JUnit и178/178GameTests без external JAR проходят. Ресурсы/локализации/визуальная инвентаризация проверены. 25SHA512/required dependency references структурно валидны. Точная официальная Apollib CDN ссылка повторно получила CONNECT403 даже при разрешённом повторе. Нет утверждения, что в этой среде проверены байты25файлов или runtime объединения с ними. Freebuff59326be сообщает25/25файлов,server load и99/99tests на своей ветке; это сохранённое стороннее evidence, не наш новый прогон.
+
+Windows воспроизведение: INSTALL_WINDOWS.md, PinnedOnly+IncludeOptional, затем InstallAvailable; verify-modpack/hash и полный runtime являются обязательными gate. EULA не принималась. Сезонный штраф не складывается, но старый HUD/calendar может расходиться сSerene Seasons — известное ограничение. Прототип цивилизаций абстрактный и operator-founded, без автоматически построенных деревень/видимых жителей; существующие NPC/торговля сохранены отдельно внутри одного владельца.
+
+Kilo пока не объединён: нужен исправленный FTB export/реальные tasks и событие settlement kind.id; следующий этап. Технологии/FTB/KubeJS/оптимизаторы вне25пинов остаются приоритетом, но не считаются установленными. До client/new-world/restart/two-account acceptance ветка не готова к объявлению первого полного прохождения.
+
+## Финальный контракт c20c6a6
+
+Canonical Version:int2, Settlers unchanged, Aggregates with Freebuff per-entry codec. Reads string/intv1, missing version, legacy rootSettlements, and v2. First UUID wins per tier (no cross-tier dedup); duplicate/missing tier reported, no missing history invented. Unknown future root version refused. Load does not dirty/save; normal next save writes v2 once. Before the first legacy file load can be followed by a save, original .dat/.dat_old are copied to content-addressed data/reimagined-settlement-backups; byte verification, no replacement, damaged backup blocks migration. Three filesystemJUnit cover backup integrity/idempotency. Backup cannot recover data already overwritten before integration.
+
+Migration fixture note: two UUID int words in handoffSNBT exceed signed32bit (2596069104/2271560481); tests use identical bit patterns -1698898192/-2023406815. Long day/time codec fields useL suffix. Five new migrationGameTests cover exact fields, both tiers, repeated reload, duplicates, missing/unknown versions/era/profession; existing distant unloaded simulation and announcement dedupe tests retained.
+
+Native no-external QA client loaded the old joint world, actually created backup and preserved inventory/NPC rendering, founded IntegrationV2 through the real command. Window shutdown failed with X11 BadDrawable; **no clean native shutdown/restart acceptance is claimed** for this attempt. Automated disk/NBT tests pass; GUI/full25mod/two-client acceptance remains pending. Evidence stays outsideGit under /tmp/world-v2-* and /workspace/modpack-integration-review.

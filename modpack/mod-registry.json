@@ -14,7 +14,7 @@
       "name": "Terralith",
       "category": "world",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -23,15 +23,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#terralith"
     },
     {
       "id": "tectonic",
       "name": "Tectonic",
       "category": "world",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -40,15 +41,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#tectonic"
     },
     {
       "id": "naturalist",
       "name": "Naturalist",
       "category": "ecology",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -57,15 +59,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#naturalist"
     },
     {
       "id": "serene-seasons",
       "name": "Serene Seasons",
       "category": "ecology",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -74,15 +77,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#serene-seasons"
     },
     {
       "id": "immersive-weathering-renewed",
       "name": "Immersive Weathering Renewed",
       "category": "ecology",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -91,15 +95,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#immersive-weather-renewed"
     },
     {
       "id": "farmers-delight",
       "name": "Farmer’s Delight",
       "category": "survival",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -108,15 +113,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#farmers-delight"
     },
     {
       "id": "cold-sweat",
       "name": "Cold Sweat",
       "category": "survival",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -125,8 +131,9 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#cold-sweat"
     },
     {
       "id": "better-combat",
@@ -286,7 +293,7 @@
       "name": "MCA Reborn",
       "category": "civilization",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -295,15 +302,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#minecraft-comes-alive-reborn"
     },
     {
       "id": "guard-villagers",
       "name": "Guard Villagers",
       "category": "civilization",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -312,15 +320,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#guard-villagers"
     },
     {
       "id": "incendium",
       "name": "Incendium",
       "category": "nether",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -329,8 +338,9 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#incendium"
     },
     {
       "id": "betterend-new-dawn",
@@ -354,7 +364,7 @@
       "name": "Nullscape",
       "category": "end",
       "role": "alternative",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -363,15 +373,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#nullscape"
     },
     {
       "id": "yungs-better-dungeons",
       "name": "YUNG’s Better Dungeons",
       "category": "adventure",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -380,15 +391,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#yungs-better-dungeons"
     },
     {
       "id": "yungs-better-mineshafts",
       "name": "YUNG’s Better Mineshafts",
       "category": "adventure",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -397,15 +409,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#yungs-better-mineshafts"
     },
     {
       "id": "yungs-better-strongholds",
       "name": "YUNG’s Better Strongholds",
       "category": "adventure",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -414,15 +427,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#yungs-better-strongholds"
     },
     {
       "id": "l-enders-cataclysm",
       "name": "L_Ender’s Cataclysm",
       "category": "adventure",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -431,15 +445,16 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#l_enders-cataclysm"
     },
     {
       "id": "better-archeology",
       "name": "Better Archeology",
       "category": "adventure",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -448,8 +463,9 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
-      "side": "unverified"
+      "reason": "Freebuff59326be server evidence; exact versions/hashes owned only by pack/mods.json, joint runtime pending.",
+      "side": "unverified",
+      "pin_ref": "pack/mods.json#better-archeology"
     },
     {
       "id": "pufferfishs-skills",
@@ -692,5 +708,6 @@
   ],
   "installer": "scripts/modpack/install.py",
   "source_bindings": "modpack/source-bindings.json",
-  "availability_note": "All candidates retained; actual releases/dependencies are resolved and pinned on the user machine. Cloud CONNECT403 does not establish incompatibility."
+  "availability_note": "All candidates retained; actual releases/dependencies are resolved and pinned on the user machine. Cloud CONNECT403 does not establish incompatibility.",
+  "pin_manifest": "pack/mods.json"
 }

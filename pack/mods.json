@@ -1,0 +1,578 @@
+{
+  "packVersion": 1,
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.264",
+  "generatedFrom": "Modrinth API",
+  "mods": [
+    {
+      "slug": "apollib",
+      "name": "Apollib",
+      "role": "library",
+      "required": true,
+      "license": "MIT",
+      "versionId": "zMAIdVwq",
+      "version": "1.2.0-neoforge-21.1",
+      "filename": "apollib-1.2.0-neoforge-21.1.jar",
+      "url": "https://cdn.modrinth.com/data/VDI2Ytax/versions/zMAIdVwq/apollib-1.2.0-neoforge-21.1.jar",
+      "sha512": "cd047ad08832826995ebeeb6fa5e2bede8eeabe28a06676b1e11c6fc2bc9f61d84c54714433505b7cdcfc9be9422e7f3afa7565f9aa38223d2a95661551f980e",
+      "size": 110989,
+      "released": "2026-08-13",
+      "dependencies": [],
+      "projectId": "VDI2Ytax",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "architectury-api",
+      "name": "Architectury API",
+      "role": "library",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "1IiqEQGl",
+      "version": "13.0.11+neoforge",
+      "filename": "architectury-13.0.11-neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1IiqEQGl/architectury-13.0.11-neoforge.jar",
+      "sha512": "d9f7c3bb8162577dfb461ffdf04bd6a3563c7586934a0e2a744c14421beffb8286f0d88d4c758317003f20f99fe8072a39b9d675af061e036970d36db36027f0",
+      "size": 584734,
+      "released": "2026-07-23",
+      "dependencies": [],
+      "projectId": "lhGA9TYQ",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "curios",
+      "name": "Curios API",
+      "role": "library",
+      "required": true,
+      "license": "LGPL-3.0-or-later",
+      "versionId": "yohfFbgD",
+      "version": "9.5.1+1.21.1",
+      "filename": "curios-neoforge-9.5.1+1.21.1.jar",
+      "url": "https://cdn.modrinth.com/data/vvuO3ImH/versions/yohfFbgD/curios-neoforge-9.5.1%2B1.21.1.jar",
+      "sha512": "5981a267686b744e7e3c227f78cbcd5267c14ac6979a28e814695f4589273998563147207fef4a5cdb7cdbdc39797cd95d9e4abadb55869f18e02a38d0654ae5",
+      "size": 410690,
+      "released": "2025-05-14",
+      "dependencies": [],
+      "projectId": "vvuO3ImH",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "glitchcore",
+      "name": "GlitchCore",
+      "role": "library",
+      "required": true,
+      "license": "LicenseRef-All-Rights-Reserved",
+      "versionId": "S2TfWrZR",
+      "version": "2.1.0.2",
+      "filename": "GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
+      "url": "https://cdn.modrinth.com/data/s3dmwKy5/versions/S2TfWrZR/GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
+      "sha512": "7a009ed163d03536fdfaee7b37cb1ec3073204dffcb06a683369aa88da8dbc3780b0ac69d466bb32a3ad9394c97b698d0fda676e1b4dd4edfc50ac5aa2283c32",
+      "size": 90717,
+      "released": "2026-05-18",
+      "dependencies": [],
+      "projectId": "s3dmwKy5",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "lionfish-api",
+      "name": "Lionfish-API",
+      "role": "library",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "fTRMVgyZ",
+      "version": "3.1",
+      "filename": "lionfishapi-3.1.jar",
+      "url": "https://cdn.modrinth.com/data/FoVacERa/versions/fTRMVgyZ/lionfishapi-3.1.jar",
+      "sha512": "fdd90f19d0424c3a837111291d6ac1547d62cbcedd43b74d3a8946912f9c5212a5ea239a6969eccf678289bcb77cbb9a937db01fdaf60e57826f9a99893d19cb",
+      "size": 91596,
+      "released": "2026-06-30",
+      "dependencies": [],
+      "projectId": "FoVacERa",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "lithostitched",
+      "name": "Lithostitched",
+      "role": "library",
+      "required": true,
+      "license": "MIT",
+      "versionId": "cZu4cHY3",
+      "version": "1.8.1-neoforge-21.1",
+      "filename": "lithostitched-1.8.1-neoforge-21.1.jar",
+      "url": "https://cdn.modrinth.com/data/XaDC71GB/versions/cZu4cHY3/lithostitched-1.8.1-neoforge-21.1.jar",
+      "sha512": "6c02b8b269269d5aa84cb03bf824a1b5d52838e806c2fec8727eb4049925592dac9bb65c996858751fbb722f22ac59c4be09860e1f01e8f7b97c95be3faf7a57",
+      "size": 1023751,
+      "released": "2026-10-14",
+      "dependencies": [],
+      "projectId": "XaDC71GB",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "moonlight",
+      "name": "Moonlight Lib",
+      "role": "library",
+      "required": true,
+      "license": "LicenseRef-LGPL-with-additional-dependency-clause",
+      "versionId": "fAIfWX6M",
+      "version": "1.21.1-3.7.2",
+      "filename": "moonlight-1.21.1-3.7.2-neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/twkfQtEc/versions/fAIfWX6M/moonlight-1.21.1-3.7.2-neoforge.jar",
+      "sha512": "b4e8efba91e5f46729928335cce8952ad70af3e33b851e8cf4887a24346f7bbdfe3609f8cc482f76a715aa050bf39e7048ee97b33183e5c358f149bc3678183c",
+      "size": 2299162,
+      "released": "2026-10-10",
+      "dependencies": [],
+      "projectId": "twkfQtEc",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "resourceful-config",
+      "name": "Resourceful Config",
+      "role": "library",
+      "required": true,
+      "license": "MIT",
+      "versionId": "lSbyRD6v",
+      "version": "3.0.11",
+      "filename": "resourcefulconfig-neoforge-1.21-3.0.11.jar",
+      "url": "https://cdn.modrinth.com/data/M1953qlQ/versions/lSbyRD6v/resourcefulconfig-neoforge-1.21-3.0.11.jar",
+      "sha512": "8e4ccc37732b3f5190e7e98df34dbc1339fe614494fcabf1aeaeab9ad8e5993522964b51be31882000c08c48a6d0096b5458364415bb81f2b2b775a7daf2eb87",
+      "size": 341009,
+      "released": "2025-04-26",
+      "dependencies": [],
+      "projectId": "M1953qlQ",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "yungs-api",
+      "name": "YUNG's API",
+      "role": "library",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "2prKITKh",
+      "version": "1.21.1-NeoForge-5.1.9",
+      "filename": "YungsApi-1.21.1-NeoForge-5.1.9.jar",
+      "url": "https://cdn.modrinth.com/data/Ua7DFN59/versions/2prKITKh/YungsApi-1.21.1-NeoForge-5.1.9.jar",
+      "sha512": "7e3cf0b429e8a1c51dca094c2d8eabf12245bb42cbcd8b6e3e54959f931bef93201b81a08d200b417059aaa438e8eb445c3978a09568597bfb588199b7775967",
+      "size": 413763,
+      "released": "2026-09-16",
+      "dependencies": [],
+      "projectId": "Ua7DFN59",
+      "candidateId": null,
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "better-archeology",
+      "name": "Better Archeology",
+      "role": "structures",
+      "required": true,
+      "license": "MIT",
+      "versionId": "zTMR6t3J",
+      "version": "1.21.1-1.3.9",
+      "filename": "betterarcheology-neoforge-1.21.1-1.3.9.jar",
+      "url": "https://cdn.modrinth.com/data/zCh7omyG/versions/zTMR6t3J/betterarcheology-neoforge-1.21.1-1.3.9.jar",
+      "sha512": "c539aac7eee3ec51d55e9c053d4ad29ee467c9ef6d1206a33a15b7ad5c7937f684453f856ed304b657e6baa8bcc63c6fd56090c46d2d6ff1dcefd0f854a943c2",
+      "size": 3106751,
+      "released": "2026-10-08",
+      "dependencies": [
+        "M1953qlQ",
+        "lhGA9TYQ"
+      ],
+      "projectId": "zCh7omyG",
+      "candidateId": "better-archeology",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "cold-sweat",
+      "name": "Cold Sweat",
+      "role": "ecology",
+      "required": false,
+      "license": "GPL-3.0-or-later",
+      "versionId": "UGoodVYD",
+      "version": "2.4.4",
+      "filename": "ColdSweat-2.4.4.jar",
+      "url": "https://cdn.modrinth.com/data/uXhSmPjd/versions/UGoodVYD/ColdSweat-2.4.4.jar",
+      "sha512": "0c15037a29301651d644554e55bcba5ce90d71f76d15addd1769e3a823069682ef1efa92338ff880a40d476cd0d7502b9df5743530dc87793949b0a0d62c50ca",
+      "size": 2745202,
+      "released": "2026-10-16",
+      "dependencies": [],
+      "projectId": "uXhSmPjd",
+      "candidateId": "cold-sweat",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "farmers-delight",
+      "name": "Farmer's Delight",
+      "role": "ecology",
+      "required": true,
+      "license": "MIT",
+      "versionId": "XTVZDOol",
+      "version": "1.21.1-1.3.4",
+      "filename": "FarmersDelight-1.21.1-1.3.4.jar",
+      "url": "https://cdn.modrinth.com/data/R2OftAxM/versions/XTVZDOol/FarmersDelight-1.21.1-1.3.4.jar",
+      "sha512": "1f6f8796469f747cff36f477b4f589a3d69613882399f9ee7f86db36c7bca9aa4828731f43db15dc6c7f5a4c1bbe3d4092a232e8cef010b09cec0581848fda90",
+      "size": 3160490,
+      "released": "2026-08-29",
+      "dependencies": [],
+      "projectId": "R2OftAxM",
+      "candidateId": "farmers-delight",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "guard-villagers",
+      "name": "Guard Villagers",
+      "role": "civilization",
+      "required": true,
+      "license": "LicenseRef-Custom",
+      "versionId": "JyXugpy2",
+      "version": "2.4.12",
+      "filename": "guardvillagers-2.4.12-1.21.1.jar",
+      "url": "https://cdn.modrinth.com/data/H1sntfo8/versions/JyXugpy2/guardvillagers-2.4.12-1.21.1.jar",
+      "sha512": "2b25eaace0b7ec4ca09ad9c428bd3ee64567bc540bf03e21231b098498a4f95f9f02da5161841e8ec48eabce6e64b49b59995d13a4cebf4efd49feb0dca1e13e",
+      "size": 283407,
+      "released": "2026-08-30",
+      "dependencies": [],
+      "projectId": "H1sntfo8",
+      "candidateId": "guard-villagers",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "immersive-weather-renewed",
+      "name": "Immersive Weathering: Renewed",
+      "role": "ecology",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "n3NgrJOg",
+      "version": "V1.0.4-NeoForge",
+      "filename": "Immersive-weathering-V1.0.4-neoforge-beta.jar",
+      "url": "https://cdn.modrinth.com/data/AtjxBimt/versions/n3NgrJOg/Immersive-weathering-V1.0.4-neoforge-beta.jar",
+      "sha512": "a2a7ebd8a0d101ec6c470ad6451b6fd86f526cd88f188cd6afe9673580be7264567be76f2d2ab19194c5332cbbe56eec2e67b359c34b610d65c9d4733aff9ad8",
+      "size": 2283529,
+      "released": "2026-05-09",
+      "dependencies": [],
+      "projectId": "AtjxBimt",
+      "candidateId": "immersive-weathering-renewed",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "incendium",
+      "name": "Incendium Legacy",
+      "role": "nether",
+      "required": true,
+      "license": "LicenseRef-Stardust-Labs-License",
+      "versionId": "7mVvV9Th",
+      "version": "5.4.4",
+      "filename": "Incendium_1.21.x_v5.4.4.jar",
+      "url": "https://cdn.modrinth.com/data/ZVzW5oNS/versions/7mVvV9Th/Incendium_1.21.x_v5.4.4.jar",
+      "sha512": "ca897be9059ea691860715dac6c0ccd934720d7d42c8af45b95257e8f91a6c9470f506bfb9ef3c770e6a6c57e58885add2126150a35927848817433fd227ce0e",
+      "size": 4267528,
+      "released": "2024-12-04",
+      "dependencies": [],
+      "projectId": "ZVzW5oNS",
+      "candidateId": "incendium",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "l_enders-cataclysm",
+      "name": "L_Ender's Cataclysm",
+      "role": "structures",
+      "required": true,
+      "license": "CC-BY-NC-ND-4.0",
+      "versionId": "PsPYpoCC",
+      "version": "3.33",
+      "filename": "L_Ender's Cataclysm 1.21.1-3.33.jar",
+      "url": "https://cdn.modrinth.com/data/46KJle7n/versions/PsPYpoCC/L_Ender%27s%20Cataclysm%201.21.1-3.33.jar",
+      "sha512": "289f6e8364a6e432f34803a47cff8381899a1df0fdc675170323b43fd1c09579b1320d8b4e0de5df65c609b738d450c13c89e240d6d79f607888da26b7724947",
+      "size": 73375667,
+      "released": "2026-09-20",
+      "dependencies": [
+        "FoVacERa",
+        "vvuO3ImH"
+      ],
+      "projectId": "46KJle7n",
+      "candidateId": "l-enders-cataclysm",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "minecraft-comes-alive-reborn",
+      "name": "MCA Reborn",
+      "role": "civilization",
+      "required": true,
+      "license": "GPL-3.0-only",
+      "versionId": "S2Ln2tIn",
+      "version": "7.7.36+1.21.1",
+      "filename": "mca-neoforge-7.7.36-beta.3+1.21.1.jar",
+      "url": "https://cdn.modrinth.com/data/1W98a849/versions/S2Ln2tIn/mca-neoforge-7.7.36-beta.3%2B1.21.1.jar",
+      "sha512": "d001d10a3c0481cfe25fb22b89b11608bf3cf1290139edd119f3f9bf8d544c369a5a0ea57293eeac3e1390b97f8ece6d2c85f84b753f54db33c4218545356a01",
+      "size": 12141510,
+      "released": "2026-08-16",
+      "dependencies": [],
+      "projectId": "1W98a849",
+      "candidateId": "mca-reborn",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "naturalist",
+      "name": "Naturalist",
+      "role": "ecology",
+      "required": true,
+      "license": "LicenseRef-Custom",
+      "versionId": "9Yn8ig4c",
+      "version": "2.0.7+1.21.1-neoforge",
+      "filename": "naturalist-2.0.7-neoforge-1.21.1.jar",
+      "url": "https://cdn.modrinth.com/data/F8BQNPWX/versions/9Yn8ig4c/naturalist-2.0.7-neoforge-1.21.1.jar",
+      "sha512": "5d56ec2d1e5f994c9b63cf7578e9ed1be2cd4f58a055503e32bdd90c80d9802af04d3f6e1eec08394180e196ce32b2c2e71df8ba19d918e77df1694c9007e7e1",
+      "size": 11347884,
+      "released": "2026-10-21",
+      "dependencies": [],
+      "projectId": "F8BQNPWX",
+      "candidateId": "naturalist",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "nullscape",
+      "name": "Nullscape",
+      "role": "end",
+      "required": true,
+      "license": "LicenseRef-Stardust-Labs-License",
+      "versionId": "3fv8O3xX",
+      "version": "1.2.14",
+      "filename": "Nullscape_1.21.x_v1.2.14.jar",
+      "url": "https://cdn.modrinth.com/data/LPjGiSO4/versions/3fv8O3xX/Nullscape_1.21.x_v1.2.14.jar",
+      "sha512": "b35a9dfdc7180ca851aea378ee4687e18b3aae717c16870a7762afc67dc0c77598fb2c4a62cb12d6ed0eacf7c9166520e0a3e7dce20da09817065d27e62c8b44",
+      "size": 355748,
+      "released": "2025-10-07",
+      "dependencies": [],
+      "projectId": "LPjGiSO4",
+      "candidateId": "nullscape",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "serene-seasons",
+      "name": "Serene Seasons",
+      "role": "ecology",
+      "required": true,
+      "license": "LicenseRef-All-Rights-Reserved",
+      "versionId": "pHEgQQUE",
+      "version": "10.1.0.9",
+      "filename": "SereneSeasons-neoforge-1.21.1-10.1.0.9.jar",
+      "url": "https://cdn.modrinth.com/data/e0bNACJD/versions/pHEgQQUE/SereneSeasons-neoforge-1.21.1-10.1.0.9.jar",
+      "sha512": "a85209de65af7999b29af850e05ad3a045c208a005ec3a7e4e66a58f1c9d90fda501ba80a6245209a4aad856ee053c21c4f679efe8c02981746e907915e31fe1",
+      "size": 163020,
+      "released": "2026-09-05",
+      "dependencies": [
+        "s3dmwKy5"
+      ],
+      "projectId": "e0bNACJD",
+      "candidateId": "serene-seasons",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "tectonic",
+      "name": "Tectonic",
+      "role": "overworld",
+      "required": true,
+      "license": "MIT",
+      "versionId": "n4iyW7aB",
+      "version": "3.0.28-neoforge-21.1",
+      "filename": "tectonic-3.0.28-neoforge-21.1.jar",
+      "url": "https://cdn.modrinth.com/data/lWDHr9jE/versions/n4iyW7aB/tectonic-3.0.28-neoforge-21.1.jar",
+      "sha512": "e07b9cb54f078b7bf74c925c5cebd6643f0b4c210b8f94474e68659b69468ece7d61432f70eafe7abaa1dfa798e4638aad297987c121dc127588c2623b7f7a81",
+      "size": 451757,
+      "released": "2026-09-11",
+      "dependencies": [
+        "XaDC71GB"
+      ],
+      "projectId": "lWDHr9jE",
+      "candidateId": "tectonic",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "terralith",
+      "name": "Terralith",
+      "role": "overworld",
+      "required": true,
+      "license": "LicenseRef-Stardust-Labs-License",
+      "versionId": "IY93YaEe",
+      "version": "2.6.2",
+      "filename": "Terralith_1.21.1_v2.6.2_Neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/8oi3bsk5/versions/IY93YaEe/Terralith_1.21.1_v2.6.2_Neoforge.jar",
+      "sha512": "35298f1682567f63dc16658b04cee5498b30819f1c05f9712b4480d7f5eb17059db3b13ab14f81a05fe257149d11ced2cce2030d3727c1747edd8657c53e2a85",
+      "size": 2814865,
+      "released": "2026-06-09",
+      "dependencies": [
+        "XaDC71GB"
+      ],
+      "projectId": "8oi3bsk5",
+      "candidateId": "terralith",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "yungs-better-dungeons",
+      "name": "YUNG's Better Dungeons",
+      "role": "structures",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "D6aZn0Em",
+      "version": "1.21.1-NeoForge-5.1.4",
+      "filename": "YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+      "url": "https://cdn.modrinth.com/data/o1C1Dkj5/versions/D6aZn0Em/YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+      "sha512": "40513bacd13fa9860abcab507b1fc09dc51649af4b615ce466e0ec361557f02d35e6e44bea1cc17cb4120805f862aad01394eb185f46611e7be63dfd97f272df",
+      "size": 782160,
+      "released": "2024-12-01",
+      "dependencies": [
+        "Ua7DFN59"
+      ],
+      "projectId": "o1C1Dkj5",
+      "candidateId": "yungs-better-dungeons",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "yungs-better-mineshafts",
+      "name": "YUNG's Better Mineshafts",
+      "role": "structures",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "Go3nbneL",
+      "version": "1.21.1-NeoForge-5.1.1",
+      "filename": "YungsBetterMineshafts-1.21.1-NeoForge-5.1.1.jar",
+      "url": "https://cdn.modrinth.com/data/HjmxVlSr/versions/Go3nbneL/YungsBetterMineshafts-1.21.1-NeoForge-5.1.1.jar",
+      "sha512": "8b01b386f53feeaa55f0c62697578b82e00501e45e428b2a68df6bda34efb6a4b3b4e3582abf13fe767ebcb61aef9368186f53c03999958bef38f31c41a7f8b2",
+      "size": 493967,
+      "released": "2024-10-14",
+      "dependencies": [
+        "Ua7DFN59"
+      ],
+      "projectId": "HjmxVlSr",
+      "candidateId": "yungs-better-mineshafts",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    },
+    {
+      "slug": "yungs-better-strongholds",
+      "name": "YUNG's Better Strongholds",
+      "role": "structures",
+      "required": true,
+      "license": "LGPL-3.0-only",
+      "versionId": "8U0dIfSM",
+      "version": "1.21.1-NeoForge-5.1.3",
+      "filename": "YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+      "url": "https://cdn.modrinth.com/data/kidLKymU/versions/8U0dIfSM/YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+      "sha512": "385d67e07f2c67af5ea387d92d92949d8f671e8f99204457b6396dbe987ac3b14c2bff765df5fcbaa68016604f82a1fc6ec5a69c012ca22ad088d1a7c9bc135d",
+      "size": 461244,
+      "released": "2025-03-06",
+      "dependencies": [
+        "Ua7DFN59"
+      ],
+      "projectId": "kidLKymU",
+      "candidateId": "yungs-better-strongholds",
+      "sides": [
+        "client",
+        "server"
+      ],
+      "sideEvidence": "Server loaded by Freebuff; common distribution, graphical client not verified by this integration"
+    }
+  ],
+  "preferredEnd": "nullscape",
+  "verification": "Freebuff59326be:25filesSHA512/serverload99tests; joint client/two-player pending"
+}

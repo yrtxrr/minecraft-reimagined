@@ -97,7 +97,11 @@ public final class AgricultureGameTests {
             // Keep this fixture in a temperate biome so the seasonal assertion actually executes.
             float temperature = level.getBiome(pos).value().getBaseTemperature();
             h.assertTrue(temperature >= .15F && temperature <= 1.5F, "Fixture requires a temperate biome");
-            h.assertTrue(counts[1] > 0 && counts[1] < counts[0], "Winter must reduce ordinary barley growth through the shared event");
+            if (net.neoforged.fml.ModList.get().isLoaded("sereneseasons")) {
+                h.assertTrue(counts[1] == 0, "Serene Seasons owns seasonal growth; Reimagined must not stack a second penalty");
+            } else {
+                h.assertTrue(counts[1] > 0 && counts[1] < counts[0], "Winter must reduce ordinary barley growth through the shared event");
+            }
             h.setBlock(CROP.above(2), Blocks.GLASS);
             for (int i = 0; i < 16; i++) {
                 var event = new CropGrowEvent.Pre(level, pos, crop.defaultBlockState()); NeoForge.EVENT_BUS.post(event);

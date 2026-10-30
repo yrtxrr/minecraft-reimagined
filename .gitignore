@@ -6,3 +6,4 @@ run-*/
 *.iml
 modpack/downloads/
 __pycache__/
+pack/mods/
