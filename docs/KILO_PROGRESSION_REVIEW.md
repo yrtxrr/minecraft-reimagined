@@ -25,3 +25,7 @@ Remote `feat/reimagined-progression`=cbc7a5f84dfe847da452437ac826c037749eef0d, �
 Приёмка перед merge: загрузка8квестов вGUI без неизвестных task/reward/ID; реальные действия дают только нужные достижения; одноразовые награды/shift-click/повтор запроса; два участника команды; смерть/перезапуск/повторный вход обоих; unchanged trade/beekeeping/GameTests; fresh+existing world. До этого cbc7a5f — **дизайн и незавершённый кандидат**, не готовая интеграция. FTB JAR в облаке недоступен403, runtime совместимость не заявлена.
 
 Отдельная безопасная компиляция неизменённого QuestIntegration.java изcbc7a5f на текущем NeoForge classpath прошла (временная Gradle JavaCompile task, /tmp, без переноса исходника/регистрации). Это подтверждает JavaAPI, не загрузку FTB или выполнение8заданий.
+
+## Final remote check after retirement
+
+Remote advanced to4ca610cbae6ada3b73e8e5cb9e818a601519a90a while this task ran. Fetched/read only; not merged. It removes the old SNBT but introduces QuestTeam.teamId returning empty/hasTeamMilestone returning false, SettlementQuestIntegration.register as no-op with wrong external package assumption, and no active native first-chapter export. These are not substitutes for FTB Teams/native task completion. Current own implementation remains the reviewed FTB-source/ATM13 approach; design sourcecbc7a5f retained, neither Kilo commit is an integration ancestor.

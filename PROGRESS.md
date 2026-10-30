@@ -342,3 +342,5 @@ Prism SHA512 reader verified against official source573665f; offlineexport emits
 ### Delivery checkpoint: world25 profiles
 
 Windowssetup now exports an actual Prism client.mrpack and matchingserverbootstrap from canonical25pins, plus full resolver for remaining40goals. The profile index uses recordedSHA512 only (supported by reviewedPrism reader); no unavailableSHA1invented/no extraCDNrequests. Old Kilo technicalcode not merged; own chapter committed771659d, Freebuff finalhistory479c1b6. Ready for localcandidatevalidation, not fullfirst-coop/FTBcertification. Tests40JUnit/185GT/53Python and resource/questgraph checks pass.
+
+Final remote Kilo check:4ca610c fetched/reviewed but not merged (team/settlement adapters remain stubs, no native chapter). User retirement instruction preserved; current independent source-reviewed first chapter unchanged. Freebuff remainsc20c6a6.
