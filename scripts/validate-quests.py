@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Validate the native FTB JSON-subset SNBT graph and server-advancement references offline."""
-import json,re
+import json,re,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 folder=ROOT/'modpack/overrides/config/ftbquests/quests'
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))
+def read_advancement(namespace,path):
+    source=ROOT/f'src/main/resources/data/{namespace}/advancement/{path}.json'
+    if source.is_file():return read(source)
+    # The Windows toolkit ships player JAR/resources, not Java source directories.
+    artifact=ROOT/'payload/reimagined-0.1.0-alpha.jar'
+    if not artifact.is_file():artifact=ROOT/'build/libs/reimagined-0.1.0-alpha.jar'
+    with zipfile.ZipFile(artifact) as jar:
+        return json.loads(jar.read(f'data/{namespace}/advancement/{path}.json').decode('utf-8'))
 chapter=read(folder/'chapters/reimagined_intro.snbt');data=read(folder/'data.snbt')
 assert data['version']==13 and data['default_reward_team'] is False
 assert data['progression_mode']=='flexible' and data['default_autoclaim_rewards']=='disabled'
@@ -20,7 +28,7 @@ for q in quests:
         ident(task['id']);assert task['type'] in ('advancement','checkmark')
         if task['type']=='advancement':
             namespace,path=task['advancement'].split(':')
-            tag=read(ROOT/f'src/main/resources/data/{namespace}/advancement/{path}.json')
+            tag=read_advancement(namespace,path)
             assert tag['criteria']['milestone']['trigger']=='minecraft:impossible'
     for reward in q['rewards']:
         ident(reward['id']);assert reward['type']=='xp' and 0<reward['xp']<=100 and reward['team_reward'] is False
