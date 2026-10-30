@@ -1,8 +1,10 @@
 # Minecraft: Reimagined
 
-Minecraft Java **1.21.1**, NeoForge **21.1.264**, Java **21**. One mod, no JEI/Create or other gameplay mod required.
+Personal two-player modpack for Minecraft Java **1.21.1**, NeoForge **21.1.264**, Java **21**. Reimagined Core preserves the existing mechanics; external mods provide the broader technology, magic and world content.
 
-**Development status:** the full Gradle build and 16 unit tests pass. A headless NeoForge server successfully executed 41 integration GameTests, including actual seeded terrain generation. A development JAR is available at `build/libs/reimagined-0.1.0-alpha.jar`. This is not yet a fully validated playable alpha: graphical rendering, inventory UI and a real client/server connection still require client checks.
+**First Windows trial, no project build needed:** [Prism download/install/run instructions](modpack/FIRST_RUN_WINDOWS.md), [exact pinned files and unresolved targets](modpack/FIRST_RUN_MODS.md), [first-run results form](modpack/FIRST_RUN_RESULTS.md). The tagged GitHub Actions workflow publishes a prerelease installer ZIP containing the owned Core; third-party mods are obtained from official sources on the player's PC.
+
+**Not yet runtime-certified:** the full external-mod client, FTB chapter/team progress, two-player saves and target-hardware performance still need a real Windows trial. Compilation or installer tests do not establish playability. Current and historical checks are distinguished in [TESTING.md](TESTING.md).
 
 ## Develop
 

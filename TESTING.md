@@ -276,3 +276,8 @@ Name-level test audit:95/99Freebuff source methods are present;4old BrowserView/
 - All25existing manifest entries byte-equivalent as parsedJSON to e4426e7. All40target candidates retained. Only source-reviewed/unconfirmed Maven candidates added; no new published release is claimed.
 - Official API fresh access check: Modrinth CONNECT403 beforeTLS, including outside-sandbox retry. No repeated CDN/Maven probes. Network, Minecraft startup and process execution in installer tests are fixtures; these tests do NOT prove FTB publication/realJava loader installation/WindowsPowerShell execution.
 - Gameplay Java/resources unchanged: GameTests not rerun in this follow-up; previous integrated185/185without external mods remains historical evidence. Full external-modGameTests, FTBGUI8tasks/team/rewards/restart, two real clients, default-world/Nether/End and hardware performance remain outstanding. EULA not accepted. No chapter2.
+
+
+## First-run delivery tooling after50376c0 (2026-10-30)
+
+78Python tests in scripts/modpack (including6new diagnostic tests) +5legacy packaging tests passed; all78also passed from the extracted Windows ZIP without checkout. Packaged content hashes and8quest/25ID definitions validated. GitHub release YAML parsed and tag/permission scopes checked locally; actual workflow/release execution remains unconfirmed here. Java/game resources unchanged, so Gradle/JUnit/GameTests were not rerun locally for these documentation/diagnostic changes (prior50376c0evidence remains historical). The publishing workflow runs a fresh build/JUnit and relevant Python/resource checks before publication; it does not certify a Minecraft client. No proxy requests repeated, no EULA accepted.

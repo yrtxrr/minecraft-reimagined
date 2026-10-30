@@ -352,3 +352,12 @@ Continued e4426e7 on the same integration branch. All40targets/25published pins 
 Cloud Modrinth CONNECT403 reproduced once plus required outside-sandbox check; no repeated CDN probes. GitHub official source repositories readable. Full mod loading, first chapter GUI/team rewards, two real clients, dimensions, clean restart and target-hardware performance still NOT verified. Do not proceed to chapter2 yet. Windows full workflow is at the top of modpack/INSTALL_WINDOWS.md. Maven range/embedded version selection remains NeoForge's runtime responsibility.
 
 Verified this follow-up: build + fresh40JUnit,72installerPython +5legacyPython,346JSON/276locale keys,8quest definitions. Extracted Windows toolkit independently repeats all72installer tests and quest validation without source checkout. All25canonical pins unchanged. No new GameTest/client/performance claims. The updated toolkit is build/modpack/Reimagined-Windows-Setup.zip.
+
+
+## Windows first-run handoff after50376c0 (2026-10-30)
+
+No resolver/installer gameplay expansion. Added a tag-triggered GitHub prerelease workflow (windows-trial-*) that builds the owned Core, verifies tools/resources, and publishes Reimagined-Windows-Setup.zip plus SHA256SUMS.txt. Third-party JARs/worlds are not bundled. Release availability is pending actual GitHub workflow completion; tag submission is not proof of publication.
+
+START_HERE_RU now opens a precise Prism guide, complete25pinned-file/remaining40target catalogue, manual-JAR placement rules and a first-run result form covering eightFTBtasks, two-player progress, NPC/trade, aggregate civilization, all dimensions and restart. Added bounded allowlisted diagnostics collection with token masking, mod SHA256 inventory and no account/world/JAR upload. This is an explicit diagnostic tool, not a new installation framework.
+
+Verified78Python tool tests plus5legacy tests; extracted source-free toolkit repeats78tests, all packaged SHA256 entries and quest graph validate. No new game/client/GameTest/performance pass claimed. Next task is to act on the user's real install/client report; no chapter expansion yet.
