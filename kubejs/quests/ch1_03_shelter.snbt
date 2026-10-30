@@ -1,0 +1,45 @@
+{
+  "id": "reimagined:quest/shelter",
+  "chapter": "reimagined:chapter_1",
+  "name": "quest.reimagined.ch1.shelter.title",
+  "description": "quest.reimagined.ch1.shelter.description",
+  "icon": "minecraft:oak_planks",
+  "position": [320, 64],
+  "tasks": [
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:bed",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:crafting_table",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    }
+  ],
+  "rewards": [
+    {
+      "id": "ftbquests:xp",
+      "count": 100
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:torch",
+      "count": 8
+    }
+  ],
+  "dependencies": [
+    "reimagined:quest/first_tools"
+  ],
+  "consume_tasks": false,
+  "display": {
+    "title": "quest.reimagined.ch1.shelter.title",
+    "subtitle": "quest.reimagined.ch1.shelter.subtitle"
+  }
+}

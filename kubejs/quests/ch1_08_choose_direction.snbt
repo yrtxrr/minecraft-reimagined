@@ -1,0 +1,46 @@
+{
+  "id": "reimagined:quest/choose_direction",
+  "chapter": "reimagined:chapter_1",
+  "name": "quest.reimagined.ch1.choose_direction.title",
+  "description": "quest.reimagined.ch1.choose_direction.description",
+  "icon": "reimagined:research_journal",
+  "position": [320, 192],
+  "tasks": [
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:compass",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    }
+  ],
+  "rewards": [
+    {
+      "id": "ftbquests:xp",
+      "count": 200
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:compass",
+      "count": 1,
+      "consume": false
+    },
+    {
+      "id": "ftbquests:choice",
+      "items": [
+        { "item": "minecraft:iron_ingot", "count": 8 },
+        { "item": "minecraft:apple", "count": 16 },
+        { "item": "minecraft:book", "count": 4 }
+      ]
+    }
+  ],
+  "dependencies": [
+    "reimagined:quest/first_contact"
+  ],
+  "consume_tasks": false,
+  "display": {
+    "title": "quest.reimagined.ch1.choose_direction.title",
+    "subtitle": "quest.reimagined.ch1.choose_direction.subtitle"
+  }
+}

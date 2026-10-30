@@ -1,0 +1,45 @@
+{
+  "id": "reimagined:quest/food_and_nature",
+  "chapter": "reimagined:chapter_1",
+  "name": "quest.reimagined.ch1.food_and_nature.title",
+  "description": "quest.reimagined.ch1.food_and_nature.description",
+  "icon": "minecraft:cooked_beef",
+  "position": [448, 64],
+  "tasks": [
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:cooked_beef",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:wheat",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    }
+  ],
+  "rewards": [
+    {
+      "id": "ftbquests:xp",
+      "count": 100
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:wheat_seeds",
+      "count": 8
+    }
+  ],
+  "dependencies": [
+    "reimagined:quest/shelter"
+  ],
+  "consume_tasks": false,
+  "display": {
+    "title": "quest.reimagined.ch1.food_and_nature.title",
+    "subtitle": "quest.reimagined.ch1.food_and_nature.subtitle"
+  }
+}

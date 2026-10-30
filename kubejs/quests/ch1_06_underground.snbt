@@ -1,0 +1,45 @@
+{
+  "id": "reimagined:quest/underground",
+  "chapter": "reimagined:chapter_1",
+  "name": "quest.reimagined.ch1.underground.title",
+  "description": "quest.reimagined.ch1.underground.description",
+  "icon": "minecraft:iron_ore",
+  "position": [64, 192],
+  "tasks": [
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:cobblestone",
+      "count": 16,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:iron_ore",
+      "count": 1,
+      "consume": false,
+      "detect": true,
+      "auto_consume": false
+    }
+  ],
+  "rewards": [
+    {
+      "id": "ftbquests:xp",
+      "count": 100
+    },
+    {
+      "id": "ftbquests:item",
+      "item": "minecraft:torch",
+      "count": 16
+    }
+  ],
+  "dependencies": [
+    "reimagined:quest/season_change"
+  ],
+  "consume_tasks": false,
+  "display": {
+    "title": "quest.reimagined.ch1.underground.title",
+    "subtitle": "quest.reimagined.ch1.underground.subtitle"
+  }
+}
