@@ -256,3 +256,11 @@ Updated final handoff/merge plan/fixtures. Version2 now writes Settlers+Aggregat
 ## Solo native quest implementation acceptance
 
 Build passes with40JUnit,185/185GameTests,0failures/skips. All original current tests retained; four previously existing navigation unit tests/helpers from a9c7423 were reviewed and retained without restoring browser UI. Seven quest GameTests check actual criterion state, failed/paid MerchantMenu transaction, food vs smelting, native sleep/journal use, canceled/incorrect-tool ore events, two ServerPlayer clone/actor isolation, shared signals persistence/replay and native config/real icons/advancement references. Native source schema13/8quests/25IDs/bilingual graph verified independently. These server players are not2network clients and FTB binary/GUI/reward claims have not run.42installer tests and5legacy assembler tests pass;25known pins validate structurally, actual bytes here still blocked.
+
+### Recorded world profile exports
+
+Prism SHA512 reader verified against official source573665f; offlineexport emits actual25pin client.mrpack and matchingserverbootstrap, not Core-only and not full40target/FTBruntime. Canonicalversions onlypack/mods.json. Fixed valid Cataclysm apostrophe filename rejected by installer;43backend+5profile+5legacyPython tests pass, noGit needed for extractedtoolkit export. Java proof remains40JUnit/185GameTests; no repeatedJava run for profile-only code. Newclient/serverprofiles still need actual download/newWorld/restart/two-account/performance acceptance.
+
+### Final profile tooling checks
+
+Prism source573665f explicitly consumes SHA512 and NeoForge; exported baseline references25actual recorded hashes without fabricatingSHA1.5profile tests verify exactpins/matchingserver/noeula/noclientoptions/optional24andstandaloneextracted-noGit.43backend and5legacyassembler tests pass (53Python total). Real Cataclysm filename apostrophe is accepted without accepting traversal/reserved filenames. No extraJava changes after40JUnit/185GameTests. Prism actualimport/download and combinedGUI remain unexecuted here, not inferred from source review.

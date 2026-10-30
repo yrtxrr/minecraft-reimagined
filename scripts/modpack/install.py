@@ -37,6 +37,14 @@ def safe_url(url, hosts):
     return url
 
 
+def safe_filename(name):
+    if not isinstance(name,str) or not re.fullmatch(r"[A-Za-z0-9_.+() '-]+[.]jar",name):
+        raise Blocked('Unsafe or non-JAR artifact filename')
+    if name.split('.')[0].upper() in {'CON','PRN','AUX','NUL',*(f'COM{i}' for i in range(1,10)),*(f'LPT{i}' for i in range(1,10))}:
+        raise Blocked('Windows reserved artifact filename')
+    return name
+
+
 class Redirects(urllib.request.HTTPRedirectHandler):
     def __init__(self, hosts):
         self.hosts = hosts
@@ -77,13 +85,9 @@ class Transport:
 
     def download(self, file, directory):
         safe_url(file['url'], FILE_HOSTS)
-        name = file['filename']
-        if not re.fullmatch(r'[A-Za-z0-9_.+() -]+[.]jar', name):
-            raise Blocked('Unsafe or non-JAR artifact filename')
+        name = safe_filename(file['filename'])
         hashes = file['hashes']
         algorithm = next((x for x in ('sha512', 'sha256', 'sha1') if x in hashes), None)
-        if name.split('.')[0].upper() in {'CON','PRN','AUX','NUL',*(f'COM{i}' for i in range(1,10)),*(f'LPT{i}' for i in range(1,10))}:
-            raise Blocked('Windows reserved artifact filename')
         if not algorithm or not re.fullmatch(r'[0-9a-fA-F]+', hashes[algorithm]) or len(hashes[algorithm]) != hashlib.new(algorithm).digest_size * 2:
             raise Blocked('Missing/invalid official checksum (MD5-only files refused)')
         size = file.get('size')
@@ -326,6 +330,7 @@ def pinned_records(path, include_optional=False):
         key='modrinth:'+entry['projectId']
         if key in records:raise Blocked('Duplicate pinned project')
         safe_url(entry['url'],FILE_HOSTS)
+        safe_filename(entry['filename'])
         if not re.fullmatch('[0-9a-f]{128}',entry['sha512']):raise Blocked('Invalid pinned SHA512')
         records[key]=dict(key=key,source='modrinth',project_id=entry['projectId'],name=entry['name'],version_id=entry['versionId'],version=entry['version'],minecraft=MC,loader='neoforge',sides=entry['sides'],license=entry['license'],source_url='https://modrinth.com/mod/'+entry['slug'],file=dict(url=entry['url'],filename=entry['filename'],hashes={'sha512':entry['sha512']},size=entry['size']),dependencies=['modrinth:'+x for x in entry['dependencies']],optional_dependencies=[],pin_source='pack/mods.json')
         if entry.get('candidateId'):targets[entry['candidateId']]=key

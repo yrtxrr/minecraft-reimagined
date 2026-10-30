@@ -25,3 +25,7 @@
 5. Выполнить приложенный установщик на компьютере пользователя, со штатной сетью/TLS. Не менять proxy ради обхода облачной политики, не отключать TLS/аутентификацию, не использовать зеркала/пиратские модпаки.
 
 Статусы `unresolved` не объявляют40модов несовместимыми. Для четырёх неоднозначных названий/портов (Thaumcraft4:Reforged, BotaniaRevived, BetterEnd:NewDawn, ImmersiveWeatheringRenewed) требуется точная официальная идентичность, не подмена одноимённым модом другого loader. Полный runtime остаётся непроверенным до фактической установки.
+
+## Дополнительный путь без каталога
+
+ОфициальныйGit позволяетчитатьисходники FTBQuests/ATM10/Prism. Prism ModrinthInstanceCreationTask.cpp в573665ffa1ccbd7e19df39c28193d26d5b202d60 явнотребуетsha512 и поддерживаетneoforge; SHA1 дляегоimportне требуется. Поэтому записанныеFreebuff25пинов экспортируютсявклиентскийmrpack без сетевыхобращений/вымышленныххешей; самPrismскачиваеттежеофициальныефайлывсети пользователя. Это не обходcloudproxy и не утверждениеGUIruntime. Официальный Maven FTB (из build.gradle upstream) https://maven.ftb.dev/releases/dev/ftb/mods/ftb-quests-neoforge/maven-metadata.xml тоже CONNECT403; повторовCDNбольше не выполнялось.

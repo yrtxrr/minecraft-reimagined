@@ -111,6 +111,9 @@ class DownloadTests(unittest.TestCase):
     def test_size_budget_stops_oversized_response(self):
         self.file['size']=1
         with self.assertRaisesRegex(m.Blocked,'exceeded'):self.t.download(self.file,self.path)
+    def test_real_cataclysm_apostrophe_filename_is_supported(self):
+        self.file['filename']="L_Ender's Cataclysm 1.21.1-3.33.jar"
+        self.assertTrue(self.t.download(self.file,self.path).is_file())
     def test_unsafe_filename(self):
         for name in ['../outside.jar','bad.exe','CON.jar']:
             self.file['filename']=name

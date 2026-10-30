@@ -152,3 +152,7 @@ Updated final handoff/merge plan/fixtures. Version2 now writes Settlers+Aggregat
 ## Solo priority after Kilo retirement
 
 Freebuff c20c6a6 history preserved at479c1b6 with backed-up Version2 ownership. Independent native first chapter implemented from reviewed source, no automatic Kilo implementation merge. Next gate: install actual FTB+dependencies and technologies on Windows/allowed network, first-bookGUI/team/reward/death/save/restart acceptance, full185GameTests with external set, ordinaryDefault terrain/dimensions/new chunks/two clients/profile. Do not start chapter2 or new large systems before first chapter works in actual game. All40candidates remain; conditional magic alternatives must have actual NeoForge release pins before activation.
+
+### Recorded world profile exports
+
+Prism SHA512 reader verified against official source573665f; offlineexport emits actual25pin client.mrpack and matchingserverbootstrap, not Core-only and not full40target/FTBruntime. Canonicalversions onlypack/mods.json. Fixed valid Cataclysm apostrophe filename rejected by installer;43backend+5profile+5legacyPython tests pass, noGit needed for extractedtoolkit export. Java proof remains40JUnit/185GameTests; no repeatedJava run for profile-only code. Newclient/serverprofiles still need actual download/newWorld/restart/two-account/performance acceptance.

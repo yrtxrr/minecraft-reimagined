@@ -346,7 +346,7 @@
       "id": "betterend-new-dawn",
       "name": "BetterEnd: New Dawn",
       "category": "end",
-      "role": "target",
+      "role": "alternative",
       "status": "blocked-source-access",
       "minecraft": "1.21.1",
       "loader": "neoforge",
@@ -363,7 +363,7 @@
       "id": "nullscape",
       "name": "Nullscape",
       "category": "end",
-      "role": "alternative",
+      "role": "target",
       "status": "agent-server-verified-pin",
       "minecraft": "1.21.1",
       "loader": "neoforge",
@@ -709,5 +709,6 @@
   "installer": "scripts/modpack/install.py",
   "source_bindings": "modpack/source-bindings.json",
   "availability_note": "All candidates retained; actual releases/dependencies are resolved and pinned on the user machine. Cloud CONNECT403 does not establish incompatibility.",
-  "pin_manifest": "pack/mods.json"
+  "pin_manifest": "pack/mods.json",
+  "preferred_end_ref": "pack/mods.json#preferredEnd"
 }

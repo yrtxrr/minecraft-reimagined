@@ -1,3 +1,15 @@
+# Быстрый Prism import и совпадающий сервер
+
+**Reimagined-world-25-candidate.mrpack** можно сразу импортировать в современныйPrismLauncher:25точных внешнихпинов скачиваютсяофициально и проверяютсяSHA512. Для этого путиPython/ModrinthAPIkey не нужны. НашCoreJAR иконфиги вложены; Minecraft1.21.1/NeoForge21.1.264 устанавливаетлаунчер. Это мировойбазис, не полная40целевая/технологическая/FTBсборка. ColdSweat в25наборе явно включён.
+
+**Reimagined-world-25-server.zip** содержиттотже source manifest, Core иобщиеconfig. После распаковки Python3.11+: `py -3 scripts/fetch-modpack.py --destination server/mods --optional`, затем `py -3 scripts/validate-modpack.py --mods server/mods`. Поставить официальныйNeoForge server в server/, самостоятельно принятьEULA при запуске; никтоеёзаваснепринимал. Оба игрока используютодинклиентскийпрофиль; дляLAN отдельныйserverне нужен.
+
+Перед старыммиром — закрытьигру/сервер и сделатькопиювсегосохранения. ПредпочтительноновыйDefault мир, не reimagined:continents совместно сTerralith. Дляоткатаv2 используйтеbackup, не старыйJAR.
+
+ПространствоFTBconfig ужеестьвclient/server, **но FTBбинарного модав25наборенет**, поэтому этотbaseline не выдаётсяза работающуюGUIкнигу. Для дополнений/FTB/технологий — полныйустановщик ниже, resolve безPinnedOnly на компьютере сдоступом, затем реальнаяприёмка VERIFY_WINDOWS.md. До первой главы в настоящем FTB/party/restart главу2 не начинаем.
+
+Для24наборабезColdSweat: `py -3 scripts/modpack/export-pinned-profiles.py` из полногоsetup/source. Генераторне требуетGit в распакованномWindows toolkit. Все версии читаются pack/mods.json, второйручнойконфиг не создаётся.
+
 # Проверенный внешний базис Freebuff
 
 Точный источник версий/URL/SHA512/зависимостей — **pack/mods.json** (25файлов, ColdSweat optional). Это не Core-only. Исторический cloud CONNECT403 не отменяет server evidence Freebuff59326be:25модов/99GameTests. После объединения требуется повторный запуск всех файлов; здесь он пока блокирован скачиванием.

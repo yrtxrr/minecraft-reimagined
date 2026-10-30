@@ -39,7 +39,7 @@ def validated_mods(registry, lock, profile):
         if not str(mod.get('source_url', '')).startswith('https://') or not isinstance(mod.get('dependencies'), list):
             raise ValueError(f'Missing official source/dependencies: {ident}')
         name = mod.get('file', '')
-        if not re.fullmatch(r'[A-Za-z0-9_.+\-]+\.jar', name):
+        if not re.fullmatch(r"[A-Za-z0-9_.+() '-]+[.]jar", name):
             raise ValueError(f'Unsafe artifact filename: {ident}')
         if name in filenames:
             raise ValueError(f'Duplicate/reserved artifact filename: {name}')
