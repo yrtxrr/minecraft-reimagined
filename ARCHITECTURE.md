@@ -140,3 +140,7 @@ TradingMenu subclasses vanilla MerchantMenu. Existing profession catalogue feeds
 ## Joint entity interaction ownership
 
 Settler EntityInteract consumes the main-hand action on client and server. Only the server opens MerchantMenu or touches offers/inventories. Client SUCCESS prevents a held usable item (such as BeeSmoker) from falling through to air use after the server handles the NPC. Hive block interactions stay owned by the beekeeping module. The joint regression checks independent hive attachments/honey, merchant payment/stock and durability; no new payload or tick scan is introduced.
+
+## Personal modpack boundary —2026-10-30
+
+See docs/ARCHITECTURE.md and docs/INTEGRATION_API.md. The current task targets1–2players, not public-server scaling. Preserve legacy modules/IDs/SavedData; use configuration/KubeJS/verified mods before extra Java. Core adds only a256-ID personal integration ledger,7independent era flags and synchronous transition signals. No tick loop/world scans/new network channel. Adapter factories are lazy and disabled/missing mods never resolve optional classes. Player clone copies only its owned key. Client-only mods are excluded by explicit verified side metadata from server packages. Official source403 leaves all40target candidates uninstalled, not declared incompatible.

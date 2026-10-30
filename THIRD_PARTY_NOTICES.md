@@ -49,3 +49,7 @@ Beekeeping research: vanilla Minecraft 1.21.1 `BeehiveBlock`, `BeehiveBlockEntit
 Settlement trading safety: installed Minecraft1.21.1 MerchantMenu, MerchantResultSlot, MerchantOffers, Merchant and server offer/selection packet implementations were inspected and reused by inheritance and supported APIs. No vanilla source/assets vendored and no external mod dependency. Existing project professions and SavedData retained.
 
 Settlement rendering uses Minecraft1.21.1 VillagerModel/ModelLayers.VILLAGER by subclassing and references minecraft:textures/entity/villager/villager.png in the installed game. No vanilla or third-party texture/model/source file copied into project assets, no extra mod dependency. Installed GroundPathNavigation/PathNavigationRegion were inspected to guard their exact loaded-chunk region before calling the vanilla implementation.
+
+## Modpack migration2026-10-30
+
+No third-party code/assets/JAR added by the Core foundation. Official catalog/source probes are blocked403; target candidate metadata/license fields remain unverified in modpack/mod-registry.json. All target names identify prospective upstream projects, not bundled dependencies. Personal use does not imply permission to redistribute. Local build archives include only existing Reimagined code/resources and original configuration/integration glue; external artifact lock requires explicit source/license/personal-use confirmation before packaging.

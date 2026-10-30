@@ -1,0 +1,14 @@
+version:3955
+lang:ru_ru
+graphicsMode:0
+renderDistance:8
+simulationDistance:5
+entityDistanceScaling:0.75
+particles:1
+mipmapLevels:2
+biomeBlendRadius:2
+maxFps:60
+enableVsync:false
+cloudStatus:0
+ambientOcclusion:true
+fullscreen:false

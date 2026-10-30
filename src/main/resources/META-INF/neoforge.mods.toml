@@ -4,7 +4,7 @@ license="All Rights Reserved"
 [[mods]]
 modId="reimagined"
 version="0.1.0-alpha"
-displayName="Minecraft: Reimagined"
+displayName="Reimagined Core"
 description="""An integrated expansion of Minecraft: seasons, skills, recipes and exploration."""
 [[dependencies.reimagined]]
 modId="neoforge"

@@ -1,0 +1,1 @@
+Only write mod-specific config files after installing and launching the exact verified mod version. Guessed keys are not optimization. Keep legacy season growth active until a tested Serene Seasons handoff; do not run two crop-season controllers. Do not activate overlapping fauna/worldgen/recipe changes blindly. See docs/MIGRATION_PLAN.md.

@@ -1,0 +1,21 @@
+{
+  "checked_on": "2026-10-30",
+  "remote": "https://github.com/yrtxrr/minecraft-reimagined",
+  "heads": {
+    "refs/heads/backup/feat-reimagined-alpha-pre-integration-20261029": "0c30793d00445d4ab55d8a683e2cb407dda41264",
+    "refs/heads/backup/reimagined-alpha-before-agent-integration-0c30793": "0c30793d00445d4ab55d8a683e2cb407dda41264",
+    "refs/heads/codex/settlement-safety-recovery-63cdf1b": "c31544ccda35cf05f9922f921a1e7307a5f07a4a",
+    "refs/heads/fcc/agriculture-barley": "e8bfb8094bc907140f2bc7db718bc2599430fcb1",
+    "refs/heads/feat/antigravity-development": "7f53132d945df492d68a72abce97917973fe8d90",
+    "refs/heads/feat/freebuff-development": "042fa77a579e71d78d5fba89ab276ef3ea5983ef",
+    "refs/heads/feat/kilo-development": "820e5dbf2fe5d52614c82a2eba66ab25136c8018",
+    "refs/heads/feat/kilo-settlements-economy": "29ba004f2d565a39b19740e49f9741e8ef288d66",
+    "refs/heads/feat/kilo-world-polish": "65f11a06281e184e6a705bf817f4af3fd0f7d058",
+    "refs/heads/feat/opencode-development": "090a2cc7305b0bde802658cb03e7125443249e17",
+    "refs/heads/feat/reimagined-alpha": "a9c74239e7703d7f82ff4481e3ac6e47dcc290f6",
+    "refs/heads/integration/agents-review-0c30793": "d8af955b78526a6ce380674c09fa92fe68b3a1a4",
+    "refs/heads/integration/combined-agents": "e170654a0cddd2886210297ee9546b388a9fd1a4",
+    "refs/heads/integration/final-agents-settlements-c31544c": "8e6bab4e64e6ef78a26b94c8262d6b937bfc0f76",
+    "refs/heads/kilo/kindhearted-contraption": "b492b2f22a300162478e8b6f8fc1ce03c73fcfe5"
+  }
+}

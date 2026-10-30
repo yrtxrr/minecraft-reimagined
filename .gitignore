@@ -4,3 +4,5 @@ run/
 run-*/
 .idea/
 *.iml
+modpack/downloads/
+__pycache__/

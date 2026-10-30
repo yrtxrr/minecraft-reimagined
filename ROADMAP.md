@@ -116,3 +116,10 @@ Final build/25freshJUnit/134GameTests passed,286JSON/200bilingual keys validated
 On integration/final-agents-settlements-c31544c: history-preserving merge04ac191 joins d8af955 and verified c31544c, not29ba004. Own tabs/nature tag, recipes, EN/RU, module registrations and all introduced tests retained. Native joint-world testing exposed smoker air-use falling through after trader interaction;22a4f48 consumes the client action without client-side inventory authority and adds a real joint hive/trade regression. Final build/21freshJUnit/160GameTests and325JSON/206keys passed. Native bees/hive/NPC/paid trade/creative egg/configured boulder and full process restart checked;33NPCs,3frames and stockuses4 persisted. Core deer visuals unchanged.
 
 Published candidate only; no main/source-branch update. Repeat32NPC profile had mean2.184ms/max115.093ms and baseline max382.014ms; long pauses remain unexplained. Functional gates pass but unconditional main promotion/Alpha completion is not recommended before a controlled dedicated-server profile. Full procedure, attribution/history and exact limitations:docs/FINAL_AGENT_INTEGRATION.md.
+
+## Personal co-op modpack direction —2026-10-30
+
+- Preserve all40target candidates; current modpack/mod-registry.json lists unresolved versions explicitly. No direction dropped.
+- Completed first server-checked foundation: Core APIs over preserved legacy modules, core-only Windows client/server packaging, SHA/side/dependency gates, initial6GB client or4GB+4GB same-host co-op guidance.
+- Next blocking step: permitted official metadata/CDN access, exact releases/dependencies/license checks, install diagnostics/optimization/JEI first, then content groups with actual client/save/restart. Kilo owns progression/magic/quests/balance; Freebuff ecology/world/civilizations/dimensions. Do not modify their branches.
+- FTB team quests and third-party sync/performance are pending real installed versions. No full modpack or Vega7 performance certification yet.

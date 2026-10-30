@@ -1,0 +1,1 @@
+-Xms2G -Xmx6G -XX:+UseG1GC

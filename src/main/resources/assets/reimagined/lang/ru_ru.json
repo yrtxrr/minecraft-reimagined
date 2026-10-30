@@ -204,5 +204,6 @@
   "journal.reimagined.page.beekeeping": "ПЧЕЛОВОДСТВО\n\nУльи и гнёзда наполняются мёдом; собирайте бутылочками или дымокуром.\n\nРамки дают больше сотов. Соты мелют в воск.",
   "entity.reimagined.settler": "Поселенец",
   "item.reimagined.settler_spawn_egg": "Яйцо призыва поселенца",
-  "message.reimagined.settler_greeting": "Приветствие от %s."
+  "message.reimagined.settler_greeting": "Приветствие от %s.",
+  "message.reimagined.core_status": "Core: исследований — %s, эпох — %s. Старый журнал, навыки и магия сохранены."
 }

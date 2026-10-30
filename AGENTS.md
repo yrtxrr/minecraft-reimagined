@@ -1,3 +1,7 @@
+# Current personal modpack authorization (2026-10-30)
+
+Work on `feat/reimagined-modpack-core`. The latest user task supersedes historical branch restrictions below. Preserve existing gameplay, the complete target mod list and source agent branches. Prioritize a playable personal Windows client for Ryzen 5 5600H/Vega 7/16 GB, use existing mods/configuration/KubeJS before new Java. Commit/push only this task branch; do not update alpha or agent branches. No force push. No automatic license/EULA acceptance or network restriction bypass. Record verified versions and dependencies; blocked candidates are not installed mods. Keep documentation concise. Core remains mod ID `reimagined` for save compatibility. No new elaborate framework or full coverage obligation; retain meaningful save/load and integration checks. The older integration instructions below describe completed checkpoints.
+
 # Current integration authorization
 
 The user authorizes merging only d8af955 (Freebuff/OpenCode candidate) and c31544c (verified settlement recovery) on integration/final-agents-settlements-c31544c. Keep both source branches and origin/feat/reimagined-alpha unchanged. Do not substitute29ba004, force push, delete tests or create unrelated systems. Publish only the new integration branch after build/JUnit/full GameTests/native joint-world/restart checks. This supersedes historical no-merge/branch-specific push instructions below.

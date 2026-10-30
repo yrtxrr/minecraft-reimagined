@@ -13,7 +13,8 @@ import net.neoforged.fml.common.Mod;
 @Mod(Reimagined.MOD_ID)
 public final class Reimagined {
     public static final String MOD_ID = "reimagined";
-    public Reimagined(IEventBus modBus) {
+    public Reimagined(IEventBus modBus, net.neoforged.fml.ModContainer container) {
+        dev.reimagined.core.CoreBootstrap.register(container);
         Content.register(modBus);
         dev.reimagined.content.ReimaginedTabs.register(modBus);
         CreatureContent.register(modBus);

@@ -204,5 +204,6 @@
   "journal.reimagined.page.beekeeping": "BEEKEEPING\n\nHives and nests fill with honey; harvest with bottles or a smoker.\n\nFrames add honeycomb. Mill honeycomb into wax.",
   "entity.reimagined.settler": "Settler",
   "item.reimagined.settler_spawn_egg": "Settler Spawn Egg",
-  "message.reimagined.settler_greeting": "Greetings from %s."
+  "message.reimagined.settler_greeting": "Greetings from %s.",
+  "message.reimagined.core_status": "Core: %s research milestones, %s eras. Legacy journal, skills and magic are preserved."
 }
