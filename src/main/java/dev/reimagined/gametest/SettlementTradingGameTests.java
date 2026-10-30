@@ -92,8 +92,14 @@ public final class SettlementTradingGameTests {
     public static void stockIsPerUuidPersistsAndFrozenTimeDoesNotRestock(GameTestHelper h) {
         var level=h.getLevel();long old=level.getDayTime();
         try {
-            level.setDayTime(8000);var data=TradeData.get(level);var a=UUID.randomUUID();var b=UUID.randomUUID();
+            level.setDayTime(8000);
+            // Another catalogue test may have spent a legacy template. Own this fixture's
+            // catalogue rather than inheriting arbitrary usage from shared SavedData.
+            var data=new TradeData();
+            data.addOffer("farmer",new ItemStack(Items.WHEAT,20),new ItemStack(Items.EMERALD),16);
+            var a=UUID.randomUUID();var b=UUID.randomUUID();
             var one=data.offersFor(level,a,"farmer");var two=data.offersFor(level,b,"farmer");
+            h.assertTrue(one.get(0).getUses()==0 && two.get(0).getUses()==0,"Owned fixture starts with unused offers");
             one.get(0).increaseUses();data.setDirty();
             for(int n=0;n<100;n++)h.assertTrue(data.offersFor(level,a,"farmer").get(0).getUses()==1,"Frozen8000cannot restock used offer");
             h.assertTrue(two.get(0).getUses()==0,"Same profession has independent NPC stock");

@@ -211,3 +211,7 @@ Executed ./gradlew build:24JUnit; scripts/verify-integration.sh:164/164GameTests
 ### Core-only native acceptance
 
 Actual client18baf09 loads preserved joint world, Russian `/reimagined_core status` and common config; NPC/bees render and vanilla trading GUI opens. Save→full process exit→new process→same world succeeds. Inventory retains3honey bottles,6honeycombs,4emeralds and smoker damage3; hive retains3frames and normal live colony. This is an existing-world compatibility test, not fresh survival world generation or full modpack acceptance. A second graphical AlphaObserver client attempted LAN25578 but authentication servers were unreachable; no authentication workaround applied. Two-client gameplay/FTB team quests/network persistence remain unverified. Detailed short debug result/limits in docs/PERFORMANCE_PLAN.md. Evidence outsideGit: /workspace/modpack-core-review and /tmp/reimagined-modpack-*.log.
+
+## Trade fixture ownership correction —2026-10-30
+
+A repeat full run during installer work exposed one failure in stockIsPerUuidPersistsAndFrozenTimeDoesNotRestock: the fixture inherited a spent legacy catalogue template from other catalogue tests. It now owns an explicit unused TradeData catalogue and asserts initial zero uses. All existing frozen-time/per-UUID/save-load/day-boundary/actual-resident assertions remain. No production trading code changed and no tests removed. Subsequent build succeeds and full GameTestServer passes164/164; existing24JUnit unchanged. Initial failed run is not counted as a pass.
