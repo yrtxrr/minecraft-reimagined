@@ -1,3 +1,7 @@
+# Текущий способ установки
+
+Все40целей сохранены. Windows: modpack/INSTALL_WINDOWS.md; bindings: modpack/source-bindings.json; официальный resolver: scripts/modpack/install.py. Он фиксирует версии/зависимости/стороны/хеши в пользовательский installed.lock.json, а не объявляет прежний пустой Core-only lock полным. Причины403: docs/MOD_DOWNLOAD_DIAGNOSTICS.md. Квестовый кандидат Kilo пока заблокирован: docs/KILO_PROGRESSION_REVIEW.md.
+
 # Целевой состав, не список установленных модов
 
 Источник истины: `modpack/mod-registry.json`; установленные сторонние версии: `modpack/mods.lock.json`. Список сохранён полностью, Nullscape — только альтернативный кандидат. На2026-10-30 ни один сторонний JAR не установлен этим этапом.

@@ -1,0 +1,461 @@
+{
+  "schema": 1,
+  "note": "Slug hints are NOT verified project bindings. Resolver validates project titles. Set exact project/file IDs only after reviewing official source. Dependency side overrides go in dependency_sides keyed by provider:projectId.",
+  "targets": {
+    "terralith": {
+      "modrinth_slug_hint": "terralith",
+      "accepted_titles": [
+        "Terralith"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "tectonic": {
+      "modrinth_slug_hint": "tectonic",
+      "accepted_titles": [
+        "Tectonic"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "naturalist": {
+      "modrinth_slug_hint": "naturalist",
+      "accepted_titles": [
+        "Naturalist"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "serene-seasons": {
+      "modrinth_slug_hint": "serene-seasons",
+      "accepted_titles": [
+        "Serene Seasons"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "immersive-weathering-renewed": {
+      "modrinth_slug_hint": null,
+      "accepted_titles": [
+        "Immersive Weathering Renewed"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "farmers-delight": {
+      "modrinth_slug_hint": "farmers-delight",
+      "accepted_titles": [
+        "Farmer’s Delight",
+        "Farmer's Delight"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "cold-sweat": {
+      "modrinth_slug_hint": "cold-sweat",
+      "accepted_titles": [
+        "Cold Sweat"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "better-combat": {
+      "modrinth_slug_hint": "better-combat",
+      "accepted_titles": [
+        "Better Combat"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "improved-mobs": {
+      "modrinth_slug_hint": "improved-mobs",
+      "accepted_titles": [
+        "Improved Mobs"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "create": {
+      "modrinth_slug_hint": "create",
+      "accepted_titles": [
+        "Create"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "immersive-engineering": {
+      "modrinth_slug_hint": "immersiveengineering",
+      "accepted_titles": [
+        "Immersive Engineering"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "mekanism": {
+      "modrinth_slug_hint": "mekanism",
+      "accepted_titles": [
+        "Mekanism"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "applied-energistics-2": {
+      "modrinth_slug_hint": "ae2",
+      "accepted_titles": [
+        "Applied Energistics 2",
+        "Applied Energistics 2",
+        "AE2"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "cc-tweaked": {
+      "modrinth_slug_hint": "cc-tweaked",
+      "accepted_titles": [
+        "CC: Tweaked",
+        "CC: Tweaked"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "thaumcraft-4-reforged": {
+      "modrinth_slug_hint": null,
+      "accepted_titles": [
+        "Thaumcraft 4: Reforged"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "botania-revived": {
+      "modrinth_slug_hint": null,
+      "accepted_titles": [
+        "Botania Revived"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "mca-reborn": {
+      "modrinth_slug_hint": "minecraft-comes-alive-reborn",
+      "accepted_titles": [
+        "MCA Reborn",
+        "Minecraft Comes Alive Reborn",
+        "Minecraft Comes Alive (MCA) Reborn"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "guard-villagers": {
+      "modrinth_slug_hint": "guard-villagers",
+      "accepted_titles": [
+        "Guard Villagers"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "incendium": {
+      "modrinth_slug_hint": "incendium",
+      "accepted_titles": [
+        "Incendium"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "betterend-new-dawn": {
+      "modrinth_slug_hint": null,
+      "accepted_titles": [
+        "BetterEnd: New Dawn"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "nullscape": {
+      "modrinth_slug_hint": "nullscape",
+      "accepted_titles": [
+        "Nullscape"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "yungs-better-dungeons": {
+      "modrinth_slug_hint": "yungs-better-dungeons",
+      "accepted_titles": [
+        "YUNG’s Better Dungeons",
+        "YUNG's Better Dungeons"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "yungs-better-mineshafts": {
+      "modrinth_slug_hint": "yungs-better-mineshafts",
+      "accepted_titles": [
+        "YUNG’s Better Mineshafts",
+        "YUNG's Better Mineshafts"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "yungs-better-strongholds": {
+      "modrinth_slug_hint": "yungs-better-strongholds",
+      "accepted_titles": [
+        "YUNG’s Better Strongholds",
+        "YUNG's Better Strongholds"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "l-enders-cataclysm": {
+      "modrinth_slug_hint": "l_enders-cataclysm",
+      "accepted_titles": [
+        "L_Ender’s Cataclysm",
+        "L_Ender's Cataclysm"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "better-archeology": {
+      "modrinth_slug_hint": "better-archeology",
+      "accepted_titles": [
+        "Better Archeology"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "pufferfishs-skills": {
+      "modrinth_slug_hint": "puffish-skills",
+      "accepted_titles": [
+        "Pufferfish’s Skills",
+        "Pufferfish's Skills"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "ftb-quests": {
+      "modrinth_slug_hint": "ftb-quests",
+      "accepted_titles": [
+        "FTB Quests",
+        "FTB Quests (NeoForge)"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "kubejs": {
+      "modrinth_slug_hint": "kubejs",
+      "accepted_titles": [
+        "KubeJS"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "jei": {
+      "modrinth_slug_hint": "jei",
+      "accepted_titles": [
+        "JEI",
+        "Just Enough Items",
+        "Just Enough Items (JEI)"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "embeddium": {
+      "modrinth_slug_hint": "embeddium",
+      "accepted_titles": [
+        "Embeddium"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "modernfix": {
+      "modrinth_slug_hint": "modernfix",
+      "accepted_titles": [
+        "ModernFix"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "ferritecore": {
+      "modrinth_slug_hint": "ferrite-core",
+      "accepted_titles": [
+        "FerriteCore"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "immediatelyfast": {
+      "modrinth_slug_hint": "immediatelyfast",
+      "accepted_titles": [
+        "ImmediatelyFast"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "entity-culling": {
+      "modrinth_slug_hint": "entityculling",
+      "accepted_titles": [
+        "Entity Culling"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "more-culling": {
+      "modrinth_slug_hint": "moreculling",
+      "accepted_titles": [
+        "More Culling"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "dynamic-fps": {
+      "modrinth_slug_hint": "dynamic-fps",
+      "accepted_titles": [
+        "Dynamic FPS"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "lithium": {
+      "modrinth_slug_hint": "lithium",
+      "accepted_titles": [
+        "Lithium"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "spark": {
+      "modrinth_slug_hint": "spark",
+      "accepted_titles": [
+        "spark"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    },
+    "chunky": {
+      "modrinth_slug_hint": "chunky",
+      "accepted_titles": [
+        "Chunky"
+      ],
+      "modrinth_project_id": null,
+      "modrinth_version_id": null,
+      "curseforge_project_id": null,
+      "curseforge_file_id": null,
+      "side_override": null
+    }
+  },
+  "dependency_sides": {}
+}

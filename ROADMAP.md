@@ -123,3 +123,9 @@ Published candidate only; no main/source-branch update. Repeat32NPC profile had 
 - Completed first server-checked foundation: Core APIs over preserved legacy modules, core-only Windows client/server packaging, SHA/side/dependency gates, initial6GB client or4GB+4GB same-host co-op guidance.
 - Next blocking step: permitted official metadata/CDN access, exact releases/dependencies/license checks, install diagnostics/optimization/JEI first, then content groups with actual client/save/restart. Kilo owns progression/magic/quests/balance; Freebuff ecology/world/civilizations/dimensions. Do not modify their branches.
 - FTB team quests and third-party sync/performance are pending real installed versions. No full modpack or Vega7 performance certification yet.
+
+## Installation-first checkpoint —2026-10-30
+
+- Official-source resolver/Windows wrapper ready for local use; all40candidates retained with explicit unresolved reasons and one End-provider selection. Core-only expansion stopped.
+- Download actual files locally → inspect INSTALL_REPORT/installed.lock → import generated candidate.mrpack/client-server folders → new-world/save/restart/two-account/runtime/profile acceptance. Unknown catalog sides/identities/version conflicts stop, never silently substitute Fabric/Forge or a different magic mod.
+- Kilo cbc7a5f not merge-ready; fix actual FTB export/tasks/rewards/team semantics after verified FTB installation, preserve author. Freebuff world change to review/integrate separately, not folded into installer.

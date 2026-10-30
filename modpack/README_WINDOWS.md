@@ -1,3 +1,7 @@
+# Новый этап: установка сторонних модов
+
+Используйте [INSTALL_WINDOWS.md](INSTALL_WINDOWS.md) и scripts/modpack/Install-Reimagined.ps1. Ниже сохранена инструкция предыдущего принятого Core-only checkpoint. Новый установщик не создаёт ещё один Core-only профиль и не считает candidate runtime-проверенным.
+
 # Reimagined — личный клиент Windows, первый checkpoint
 
 Это **Core-only**, не полный целевой модпак. Все 40 кандидатов сохранены в mod-registry.json; их официальные метаданные/загрузка заблокированы HTTP403. В архиве только собственный собранный Core, настройки и реестр. Нет Minecraft, NeoForge installer, сторонних JAR, секретов или сохранений. Нет утверждения о проверенном FPS на Vega7.

@@ -1,3 +1,7 @@
+# Installation-first priority (2026-10-30)
+
+Do not expand Core-only gameplay while third-party installation is blocked. Maintain all40target candidates and an official-source Windows install path. Source restrictions must not be bypassed. Kilo progression cbc7a5f has blocking FTB quest review in docs/KILO_PROGRESSION_REVIEW.md; no merge until actual compatibility/action/team checks pass. Review Freebuff separately when ready. Keep all existing tests/save compatibility and distinguish candidate metadata/hash checks from actual client/server runtime.
+
 # Current personal modpack authorization (2026-10-30)
 
 Work on `feat/reimagined-modpack-core`. The latest user task supersedes historical branch restrictions below. Preserve existing gameplay, the complete target mod list and source agent branches. Prioritize a playable personal Windows client for Ryzen 5 5600H/Vega 7/16 GB, use existing mods/configuration/KubeJS before new Java. Commit/push only this task branch; do not update alpha or agent branches. No force push. No automatic license/EULA acceptance or network restriction bypass. Record verified versions and dependencies; blocked candidates are not installed mods. Keep documentation concise. Core remains mod ID `reimagined` for save compatibility. No new elaborate framework or full coverage obligation; retain meaningful save/load and integration checks. The older integration instructions below describe completed checkpoints.

@@ -215,3 +215,9 @@ Actual client18baf09 loads preserved joint world, Russian `/reimagined_core stat
 ## Trade fixture ownership correction —2026-10-30
 
 A repeat full run during installer work exposed one failure in stockIsPerUuidPersistsAndFrozenTimeDoesNotRestock: the fixture inherited a spent legacy catalogue template from other catalogue tests. It now owns an explicit unused TradeData catalogue and asserts initial zero uses. All existing frozen-time/per-UUID/save-load/day-boundary/actual-resident assertions remain. No production trading code changed and no tests removed. Subsequent build succeeds and full GameTestServer passes164/164; existing24JUnit unchanged. Initial failed run is not counted as a pass.
+
+## Installer stage acceptance —2026-10-30
+
+39new stdlib Python tests cover official HTTPS/redirect/key handling, exact identities/loaders/releases, required/pinned/optional/incompatible/cyclic dependencies, all40target coverage/End alternatives, side separation, SHA/size/cache corruption/unsafe filenames, CF author-disallowed/null-URL cases, duplicate Java mod IDs, no overwrites/no0-mod Core-only output and mrpack/actual lock generation.5previous pack-assembler tests retained. Real cloud resolver visits all40candidates, writes0-artifact403report and refuses installation rather than manufacturing a full profile. Fixture JARs are synthetic and temp-only, not working Minecraft mods.
+
+After isolated trade-fixture correction: Gradle build succeeds and all164GameTests pass; existing24JUnit present,325JSON/207bilingual keys and unchanged64PNG/92models/16blockstates validate. Unmodified Kilo QuestIntegration.java compiles in /tmp against currentNeoForge, not integrated. No full-pack client run possible without files; no new save/performance/two-player claims. Python backend tested onLinux; PowerShell wrapper/actual Windows online download not executed here (pwsh unavailable). Prior Core-only native results remain historical, not full-pack proof.

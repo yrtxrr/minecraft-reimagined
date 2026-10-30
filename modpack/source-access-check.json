@@ -1,0 +1,45 @@
+{
+  "checked_on": "2026-10-30",
+  "proxy": "proxy:8080",
+  "tls_validation": true,
+  "sandbox_retry": "same CONNECT403 for official APIs/CDNs",
+  "results": [
+    {
+      "url": "https://api.modrinth.com/v2/project/terralith",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://api.modrinth.com/v2/search?query=jei",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://api.curseforge.com/v1/mods/238222",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://www.curseforge.com/minecraft/mc-mods/jei",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://cdn.modrinth.com/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://edge.forgecdn.net/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://maven.blamejared.com/mezz/jei/jei-1.21.1-neoforge/maven-metadata.xml",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://api.github.com/repos/mezz/JustEnoughItems/releases",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "url": "https://repo.maven.apache.org/maven2/",
+      "status": 200,
+      "server": "envoy"
+    }
+  ]
+}

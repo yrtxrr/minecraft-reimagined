@@ -18,3 +18,7 @@
 Для16GB/Vega7 начальный heap6GB, окно720p,8чанков/simulation5,fast/no-shaders/60FPS; это гипотеза настроек, не измеренный optimum. На cloud Mesa нельзя подтвердить железо пользователя. Прежде удаления старой системы: резервная копия, migration IDs/NBT/recipes, тест на старом и новом мире; запись причины и подтверждение отсутствия потери контента.
 
 Агенты: Kilo — прогрессия/магия/квесты/баланс; Freebuff — мир/экология/цивилизации/измерения. Их ветки не меняются. Сначала используют docs/INTEGRATION_API.md и не меняют bootstrap/API без согласования; готовые коммиты проверяются по фактическим HEAD.
+
+## Следующий этап: установка внешних файлов
+
+Core feature development заморожено по приоритету пользователя. Windows installer в scripts/modpack и modpack/INSTALL_WINDOWS.md решает official metadata/dependencies/pinned files/client-server profiles/mrpack без расширения Core. Все40целей сохраняются даже при ошибках;0внешних файлов не создаёт новый Core-only профиль. В cloud пока CONNECT403, поэтому фактический installed.lock должен появиться на компьютере пользователя и пройти runtime/save/co-op проверки. cbc7a5fKilo изучен/отдельно скомпилирован, но квесты заблокированы по docs/KILO_PROGRESSION_REVIEW.md и не объединены. Freebuff HEAD042fa77 содержит отдельный редкий горный iron worldgen; не подмешан в установочный этап и не заменяет обещанную будущую world/ecology интеграцию.

@@ -689,5 +689,8 @@
       "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
       "side": "unverified"
     }
-  ]
+  ],
+  "installer": "scripts/modpack/install.py",
+  "source_bindings": "modpack/source-bindings.json",
+  "availability_note": "All candidates retained; actual releases/dependencies are resolved and pinned on the user machine. Cloud CONNECT403 does not establish incompatibility."
 }
