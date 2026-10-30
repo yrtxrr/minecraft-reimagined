@@ -5,7 +5,8 @@ import dev.reimagined.creature.CreatureContent;
 import dev.reimagined.fishing.FishContent;
 import dev.reimagined.engineering.EngineeringContent;
 import dev.reimagined.progression.ProgressionEvents;
-import dev.reimagined.quest.QuestIntegration;
+import dev.reimagined.quest.QuestEvents;
+import dev.reimagined.quest.SettlementQuestIntegration;
 import dev.reimagined.season.Seasons;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -28,7 +29,8 @@ public final class Reimagined {
         dev.reimagined.smithing.SmithingContent.register(modBus);
         dev.reimagined.settlements.SettlementContent.register(modBus);
         ProgressionEvents.register();
-        QuestIntegration.register();
+        QuestEvents.register();
+        SettlementQuestIntegration.register();
         Seasons.register(modBus);
     }
 }
