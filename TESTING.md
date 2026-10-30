@@ -264,3 +264,5 @@ Prism SHA512 reader verified against official source573665f; offlineexport emits
 ### Final profile tooling checks
 
 Prism source573665f explicitly consumes SHA512 and NeoForge; exported baseline references25actual recorded hashes without fabricatingSHA1.5profile tests verify exactpins/matchingserver/noeula/noclientoptions/optional24andstandaloneextracted-noGit.43backend and5legacyassembler tests pass (53Python total). Real Cataclysm filename apostrophe is accepted without accepting traversal/reserved filenames. No extraJava changes after40JUnit/185GameTests. Prism actualimport/download and combinedGUI remain unexecuted here, not inferred from source review.
+
+Name-level test audit:95/99Freebuff source methods are present;4old BrowserView/snapshot-cache methods were already absent at21cdd49 after the authorized browser removal. No active base test was deleted by this integration, and no obsolete browser UI was resurrected. Current185 includes all164active base methods plus additions.

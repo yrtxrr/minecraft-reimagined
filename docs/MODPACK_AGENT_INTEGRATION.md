@@ -1,6 +1,6 @@
 # Объединение агентов: checkpoint Freebuff
 
-База21cdd49, integration/modpack-agents-21cdd49. Actual remote Freebuffc20c6a6 (финальный handoff; код59326be), Kilo cbc7a5f. Обычный merge Freebuff сохраняет историю/авторство; исходные ветки не изменяются. Все прежние тесты и исправленные Zombies/SereneSeasons fixtures сохранены, не возвращены старые цели MCA.
+База21cdd49, integration/modpack-agents-21cdd49. Actual remote Freebuffc20c6a6 (финальный handoff; код59326be), Kilo cbc7a5f. Обычный merge Freebuff сохраняет историю/авторство; исходные ветки не изменяются. Все действующие тесты базы и новые системные проверки Freebuff, исправленные Zombies/SereneSeasons fixtures сохранены, не возвращены старые цели MCA.
 
 Выявлен критический конфликт: оба класса SettlementData регистрировали один disk key reimagined_settlements. Исправлен единый владелец — старый settlements.SettlementData сохраняет NPC как прежде и Version=2 с Settlers и Aggregates. civilization.SettlementData — фасад состояния Freebuff, больше не регистрируется отдельно; population/economy/era принадлежат ему, dirty делегирован владельцу. Читаются и старые NPC-only, и Freebuff-only root Settlements; новый GameTest проверяет оба формата и общий roundtrip. Нет второго authoritative реестра/потери NPC/новых зданий.
 
@@ -19,3 +19,7 @@ Canonical Version:int2, Settlers unchanged, Aggregates with Freebuff per-entry c
 Migration fixture note: two UUID int words in handoffSNBT exceed signed32bit (2596069104/2271560481); tests use identical bit patterns -1698898192/-2023406815. Long day/time codec fields useL suffix. Five new migrationGameTests cover exact fields, both tiers, repeated reload, duplicates, missing/unknown versions/era/profession; existing distant unloaded simulation and announcement dedupe tests retained.
 
 Native no-external QA client loaded the old joint world, actually created backup and preserved inventory/NPC rendering, founded IntegrationV2 through the real command. Window shutdown failed with X11 BadDrawable; **no clean native shutdown/restart acceptance is claimed** for this attempt. Automated disk/NBT tests pass; GUI/full25mod/two-client acceptance remains pending. Evidence stays outsideGit under /tmp/world-v2-* and /workspace/modpack-integration-review.
+
+## Сверка имён тестов
+
+В Freebuff c20c6a6 объявлено99GameTests;95ихметодов присутствуют в текущемдереве. Четыре BrowserView/snapshot-cache проверки уже отсутствовали в принятой базе21cdd49: они удалены раньше по заданию убрать собственный рецепт-браузер. Эта интеграция не удаляла их радиPASS и не восстанавливает запрещённый UI. Все164активных теста базы сохранены; новые проверки мировых систем/миграции/квестов довели общий набор до185. Freebuff99pass остаётся evidence своей sourceветки, а не тождественный повтор нынешнего набора.
