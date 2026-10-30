@@ -18,6 +18,8 @@ Branches: `feat/reimagined-world` (`8e9d6b3`) vs `feat/reimagined-modpack-core` 
 
 **Blocking conflict:** both declare a `SavedData` named `reimagined_settlements` in the overworld with incompatible layouts. `DataStorage.computeIfAbsent` keys by name only, so whichever factory is created first wins and the other's data is silently ignored/dropped on save. `TradeData` has no collision.
 
+Exact v1 NBT fixtures, expected v2 shape and migration acceptance scenarios: [SETTLEMENT_MIGRATION_FIXTURES.md](SETTLEMENT_MIGRATION_FIXTURES.md).
+
 ## 2. Which one should be primary
 
 **Keep Codex's `settlements` as the local/entity tier and the owner of the `reimagined_settlements` key.** It already has real NPCs, trading, navigation budgets, rendering and live save compatibility. Our `civilization` stays the **remote/abstract tier** (economy, eras, quest signals, commands) but must stop owning that key.
