@@ -4,3 +4,4 @@ run/
 run-*/
 .idea/
 *.iml
+pack/mods/

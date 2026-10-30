@@ -17,11 +17,15 @@ rm -rf build/domain-tests/classes build/domain-tests/results
 mkdir -p build/domain-tests/classes build/domain-tests/results
 "$test_javac" --release 21 -cp "$junit" -d build/domain-tests/classes \
   src/main/java/dev/reimagined/season/SeasonCalendar.java \
+  src/main/java/dev/reimagined/civilization/SettlementType.java \
+  src/main/java/dev/reimagined/civilization/TechEra.java \
+  src/main/java/dev/reimagined/civilization/SettlementEconomy.java \
   src/main/java/dev/reimagined/progression/Skill.java \
   src/main/java/dev/reimagined/progression/SkillProgress.java \
   src/main/java/dev/reimagined/content/ManaRules.java \
   src/main/java/dev/reimagined/engineering/Rotation.java \
   src/test/java/dev/reimagined/season/SeasonCalendarTest.java \
+  src/test/java/dev/reimagined/civilization/SettlementEconomyTest.java \
   src/test/java/dev/reimagined/progression/SkillProgressTest.java \
   src/test/java/dev/reimagined/content/ManaRulesTest.java \
   src/test/java/dev/reimagined/engineering/RotationTest.java

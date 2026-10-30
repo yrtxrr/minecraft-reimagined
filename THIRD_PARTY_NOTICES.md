@@ -8,6 +8,13 @@ Project gameplay code, deer geometry and deer pixel texture were written for thi
 - **Minecraft** remains proprietary Mojang/Microsoft software and is not redistributed in this repository. Asset models reference vanilla texture/resource identifiers resolved from the installed game; referenced vanilla textures are not copied into this repository. Generated development artifacts stay ignored. Development and use remain subject to Minecraft's terms and EULA.
 - The cloud bootstrap downloads **Oracle JDK 21.0.8**, separately from the mod, from Oracle's official archive and checks its published checksum. Its bundled license and release-specific Oracle terms apply; it is not redistributed in the mod. Developers may instead use another licensed JDK 21. https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
 
+Pack mods are **not** redistributed by this repository. `pack/mods.json` pins official Modrinth CDN URLs and SHA-512 hashes; `scripts/fetch-modpack.py` downloads them to an ignored local `mods/` directory for the user's own single-player installation. Each mod keeps its own licence, including all-rights-reserved and no-derivatives terms; downloading for personal use is not redistribution. Pack entries added as required libraries:
+
+- **Apollo's Library** 1.2.0 (Modrinth `apollib`), MIT. Required by Lithostitched/Tectonic. https://modrinth.com/mod/apollib
+- **Moonlight Lib** 1.21.1-3.7.2 (Modrinth `moonlight`), LGPL-3.0 with an additional dependency clause. Required by Immersive Weathering: Renewed. https://modrinth.com/mod/moonlight
+
+Their metadata (`META-INF/neoforge.mods.toml`, licence id, file hash) was read from the downloaded jars; no source or assets are copied into this repository, and the mod does not depend on them.
+
 Current original project files are All Rights Reserved pending the owner's license choice. This is not a grant to redistribute third-party software beyond its own terms.
 
 Mechanical implementation research: Create commit `7ff2760e4924d35d4bc2e22c4b19923f0178cd16`, code MIT, assets all rights reserved. No source/assets copied; reviewed patterns and compatibility are recorded in docs/MECHANICAL_SYSTEM.md. The native NeoForge renderer requires no Create/Flywheel dependency.

@@ -32,6 +32,17 @@ The complete Russian specification is preserved in `docs/USER_SPEC_RU.md`. This 
 
 Each increment requires a passing build, relevant automated tests, a meaningful game/server check and a Git checkpoint. No milestone is satisfied by documentation alone.
 
+## World, single-player pack and civilization prototype — `feat/reimagined-world`
+
+- [x] Audit existing worldgen/fauna/village systems; nothing removed. Deer spawns and the mountain vein now use vanilla biome tags so Terralith biomes inherit them.
+- [x] Pin a NeoForge 1.21.1 pack (`pack/mods.json`) with hashes and a downloader: Terralith, Tectonic, Lithostitched, Apollo's Library, Naturalist, Serene Seasons, GlitchCore, Immersive Weathering: Renewed, Moonlight Lib, Farmer's Delight, Incendium, Nullscape, YUNG's Better Dungeons/Mineshafts/Strongholds, Better Archeology, Cataclysm and libraries, MCA Reborn, Guard Villagers, optional Cold Sweat.
+- [x] Fix load-blocking dependencies the first manifest missed (Apollo's Library, Moonlight Lib); offline validator proves 25/25 hashes and a complete required dependency closure.
+- [x] Abstract settlement prototype: seven types, four eras, food/material/knowledge/treasury economy, population/housing growth, starvation, era advancement, persisted `SavedData`, bounded remote pass without chunk access, deduped quest signals, operator commands, 9 unit tests and 6 GameTests.
+- [ ] Launch the actual pack: Default world with Terralith/Tectonic, Nether with Incendium, End with Nullscape; measure chunk-generation spikes and spawn balance (EULA must be accepted by the user).
+- [ ] Unify the Reimagined calendar with Serene Seasons instead of deferring growth while two HUDs disagree.
+- [ ] Local settlement tier: NPCs/buildings near players integrated with MCA/Guard Villagers, plot/road records, player-claim protection and destructive-work switch.
+- [ ] Inter-settlement trade, professions, diplomacy/alliances/conflicts, technology/magic research, natural founding; post-dragon End progression.
+
 ## Current ownership
 
 Main developer owns the new smithing cycle and its focused validation in `feat/reimagined-alpha`. OpenCode develops pear orchards independently; Antigravity handles existing-system performance/testing. Do not overlap their files or merge their branches. Shared entry-point/language/documentation edits are additive only. FCC-Codex handoffs are historical. The smithing source/server checkpoint has23JUnit/88GameTests; native client validation follows. Prior Alpha gates remain open. See docs/SMITHING.md and docs/MAGIC_RESEARCH.md for current feature limits.

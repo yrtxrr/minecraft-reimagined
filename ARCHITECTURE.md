@@ -14,6 +14,7 @@ Single entry point: `dev.reimagined.Reimagined`. Each module registers its own d
 | `browser` | common display/query/cache/adapter API, brewing and smithing projection | Immutable recipe snapshots, actual Ingredient predicates, exact potion variants, no client-only imports |
 | `client` | existing inventory item panel and recipe screen | Read-only common projections; recipe-sync invalidation, world/logout lifecycle, no client crafting authority |
 | data `worldgen` | optional world preset | Stateless seeded chunk noise, built-in registry codecs |
+| `civilization` | abstract settlements, bounded remote simulation, quest signals | Overworld `SavedData`; ≤64 settlements; staggered 100-tick pass; no world access |
 
 ## Network
 
@@ -25,7 +26,7 @@ New process recipes implement vanilla `Recipe<RecipeInput>` and register a `Reci
 
 ## Performance and boundaries
 
-No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. Remote civilization simulation and climate weather effects are future work; no placeholder simulation is presented as complete.
+No world-wide tick scans. Mechanical graphs inspect at most 128 loaded positions and never deliberately load chunks. Crop changes run only in existing random growth events; greenhouse checks stay in one loaded column. Deer uses standard bounded AI goals. An abstract remote settlement simulation now exists (see "Abstract civilizations" below); local NPCs/buildings, inter-settlement trade, diplomacy and climate weather effects are still future work.
 
 Player state is server-owned. There is no state-level player kingdom creation API and no NPC war terrain destruction. Both civilizations and wars remain unimplemented.
 
@@ -83,3 +84,9 @@ The `magic` module adds manual recipe-driven altar/research stations with standa
 ## Manual smithing
 
 The `smithing` module uses standard reloadable recipes and a seven-slot server-owned manual forge. Steel production reuses the vanilla blast furnace. No BE ticker/world scan/profile changes exist. Quality is bounded by metal, rank and bellows; finishes preserve item components/wear and change built-in durability/attack attributes once. Per-stack nondefault durability and existing forging state reject repeat processing, including vanilla grid-repair metadata loss. Native anvil repair preserves worked equipment. See docs/SMITHING.md for costs/lifecycle/browser preview limits and Antigravity profiling handoff.
+
+## Abstract civilizations and the single-player modpack
+
+`civilization` is the first world-layer module. It stores settlements in overworld `SavedData` and advances them without touching the level: no chunk, block, entity or player query exists in the simulation path. Every 100 ticks a round-robin pass advances at most 16 settlements by at most 6 simulated hours each, so the cost is bounded integer arithmetic (96 hour-steps worst case) rather than work proportional to world size. One-time quest signals are saved before they are posted, so a reload cannot repeat them. Founding is operator-only; nothing is placed in the world, and player bases are not modified.
+
+The pack itself is configuration, not bundled content: `pack/mods.json` pins Modrinth version IDs, filenames, CDN URLs and SHA-512 for Terralith, Tectonic, Lithostitched, Apollo's Library, Naturalist, Serene Seasons, GlitchCore, Immersive Weathering: Renewed, Moonlight Lib, Farmer's Delight, Incendium, Nullscape, the YUNG's suite, Better Archeology, Cataclysm and their libraries, plus MCA Reborn, Guard Villagers and optional Cold Sweat. `scripts/fetch-modpack.py` downloads to an ignored directory; `scripts/validate-modpack.py` re-checks file hashes and the required dependency closure offline. Pack compatibility is currently metadata-level evidence, not a launched pack. See [MODPACK.md](docs/MODPACK.md), [CIVILIZATION_DESIGN.md](docs/CIVILIZATION_DESIGN.md) and [WORLD_PERFORMANCE.md](docs/WORLD_PERFORMANCE.md).
