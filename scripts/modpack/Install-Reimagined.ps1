@@ -10,6 +10,8 @@ param(
     [switch]$UseExistingPlan,
     [switch]$PinnedOnly,
     [switch]$IncludeOptional,
+    [switch]$OfficialFtbMaven,
+    [string]$LocalFiles = '',
     [switch]$AllowBeta
 )
 $ErrorActionPreference = 'Stop'
@@ -34,6 +36,8 @@ if (-not $UseExistingPlan) {
     if ($Bindings) { $resolveArguments += @('--bindings', $Bindings) }
     if ($PinnedOnly) { $resolveArguments += '--pinned-only' }
     if ($IncludeOptional) { $resolveArguments += '--include-optional' }
+    if ($OfficialFtbMaven) { $resolveArguments += '--ftb-maven' }
+    if ($LocalFiles) { $resolveArguments += @('--local-files', $LocalFiles) }
     if ($AllowBeta) { $resolveArguments += '--allow-beta' }
     & $python @pyArguments @resolveArguments
     $resolveExit = $LASTEXITCODE
@@ -42,6 +46,7 @@ if (-not $UseExistingPlan) {
 }
 if ($Install -or $InstallAvailable) {
     $installArguments = @($scriptPath, 'install', '--output', $outputPath, '--core-jar', $CoreJar)
+    if ($LocalFiles) { $installArguments += @('--local-files', $LocalFiles) }
     if ($InstallAvailable) { $installArguments += '--allow-incomplete' }
     & $python @pyArguments @installArguments
     if ($LASTEXITCODE -ne 0) { throw 'Install stopped safely; profiles have not been certified. Inspect the report/error. No existing worlds were changed.' }

@@ -156,3 +156,5 @@ Freebuff c20c6a6 history preserved at479c1b6 with backed-up Version2 ownership. 
 ### Recorded world profile exports
 
 Prism SHA512 reader verified against official source573665f; offlineexport emits actual25pin client.mrpack and matchingserverbootstrap, not Core-only and not full40target/FTBruntime. Canonicalversions onlypack/mods.json. Fixed valid Cataclysm apostrophe filename rejected by installer;43backend+5profile+5legacyPython tests pass, noGit needed for extractedtoolkit export. Java proof remains40JUnit/185GameTests; no repeatedJava run for profile-only code. Newclient/serverprofiles still need actual download/newWorld/restart/two-account/performance acceptance.
+
+- Windows installation follow-up: implemented official FTB Maven candidate path, manual official hash-checked imports, actual per-side game-dependency inspection and dedicated-loader preparation. Next gate remains actual external binaries + first chapter/two-player/default-world/Nether/End/restart/performance acceptance. Do not mistake fixture tests or25baseline for the full technology/magic pack; no later chapters yet.

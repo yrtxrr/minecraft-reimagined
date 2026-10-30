@@ -266,3 +266,13 @@ Prism SHA512 reader verified against official source573665f; offlineexport emits
 Prism source573665f explicitly consumes SHA512 and NeoForge; exported baseline references25actual recorded hashes without fabricatingSHA1.5profile tests verify exactpins/matchingserver/noeula/noclientoptions/optional24andstandaloneextracted-noGit.43backend and5legacyassembler tests pass (53Python total). Real Cataclysm filename apostrophe is accepted without accepting traversal/reserved filenames. No extraJava changes after40JUnit/185GameTests. Prism actualimport/download and combinedGUI remain unexecuted here, not inferred from source review.
 
 Name-level test audit:95/99Freebuff source methods are present;4old BrowserView/snapshot-cache methods were already absent at21cdd49 after the authorized browser removal. No active base test was deleted by this integration, and no obsolete browser UI was resurrected. Current185 includes all164active base methods plus additions.
+
+## Windows installer / official FTB source follow-up (2026-10-30)
+
+- `./gradlew build`: PASS (unchanged Java outputs reused); `./gradlew test --rerun-tasks`: PASS,40JUnit freshly executed,0failures.
+- `python3 -m unittest discover -s scripts/modpack -p 'test_*.py'`:72PASS, including8JAR-audit and16official-source/server cases; rerun from extracted Windows toolkit without source checkout:72PASS.
+- Legacy `python3 scripts/test-modpack.py`:5PASS. Total distinct Python tests77; extracted rerun does not double the count.
+- Resource validator:346JSON/276bilingualkeys; nativequestvalidator:8quests/25IDs, PASS both checkout and extracted tool kit.
+- All25existing manifest entries byte-equivalent as parsedJSON to e4426e7. All40target candidates retained. Only source-reviewed/unconfirmed Maven candidates added; no new published release is claimed.
+- Official API fresh access check: Modrinth CONNECT403 beforeTLS, including outside-sandbox retry. No repeated CDN/Maven probes. Network, Minecraft startup and process execution in installer tests are fixtures; these tests do NOT prove FTB publication/realJava loader installation/WindowsPowerShell execution.
+- Gameplay Java/resources unchanged: GameTests not rerun in this follow-up; previous integrated185/185without external mods remains historical evidence. Full external-modGameTests, FTBGUI8tasks/team/rewards/restart, two real clients, default-world/Nether/End and hardware performance remain outstanding. EULA not accepted. No chapter2.

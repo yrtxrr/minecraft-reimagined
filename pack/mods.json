@@ -579,5 +579,33 @@
     }
   ],
   "preferredEnd": "nullscape",
-  "verification": "Freebuff59326be:25filesSHA512/serverload99tests; joint client/two-player pending"
+  "verification": "Freebuff59326be:25filesSHA512/serverload99tests; joint client/two-player pending",
+  "officialMavenCandidates": {
+    "ftb": {
+      "repository": "https://maven.ftb.dev/releases",
+      "group": "dev.ftb.mods",
+      "source": "https://github.com/FTBTeam/FTB-Quests/tree/dc94c46a6a9ae806fb5921159513448fcedc8816",
+      "status": "source-reviewed coordinates, publication and binaries must be verified locally",
+      "artifacts": [
+        {
+          "artifact": "ftb-library-neoforge",
+          "version": "2101.1.36",
+          "modId": "ftblibrary",
+          "name": "FTB Library"
+        },
+        {
+          "artifact": "ftb-teams-neoforge",
+          "version": "2101.1.9",
+          "modId": "ftbteams",
+          "name": "FTB Teams"
+        },
+        {
+          "artifact": "ftb-quests-neoforge",
+          "version": "2101.1.37",
+          "modId": "ftbquests",
+          "name": "FTB Quests"
+        }
+      ]
+    }
+  }
 }

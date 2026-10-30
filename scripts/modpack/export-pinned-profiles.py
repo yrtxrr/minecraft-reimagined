@@ -57,7 +57,8 @@ def export(output,core,include_optional=False):
                 if p.is_file() and 'client_scripts' not in p.parts:z.write(p,'server/'+folder+'/'+p.relative_to(ROOT/'modpack/overrides'/folder).as_posix())
         for name in ['fetch-modpack.py','validate-modpack.py']:
             z.write(ROOT/'scripts'/name,'scripts/'+name)
-        z.write(ROOT/'scripts/modpack/install.py','scripts/modpack/install.py')
+        for name in ['install.py','audit_jars.py','official_ftb.py','prepare-server.py']:
+            z.write(ROOT/'scripts/modpack'/name,'scripts/modpack/'+name)
         z.write(ROOT/'pack/mods.json','pack/mods.json')
         z.writestr('PROFILE_STATUS.txt',status)
         z.writestr('PINNED_MODS.md',listing)

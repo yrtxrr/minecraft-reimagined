@@ -17,12 +17,17 @@ import urllib.parse
 import urllib.request
 import zipfile
 
+# Also works when imported by tests from an arbitrary current directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import audit_jars
+import official_ftb
+
 ROOT = Path(__file__).resolve().parents[2]
 MC = '1.21.1'
 NF = '21.1.264'
 UA = 'Reimagined-personal-coop/0.2 (github.com/yrtxrr/minecraft-reimagined)'
 API_HOSTS = {'api.modrinth.com', 'api.curseforge.com'}
-FILE_HOSTS = {'cdn.modrinth.com', 'edge.forgecdn.net', 'mediafilez.forgecdn.net', 'media.forgecdn.net'}
+FILE_HOSTS = {'cdn.modrinth.com', 'edge.forgecdn.net', 'mediafilez.forgecdn.net', 'media.forgecdn.net', 'maven.ftb.dev'}
 MAX_FILE = 512 * 1024 * 1024
 
 
@@ -57,8 +62,9 @@ class Redirects(urllib.request.HTTPRedirectHandler):
 
 
 class Transport:
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, local_files=None):
         self.api_key = api_key
+        self.local_files = Path(local_files) if local_files else None
 
     def open(self, url, hosts):
         safe_url(url, hosts)
@@ -104,7 +110,15 @@ class Transport:
             if temporary.exists() or temporary.is_symlink():
                 raise Blocked('Stale partial download; inspect and remove it manually')
             try:
-                with self.open(file['url'], FILE_HOSTS) as response, temporary.open('xb') as output:
+                local_dir = getattr(self, 'local_files', None)
+                local = local_dir / name if local_dir else None
+                if local and local.exists():
+                    if local.is_symlink() or not local.is_file() or not verify(local):
+                        raise Blocked('Manual official artifact checksum/size mismatch: ' + name)
+                    source = local.open('rb')
+                else:
+                    source = self.open(file['url'], FILE_HOSTS)
+                with source as response, temporary.open('xb') as output:
                     count = 0
                     while chunk := response.read(1024 * 1024):
                         count += len(chunk)
@@ -339,7 +353,7 @@ def pinned_records(path, include_optional=False):
     return records,targets,all_targets
 
 
-def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pinned=None, pinned_only=False, include_optional=False):
+def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pinned=None, pinned_only=False, include_optional=False, ftb_maven_cache=None):
     expected = {m['id'] for m in registry['mods']}
     if len(expected) != 40 or expected != set(bindings['targets']):
         raise Blocked('Registry/bindings must cover all 40 unique candidates')
@@ -364,6 +378,8 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
         try:
             if target['id'] in pinned_targets:
                 key=pinned_targets[target['id']]
+            elif target['id'] == 'ftb-quests' and ftb_maven_cache is not None:
+                key = official_ftb.resolve(resolver, pinned, ftb_maven_cache)
             elif pinned_only:
                 raise Blocked('Not in verified pack/mods.json; retained candidate, no invented pin')
             else:
@@ -372,7 +388,8 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
             report.append(dict(id=target['id'], name=target['name'], selected=selected,
                                status='resolved' if selected else 'available-alternative-not-selected', key=key,
                                version=record['version'], version_id=record['version_id'], source_url=record['source_url']))
-        except (Blocked, ValueError, KeyError) as exc:
+        except (Blocked, ValueError, KeyError, OSError) as exc:
+            resolver.selected, resolver.constraints = before
             report.append(dict(id=target['id'],name=target['name'],selected=selected,status='unresolved',reason=str(exc)))
         if not selected:
             resolver.selected, resolver.constraints = before
@@ -492,6 +509,14 @@ def install(plan, output, transport, core, allow_incomplete=False):
             seen_ids[ident]=key
         downloaded[key]=path
     validate_downloaded_pins(records,downloaded,output)
+    audits = []
+    for side in ('client', 'server'):
+        paths = [core] + [downloaded[key] for key, record in records.items() if side in record['sides']]
+        audits.append(audit_jars.audit(paths, side))
+    (output/'DEPENDENCY_AUDIT.json').write_text(json.dumps(audits, indent=2)+'\n', encoding='utf-8')
+    errors = [error for audit in audits for error in audit['errors']]
+    if errors:
+        raise Blocked('Downloaded JAR dependencies: ' + '; '.join(errors))
     for side in ('client','server'):
         dest=output/side; (dest/'mods').mkdir(parents=True)
         shutil.copy2(core,dest/'mods/reimagined-0.1.0-alpha.jar')
@@ -547,13 +572,15 @@ def main():
     parser.add_argument('--allow-incomplete',action='store_true')
     parser.add_argument('--pinned-only',action='store_true')
     parser.add_argument('--include-optional',action='store_true')
+    parser.add_argument('--ftb-maven',action='store_true',help='Verify reviewed FTB production candidates through official Maven')
+    parser.add_argument('--local-files',type=Path,help='Manually downloaded official JARs; exact plan checksums required')
     args=parser.parse_args()
-    transport=Transport(os.environ.get('CURSEFORGE_API_KEY'))
+    transport=Transport(os.environ.get('CURSEFORGE_API_KEY'), args.local_files)
     try:
         if args.command=='resolve':
             registry=json.loads((ROOT/'modpack/mod-registry.json').read_text(encoding='utf-8'))
             bindings=json.loads(args.bindings.read_text(encoding='utf-8'))
-            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional)
+            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional,args.output/'downloads' if args.ftb_maven else None)
             write_reports(plan,args.output)
             missing=sum(t['selected'] and t['status']!='resolved' for t in plan['targets'])
             print(f'Checked all {len(plan["targets"])} candidates; resolved {len(plan["mods"])} artifacts, unresolved selected targets {missing}. See INSTALL_REPORT.md')

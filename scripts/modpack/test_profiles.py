@@ -33,7 +33,7 @@ class ProfileTests(unittest.TestCase):
         source=m.ROOT;offline=self.root/'offline';offline.mkdir()
         for folder in ['pack','modpack/overrides','modpack/server']:
             shutil.copytree(source/folder,offline/folder,ignore=shutil.ignore_patterns('mods'))
-        for name in ['fetch-modpack.py','validate-modpack.py','modpack/install.py']:
+        for name in ['fetch-modpack.py','validate-modpack.py','modpack/install.py','modpack/audit_jars.py','modpack/official_ftb.py','modpack/prepare-server.py']:
             dest=offline/'scripts'/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/'scripts'/name,dest)
         (offline/'installer-manifest.json').write_text(json.dumps({'revision':'a'*40}))
         with patch.object(m,'ROOT',offline),patch.object(m.subprocess,'check_output',side_effect=AssertionError('Git required')):
