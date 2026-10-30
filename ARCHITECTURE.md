@@ -135,3 +135,8 @@ Vanilla hive block-entity attachments persist up to3frames; no second bee/hive/t
 ## Settlement trade and navigation contract
 
 TradingMenu subclasses vanilla MerchantMenu. Existing profession catalogue feeds UUID-owned MerchantOffers in TradeData SavedData; offer packet/selection/result clicks are vanilla server paths. One buyer per NPC, alive/dimension/range/spectator checks, whole-result capacity before shift/pickup and stock consumption per actual result prevent client minting/partial-failure output. Restock is lazy and monotonically day-guarded, not an all-record tick scan. SettlerNavigation guards the entire vanilla path region using ready getChunkNow reads, bounds range/padding/targets and throttles all requests/recomputations40ticks with UUID staggering. QA profile code is opt-in and excluded from player JAR, releasing entity references on completion/stop. Measured load and limits:docs/SETTLEMENT_REMEDIATION.md.
+
+
+## Joint entity interaction ownership
+
+Settler EntityInteract consumes the main-hand action on client and server. Only the server opens MerchantMenu or touches offers/inventories. Client SUCCESS prevents a held usable item (such as BeeSmoker) from falling through to air use after the server handles the NPC. Hive block interactions stay owned by the beekeeping module. The joint regression checks independent hive attachments/honey, merchant payment/stock and durability; no new payload or tick scan is introduced.
