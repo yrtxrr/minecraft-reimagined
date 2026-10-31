@@ -391,3 +391,6 @@ R5 verification completed:104Python tool tests +5legacy tests PASS; extracted se
 
 ## Windows R6
 R5 rejected known Maven beta qualifier as unverified;21.1.264 is above21.0.118-beta. Added conservative known qualifier ordering, retaining unknown-syntax refusal and the original exclusive Minecraft boundary rejection. Added scoped beta permission only for official MoreCulling project51shyZVL; actual JAR checks and R4/R5 cache/base-plan preservation remain. 113 installer tests pass, including9 new boundary/channel regressions. No new runtime/client/two-player or published binary compatibility claim.
+
+## R6 investigation: installer releases paused
+User reports both projects still rejected. Found actual NeoForge21.1.264/FML4.0.45 support-matrix fallbackMinecraft1.21 andNeoForge21.0.166 from cachedloader bytecode/POM. Bare Maven exclusion of1.21.1 was not equivalent to loader rejection; previous diagnostics were overly strict. No installer/pin/Core changes or new release. docs/R6_ROOT_CAUSE_INVESTIGATION.md records filter/order/12-limit/base-plan analysis and realMaven proof. Await concrete Windows cachedJAR metadata/hashes before changing the checker; read-only evidence extractor supplied.
