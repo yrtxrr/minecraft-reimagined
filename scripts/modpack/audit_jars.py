@@ -5,12 +5,29 @@ selection. Reports these limitations explicitly; never labels a profile playable
 """
 import io
 import json
+import re
 from pathlib import Path
 import tomllib
 import zipfile
 
 MAX_METADATA = 2 * 1024 * 1024
 MAX_NESTED = 64 * 1024 * 1024
+
+
+def numeric_range_contains(version, requirement):
+    """Only unambiguous numeric platform ranges; other Maven syntax stays unverified."""
+    def compare(a, b):
+        a=tuple(map(int,a.split('.')));b=tuple(map(int,b.split('.')))
+        width=max(len(a),len(b));a+= (0,)*(width-len(a));b+=(0,)*(width-len(b))
+        return (a>b)-(a<b)
+    number=r'[0-9]+(?:\.[0-9]+)*'
+    exact=re.fullmatch(r'\[\s*('+number+r')\s*\]',requirement)
+    if exact:return compare(version,exact[1])==0
+    interval=re.fullmatch(r'([\[(])\s*('+number+r')?\s*,\s*('+number+r')?\s*([\])])',requirement)
+    if not interval:return None
+    left,low,high,right=interval.groups()
+    return ((not low or compare(version,low)>0 or compare(version,low)==0 and left=='[')
+            and (not high or compare(version,high)<0 or compare(version,high)==0 and right==']'))
 
 
 def inspect(path):
@@ -65,6 +82,7 @@ def audit(paths, side):
         raise ValueError('Unknown profile side')
     declared, required, notes, errors = {}, [], [], []
     top_level = set()
+    platform_checks = []
     for path in paths:
         mods, dependencies, warnings = inspect(path)
         notes.extend(warnings)
@@ -81,10 +99,18 @@ def audit(paths, side):
             else:
                 declared[mod['id']] = mod
     for dep in required:
+        if dep['side'] in ('both',side) and dep['id'] in ('minecraft','neoforge'):
+            version={'minecraft':'1.21.1','neoforge':'21.1.264'}[dep['id']]
+            matches=numeric_range_contains(version,dep['range'])
+            platform_checks.append(dict(owner=dep['owner'],platform=dep['id'],version=version,range=dep['range'],matches=matches))
+            if matches is False:
+                errors.append(dep['owner']+' excludes '+dep['id']+' '+version+' with '+dep['range'])
+            elif matches is None:
+                notes.append('NeoForge must evaluate platform range: '+str(dep))
         if dep['side'] not in ('both', 'client', 'server'):
             errors.append('Unknown dependency side: ' + str(dep))
         elif dep['side'] in ('both', side) and dep['id'] not in {'minecraft', 'neoforge'} | declared.keys():
             errors.append(dep['owner'] + ' requires missing ' + dep['id'] + ' on ' + side)
     return dict(side=side, mods=list(declared.values()), required=required, errors=errors,
-                notes=notes, version_ranges_checked=False, runtime_verified=False,
+                notes=notes, platform_checks=platform_checks, version_ranges_checked=False, runtime_verified=False,
                 limitation='NeoForge must verify version ranges, embedded library selection, mixins and actual world loading.')

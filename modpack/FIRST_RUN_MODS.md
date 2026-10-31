@@ -1,3 +1,5 @@
+Обновление R2: [разбор шести unresolved и точная команда повторного запуска](../docs/WINDOWS_RESOLVE_FIXES.md). CC допускает авторский alpha, JEI/MezzConfig — beta, Player Animator — авторские prerelease. Thaumcraft4:Reforged и BotaniaRevived отложены по неподтверждённой идентичности; Skills необязателен при неуспехе точного поиска. Версии бинарных файлов этих целей окончательно определяет новый Windows resolve.
+
 # Моды для первого испытания Windows
 
 Minecraft **1.21.1**, NeoForge **21.1.264**, Java **21**, Reimagined Core **0.1.0-alpha** из архива. Core сохраняет прежний modId и данные. Все40целевых кандидатов сохранены; таблица25ниже включает библиотеки и не означает40установленных модов.

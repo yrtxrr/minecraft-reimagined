@@ -281,3 +281,9 @@ Name-level test audit:95/99Freebuff source methods are present;4old BrowserView/
 ## First-run delivery tooling after50376c0 (2026-10-30)
 
 78Python tests in scripts/modpack (including6new diagnostic tests) +5legacy packaging tests passed; all78also passed from the extracted Windows ZIP without checkout. Packaged content hashes and8quest/25ID definitions validated. GitHub release YAML parsed and tag/permission scopes checked locally; actual workflow/release execution remains unconfirmed here. Java/game resources unchanged, so Gradle/JUnit/GameTests were not rerun locally for these documentation/diagnostic changes (prior50376c0evidence remains historical). The publishing workflow runs a fresh build/JUnit and relevant Python/resource checks before publication; it does not certify a Minecraft client. No proxy requests repeated, no EULA accepted.
+
+## Windows R2 resolver fixes (2026-10-30)
+
+94Python tools +5legacy tests PASS. Added regressions for CCofficialalpha, JEI+MezzConfigbeta closure, BetterCombat+PlayerAnimatoralpha, author-source mismatch, wrong loaders, stable preference, actual dependency error identity, exact Skills lookup, explicit magic deferrals, mandatory-profile validation with retained40targets, CFbeta not admitting arbitraryalpha, and actual JAR numeric platform exclusions. Existing denied-catalog test now explicitly checks two deferred identities and preserves CONNECT403 assertions for every attempted target; no test deleted.
+
+Gradle build PASS with unchanged Java tasks cached;346JSON/276bilingual keys and8quests/25IDs validate. No fresh JUnit/GameTest/client execution claimed for this installer-only stage. User's real Windows resolution is separate from fixture test results. Published binary versions/runtime remain unconfirmed until R2 Windows download/launch.

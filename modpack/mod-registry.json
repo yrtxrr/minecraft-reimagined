@@ -259,7 +259,7 @@
       "name": "Thaumcraft 4: Reforged",
       "category": "magic",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "deferred-identity",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -268,7 +268,7 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
+      "reason": "Exact project/author/NeoForge1.21.1 artifact unconfirmed; not mandatory for first run; Core magic retained. See docs/WINDOWS_RESOLVE_FIXES.md.",
       "side": "unverified"
     },
     {
@@ -276,7 +276,7 @@
       "name": "Botania Revived",
       "category": "magic",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "deferred-identity",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -285,7 +285,7 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
+      "reason": "Exact project/author/NeoForge1.21.1 artifact unconfirmed; not mandatory for first run; Core magic retained. See docs/WINDOWS_RESOLVE_FIXES.md.",
       "side": "unverified"
     },
     {
@@ -472,7 +472,7 @@
       "name": "Pufferfish’s Skills",
       "category": "progression",
       "role": "target",
-      "status": "blocked-source-access",
+      "status": "optional-unconfirmed-identity",
       "minecraft": "1.21.1",
       "loader": "neoforge",
       "version": null,
@@ -481,7 +481,7 @@
       "dependencies": null,
       "compatibility": "unverified",
       "redistribution": "unverified-not-bundled",
-      "reason": "Official catalog metadata request blocked by proxy HTTP 403; exact project identity, release, dependencies and license must be verified.",
+      "reason": "Windows slug404; exact-title search only, optional if unresolved; individual Core skills retained.",
       "side": "unverified"
     },
     {

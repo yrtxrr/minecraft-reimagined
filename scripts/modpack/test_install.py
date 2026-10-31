@@ -198,6 +198,12 @@ class CurseForgeTests(unittest.TestCase):
             self.r.cf(10,override='both')
     def test_curseforge_side_cannot_be_guessed(self):
         with self.assertRaisesRegex(m.Blocked,'Unknown side'):self.r.cf(10)
+    def test_curseforge_scoped_beta_and_global_beta_does_not_allow_alpha(self):
+        self.file['releaseType']=2
+        self.r.bindings={'project_policies':{'curseforge:10':{'release_types':['release','beta']}}}
+        self.assertEqual('beta',self.r.selected[self.r.cf(10,override='both')]['release_type'])
+        self.r.selected={};self.r.bindings={};self.r.allow_beta=True;self.file['releaseType']=3
+        with self.assertRaisesRegex(m.Blocked,'No matching'):self.r.cf(10,override='both')
     def test_curseforge_wrong_loader_refused(self):
         self.file['gameVersions']=['1.21.1','Forge']
         with self.assertRaises(m.Blocked):self.r.cf(10,100,override='both')
@@ -228,7 +234,10 @@ class FullCatalogTests(unittest.TestCase):
             api_key=None
             def json(self,url):raise m.Blocked('CONNECT403')
         plan=m.resolve(registry,bindings,Denied());self.assertEqual(40,len(plan['targets']));self.assertEqual([],plan['mods'])
-        self.assertTrue(all('CONNECT403' in t['reason'] for t in plan['targets']))
+        deferred=[t for t in plan['targets'] if t['status']=='deferred-identity']
+        self.assertEqual({'thaumcraft-4-reforged','botania-revived'},{t['id'] for t in deferred})
+        self.assertTrue(all(not t['selected'] and t['reason'] for t in deferred))
+        self.assertTrue(all('CONNECT403' in t['reason'] for t in plan['targets'] if t not in deferred))
 
 
 class PinnedManifestTests(unittest.TestCase):

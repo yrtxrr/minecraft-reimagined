@@ -50,6 +50,12 @@ class AuditTests(unittest.TestCase):
     def test_forge_dependency_not_treated_as_neoforge(self):
         p=self.write('root.jar',jar('root',self.dep('forge')))
         self.assertTrue(audit_jars.audit([p],'server')['errors'])
+    def test_wrong_numeric_platform_range_blocks_real_jar_profile(self):
+        dep=self.dep('minecraft').replace('[1,)','[1.21, 1.21.1)')
+        p=self.write('root.jar',jar('root',dep))
+        report=audit_jars.audit([p],'client')
+        self.assertIn('excludes minecraft 1.21.1',report['errors'][0])
+        self.assertFalse(report['platform_checks'][0]['matches'])
     def test_unknown_side_rejected(self):
         p=self.write('root.jar',jar('root',self.dep(side='UNKNOWN')))
         self.assertTrue(audit_jars.audit([p],'server')['errors'])

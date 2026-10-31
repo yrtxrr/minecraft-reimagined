@@ -154,7 +154,7 @@
         "CC: Tweaked",
         "CC: Tweaked"
       ],
-      "modrinth_project_id": null,
+      "modrinth_project_id": "gu7yAYhd",
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
@@ -169,7 +169,9 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "resolution_policy": "deferred-identity",
+      "reason": "Exact project/author and NeoForge1.21.1 artifact unconfirmed; excluded from mandatory first run, no substitution. Existing Core magic remains available."
     },
     "botania-revived": {
       "modrinth_slug_hint": null,
@@ -180,7 +182,9 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "resolution_policy": "deferred-identity",
+      "reason": "Exact project/author and NeoForge1.21.1 artifact unconfirmed; excluded from mandatory first run, no substitution. Existing Core magic remains available."
     },
     "mca-reborn": {
       "modrinth_slug_hint": "minecraft-comes-alive-reborn",
@@ -299,7 +303,7 @@
       "side_override": null
     },
     "pufferfishs-skills": {
-      "modrinth_slug_hint": "puffish-skills",
+      "modrinth_slug_hint": null,
       "accepted_titles": [
         "Pufferfish’s Skills",
         "Pufferfish's Skills"
@@ -308,7 +312,9 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "resolution_policy": "optional",
+      "reason": "Previous slug returned404 on Windows; exact-title search only. If unresolved, preserve candidate and use existing individual Core skills; do not substitute an unverified project."
     },
     "ftb-quests": {
       "modrinth_slug_hint": "ftb-quests",
@@ -340,9 +346,9 @@
         "Just Enough Items",
         "Just Enough Items (JEI)"
       ],
-      "modrinth_project_id": null,
+      "modrinth_project_id": "u6dRKJwZ",
       "modrinth_version_id": null,
-      "curseforge_project_id": null,
+      "curseforge_project_id": 238222,
       "curseforge_file_id": null,
       "side_override": null
     },
@@ -457,5 +463,68 @@
       "side_override": null
     }
   },
-  "dependency_sides": {}
+  "dependency_sides": {
+    "curseforge:238222": "both",
+    "curseforge:1689768": "both"
+  },
+  "project_policies": {
+    "modrinth:gu7yAYhd": {
+      "release_types": [
+        "release",
+        "alpha"
+      ],
+      "source_url": "https://github.com/cc-tweaked/CC-Tweaked",
+      "reason": "Official mc-1.21.x uses isUnstable=true and publishes alpha; only this project may use that channel."
+    },
+    "modrinth:u6dRKJwZ": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/mezz/JustEnoughItems",
+      "reason": "Official1.21.1 NeoForge publishing uses BETA."
+    },
+    "modrinth:better-combat": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/ZsoltMolnarrr/BetterCombat",
+      "reason": "Official1.21.1 NeoForge build; beta permitted for this project only, required PlayerAnimator is separately reviewed."
+    },
+    "modrinth:playeranimator": {
+      "release_types": [
+        "release",
+        "beta",
+        "alpha"
+      ],
+      "source_url": "https://github.com/KosmX/minecraftPlayerAnimator",
+      "reason": "Official1.21.1 NeoForge publishing defaults to alpha; BetterCombat requires this game library."
+    },
+    "modrinth:7tEfOcA7": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/mezz/MezzConfig",
+      "reason": "Official1.21.1 publishing uses BETA; required by current JEI."
+    },
+    "curseforge:238222": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/mezz/JustEnoughItems",
+      "reason": "JEI official CurseForge ID from gradle.properties."
+    },
+    "curseforge:1689768": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/mezz/MezzConfig",
+      "reason": "MezzConfig official CurseForge ID from gradle.properties."
+    }
+  },
+  "review_document": "docs/WINDOWS_RESOLVE_FIXES.md"
 }

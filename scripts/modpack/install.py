@@ -158,11 +158,20 @@ def compatible(version):
     return MC in version.get('game_versions', []) and 'neoforge' in version.get('loaders', [])
 
 
-def choose(versions, allow_beta=False):
-    choices = [v for v in versions if compatible(v) and v.get('version_type') in (('release','beta') if allow_beta else ('release',))]
+def choose(versions, allow_beta=False, release_types=None):
+    allowed = set(release_types or (('release','beta') if allow_beta else ('release',)))
+    if not allowed or not allowed.issubset({'release','beta','alpha'}):
+        raise Blocked('Invalid reviewed release-channel policy')
+    matching = [v for v in versions if compatible(v)]
+    choices = [v for v in matching if v.get('version_type') in allowed]
     if not choices:
-        raise Blocked('No verified NeoForge 1.21.1 release; wrong-loader/Fabric/Forge/datapack files are not substituted')
-    return max(choices, key=lambda v: v['date_published'])
+        if matching:
+            channels = ', '.join(sorted({v.get('version_type', 'unknown') for v in matching}))
+            raise Blocked('NeoForge1.21.1 files exist but their channels are excluded: '+channels+'; permitted: '+', '.join(sorted(allowed)))
+        raise Blocked('Catalog returned no compatible NeoForge1.21.1 files; Fabric/Forge/datapack files are not substituted')
+    # Prefer a stable release when one exists; scoped prerelease permission is a fallback.
+    stable = [v for v in choices if v.get('version_type') == 'release']
+    return max(stable or choices, key=lambda v: v['date_published'])
 
 
 class Resolver:
@@ -196,6 +205,21 @@ class Resolver:
             raise Blocked('No unique exact official project identity; review source-bindings.json (candidate retained)')
         return self.mr_project(exact.pop())
 
+    def project_policy(self, key, project=None):
+        policies = self.bindings.get('project_policies', {})
+        policy = policies.get(key)
+        if policy is None and project is not None:
+            policy = policies.get('modrinth:' + project.get('slug', ''))
+        if not policy:
+            return None
+        # ID-based policies were read from upstream publication config. Slug-only
+        # policies additionally require the upstream source link to match.
+        if project is not None and key not in policies:
+            normalize = lambda value: (value or '').lower().removesuffix('/').removesuffix('.git')
+            if normalize(project.get('source_url')) != normalize(policy.get('source_url')):
+                raise Blocked('Scoped channel policy source identity mismatch: ' + key)
+        return policy
+
     def mr(self, ident, pinned=None, override=None, depth=0):
         if depth > 32 or len(self.selected) >= 160:
             raise Blocked('Dependency budget exceeded')
@@ -211,7 +235,12 @@ class Resolver:
                 raise Blocked('Pinned dependency has wrong project/loader/Minecraft')
         else:
             query = urllib.parse.urlencode({'loaders': '["neoforge"]', 'game_versions': '["1.21.1"]'})
-            version = choose(self.t.json('https://api.modrinth.com/v2/project/' + project['id'] + '/version?' + query), self.allow_beta)
+            policy = self.project_policy(key, project)
+            try:
+                version = choose(self.t.json('https://api.modrinth.com/v2/project/' + project['id'] + '/version?' + query),
+                                 self.allow_beta, policy['release_types'] if policy else None)
+            except Blocked as exc:
+                raise Blocked(project['title'] + ' [' + key + ']: ' + str(exc)) from None
         jar_files = [f for f in version['files'] if f['filename'].endswith('.jar')]
         primary = [f for f in jar_files if f.get('primary')]
         if len(primary) == 1:
@@ -222,7 +251,7 @@ class Resolver:
             raise Blocked('No unique primary JAR; datapack/manual handling required')
         safe_url(file['url'], FILE_HOSTS)
         record = dict(key=key, source='modrinth', project_id=project['id'], name=project['title'],
-                      version_id=version['id'], version=version['version_number'], minecraft=MC, loader='neoforge',
+                      version_id=version['id'], version=version['version_number'], release_type=version.get('version_type','unknown'), minecraft=MC, loader='neoforge',
                       sides=sides(project, override or self.bindings.get('dependency_sides', {}).get(key)),
                       license=project.get('license'), source_url='https://modrinth.com/mod/' + project['slug'],
                       file={k: file[k] for k in ('url', 'filename', 'hashes', 'size')}, dependencies=[], optional_dependencies=[])
@@ -261,10 +290,12 @@ class Resolver:
             file = self.t.json(f'https://api.curseforge.com/v1/mods/{ident}/files/{int(pinned)}')['data']
         else:
             files = self.t.json(f'https://api.curseforge.com/v1/mods/{ident}/files?gameVersion={MC}&modLoaderType=6&pageSize=50')['data']
-            matches = [f for f in files if MC in f.get('gameVersions', []) and 'NeoForge' in f.get('gameVersions', []) and (self.allow_beta or f['releaseType'] == 1)]
+            policy = self.project_policy(key)
+            channels = set(policy['release_types'] if policy else (['release','beta'] if self.allow_beta else ['release']))
+            matches = [f for f in files if MC in f.get('gameVersions', []) and 'NeoForge' in f.get('gameVersions', []) and {1:'release',2:'beta',3:'alpha'}.get(f['releaseType']) in channels]
             if not matches:
                 raise Blocked('No matching official CurseForge NeoForge release')
-            file = max(matches, key=lambda f: f['fileDate'])
+            file = max([f for f in matches if f['releaseType']==1] or matches, key=lambda f: f['fileDate'])
         if str(file['modId']) != ident or MC not in file.get('gameVersions', []) or 'NeoForge' not in file.get('gameVersions', []):
             raise Blocked('CurseForge file project/loader mismatch')
         if not file.get('downloadUrl'):
@@ -274,7 +305,7 @@ class Resolver:
         if 'sha1' not in hashes:
             raise Blocked('CurseForge file has no official SHA1')
         record = dict(key=key,source='curseforge',project_id=ident,name=project['name'],version_id=str(file['id']),
-                      version=file['displayName'],minecraft=MC,loader='neoforge',sides=side_list,
+                      version=file['displayName'],release_type={1:'release',2:'beta',3:'alpha'}.get(file['releaseType'],'unknown'),minecraft=MC,loader='neoforge',sides=side_list,
                       license=None,license_review='Review official project license; personal download is not redistribution permission',
                       source_url=project['links']['websiteUrl'],file=dict(url=file['downloadUrl'],filename=file['fileName'],hashes=hashes,size=file['fileLength']),
                       dependencies=[],optional_dependencies=[])
@@ -368,6 +399,13 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
     for target in registry['mods']:
         selected = not (target['id'] == 'nullscape' and end != 'nullscape' or target['id'] == 'betterend-new-dawn' and end == 'nullscape')
         before = copy.deepcopy(resolver.selected), copy.deepcopy(resolver.constraints)
+        binding = bindings['targets'][target['id']]
+        resolution_policy = binding.get('resolution_policy', 'required')
+        if resolution_policy not in ('required', 'optional', 'deferred-identity'):
+            raise Blocked('Unknown target resolution policy: ' + target['id'])
+        if resolution_policy == 'deferred-identity':
+            report.append(dict(id=target['id'],name=target['name'],selected=False,status='deferred-identity',reason=binding['reason']))
+            continue
         if not selected and target['id'] in all_pinned:
             entry=all_pinned[target['id']]
             report.append(dict(id=target['id'],name=target['name'],selected=False,status='available-alternative-not-selected',version=entry['version'],version_id=entry['versionId']))
@@ -387,10 +425,12 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
             record = resolver.selected[key]
             report.append(dict(id=target['id'], name=target['name'], selected=selected,
                                status='resolved' if selected else 'available-alternative-not-selected', key=key,
-                               version=record['version'], version_id=record['version_id'], source_url=record['source_url']))
+                               version=record['version'], version_id=record['version_id'], release_type=record.get('release_type','recorded-pin'), source_url=record['source_url']))
         except (Blocked, ValueError, KeyError, OSError) as exc:
             resolver.selected, resolver.constraints = before
-            report.append(dict(id=target['id'],name=target['name'],selected=selected,status='unresolved',reason=str(exc)))
+            report.append(dict(id=target['id'],name=target['name'],selected=selected and resolution_policy!='optional',
+                               status='optional-unresolved' if resolution_policy=='optional' else 'unresolved',
+                               reason=str(exc) + ('; '+binding['reason'] if resolution_policy=='optional' else '')))
         if not selected:
             resolver.selected, resolver.constraints = before
     # Independently curated providers can publish the same mod on both catalogs.
@@ -408,6 +448,7 @@ def write_reports(plan, directory):
              '| Candidate | Selected | Result | Version / reason |','|---|---|---|---|']
     for t in plan['targets']:
         detail = str(t.get('version') or t.get('reason', '')).replace('|','/').replace('\n',' ')
+        if t.get('release_type'):detail += ' [' + t['release_type'] + ']'
         lines.append(f'|{t["name"]}|{t["selected"]}|{t["status"]}|{detail}|')
     lines += ['', '## Conflicts', *('- '+c for c in plan['conflicts']), '',
               'No Fabric/Forge fallback, mirror, synthesized CDN URL, automatic EULA acceptance or authentication bypass.']
@@ -492,6 +533,7 @@ def validate_downloaded_pins(records,downloaded,output):
 
 def install(plan, output, transport, core, allow_incomplete=False):
     records, missing = validate_plan(plan,allow_incomplete)
+    missing += [t['id'] for t in plan['targets'] if t['status'] in ('deferred-identity','optional-unresolved')]
     if not core.is_file() or not zipfile.is_zipfile(core):
         raise Blocked('Provide the previously built Reimagined Core JAR with --core-jar')
     if 'reimagined' not in java_mod_ids(core):

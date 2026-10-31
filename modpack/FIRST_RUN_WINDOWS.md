@@ -1,10 +1,12 @@
 # Первый запуск Reimagined через Prism Launcher
 
+Исправление R2 после вашего первого resolve: см. `docs/WINDOWS_RESOLVE_FIXES.md`. Используйте новую папку вывода и новый resolve, а не старый план.
+
 Это испытание клиента, а не объявление готовой Alpha. Собирать Java-проект не нужно: собственный Core уже находится в ZIP. Внешние моды установщик получает на вашем компьютере.
 
 ## 1. Получить архив
 
-Откройте [GitHub Releases](https://github.com/yrtxrr/minecraft-reimagined/releases) и prerelease **windows-trial-2026-10-30**. В **Assets** скачайте `Reimagined-Windows-Setup.zip` и `SHA256SUMS.txt`. Не выбирайте автоматически добавленный GitHub архив **Source code**: он не содержит собранного Core.
+Откройте [GitHub Releases](https://github.com/yrtxrr/minecraft-reimagined/releases) и prerelease **windows-trial-2026-10-30-r2**. В **Assets** скачайте `Reimagined-Windows-Setup.zip` и `SHA256SUMS.txt`. Не выбирайте автоматически добавленный GitHub архив **Source code**: он не содержит собранного Core.
 
 Публикация выполняется GitHub Actions после отправки тега. Если Assets ещё нет, проверьте [Windows first-run kit](https://github.com/yrtxrr/minecraft-reimagined/actions/workflows/windows-trial.yml). Пока процесс не завершился, это ожидаемый адрес, а не подтверждение наличия релиза. При успешном шаге package ZIP также доступен в **Artifacts → Reimagined-Windows-Setup** на странице запуска (нужен вход в GitHub). Его внешний ZIP содержит установочный ZIP и checksum; распакуйте оба уровня. Если сборка красная, передайте ссылку/текст ошибки — самостоятельно собирать проект не требуется.
 
