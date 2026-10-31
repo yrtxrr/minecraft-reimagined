@@ -1,0 +1,37 @@
+{
+  "name": "Reimagined Magic Ports Lab",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.264",
+  "java": 21,
+  "isolated": true,
+  "runtime_verified": false,
+  "install_into_r4": false,
+  "ports": [
+    {
+      "name": "Thaumcraft 4: Reforged",
+      "repository": "https://github.com/notlikethiss/thaumcraft-4-reforged",
+      "revision": "dffee19a4f7f82e0538d323d5de403883db1fe0c",
+      "branch": "mc/1.21.1",
+      "source_version": "1.1.2",
+      "mod_id": "thaumcraft",
+      "minimum_neoforge": "21.1.256",
+      "required": [
+        "TerraBlender >=4.1.0.1 (NeoForge1.21.1)",
+        "Curios >=9.5.1 (NeoForge1.21.1)"
+      ],
+      "redistribute": false
+    },
+    {
+      "name": "Botania Revived",
+      "repository": "https://github.com/Velron-Devs/Botania-Revived",
+      "revision": "8da09edaf6bd5ab454899f6306560baf93c79bae",
+      "source_version": "1.0.4",
+      "mod_id": "botania",
+      "minimum_neoforge": "21.1.240",
+      "required": [
+        "Patchouli >=1.21.1-93-NEOFORGE"
+      ],
+      "redistribute": "Only under Botania License and component licenses; no binary bundled here"
+    }
+  ]
+}

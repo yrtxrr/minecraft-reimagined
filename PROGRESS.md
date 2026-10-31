@@ -378,3 +378,6 @@ Only Better Combat identity-link checking and default official FTB Maven routing
 
 ## Windows R4
 Player Animator official repository alias verified via git ls-remote: both URLs return cb3227efc19ec46065597332ae265076d0f2b495. Dependency ID mapping is correct; root candidate report obscured the library identity rejection. Added only this repository alias and regression coverage rejecting that alias for BetterCombat itself. --base-plan preserves prior resolved records and skips re-resolution, including existing Maven records; no original version pins/Core modified. 99 tool tests +5legacy pass; Gradle build unchanged/cached passes. Actual Windows resolution/client/two players remain untested. Release requested by windows-trial-2026-10-31-r4 tag; publication requires successful GitHub Actions.
+
+## Exact magic ports reviewed (2026-10-31)
+User-supplied Thaumcraft4:Reforged and BotaniaRevived repositories are identified. Separate pinned lab template prepared, see docs/MAGIC_PORTS_REVIEW.md. Both source build attempts blocked before Java compilation by external Maven403, including one outside-sandbox retry each; no runtime/binary compatibility claimed. R4 pins/bindings/Core/quests unchanged. Further gate: isolated Windows build/client/two-player/restart/performance checks plus Thaumcraft redistribution restriction; no main-profile integration yet.
