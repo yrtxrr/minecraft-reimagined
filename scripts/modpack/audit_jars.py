@@ -40,6 +40,18 @@ Known qualifiers follow Maven order. This is not a general Maven version resolve
             and (not high or compare(version,high)<0 or compare(version,high)==0 and right==']'))
 
 
+def platform_range_contains(platform, version, requirement, minecraft='1.21.1', neoforge='21.1.264', fml='4.0.45'):
+    direct=numeric_range_contains(version,requirement)
+    if direct is True:return True
+    # Exact support matrix from the actual FML4.0.45 shipped with NeoForge21.1.264.
+    if (minecraft,neoforge,fml)==('1.21.1','21.1.264','4.0.45'):
+        alternative={'minecraft':('1.21.1','1.21'),'neoforge':('21.1.264','21.0.166')}.get(platform)
+        if alternative and version==alternative[0]:
+            fallback=numeric_range_contains(alternative[1],requirement)
+            if fallback is True:return True
+    return direct
+
+
 def inspect(path):
     mods, dependencies, notes = [], [], []
     budget = [0, 0]
@@ -60,15 +72,23 @@ def inspect(path):
             descriptor = next((n for n in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml') if n in names), None)
             if descriptor:
                 data = tomllib.loads(read(descriptor).decode('utf-8-sig'))
+                implementation_version=''
+                if 'META-INF/MANIFEST.MF' in names:
+                    manifest=read('META-INF/MANIFEST.MF').decode('utf-8',errors='replace').replace('\r\n','\n').replace('\n ','')
+                    for line in manifest.splitlines():
+                        if line.lower().startswith('implementation-version:'):
+                            implementation_version=line.split(':',1)[1].strip();break
                 for mod in data.get('mods', []):
                     ident = mod['modId']
                     if not ident or '${' in ident:
                         raise ValueError('Unresolved Java mod ID in ' + label)
-                    mods.append(dict(id=ident, version=mod.get('version', ''), artifact=label, embedded=depth > 0))
+                    version=mod.get('version','')
+                    if version=='${file.jarVersion}':version=implementation_version or version
+                    mods.append(dict(id=ident, version=version, artifact=label, embedded=depth > 0))
                     for dep in data.get('dependencies', {}).get(ident, []):
-                        if dep.get('type') == 'required' or dep.get('mandatory') is True:
+                        if dep.get('type') in ('required','optional','incompatible') or 'mandatory' in dep:
                             dependencies.append(dict(owner=ident, id=dep['modId'],
-                                side=dep.get('side', 'BOTH').lower(), range=dep.get('versionRange', '')))
+                                side=dep.get('side', 'BOTH').lower(), range=dep.get('versionRange', ''),type=dep.get('type','required' if dep.get('mandatory') else 'optional')))
             elif depth == 0 and 'fabric.mod.json' in names:
                 raise ValueError('Fabric-only top-level JAR: ' + label)
             elif depth == 0:
@@ -109,9 +129,9 @@ def audit(paths, side):
             else:
                 declared[mod['id']] = mod
     for dep in required:
-        if dep['side'] in ('both',side) and dep['id'] in ('minecraft','neoforge'):
+        if dep.get('type','required')=='required' and dep['side'] in ('both',side) and dep['id'] in ('minecraft','neoforge'):
             version={'minecraft':'1.21.1','neoforge':'21.1.264'}[dep['id']]
-            matches=numeric_range_contains(version,dep['range'])
+            matches=platform_range_contains(dep['id'],version,dep['range'])
             platform_checks.append(dict(owner=dep['owner'],platform=dep['id'],version=version,range=dep['range'],matches=matches))
             if matches is False:
                 errors.append(dep['owner']+' excludes '+dep['id']+' '+version+' with '+dep['range'])
@@ -119,8 +139,22 @@ def audit(paths, side):
                 notes.append('NeoForge must evaluate platform range: '+str(dep))
         if dep['side'] not in ('both', 'client', 'server'):
             errors.append('Unknown dependency side: ' + str(dep))
-        elif dep['side'] in ('both', side) and dep['id'] not in {'minecraft', 'neoforge'} | declared.keys():
+        elif dep.get('type','required')=='required' and dep['side'] in ('both', side) and dep['id'] not in {'minecraft', 'neoforge'} | declared.keys():
             errors.append(dep['owner'] + ' requires missing ' + dep['id'] + ' on ' + side)
+    for dep in required:
+        if dep['side'] not in ('both',side) or dep['id'] not in declared:continue
+        if not dep['range']:continue
+        actual=declared[dep['id']]['version']
+        matches=numeric_range_contains(actual,dep['range'])
+        relation=dep.get('type','required')
+        if relation=='incompatible':
+            if matches is not False:errors.append(dep['owner']+' incompatible with '+dep['id']+' '+actual+' in or unverified against '+dep['range'])
+        elif matches is False:
+            errors.append(dep['owner']+' requires '+dep['id']+' '+dep['range']+' but found '+actual)
+        elif matches is None:
+            if dep['id'] in ('mezz_config','cloth_config'):
+                errors.append('Required explicit dependency range cannot be verified: '+str(dep)+' actual='+actual)
+            notes.append('Dependency version range unverified; NeoForge must check: '+str(dep)+' actual='+actual)
     return dict(side=side, mods=list(declared.values()), required=required, errors=errors,
                 notes=notes, platform_checks=platform_checks, version_ranges_checked=False, runtime_verified=False,
                 limitation='NeoForge must verify version ranges, embedded library selection, mixins and actual world loading.')

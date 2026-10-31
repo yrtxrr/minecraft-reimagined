@@ -490,9 +490,10 @@
       "source_url": "https://github.com/mezz/JustEnoughItems",
       "reason": "Official1.21.1 NeoForge publishing uses BETA.",
       "preferred_versions": [
+        "19.70.0.468",
         "19.27.0.340"
       ],
-      "preferred_version_evidence": "Botania Revived audited1.21.1 build.gradle/gradle.properties uses19.27.0.340; compatibility candidate only, official publication/hash and actual JAR ranges must pass before selection."
+      "preferred_version_evidence": "Windows cache inventory confirms JEI19.70.0.468 and MC[1.21,1.21.1); official API hashes, production metadata, dependency ranges and exact target FML support matrix must pass; no hash inferred from cache filename."
     },
     "modrinth:better-combat": {
       "release_types": [
@@ -544,7 +545,10 @@
         "beta"
       ],
       "source_url": "https://github.com/FxMorin/MoreCulling",
-      "reason": "Windows R5 confirmed official project51shyZVL provides NeoForge1.21.1 beta artifacts; actual production JAR modId/platform checks remain mandatory."
+      "reason": "Windows R5 confirmed official project51shyZVL provides NeoForge1.21.1 beta artifacts; actual production JAR modId/platform checks remain mandatory.",
+      "preferred_versions": [
+        "1.0.10"
+      ]
     }
   },
   "review_document": "docs/WINDOWS_RESOLVE_FIXES.md"

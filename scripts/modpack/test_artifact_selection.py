@@ -20,7 +20,7 @@ class SelectionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bodies={};fake=Fake();fake.artifact_cache=Path(tmp)
             fake.versions={}
-            for name,rng,date in [('bad','[1.21,1.21.1)','2026-10-31'),('good','[1.21.1,1.22)','2026-10-01')]:
+            for name,rng,date in [('bad','[1.20,1.21)','2026-10-31'),('good','[1.21.1,1.22)','2026-10-01')]:
                 v=version(name,date=date);body=jar(rng);f=v['files'][0];f['hashes']={'sha512':hashlib.sha512(body).hexdigest()};f['size']=len(body)
                 bodies[f['url']]=body;fake.versions[name]=v
             fake.open=lambda url,hosts:io.BytesIO(bodies[url])
@@ -57,7 +57,7 @@ class SelectionTests(unittest.TestCase):
             root=version();lib=version('library1','library')
             root['dependencies']=[dict(dependency_type='required',project_id='library',version_id='library1')]
             bodies={}
-            for v,rng in [(root,'[1.21.1]'),(lib,'[1.21,1.21.1)')]:
+            for v,rng in [(root,'[1.21.1]'),(lib,'[1.20,1.21)')]:
                 body=jar(rng);f=v['files'][0];f.update(hashes={'sha512':hashlib.sha512(body).hexdigest()},size=len(body));bodies[f['url']]=body
             fake.versions={'v1':root,'library1':lib};fake.open=lambda url,hosts:io.BytesIO(bodies[url])
             with self.assertRaisesRegex(m.Blocked,'excludes'):m.Resolver(fake,{}).mr('root',verify=True)

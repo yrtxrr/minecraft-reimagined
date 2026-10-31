@@ -251,9 +251,9 @@ class Resolver:
         if mod_id and not any(m['id']==mod_id and not m['embedded'] for m in mods):
             raise IncompatibleArtifact('Wrong production mod ID: '+mod_id)
         for dep in deps:
-            if dep['id'] in ('minecraft','neoforge'):
+            if dep.get('type','required')=='required' and dep['id'] in ('minecraft','neoforge'):
                 actual={'minecraft':MC,'neoforge':NF}[dep['id']]
-                matches=audit_jars.numeric_range_contains(actual,dep['range'])
+                matches=audit_jars.platform_range_contains(dep['id'],actual,dep['range'],minecraft=MC,neoforge=NF)
                 if matches is not True:
                     raise IncompatibleArtifact(dep['owner']+' excludes or has unverified '+dep['id']+' range '+dep['range'])
 

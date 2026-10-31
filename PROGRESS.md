@@ -394,3 +394,7 @@ R5 rejected known Maven beta qualifier as unverified;21.1.264 is above21.0.118-b
 
 ## R6 investigation: installer releases paused
 User reports both projects still rejected. Found actual NeoForge21.1.264/FML4.0.45 support-matrix fallbackMinecraft1.21 andNeoForge21.0.166 from cachedloader bytecode/POM. Bare Maven exclusion of1.21.1 was not equivalent to loader rejection; previous diagnostics were overly strict. No installer/pin/Core changes or new release. docs/R6_ROOT_CAUSE_INVESTIGATION.md records filter/order/12-limit/base-plan analysis and realMaven proof. Await concrete Windows cachedJAR metadata/hashes before changing the checker; read-only evidence extractor supplied.
+
+
+## Windows R7
+Implemented exact FML4.0.45 support matrix pinned to MC1.21.1/NF21.1.264; ordinary range checks remain strict and other contexts get no override. Required/optional/incompatible JAR dependencies checked including MezzConfig[0.6.3,1.0.0), Cloth>=15, Sodium conflict[,0.8.0); standard file.jarVersion resolved from same-JARmanifest. User-confirmed JEI19.70.0.468/MoreCulling1.0.10 remain official-hash-verified candidates at Windows resolution, not cloud-verified binaries. 120installer tests pass; caches/other base records/Core preserved. Real install/client/two players remain acceptance gates.

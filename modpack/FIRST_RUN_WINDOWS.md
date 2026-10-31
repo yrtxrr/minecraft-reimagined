@@ -1,3 +1,5 @@
+R7: используйте новые команды из docs/WINDOWS_R7_FML_MATRIX.md. Исправление учитывает точную матрицу FML4.0.45 и проверяет MezzConfig/Cloth/Sodium по даннымJAR. Core и старыеcache сохраняются.
+
 R6: исправлена проверка нижней границы NeoForge21.0.118-beta и разрешён beta только MoreCulling51shyZVL. Используйте план R5 через --base-plan и оба прежних downloads через повторяемый --reuse-downloads.
 
 R5: для исправления JAR JEI/More Culling и повторного использования R4 следуйте docs/WINDOWS_R5_ARTIFACT_REPAIR.md. Не запускайте install со старым планом.
@@ -14,7 +16,7 @@ R3: обычный resolve использует официальный FTB Maven
 
 ## 1. Получить архив
 
-Откройте [GitHub Releases](https://github.com/yrtxrr/minecraft-reimagined/releases) и prerelease **windows-trial-2026-10-31-r6**. В **Assets** скачайте `Reimagined-Windows-Setup.zip` и `SHA256SUMS.txt`. Не выбирайте автоматически добавленный GitHub архив **Source code**: он не содержит собранного Core.
+Откройте [GitHub Releases](https://github.com/yrtxrr/minecraft-reimagined/releases) и prerelease **windows-trial-2026-10-31-r7**. В **Assets** скачайте `Reimagined-Windows-Setup.zip` и `SHA256SUMS.txt`. Не выбирайте автоматически добавленный GitHub архив **Source code**: он не содержит собранного Core.
 
 Публикация выполняется GitHub Actions после отправки тега. Если Assets ещё нет, проверьте [Windows first-run kit](https://github.com/yrtxrr/minecraft-reimagined/actions/workflows/windows-trial.yml). Пока процесс не завершился, это ожидаемый адрес, а не подтверждение наличия релиза. При успешном шаге package ZIP также доступен в **Artifacts → Reimagined-Windows-Setup** на странице запуска (нужен вход в GitHub). Его внешний ZIP содержит установочный ZIP и checksum; распакуйте оба уровня. Если сборка красная, передайте ссылку/текст ошибки — самостоятельно собирать проект не требуется.
 

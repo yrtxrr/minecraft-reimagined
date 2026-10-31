@@ -51,7 +51,7 @@ class AuditTests(unittest.TestCase):
         p=self.write('root.jar',jar('root',self.dep('forge')))
         self.assertTrue(audit_jars.audit([p],'server')['errors'])
     def test_wrong_numeric_platform_range_blocks_real_jar_profile(self):
-        dep=self.dep('minecraft').replace('[1,)','[1.21, 1.21.1)')
+        dep=self.dep('minecraft').replace('[1,)','[1.20, 1.21)')
         p=self.write('root.jar',jar('root',dep))
         report=audit_jars.audit([p],'client')
         self.assertIn('excludes minecraft 1.21.1',report['errors'][0])
