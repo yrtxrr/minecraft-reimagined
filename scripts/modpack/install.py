@@ -35,6 +35,10 @@ class Blocked(RuntimeError):
     pass
 
 
+class IncompatibleArtifact(Blocked):
+    pass
+
+
 def safe_url(url, hosts):
     p = urllib.parse.urlsplit(url)
     if p.scheme != 'https' or p.hostname not in hosts or p.username or p.password or p.port not in (None, 443):
@@ -106,6 +110,14 @@ class Transport:
             if path.is_symlink() or not path.is_file() or not verify(path):
                 raise Blocked('Cached artifact checksum mismatch')
         else:
+            for cache_dir in getattr(self, 'reuse_caches', []):
+                old = Path(cache_dir) / path.name
+                if old.exists():
+                    if old.is_symlink() or not old.is_file() or not verify(old):
+                        raise Blocked('Reused cache checksum mismatch: ' + str(old))
+                    shutil.copyfile(old,path)
+                    if not zipfile.is_zipfile(path):raise Blocked('Reused cache is not a JAR')
+                    return path
             temporary = path.with_suffix('.part')
             if temporary.exists() or temporary.is_symlink():
                 raise Blocked('Stale partial download; inspect and remove it manually')
@@ -230,7 +242,29 @@ class Resolver:
                 raise Blocked('Scoped channel policy source identity mismatch: ' + key + '; source_url=' + str(project.get('source_url')) + '; issues_url=' + str(project.get('issues_url')))
         return policy
 
-    def mr(self, ident, pinned=None, override=None, depth=0):
+    def verify_platform(self, file, mod_id=None):
+        cache = getattr(self.t, 'artifact_cache', None)
+        if cache is None:raise Blocked('Production JAR inspection requires an artifact cache')
+        cache.mkdir(parents=True,exist_ok=True)
+        path=self.t.download(file,cache)
+        mods,deps,_=audit_jars.inspect(path)
+        if mod_id and not any(m['id']==mod_id and not m['embedded'] for m in mods):
+            raise IncompatibleArtifact('Wrong production mod ID: '+mod_id)
+        for dep in deps:
+            if dep['id'] in ('minecraft','neoforge'):
+                actual={'minecraft':MC,'neoforge':NF}[dep['id']]
+                matches=audit_jars.numeric_range_contains(actual,dep['range'])
+                if matches is not True:
+                    raise IncompatibleArtifact(dep['owner']+' excludes or has unverified '+dep['id']+' range '+dep['range'])
+
+    def primary_file(self, version):
+        jars=[f for f in version['files'] if f['filename'].endswith('.jar')]
+        primary=[f for f in jars if f.get('primary')]
+        if len(primary)==1:return primary[0]
+        if len(jars)==1:return jars[0]
+        raise Blocked('No unique primary game JAR')
+
+    def mr(self, ident, pinned=None, override=None, depth=0, verify=False, mod_id=None):
         if depth > 32 or len(self.selected) >= 160:
             raise Blocked('Dependency budget exceeded')
         project = self.mr_project(ident)
@@ -238,6 +272,7 @@ class Resolver:
         if key in self.selected:
             if pinned and self.selected[key]['version_id'] != pinned:
                 raise Blocked('Conflicting exact dependency version: ' + key)
+            if verify:self.verify_platform(self.selected[key]['file'],mod_id)
             return key
         if pinned:
             version = self.t.json('https://api.modrinth.com/v2/version/' + urllib.parse.quote(pinned, safe=''))
@@ -247,10 +282,22 @@ class Resolver:
             query = urllib.parse.urlencode({'loaders': '["neoforge"]', 'game_versions': '["1.21.1"]'})
             policy = self.project_policy(key, project)
             try:
-                version = choose(self.t.json('https://api.modrinth.com/v2/project/' + project['id'] + '/version?' + query),
-                                 self.allow_beta, policy['release_types'] if policy else None)
+                versions = self.t.json('https://api.modrinth.com/v2/project/' + project['id'] + '/version?' + query)
+                rejected=[]
+                for attempt in range(12):
+                    preferred=[v for v in versions if policy and v['version_number'] in policy.get('preferred_versions',[]) and compatible(v) and v.get('version_type') in policy['release_types']]
+                    version=choose(preferred or versions,self.allow_beta,policy['release_types'] if policy else None)
+                    if not verify:break
+                    try:
+                        self.verify_platform(self.primary_file(version),mod_id)
+                        break
+                    except IncompatibleArtifact as exc:
+                        rejected.append(version['id']+': '+str(exc))
+                        versions=[v for v in versions if v['id']!=version['id']]
+                else:raise Blocked('No compatible production JAR within12 candidates: '+'; '.join(rejected))
             except Blocked as exc:
                 raise Blocked(project['title'] + ' [' + key + ']: ' + str(exc)) from None
+        if verify and pinned:self.verify_platform(self.primary_file(version),mod_id)
         jar_files = [f for f in version['files'] if f['filename'].endswith('.jar')]
         primary = [f for f in jar_files if f.get('primary')]
         if len(primary) == 1:
@@ -273,7 +320,7 @@ class Resolver:
                     dep_id = self.t.json('https://api.modrinth.com/v2/version/' + dep['version_id'])['project_id']
                 if not dep_id:
                     raise Blocked('Required dependency lacks project/version identity')
-                record['dependencies'].append(self.mr(dep_id, dep.get('version_id'), depth=depth+1))
+                record['dependencies'].append(self.mr(dep_id, dep.get('version_id'), depth=depth+1,verify=verify))
             elif dep['dependency_type'] == 'incompatible':
                 self.constraints.append(dict(source=key, project=dep.get('project_id'), version=dep.get('version_id')))
             elif dep['dependency_type'] == 'optional':
@@ -334,7 +381,7 @@ class Resolver:
         errors = []
         try:
             p = self.identify_mr(target, binding)
-            return self.mr(p['id'], binding.get('modrinth_version_id'), binding.get('side_override'))
+            return self.mr(p['id'], binding.get('modrinth_version_id'), binding.get('side_override'), verify=bool(binding.get('verify_game_jar') and getattr(self.t,'artifact_cache',None)),mod_id=binding.get('expected_mod_id'))
         except (Blocked, KeyError, ValueError) as exc:
             self.selected, self.constraints = copy.deepcopy(snapshot)
             errors.append('Modrinth: ' + str(exc))
@@ -351,7 +398,16 @@ class Resolver:
                     project=matches[0]
                 if normal(project['name']) not in {normal(x) for x in binding['accepted_titles']}:
                     raise Blocked('CurseForge project title mismatch')
-                return self.cf(project['id'], binding.get('curseforge_file_id'), binding.get('side_override'))
+                key=self.cf(project['id'], binding.get('curseforge_file_id'), binding.get('side_override'))
+                if binding.get('verify_game_jar') and getattr(self.t,'artifact_cache',None):
+                    todo=[key];checked=set()
+                    while todo:
+                        current=todo.pop()
+                        if current in checked:continue
+                        checked.add(current)
+                        self.verify_platform(self.selected[current]['file'],binding.get('expected_mod_id') if current==key else None)
+                        todo.extend(self.selected[current]['dependencies'])
+                return key
             except (Blocked, KeyError, ValueError) as exc:
                 self.selected, self.constraints = snapshot
                 errors.append('CurseForge: ' + str(exc))
@@ -404,6 +460,21 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
         resolver.selected,pinned_targets,all_pinned=pinned_records(pinned,include_optional)
     if base_plan is not None:
         previous, _ = validate_plan(base_plan, True)
+        repair_roots={t['key'] for t in base_plan['targets'] if bindings['targets'][t['id']].get('verify_game_jar') and t.get('key')}
+        removal=set(repair_roots)
+        todo=list(repair_roots)
+        while todo:
+            key=todo.pop()
+            for dep in previous.get(key,{}).get('dependencies',[]):
+                if dep not in removal:removal.add(dep);todo.append(dep)
+        # Preserve dependencies referenced by any unaffected artifact, and their closure.
+        keep=set(previous)-removal
+        todo=list(keep)
+        while todo:
+            for dep in previous[todo.pop()]['dependencies']:
+                if dep not in keep:keep.add(dep);todo.append(dep)
+        previous={k:v for k,v in previous.items() if k not in repair_roots and k in keep}
+        resolver.constraints=copy.deepcopy([c for c in base_plan.get('constraints',[]) if c.get('source') in previous])
         for key, record in previous.items():
             if key in resolver.selected and resolver.selected[key]['version_id'] != record['version_id']:
                 raise Blocked('Base plan conflicts with canonical pin: ' + key)
@@ -627,6 +698,7 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--bindings',type=Path,default=ROOT/'modpack/source-bindings.json')
     parser.add_argument('--plan',type=Path)
+    parser.add_argument('--reuse-downloads',type=Path,action='append',default=[],help='Read and verify downloads from an earlier failed install')
     parser.add_argument('--base-plan',type=Path,help='Preserve already resolved artifact versions/files while repairing unresolved targets')
     parser.add_argument('--core-jar',type=Path,default=ROOT/'payload/reimagined-0.1.0-alpha.jar')
     parser.add_argument('--end',choices=['betterend','nullscape'],default='nullscape')
@@ -638,6 +710,8 @@ def main():
     parser.add_argument('--local-files',type=Path,help='Manually downloaded official JARs; exact plan checksums required')
     args=parser.parse_args()
     transport=Transport(os.environ.get('CURSEFORGE_API_KEY'), args.local_files)
+    transport.artifact_cache=args.output/'downloads'
+    transport.reuse_caches=args.reuse_downloads
     try:
         if args.command=='resolve':
             registry=json.loads((ROOT/'modpack/mod-registry.json').read_text(encoding='utf-8'))

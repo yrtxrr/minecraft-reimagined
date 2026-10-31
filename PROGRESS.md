@@ -381,3 +381,9 @@ Player Animator official repository alias verified via git ls-remote: both URLs 
 
 ## Exact magic ports reviewed (2026-10-31)
 User-supplied Thaumcraft4:Reforged and BotaniaRevived repositories are identified. Separate pinned lab template prepared, see docs/MAGIC_PORTS_REVIEW.md. Both source build attempts blocked before Java compilation by external Maven403, including one outside-sandbox retry each; no runtime/binary compatibility claimed. R4 pins/bindings/Core/quests unchanged. Further gate: isolated Windows build/client/two-player/restart/performance checks plus Thaumcraft redistribution restriction; no main-profile integration yet.
+
+
+## Windows R5 artifact repair
+User confirmed excluding MC ranges in actual JEI/MoreCullingJARs. Added bounded official production-JAR selection/preflight, recursive JEI dependency checks, preserved unrelated base-plan records/constraints, checksum-verified reuse of olddownloads. JEI19.27.0.340 is only a source-evidenced candidate, not a claimed verifiedbinary. Core/pins/otherbindings unchanged. Python tests plus resource checks run; actual R5 Windows download/client/two-player acceptance pending. MagicLab work preserved separately at1acd930.
+
+R5 verification completed:104Python tool tests +5legacy tests PASS; extracted setup repeats104tests. Tests verify incompatible-newer/compatible-older actualJAR selection, rejection of pinned incompatible transitive dependencies, no retry on403, cache reuse and unchanged unrelated base-plan records. Existing Gradle build/resources/quest checks pass; no new real client acceptance. Release also carries a separate tools-only MagicLab ZIP (no third-partyJARs), preserving the previous authorized lab handoff.

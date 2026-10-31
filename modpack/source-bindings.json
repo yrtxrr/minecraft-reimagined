@@ -352,7 +352,9 @@
       "modrinth_version_id": null,
       "curseforge_project_id": 238222,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "verify_game_jar": true,
+      "expected_mod_id": "jei"
     },
     "embeddium": {
       "modrinth_slug_hint": "embeddium",
@@ -418,7 +420,9 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "verify_game_jar": true,
+      "expected_mod_id": "moreculling"
     },
     "dynamic-fps": {
       "modrinth_slug_hint": "dynamic-fps",
@@ -484,7 +488,11 @@
         "beta"
       ],
       "source_url": "https://github.com/mezz/JustEnoughItems",
-      "reason": "Official1.21.1 NeoForge publishing uses BETA."
+      "reason": "Official1.21.1 NeoForge publishing uses BETA.",
+      "preferred_versions": [
+        "19.27.0.340"
+      ],
+      "preferred_version_evidence": "Botania Revived audited1.21.1 build.gradle/gradle.properties uses19.27.0.340; compatibility candidate only, official publication/hash and actual JAR ranges must pass before selection."
     },
     "modrinth:better-combat": {
       "release_types": [

@@ -296,3 +296,9 @@ Only Better Combat identity-link checking and default official FTB Maven routing
 
 ## Windows R4
 Player Animator official repository alias verified via git ls-remote: both URLs return cb3227efc19ec46065597332ae265076d0f2b495. Dependency ID mapping is correct; root candidate report obscured the library identity rejection. Added only this repository alias and regression coverage rejecting that alias for BetterCombat itself. --base-plan preserves prior resolved records and skips re-resolution, including existing Maven records; no original version pins/Core modified. 99 tool tests +5legacy pass; Gradle build unchanged/cached passes. Actual Windows resolution/client/two players remain untested. Release requested by windows-trial-2026-10-31-r4 tag; publication requires successful GitHub Actions.
+
+
+## Windows R5 artifact repair
+User confirmed excluding MC ranges in actual JEI/MoreCullingJARs. Added bounded official production-JAR selection/preflight, recursive JEI dependency checks, preserved unrelated base-plan records/constraints, checksum-verified reuse of olddownloads. JEI19.27.0.340 is only a source-evidenced candidate, not a claimed verifiedbinary. Core/pins/otherbindings unchanged. Python tests plus resource checks run; actual R5 Windows download/client/two-player acceptance pending. MagicLab work preserved separately at1acd930.
+
+R5 verification completed:104Python tool tests +5legacy tests PASS; extracted setup repeats104tests. Tests verify incompatible-newer/compatible-older actualJAR selection, rejection of pinned incompatible transitive dependencies, no retry on403, cache reuse and unchanged unrelated base-plan records. Existing Gradle build/resources/quest checks pass; no new real client acceptance. Release also carries a separate tools-only MagicLab ZIP (no third-partyJARs), preserving the previous authorized lab handoff.

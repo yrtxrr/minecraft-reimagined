@@ -24,6 +24,7 @@ jobs:
       - run: python3 scripts/validate-resources.py
       - run: python3 scripts/validate-quests.py
       - run: python3 scripts/modpack/package-installer.py
+      - run: python3 -m unittest discover -s scripts/magic-lab -p 'test_*.py'
       - name: Record archive checksum
         working-directory: build/modpack
         run: sha256sum Reimagined-Windows-Setup.zip > SHA256SUMS.txt
@@ -34,6 +35,8 @@ jobs:
           path: |
             build/modpack/Reimagined-Windows-Setup.zip
             build/modpack/SHA256SUMS.txt
+            build/modpack/Reimagined-Magic-Ports-Windows.zip
+            build/modpack/MAGIC-LAB-SHA256SUMS.txt
   publish:
     needs: package
     runs-on: ubuntu-latest
@@ -57,3 +60,5 @@ jobs:
           --notes-file modpack/WINDOWS_RELEASE_NOTES.md
           release-files/Reimagined-Windows-Setup.zip
           release-files/SHA256SUMS.txt
+          release-files/Reimagined-Magic-Ports-Windows.zip
+          release-files/MAGIC-LAB-SHA256SUMS.txt
