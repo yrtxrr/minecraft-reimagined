@@ -1,0 +1,426 @@
+{
+  "schema": 1,
+  "purpose": "Research inventory only, NOT install manifest or dependency lock",
+  "required_platform": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.264",
+    "java": 21
+  },
+  "forbidden_additions": [
+    "ars-nouveau"
+  ],
+  "candidates": [
+    {
+      "number": 1,
+      "id": "aeronautics",
+      "name": "Create: Aeronautics",
+      "batch": "E",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": "1.3.0+mc1.21.1",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Indirect integration declarations in CreateAddition1.7.2: Modrinth create-aeronautics, Sable2.0.3; EnchantmentIndustry declares eriksonn/aeronautics, simulated and offroad coordinates. Official Aeronautics artifact/author ownership/Sable closure not confirmed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 2,
+      "id": "gadgets-gizmos",
+      "name": "Aeronautics: Gadgets & Gizmos",
+      "batch": "E",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": null,
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Exact official project identity, aircraft/API/Sable version constraints unknown; no replacement guessed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 3,
+      "id": "airliners",
+      "name": "Create: Airliners",
+      "batch": "E",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": null,
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Exact official project identity and Aeronautics dependency not confirmed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 4,
+      "id": "steam-rails",
+      "name": "Create: Steam ’n’ Rails",
+      "batch": "E",
+      "status": "DEFERRED",
+      "source": {
+        "repository": "https://github.com/Layers-of-Railways/Railway",
+        "revision": "7441960c212826e8831da9eccae84a5154de4be4"
+      },
+      "source_version_hint": "1.7.3-beta",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "LGPL-3.0",
+      "evidence": "Reviewed official source/default1.20/dev and branch list target1.20.1; create-v6 branch is also1.20, not proof of NeoForge1.21.1. No matching binary confirmed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 5,
+      "id": "enchantment-industry",
+      "name": "Create: Enchantment Industry",
+      "batch": "D",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/DragonsPlusMinecraft/CreateEnchantmentIndustry",
+        "revision": "7cb2e9f59d83c800b3dde4d0a9123cbcc083c9a5"
+      },
+      "source_version_hint": "2.5.4b",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "modrinth": "JWGBpFUP",
+        "curseforge": "688768"
+      },
+      "license_evidence": "LGPL-3.0-or-later",
+      "evidence": "Source MC1.21.1 NF>=21.1.228 Create>=6.0.10; required CreateDragonsPlus>=1.11.9. Sable>=2.0.3 is OPTIONAL integration, not required by default.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 6,
+      "id": "slice-dice",
+      "name": "Create: Slice & Dice",
+      "batch": "D",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": null,
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Official source/project identity not confirmed in accessible sources; guessed Git URLs failed and are NOT official-source evidence.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 7,
+      "id": "crafts-additions",
+      "name": "Create Crafts & Additions",
+      "batch": "D",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/mrh0/CreateAddition",
+        "revision": "1c81fab9aaaf157c58e16ad0acbe95c8523cd4e4"
+      },
+      "source_version_hint": "1.7.2",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "MIT",
+      "evidence": "Source MC1.21.1 NF>=21.1.248 Create[6.0.7,6.1.0); compiled Create6.0.10-280. JarJar SableCompanion1.6.0; Sable2.0.3/Aeronautics1.3.0 optional dev/integration declarations.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 8,
+      "id": "diesel-generators",
+      "name": "Create: Diesel Generators",
+      "batch": "D",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/george8188625/Create-Diesel-Generators",
+        "revision": "79ce136730871b6f3f7b55d3cc748ff2bec2ad12"
+      },
+      "source_version_hint": "1.21.1-1.3.15",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "curseforge": "869316"
+      },
+      "license_evidence": "MIT",
+      "evidence": "Source MC1.21.1 NF>=21.1.174 Create[6.0.7,6.1.0), build6.0.10-280.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 9,
+      "id": "mekanism-generators",
+      "name": "Mekanism Generators",
+      "batch": "A",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/mekanism/Mekanism",
+        "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
+      },
+      "source_version_hint": "10.7.19 (build suffix unconfirmed)",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "modrinth": "OFVYKsAk",
+        "curseforge": "268566"
+      },
+      "license_evidence": "MIT",
+      "evidence": "Official release/1.21.x; exact [file.jarVersion] dependency on baseMekanism. Never mix module/base build numbers.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 10,
+      "id": "mekanism-tools",
+      "name": "Mekanism Tools",
+      "batch": "A",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/mekanism/Mekanism",
+        "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
+      },
+      "source_version_hint": "10.7.19 (build suffix unconfirmed)",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "modrinth": "tqQpq1lt",
+        "curseforge": "268567"
+      },
+      "license_evidence": "MIT",
+      "evidence": "Same exact-version module rule; MC1.21.1 NF>=21.1.194.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 11,
+      "id": "applied-mekanistics",
+      "name": "Applied Mekanistics",
+      "batch": "B",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/AppliedEnergistics/Applied-Mekanistics",
+        "revision": "137f24bb9a46775ddd5a620055270b5e8a540f5a"
+      },
+      "source_version_hint": "1.6.0 fallback source version",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "LGPL-3.0",
+      "evidence": "MC1.21.1; AE2[19.2.10,20.0.0), Mekanism[10.7.14,11-). APPMEK_VERSION environment can override source version. No release guessed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 12,
+      "id": "extended-ae",
+      "name": "Extended AE",
+      "batch": "B",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/GlodBlock/ExtendedAE",
+        "revision": "1f86f927552f02451236465c0c96a12a3de8f66c"
+      },
+      "source_version_hint": "1.21-2.2.42-neoforge",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "curseforge": "892005"
+      },
+      "license_evidence": "LGPL-3.0",
+      "evidence": "Explicit1.21.1-neoforge branch NF>=21.1.194, GuideME21.1.1/AE2WirelessTerminalAPI JarJar require actual descriptor audit. Default26.1.2 is not our source. Required Glodium>=1.21-2.0-neoforge; AE2>=19.2.8. Source descriptor has uppercase REQUIRED; current auditor needs case normalization before partyB.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 13,
+      "id": "expanded-delight",
+      "name": "Expanded Delight",
+      "batch": "C",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/ianm1647/expandeddelight",
+        "revision": "ea826400654702587e86c9e94544bfd74f065083"
+      },
+      "source_version_hint": "0.1.4",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "MIT declared; full mod license text not confirmed",
+      "evidence": "Source MC1.21.1, buildFD1.21.1-1.2.6 but descriptor FarmersDelight1.21-1.2.4. Placeholder neo_version_range appears undeclared in gradle.properties; published JAR must be checked. MIT declaration, template license is not full mod license.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 14,
+      "id": "thaumcraft",
+      "name": "Thaumcraft 4: Reforged",
+      "batch": "F",
+      "status": "DEFERRED",
+      "source": null,
+      "source_version_hint": "1.1.2 source",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "All Rights Reserved / personal use statement",
+      "evidence": "Exact user-selected notlikethiss port, mc/1.21.1 dffee19a4f7f82e0538d323d5de403883db1fe0c; TerraBlender/Curios; local build blocked by403. Personal-only redistribution caveat.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 15,
+      "id": "botania",
+      "name": "Botania Revived",
+      "batch": "F",
+      "status": "DEFERRED",
+      "source": null,
+      "source_version_hint": "1.0.4 source",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "Botania License and component licenses",
+      "evidence": "Exact Velron-Devs port8da09edaf6bd5ab454899f6306560baf93c79bae; MC1.21.1 NF>=21.1.240, Patchouli>=93; builds previously blocked403. Addon ABI differs from originalBotania.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 16,
+      "id": "mekanism-additions",
+      "name": "Mekanism Additions",
+      "batch": "A",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/mekanism/Mekanism",
+        "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
+      },
+      "source_version_hint": "10.7.19 (build suffix unconfirmed)",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": {
+        "modrinth": "a6F3uASn",
+        "curseforge": "345425"
+      },
+      "license_evidence": "MIT",
+      "evidence": "Same exact-version module rule; new mob/balloon persistence and collision checks required.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 17,
+      "id": "my-nethers-delight",
+      "name": "My Nether’s Delight",
+      "batch": "C",
+      "status": "UNVERIFIED",
+      "source": {
+        "repository": "https://github.com/Soytutta/MyNethersDelight",
+        "revision": "4234175ea3d1ea1b2af29944852465990ac262a0"
+      },
+      "source_version_hint": "1.10.4",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "MIT declared; full license file not confirmed",
+      "evidence": "Explicit Neo-1.21+ branch MC1.21.1 NF>=21.1.4, FD build1.21.1-1.3.2. Default1.20.1 backport must not be installed.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 18,
+      "id": "ends-delight",
+      "name": "End’s Delight",
+      "batch": "C",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": null,
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Official project/release identity not confirmed; guessed Git URL failed, not evidence no release exists.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 19,
+      "id": "oceans-delight",
+      "name": "Ocean’s Delight",
+      "batch": "C",
+      "status": "UNVERIFIED",
+      "source": null,
+      "source_version_hint": null,
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": null,
+      "evidence": "Official project/release identity not confirmed; guessed Git URL failed, not evidence no release exists.",
+      "runtime_verified": false,
+      "install": false
+    },
+    {
+      "number": 20,
+      "id": "mythicbotany",
+      "name": "MythicBotany",
+      "batch": "F",
+      "status": "DEFERRED",
+      "source": {
+        "repository": "https://github.com/noeppi-noeppi/MythicBotany",
+        "revision": "f3e9c949848f6a675930c3006c7b920b95102370"
+      },
+      "source_version_hint": "4.0 source",
+      "release_version": null,
+      "release_url": null,
+      "release_date": null,
+      "sha256": null,
+      "project_id": null,
+      "license_evidence": "Apache-2.0",
+      "evidence": "Reviewed upstream master targets Forge1.20.1/Botania1.20.1-443-FORGE. This source incompatible with target; compatible1.21.1 binary/port and BotaniaRevived ABI not confirmed.",
+      "runtime_verified": false,
+      "install": false
+    }
+  ]
+}

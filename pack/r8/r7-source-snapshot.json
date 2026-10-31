@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "tag": "windows-trial-2026-10-31-r7",
+  "tag_object": "43e6c032c607197e03c68041f9df7430f1006b59",
+  "commit": "c7b140edcf013016a333c453a1a390b79fbad538",
+  "source_inputs_sha256": {
+    "pack/mods.json": "a2d60efdd36789c59fca07a0300260b71cd4d6b17e94027d3c8a08e973361010",
+    "modpack/source-bindings.json": "debbb9c44c9545ad76959ec34f54f9eca8a97b699cbd901b79ac1d778e6f0a28",
+    "modpack/mod-registry.json": "763e734bc3419c5134090c40a04aa76ce1b8c9aa2f8821adb960a2d110004cb4",
+    "modpack/overrides/config/ftbquests/quests/chapters/reimagined_intro.snbt": "6114d050d0e85e039d14acf4c7a2b937465a3c4d508ebf39fcab495919f63dfc"
+  },
+  "full_installed_lock": null,
+  "installed_baseline_ready": false,
+  "runtime_evidence": "User reports R7 main menu only; world/save/server/two-player NOT_TESTED",
+  "versions": {
+    "create": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    },
+    "mekanism": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    },
+    "ae2": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    },
+    "farmersdelight": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    },
+    "ftbquests": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    },
+    "reimagined": {
+      "installed_version": null,
+      "reason": "User Windows installed.lock.json unavailable in this workspace"
+    }
+  },
+  "user_assertion_create": "6.0.10, not independently verified against installed lock",
+  "local_archive_evidence": {
+    "sha256": "e93482b426a5a2b7d3a7e598a5e5a9b1b4157d1854a404bb7e0cac3411e46e57",
+    "manifest_revision": "c7b140edcf013016a333c453a1a390b79fbad538",
+    "owned_core_sha256": "266c7e4309b6692e86498f1437b1c69c65777fb391fb6e478ae29dd7afc75451",
+    "scope": "Local generated archive, NOT confirmed GitHub Release bytes or user installed Core"
+  }
+}

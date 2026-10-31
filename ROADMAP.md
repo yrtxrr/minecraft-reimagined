@@ -164,3 +164,7 @@ Prism SHA512 reader verified against official source573665f; offlineexport emits
 - Windows R2 resolves the concrete release-channel/identity blockers reported by the user. First full mandatory-profile install/client launch is the next gate. Thaumcraft4:Reforged/BotaniaRevived remain explicitly deferred identities, Skills optional if exact search fails; original directions/Core systems retained. No new quest chapters until actual chapter1/co-op/save acceptance.
 
 - Magic port identities now resolved from the exact user repositories. See docs/MAGIC_PORTS_REVIEW.md and isolated modpack/experimental/magic-ports. Resume source/binary validation when required official Maven dependencies are accessible; complete separate real-client/two-player/save tests before modifying R4 or adding their quests. Thaumcraft personal-use/redistribution caveat retained.
+
+
+## R8 research gate
+Branch feat/reimagined-r8-addons, immutable R7 c7b140e source snapshot,20candidate research records and A–F integration plan prepared. No addon or new quest installed. Actual R7 installed.lock/Core hash plus official artifact/closure/license checks required before partyA. Aeronautics remains priority but unverified; magic ports deferred; ArsNouveau prohibited. See docs/R8_INTEGRATION_PLAN.md.

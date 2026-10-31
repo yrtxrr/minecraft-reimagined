@@ -1,3 +1,7 @@
+# Active R8 research stage
+
+Work only on feat/reimagined-r8-addons. User R8 request supersedes historical branch restrictions below. Preserve R7 tag c7b140e, release archives, pins, locks, Core and worlds. Research all20candidates before installing addons; no Ars Nouveau, no unverified JAR or automatic magic substitution. Actual user installed.lock/Core hash are required for baseline acceptance. Source declarations are not VERIFIED_METADATA or runtime proof. Follow docs/R8_INTEGRATION_PLAN.md; publish checkpoints only on this R8 branch.
+
 # Current solo-development priority
 
 Kilo has stopped. Do not merge its unverified technical implementation automatically. Its cbc7a5f docs are design input; the current native first-chapter/advancement bridge is independently implemented against reviewed FTB1.21.1 source. Finish actual first-chapter runtime acceptance before later chapters. Preserve Freebuffc20c6a6, v2Settlers+Aggregates and pre-migration backups. Consult concrete working pack/mod implementations before complex integration; record source/license/provenance, copy no unlicensed code/text/assets. Keep the two-player scope and only publish the current integration branch. Historical roles/merge instructions below are superseded.

@@ -398,3 +398,7 @@ User reports both projects still rejected. Found actual NeoForge21.1.264/FML4.0.
 
 ## Windows R7
 Implemented exact FML4.0.45 support matrix pinned to MC1.21.1/NF21.1.264; ordinary range checks remain strict and other contexts get no override. Required/optional/incompatible JAR dependencies checked including MezzConfig[0.6.3,1.0.0), Cloth>=15, Sodium conflict[,0.8.0); standard file.jarVersion resolved from same-JARmanifest. User-confirmed JEI19.70.0.468/MoreCulling1.0.10 remain official-hash-verified candidates at Windows resolution, not cloud-verified binaries. 120installer tests pass; caches/other base records/Core preserved. Real install/client/two players remain acceptance gates.
+
+
+## R8 research stage (2026-10-31)
+Created feat/reimagined-r8-addons from verified local/remote c7b140e R7 tag. Source/archive evidence snapshot added without modifying R7. User reports main menu only; full installed lock/Core hash unavailable. Investigated20candidate entries, exact source revisions/dependency/license evidence retained in pack/r8/addon-research.json; no binary fully verified and no addon installed. A–Fparty, Core migration, quest/performance/save plans and blockers documented. Read-only Windows catalog evidence collector prepared; never installs or promotes statuses. R7 installer/manifests/Core untouched. Missing actual R7 lock blocks safe binary selection and integration; this is not an approval gate.
