@@ -501,7 +501,10 @@
         "alpha"
       ],
       "source_url": "https://github.com/KosmX/minecraftPlayerAnimator",
-      "reason": "Official1.21.1 NeoForge publishing defaults to alpha; BetterCombat requires this game library."
+      "reason": "Official1.21.1 NeoForge publishing defaults to alpha; BetterCombat requires this game library.",
+      "source_aliases": [
+        "https://github.com/KosmX/fabricPlayerAnimation"
+      ]
     },
     "modrinth:7tEfOcA7": {
       "release_types": [

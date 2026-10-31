@@ -223,9 +223,10 @@ class Resolver:
                 if len(parts) == 3 and parts[2] == 'issues':parts = parts[:2]
                 if len(parts) != 2:return None
                 return '/'.join(parts).lower()
-            expected = repository(policy.get('source_url'))
+            expected = {repository(url) for url in [policy.get('source_url')] + policy.get('source_aliases', [])}
+            expected.discard(None)
             links = [project.get('source_url'), project.get('issues_url')]
-            if expected is None or not any(repository(link) == expected for link in links):
+            if not expected or not any(repository(link) in expected for link in links):
                 raise Blocked('Scoped channel policy source identity mismatch: ' + key + '; source_url=' + str(project.get('source_url')) + '; issues_url=' + str(project.get('issues_url')))
         return policy
 
@@ -393,7 +394,7 @@ def pinned_records(path, include_optional=False):
     return records,targets,all_targets
 
 
-def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pinned=None, pinned_only=False, include_optional=False, ftb_maven_cache=None):
+def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pinned=None, pinned_only=False, include_optional=False, ftb_maven_cache=None, base_plan=None):
     expected = {m['id'] for m in registry['mods']}
     if len(expected) != 40 or expected != set(bindings['targets']):
         raise Blocked('Registry/bindings must cover all 40 unique candidates')
@@ -401,9 +402,16 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
     pinned_targets={};all_pinned={}
     if pinned is not None:
         resolver.selected,pinned_targets,all_pinned=pinned_records(pinned,include_optional)
+    if base_plan is not None:
+        previous, _ = validate_plan(base_plan, True)
+        for key, record in previous.items():
+            if key in resolver.selected and resolver.selected[key]['version_id'] != record['version_id']:
+                raise Blocked('Base plan conflicts with canonical pin: ' + key)
+            resolver.selected[key] = copy.deepcopy(record)
     for candidate,key in list(pinned_targets.items()):
         if (candidate=='nullscape' and end!='nullscape') or (candidate=='betterend-new-dawn' and end=='nullscape'):
             resolver.selected.pop(key,None);pinned_targets.pop(candidate)
+    locked_targets = {t['id']:t['key'] for t in (base_plan or {}).get('targets',[]) if t['status']=='resolved' and t.get('key') in resolver.selected}
     report = []
     for target in registry['mods']:
         selected = not (target['id'] == 'nullscape' and end != 'nullscape' or target['id'] == 'betterend-new-dawn' and end == 'nullscape')
@@ -423,7 +431,9 @@ def resolve(registry, bindings, transport, end='nullscape', allow_beta=False, pi
             report.append(dict(id=target['id'],name=target['name'],selected=False,status='optional-not-selected',reason='Pinned optional mod; enable include_optional explicitly'))
             continue
         try:
-            if target['id'] in pinned_targets:
+            if target['id'] in locked_targets:
+                key=locked_targets[target['id']]
+            elif target['id'] in pinned_targets:
                 key=pinned_targets[target['id']]
             elif target['id'] == 'ftb-quests' and ftb_maven_cache is not None:
                 key = official_ftb.resolve(resolver, pinned, ftb_maven_cache)
@@ -617,6 +627,7 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--bindings',type=Path,default=ROOT/'modpack/source-bindings.json')
     parser.add_argument('--plan',type=Path)
+    parser.add_argument('--base-plan',type=Path,help='Preserve already resolved artifact versions/files while repairing unresolved targets')
     parser.add_argument('--core-jar',type=Path,default=ROOT/'payload/reimagined-0.1.0-alpha.jar')
     parser.add_argument('--end',choices=['betterend','nullscape'],default='nullscape')
     parser.add_argument('--allow-beta',action='store_true')
@@ -631,7 +642,7 @@ def main():
         if args.command=='resolve':
             registry=json.loads((ROOT/'modpack/mod-registry.json').read_text(encoding='utf-8'))
             bindings=json.loads(args.bindings.read_text(encoding='utf-8'))
-            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional,args.output/'downloads' if not args.pinned_only else None)
+            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional,args.output/'downloads' if not args.pinned_only else None,json.loads(args.base_plan.read_text(encoding='utf-8')) if args.base_plan else None)
             write_reports(plan,args.output)
             missing=sum(t['selected'] and t['status']!='resolved' for t in plan['targets'])
             print(f'Checked all {len(plan["targets"])} candidates; resolved {len(plan["mods"])} artifacts, unresolved selected targets {missing}. See INSTALL_REPORT.md')

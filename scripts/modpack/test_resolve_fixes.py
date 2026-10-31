@@ -46,6 +46,28 @@ class ReleasePolicyTests(unittest.TestCase):
         project,_=self.mod('combat','better-combat','Better Combat','beta')
         project['issues_url']='https://github.com/other/BetterCombat/issues'
         with self.assertRaisesRegex(m.Blocked,'identity mismatch'):self.resolver.mr('combat')
+    def test_playeranimator_canonical_repository_resolves_under_better_combat(self):
+        self.mod('anim','playeranimator','Player Animator','alpha','https://github.com/KosmX/fabricPlayerAnimation')
+        self.mod('combat','better-combat','Better Combat','release','https://github.com/ZsoltMolnarrr/BetterCombat',deps=[dict(dependency_type='required',project_id='anim',version_id=None)])
+        key=self.resolver.target({'name':'Better Combat'},self.bindings['targets']['better-combat'])
+        self.assertEqual(['modrinth:anim'],self.resolver.selected[key]['dependencies'])
+        self.assertEqual('anim',self.resolver.selected['modrinth:anim']['project_id'])
+        self.assertEqual('alpha',self.resolver.selected['modrinth:anim']['release_type'])
+        self.assertEqual('https://cdn.modrinth.com/data/anim/anim1.jar',self.resolver.selected['modrinth:anim']['file']['url'])
+    def test_canonical_playeranimator_repository_does_not_identify_better_combat(self):
+        self.mod('combat','better-combat','Better Combat','beta','https://github.com/KosmX/fabricPlayerAnimation')
+        with self.assertRaisesRegex(m.Blocked,'identity mismatch'):self.resolver.mr('combat')
+    def test_base_plan_keeps_resolved_artifacts_byte_for_byte(self):
+        registry=json.loads((m.ROOT/'modpack/mod-registry.json').read_text())
+        fake=Fake();fake.projects={};fake.versions={};bindings={'targets':{}}
+        for t in registry['mods']:
+            ident=t['id'];fake.projects[ident]=project(ident,t['name']);fake.versions[ident]=version(ident,ident)
+            bindings['targets'][ident]=dict(modrinth_slug_hint=ident,accepted_titles=[t['name']])
+        old=m.resolve(registry,bindings,fake)
+        for v in list(fake.versions.values()):
+            newer=copy.deepcopy(v);newer['id']+='new';newer['date_published']='2027-01-01';fake.versions[newer['id']]=newer
+        repaired=m.resolve(registry,bindings,fake,base_plan=old)
+        self.assertEqual(old['mods'],repaired['mods'])
     def test_permitted_alpha_does_not_permit_fabric(self):
         self.mod('gu7yAYhd','cc-tweaked','CC: Tweaked','alpha',loaders=['fabric'])
         with self.assertRaisesRegex(m.Blocked,'no compatible'):self.resolver.mr('gu7yAYhd')

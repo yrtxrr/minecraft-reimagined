@@ -292,3 +292,7 @@ Gradle build PASS with unchanged Java tasks cached;346JSON/276bilingual keys and
 ## Windows R3 (2026-10-31)
 
 Only Better Combat identity-link checking and default official FTB Maven routing changed. Exact accepted project title/slug plus matching official source/Issues repository remain required; foreign repositories rejected. Other bindings/version pins and Core gameplay unchanged. 96 tool tests +5 legacy tests PASS; Gradle build PASS (unchanged Java cached). Existing official Maven fixture checks publication, checksum, production descriptor and dependency closure; actual binary/network availability and0unresolved selected targets require Windows confirmation. Tag windows-trial-2026-10-31-r3 requests GitHub prerelease publication; availability is not confirmed by a tag push.
+
+
+## Windows R4
+Player Animator official repository alias verified via git ls-remote: both URLs return cb3227efc19ec46065597332ae265076d0f2b495. Dependency ID mapping is correct; root candidate report obscured the library identity rejection. Added only this repository alias and regression coverage rejecting that alias for BetterCombat itself. --base-plan preserves prior resolved records and skips re-resolution, including existing Maven records; no original version pins/Core modified. 99 tool tests +5legacy pass; Gradle build unchanged/cached passes. Actual Windows resolution/client/two players remain untested. Release requested by windows-trial-2026-10-31-r4 tag; publication requires successful GitHub Actions.
