@@ -215,9 +215,18 @@ class Resolver:
         # ID-based policies were read from upstream publication config. Slug-only
         # policies additionally require the upstream source link to match.
         if project is not None and key not in policies:
-            normalize = lambda value: (value or '').lower().removesuffix('/').removesuffix('.git')
-            if normalize(project.get('source_url')) != normalize(policy.get('source_url')):
-                raise Blocked('Scoped channel policy source identity mismatch: ' + key)
+            def repository(value):
+                parsed = urllib.parse.urlsplit(value or '')
+                if parsed.scheme != 'https' or parsed.hostname not in ('github.com','www.github.com'):
+                    return None
+                parts = parsed.path.strip('/').removesuffix('.git').split('/')
+                if len(parts) == 3 and parts[2] == 'issues':parts = parts[:2]
+                if len(parts) != 2:return None
+                return '/'.join(parts).lower()
+            expected = repository(policy.get('source_url'))
+            links = [project.get('source_url'), project.get('issues_url')]
+            if expected is None or not any(repository(link) == expected for link in links):
+                raise Blocked('Scoped channel policy source identity mismatch: ' + key + '; source_url=' + str(project.get('source_url')) + '; issues_url=' + str(project.get('issues_url')))
         return policy
 
     def mr(self, ident, pinned=None, override=None, depth=0):
@@ -622,7 +631,7 @@ def main():
         if args.command=='resolve':
             registry=json.loads((ROOT/'modpack/mod-registry.json').read_text(encoding='utf-8'))
             bindings=json.loads(args.bindings.read_text(encoding='utf-8'))
-            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional,args.output/'downloads' if args.ftb_maven else None)
+            plan=resolve(registry,bindings,transport,args.end,args.allow_beta,ROOT/'pack/mods.json' if (ROOT/'pack/mods.json').exists() else None,args.pinned_only,args.include_optional,args.output/'downloads' if not args.pinned_only else None)
             write_reports(plan,args.output)
             missing=sum(t['selected'] and t['status']!='resolved' for t in plan['targets'])
             print(f'Checked all {len(plan["targets"])} candidates; resolved {len(plan["mods"])} artifacts, unresolved selected targets {missing}. See INSTALL_REPORT.md')

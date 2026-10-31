@@ -287,3 +287,8 @@ Name-level test audit:95/99Freebuff source methods are present;4old BrowserView/
 94Python tools +5legacy tests PASS. Added regressions for CCofficialalpha, JEI+MezzConfigbeta closure, BetterCombat+PlayerAnimatoralpha, author-source mismatch, wrong loaders, stable preference, actual dependency error identity, exact Skills lookup, explicit magic deferrals, mandatory-profile validation with retained40targets, CFbeta not admitting arbitraryalpha, and actual JAR numeric platform exclusions. Existing denied-catalog test now explicitly checks two deferred identities and preserves CONNECT403 assertions for every attempted target; no test deleted.
 
 Gradle build PASS with unchanged Java tasks cached;346JSON/276bilingual keys and8quests/25IDs validate. No fresh JUnit/GameTest/client execution claimed for this installer-only stage. User's real Windows resolution is separate from fixture test results. Published binary versions/runtime remain unconfirmed until R2 Windows download/launch.
+
+
+## Windows R3 (2026-10-31)
+
+Only Better Combat identity-link checking and default official FTB Maven routing changed. Exact accepted project title/slug plus matching official source/Issues repository remain required; foreign repositories rejected. Other bindings/version pins and Core gameplay unchanged. 96 tool tests +5 legacy tests PASS; Gradle build PASS (unchanged Java cached). Existing official Maven fixture checks publication, checksum, production descriptor and dependency closure; actual binary/network availability and0unresolved selected targets require Windows confirmation. Tag windows-trial-2026-10-31-r3 requests GitHub prerelease publication; availability is not confirmed by a tag push.

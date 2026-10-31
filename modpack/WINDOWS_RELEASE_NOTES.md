@@ -1,7 +1,1 @@
-R2 fixes the six unresolved candidates from the first real Windows resolution. Download Reimagined-Windows-Setup.zip and SHA256SUMS.txt; no source build needed.
-
-- Scoped official release channels: CC:Tweaked alpha, JEI/MezzConfig beta, PlayerAnimator prereleases. No global alpha permission or wrong-loader fallback.
-- Explicitly defer unverified Thaumcraft4:Reforged and BotaniaRevived identities; optional exact-title search for the stale Skills slug. All40candidates/Core systems retained.
-- Actual downloaded JAR numeric Minecraft/NeoForge ranges now checked before creating profiles.
-
-Extract into a fresh directory. Run resolve again (do not reuse the previous plan), then install. See START_HERE_RU.md and docs/WINDOWS_RESOLVE_FIXES.md. The archive contains ownedCore and tools, not redistributed third-partyJARs. This is a first-run candidate, NOT client/runtime certification. No EULA accepted.
+R3 addresses only two Windows R2 blockers: Better Combat may identify its official repository via source_url OR issues_url; FTB Quests uses the reviewed official FTB Maven path by default. Existing version pins and Core gameplay unchanged. 96 tool tests +5 legacy tests passed. Zero unresolved targets and actual client launch remain Windows acceptance gates. Extract fresh, run resolve with a new output directory, then install; do not reuse the R2 plan.

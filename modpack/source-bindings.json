@@ -89,7 +89,8 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "identity_evidence": "Exact accepted title/slug plus official GitHub source or issue repository; missing source_url alone is not an identity mismatch."
     },
     "improved-mobs": {
       "modrinth_slug_hint": "improved-mobs",
@@ -326,7 +327,8 @@
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
-      "side_override": null
+      "side_override": null,
+      "preferred_provider": "official-ftb-maven"
     },
     "kubejs": {
       "modrinth_slug_hint": "kubejs",

@@ -37,6 +37,15 @@ class ReleasePolicyTests(unittest.TestCase):
     def test_slug_policy_requires_reviewed_author_source(self):
         self.mod('impostor','playeranimator','Player Animator','alpha','https://github.com/unreviewed/fork')
         with self.assertRaisesRegex(m.Blocked,'identity mismatch'):self.resolver.mr('impostor')
+    def test_official_issue_link_identifies_project_when_source_link_missing(self):
+        project,_=self.mod('combat','better-combat','Better Combat','beta')
+        project['issues_url']='https://github.com/ZsoltMolnarrr/BetterCombat/issues'
+        self.resolver.mr('combat')
+        self.assertEqual('beta',self.resolver.selected['modrinth:combat']['release_type'])
+    def test_foreign_issue_repository_is_not_accepted(self):
+        project,_=self.mod('combat','better-combat','Better Combat','beta')
+        project['issues_url']='https://github.com/other/BetterCombat/issues'
+        with self.assertRaisesRegex(m.Blocked,'identity mismatch'):self.resolver.mr('combat')
     def test_permitted_alpha_does_not_permit_fabric(self):
         self.mod('gu7yAYhd','cc-tweaked','CC: Tweaked','alpha',loaders=['fabric'])
         with self.assertRaisesRegex(m.Blocked,'no compatible'):self.resolver.mr('gu7yAYhd')
