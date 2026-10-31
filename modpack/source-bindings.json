@@ -416,7 +416,7 @@
       "accepted_titles": [
         "More Culling"
       ],
-      "modrinth_project_id": null,
+      "modrinth_project_id": "51shyZVL",
       "modrinth_version_id": null,
       "curseforge_project_id": null,
       "curseforge_file_id": null,
@@ -537,6 +537,14 @@
       ],
       "source_url": "https://github.com/mezz/MezzConfig",
       "reason": "MezzConfig official CurseForge ID from gradle.properties."
+    },
+    "modrinth:51shyZVL": {
+      "release_types": [
+        "release",
+        "beta"
+      ],
+      "source_url": "https://github.com/FxMorin/MoreCulling",
+      "reason": "Windows R5 confirmed official project51shyZVL provides NeoForge1.21.1 beta artifacts; actual production JAR modId/platform checks remain mandatory."
     }
   },
   "review_document": "docs/WINDOWS_RESOLVE_FIXES.md"

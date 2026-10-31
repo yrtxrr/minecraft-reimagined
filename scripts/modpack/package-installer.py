@@ -17,7 +17,7 @@ files={
     'START_HERE_RU.md':root/'modpack/FIRST_RUN_WINDOWS.md',
     'payload/reimagined-0.1.0-alpha.jar':jar,
 }
-for name in ['install.py','Install-Reimagined.ps1','test_install.py','export-pinned-profiles.py','test_profiles.py','audit_jars.py','test_audit_jars.py','official_ftb.py','test_official_sources.py','prepare-server.py','collect-diagnostics.py','test_diagnostics.py','test_resolve_fixes.py','test_artifact_selection.py']:
+for name in ['install.py','Install-Reimagined.ps1','test_install.py','export-pinned-profiles.py','test_profiles.py','audit_jars.py','test_audit_jars.py','official_ftb.py','test_official_sources.py','prepare-server.py','collect-diagnostics.py','test_diagnostics.py','test_resolve_fixes.py','test_artifact_selection.py','test_r6.py']:
     files['scripts/modpack/'+name]=root/'scripts/modpack'/name
 for name in ['mod-registry.json','source-bindings.json','INSTALL_WINDOWS.md','VERIFY_WINDOWS.md','jvm-args.txt','FIRST_RUN_WINDOWS.md','FIRST_RUN_MODS.md','FIRST_RUN_RESULTS.md']:
     files['modpack/'+name]=root/'modpack'/name

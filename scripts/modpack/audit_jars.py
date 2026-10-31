@@ -15,12 +15,22 @@ MAX_NESTED = 64 * 1024 * 1024
 
 
 def numeric_range_contains(version, requirement):
-    """Only unambiguous numeric platform ranges; other Maven syntax stays unverified."""
-    def compare(a, b):
-        a=tuple(map(int,a.split('.')));b=tuple(map(int,b.split('.')))
-        width=max(len(a),len(b));a+= (0,)*(width-len(a));b+=(0,)*(width-len(b))
-        return (a>b)-(a<b)
-    number=r'[0-9]+(?:\.[0-9]+)*'
+    """Conservative Maven platform subset; unsupported syntax remains unverified.
+
+Known qualifiers follow Maven order. This is not a general Maven version resolver.
+    """
+    number=r'[0-9]+(?:\.[0-9]+)*(?:-(?:alpha|beta|milestone|rc|snapshot|final|ga|release|sp)(?:[.-]?[0-9]+)?)?'
+    def parse(value):
+        match=re.fullmatch(r'([0-9]+(?:\.[0-9]+)*)(?:-(alpha|beta|milestone|rc|snapshot|final|ga|release|sp)(?:[.-]?([0-9]+))?)?',value.lower())
+        if not match:return None
+        ranks={'alpha':0,'beta':1,'milestone':2,'rc':3,'snapshot':4,'final':5,'ga':5,'release':5,None:5,'sp':6}
+        return tuple(map(int,match[1].split('.'))),ranks[match[2]],int(match[3] or '0')
+    if parse(version) is None:return None
+    def compare(a,b):
+        av,aq,an=parse(a);bv,bq,bn=parse(b)
+        width=max(len(av),len(bv));av+=(0,)*(width-len(av));bv+=(0,)*(width-len(bv))
+        left=(av,aq,an);right=(bv,bq,bn)
+        return (left>right)-(left<right)
     exact=re.fullmatch(r'\[\s*('+number+r')\s*\]',requirement)
     if exact:return compare(version,exact[1])==0
     interval=re.fullmatch(r'([\[(])\s*('+number+r')?\s*,\s*('+number+r')?\s*([\])])',requirement)

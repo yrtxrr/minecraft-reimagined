@@ -125,6 +125,6 @@ class PlatformRangeTests(unittest.TestCase):
         self.assertTrue(audit_jars.numeric_range_contains('1.21.1','[1.21.1, 1.21.2)'))
     def test_exact_range_and_unknown_qualifiers(self):
         self.assertTrue(audit_jars.numeric_range_contains('1.21.1','[1.21.1]'))
-        self.assertIsNone(audit_jars.numeric_range_contains('1.21.1','[1.21-beta,)'))
+        self.assertIsNone(audit_jars.numeric_range_contains('1.21.1','[1.21-experimental,)'))
 
 if __name__=='__main__':unittest.main()
