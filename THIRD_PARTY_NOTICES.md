@@ -76,3 +76,7 @@ Reviewed gradle.properties, neoforge/build.gradle (production remapJar vs dev cl
 ### Scoped prerelease-channel review for Windows R2 (2026-10-30)
 
 Official BetterCombat1.21.1 e4a6a4a2ae109045d7a1eae334728bd726c305ea, PlayerAnimator cb3227efc19ec46065597332ae265076d0f2b495, CC:Tweaked mc-1.21.x e49896848178be8d8aa7f146a3893e9ae1d87d58, JEI1.21.1 98e703a70a728a13c0d22f9509adf044a23cc738 and MezzConfig1.21.1 a2f4af88372f495cd8225fd378f0dd2b45994d10 publication/configuration sources were inspected for platform support, project identities and release channels. Links/evidence are in docs/WINDOWS_RESOLVE_FIXES.md. No upstream source/config/assets were copied or unofficial binaries built; own installer uses the authors' official catalog files/hashes and respects API distribution restrictions. Unknown Thaumcraft4:Reforged/BotaniaRevived identities are explicitly deferred, never aliased to another author's project. This is not binary-runtime certification.
+
+## R8 Party A Mekanism modules
+
+Mekanism Generators, Tools and Additions 10.7.19.85: Mekanism contributors, MIT, https://github.com/mekanism/Mekanism. No third-party code or JAR is redistributed in the test kit; pinned official download URLs and supplied metadata evidence are recorded in pack/r8/party-a.

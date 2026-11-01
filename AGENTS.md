@@ -1,3 +1,7 @@
+# Party A integration authorization — 2026-11-01
+
+The user supplied R8-Party-A-Evidence.json and now authorizes preparing Party A in a separate R8 profile. This supersedes the earlier research-only gate for these three modules only. Preserve R7/Core/worlds and all 53 base artifacts; append exactly the three verified Mekanism 10.7.19.85 modules. Recheck hashes and descriptors on Windows. Runtime is NOT tested; do not start Party B before actual Party A client/server acceptance. Publish only feat/reimagined-r8-addons.
+
 # Active R8 research stage
 
 Work only on feat/reimagined-r8-addons. User R8 request supersedes historical branch restrictions below. Preserve R7 tag c7b140e, release archives, pins, locks, Core and worlds. Research all20candidates before installing addons; no Ars Nouveau, no unverified JAR or automatic magic substitution. User R7 lock is now frozen at pack/r8/baseline/r7-installed.lock.json (53 external artifacts); supplied Core hash matches R7. Do not ask for the same baseline again. Actual addon JAR metadata and runtime acceptance are still required. Source declarations are not VERIFIED_METADATA or runtime proof. Follow docs/R8_INTEGRATION_PLAN.md; publish checkpoints only on this R8 branch.

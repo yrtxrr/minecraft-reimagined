@@ -1,0 +1,213 @@
+{
+  "r7_lock_sha256": "88bfabac42f3c52675cd9690487efa4e9ee692e319feccc3261c3d6e9a279729",
+  "runtime_verified": false,
+  "installed": false,
+  "results": [
+    {
+      "id": "mekanism-generators",
+      "status": "VERIFIED_METADATA",
+      "runtime_verified": false,
+      "installed": false,
+      "project_id": "OFVYKsAk",
+      "source_repository": "https://github.com/mekanism/Mekanism",
+      "version_id": "a6gl7srE",
+      "version": "10.7.19.85",
+      "release_date": "2026-04-10T10:30:36.558660Z",
+      "file": {
+        "id": "bSWd7EZ5",
+        "hashes": {
+          "sha512": "6c3d5b7ea2f67f43c3d169c97de2855a7085f38019cf426e015ccc8ca9bc4f66e96b1cdf4a9afdc92bef7b2e236f16c81415ed5e48736805d5961d29525316d6",
+          "sha1": "44c4d8006597580ff7e4101b5a22f7b426cdcaf6"
+        },
+        "url": "https://cdn.modrinth.com/data/OFVYKsAk/versions/a6gl7srE/MekanismGenerators-1.21.1-10.7.19.85.jar",
+        "filename": "MekanismGenerators-1.21.1-10.7.19.85.jar",
+        "primary": true,
+        "size": 1114598,
+        "file_type": null
+      },
+      "sha256": "0e5783b111e756f27b48c62b2f0e02fff750c77f7985ff809bfadc5f444ba4ac",
+      "license": {
+        "id": "MIT",
+        "name": "MIT License",
+        "url": null
+      },
+      "sides": [
+        "client",
+        "server"
+      ],
+      "catalog_dependencies": [
+        {
+          "version_id": "5KzzycBT",
+          "project_id": "Ce6I4WUE",
+          "file_name": null,
+          "dependency_type": "required"
+        }
+      ],
+      "descriptor": {
+        "mods": [
+          {
+            "id": "mekanismgenerators",
+            "version": "10.7.19",
+            "artifact": "aac81e96d4c89c99423c4d393735635b470b4435fd9d837cab40682d6f27655b.jar",
+            "embedded": false
+          }
+        ],
+        "dependencies": [
+          {
+            "owner": "mekanismgenerators",
+            "id": "mekanism",
+            "side": "both",
+            "range": "[10.7.19]",
+            "type": "required"
+          }
+        ],
+        "notes": [],
+        "descriptor_license": "MIT"
+      },
+      "base_version": "10.7.19.85",
+      "base_game_version": "10.7.19",
+      "recorded_base_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+      "limitation": "Official checksums/JAR metadata only. No client, server, two-player, save or performance test."
+    },
+    {
+      "id": "mekanism-tools",
+      "status": "VERIFIED_METADATA",
+      "runtime_verified": false,
+      "installed": false,
+      "project_id": "tqQpq1lt",
+      "source_repository": "https://github.com/mekanism/Mekanism",
+      "version_id": "v5zlSE9s",
+      "version": "10.7.19.85",
+      "release_date": "2026-04-10T10:30:33.347485Z",
+      "file": {
+        "id": "FkegUo7w",
+        "hashes": {
+          "sha1": "4433b3eec0a5a0bf415d873e710a1cecea5850bc",
+          "sha512": "0dccc47efbb9e3bf3b7df886cefff4a6b9a3f683bf0df3e54409dc3a4c6459eef95ce0af93adf345b868e5b7dcb7a2bb0af68f0a94acfa69975bfbb278e4902f"
+        },
+        "url": "https://cdn.modrinth.com/data/tqQpq1lt/versions/v5zlSE9s/MekanismTools-1.21.1-10.7.19.85.jar",
+        "filename": "MekanismTools-1.21.1-10.7.19.85.jar",
+        "primary": true,
+        "size": 526620,
+        "file_type": null
+      },
+      "sha256": "e1dbca7d70df150101da535f6ab4b165a2e402fde830d34df75b58d9aad24dd8",
+      "license": {
+        "id": "MIT",
+        "name": "MIT License",
+        "url": null
+      },
+      "sides": [
+        "client",
+        "server"
+      ],
+      "catalog_dependencies": [
+        {
+          "version_id": "5KzzycBT",
+          "project_id": "Ce6I4WUE",
+          "file_name": null,
+          "dependency_type": "required"
+        }
+      ],
+      "descriptor": {
+        "mods": [
+          {
+            "id": "mekanismtools",
+            "version": "10.7.19",
+            "artifact": "7a3dda0bdbcebb44d080fb52fa791d0724a270c4c9565c9e16198250061d0e74.jar",
+            "embedded": false
+          }
+        ],
+        "dependencies": [
+          {
+            "owner": "mekanismtools",
+            "id": "mekanism",
+            "side": "both",
+            "range": "[10.7.19]",
+            "type": "required"
+          }
+        ],
+        "notes": [],
+        "descriptor_license": "MIT"
+      },
+      "base_version": "10.7.19.85",
+      "base_game_version": "10.7.19",
+      "recorded_base_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+      "limitation": "Official checksums/JAR metadata only. No client, server, two-player, save or performance test."
+    },
+    {
+      "id": "mekanism-additions",
+      "status": "VERIFIED_METADATA",
+      "runtime_verified": false,
+      "installed": false,
+      "project_id": "a6F3uASn",
+      "source_repository": "https://github.com/mekanism/Mekanism",
+      "version_id": "6mkdykZa",
+      "version": "10.7.19.85",
+      "release_date": "2026-04-10T10:30:39.973006Z",
+      "file": {
+        "id": "FBYamfyq",
+        "hashes": {
+          "sha1": "0934a9f9961a9a1a47ff344762f8eeb0c149d80d",
+          "sha512": "6bdd4b00d19f316c7486ec27e78fe1204427fea4ad1c15c13a395956c4d1d7eb7f55438f0399b623820eae02fa5a690cece6cbb57c1b5923e1185c389bf0ddb7"
+        },
+        "url": "https://cdn.modrinth.com/data/a6F3uASn/versions/6mkdykZa/MekanismAdditions-1.21.1-10.7.19.85.jar",
+        "filename": "MekanismAdditions-1.21.1-10.7.19.85.jar",
+        "primary": true,
+        "size": 1162551,
+        "file_type": null
+      },
+      "sha256": "3d8a6ed67f5ccf3797ad9d5236ec4e22b74481aa9cd45636feb16f89e1d56311",
+      "license": {
+        "id": "MIT",
+        "name": "MIT License",
+        "url": null
+      },
+      "sides": [
+        "client",
+        "server"
+      ],
+      "catalog_dependencies": [
+        {
+          "version_id": "5KzzycBT",
+          "project_id": "Ce6I4WUE",
+          "file_name": null,
+          "dependency_type": "required"
+        }
+      ],
+      "descriptor": {
+        "mods": [
+          {
+            "id": "mekanismadditions",
+            "version": "10.7.19",
+            "artifact": "41fccce0f61ff558b8d7842cf7e5cb785ad58064c3d739f804aa614f5e85e2e6.jar",
+            "embedded": false
+          }
+        ],
+        "dependencies": [
+          {
+            "owner": "mekanismadditions",
+            "id": "mekanism",
+            "side": "both",
+            "range": "[10.7.19]",
+            "type": "required"
+          }
+        ],
+        "notes": [],
+        "descriptor_license": "MIT"
+      },
+      "base_version": "10.7.19.85",
+      "base_game_version": "10.7.19",
+      "recorded_base_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+      "limitation": "Official checksums/JAR metadata only. No client, server, two-player, save or performance test."
+    }
+  ],
+  "base_game_descriptor": {
+    "id": "mekanism",
+    "version": "10.7.19",
+    "artifact": "4c720914c3026c9e88b95632bf860e0e86da9e054e7f60110a14f766b8fddef8.jar",
+    "embedded": false
+  },
+  "base_content_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+  "all_metadata_verified": true
+}

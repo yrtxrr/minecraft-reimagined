@@ -28,3 +28,7 @@
 | 20 | MythicBotany | DEFERRED | 4.0 source | Reviewed upstream master targets Forge1.20.1/Botania1.20.1-443-FORGE. This source incompatible with target; compatible1.21.1 binary/port and BotaniaRevived ABI not confirmed. |
 
 Для Create6.0.10 приведённые диапазоныC&A/Diesel/Industry предварительно подходят математически. Без фактического lock и jar metadata это не VERIFIED_METADATA; без запуска — не RUNTIME_VERIFIED. Для Aeronautics/Sable/Gadgets/Airliners соответствие не подтверждено. Модульные версииMekanism должны совпадать полностью. Статус DEFERRED для проверенного старого источника не является утверждением об отсутствии любых новых портов.
+
+## Party A update — 2026-11-01
+
+The three Mekanism modules are now VERIFIED_METADATA from the supplied report, and an isolated profile installer is prepared. See R8_PARTY_A_INTEGRATION.md for exact versions/hashes. Runtime remains NOT_TESTED; Party B is not authorized by metadata alone. This supersedes older research-only status for Party A.

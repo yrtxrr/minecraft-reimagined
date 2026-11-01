@@ -197,58 +197,54 @@
       "id": "mekanism-generators",
       "name": "Mekanism Generators",
       "batch": "A",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED_METADATA",
       "source": {
         "repository": "https://github.com/mekanism/Mekanism",
         "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
       },
       "source_version_hint": "10.7.19 (build suffix unconfirmed)",
-      "release_version": null,
-      "release_url": null,
-      "release_date": null,
-      "sha256": null,
-      "project_id": {
-        "modrinth": "OFVYKsAk",
-        "curseforge": "268566"
-      },
-      "license_evidence": "MIT",
-      "evidence": "Official release/1.21.x; exact [file.jarVersion] dependency on baseMekanism. Never mix module/base build numbers.",
+      "release_version": "10.7.19.85",
+      "release_url": "https://cdn.modrinth.com/data/OFVYKsAk/versions/a6gl7srE/MekanismGenerators-1.21.1-10.7.19.85.jar",
+      "release_date": "2026-04-10T10:30:36.558660Z",
+      "sha256": "0e5783b111e756f27b48c62b2f0e02fff750c77f7985ff809bfadc5f444ba4ac",
+      "project_id": "OFVYKsAk",
+      "license_evidence": "MIT; supplied exact-JAR evidence and official Mekanism repository",
+      "evidence": "pack/r8/party-a/evidence.json: actual descriptor version 10.7.19, required Mekanism [10.7.19]; frozen R7 base SHA256 matches. Runtime NOT tested.",
       "runtime_verified": false,
       "install": false,
       "baseline_assessment": {
         "required_exact_module_version": "10.7.19.85",
         "catalog_base_version": "10.7.19.85",
         "scope": "Exact-version requirement from reviewed source; module release/JAR not yet inspected"
-      }
+      },
+      "integration_candidate": true
     },
     {
       "number": 10,
       "id": "mekanism-tools",
       "name": "Mekanism Tools",
       "batch": "A",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED_METADATA",
       "source": {
         "repository": "https://github.com/mekanism/Mekanism",
         "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
       },
       "source_version_hint": "10.7.19 (build suffix unconfirmed)",
-      "release_version": null,
-      "release_url": null,
-      "release_date": null,
-      "sha256": null,
-      "project_id": {
-        "modrinth": "tqQpq1lt",
-        "curseforge": "268567"
-      },
-      "license_evidence": "MIT",
-      "evidence": "Same exact-version module rule; MC1.21.1 NF>=21.1.194.",
+      "release_version": "10.7.19.85",
+      "release_url": "https://cdn.modrinth.com/data/tqQpq1lt/versions/v5zlSE9s/MekanismTools-1.21.1-10.7.19.85.jar",
+      "release_date": "2026-04-10T10:30:33.347485Z",
+      "sha256": "e1dbca7d70df150101da535f6ab4b165a2e402fde830d34df75b58d9aad24dd8",
+      "project_id": "tqQpq1lt",
+      "license_evidence": "MIT; supplied exact-JAR evidence and official Mekanism repository",
+      "evidence": "pack/r8/party-a/evidence.json: actual descriptor version 10.7.19, required Mekanism [10.7.19]; frozen R7 base SHA256 matches. Runtime NOT tested.",
       "runtime_verified": false,
       "install": false,
       "baseline_assessment": {
         "required_exact_module_version": "10.7.19.85",
         "catalog_base_version": "10.7.19.85",
         "scope": "Exact-version requirement from reviewed source; module release/JAR not yet inspected"
-      }
+      },
+      "integration_candidate": true
     },
     {
       "number": 11,
@@ -382,29 +378,27 @@
       "id": "mekanism-additions",
       "name": "Mekanism Additions",
       "batch": "A",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED_METADATA",
       "source": {
         "repository": "https://github.com/mekanism/Mekanism",
         "revision": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80"
       },
       "source_version_hint": "10.7.19 (build suffix unconfirmed)",
-      "release_version": null,
-      "release_url": null,
-      "release_date": null,
-      "sha256": null,
-      "project_id": {
-        "modrinth": "a6F3uASn",
-        "curseforge": "345425"
-      },
-      "license_evidence": "MIT",
-      "evidence": "Same exact-version module rule; new mob/balloon persistence and collision checks required.",
+      "release_version": "10.7.19.85",
+      "release_url": "https://cdn.modrinth.com/data/a6F3uASn/versions/6mkdykZa/MekanismAdditions-1.21.1-10.7.19.85.jar",
+      "release_date": "2026-04-10T10:30:39.973006Z",
+      "sha256": "3d8a6ed67f5ccf3797ad9d5236ec4e22b74481aa9cd45636feb16f89e1d56311",
+      "project_id": "a6F3uASn",
+      "license_evidence": "MIT; supplied exact-JAR evidence and official Mekanism repository",
+      "evidence": "pack/r8/party-a/evidence.json: actual descriptor version 10.7.19, required Mekanism [10.7.19]; frozen R7 base SHA256 matches. Runtime NOT tested.",
       "runtime_verified": false,
       "install": false,
       "baseline_assessment": {
         "required_exact_module_version": "10.7.19.85",
         "catalog_base_version": "10.7.19.85",
         "scope": "Exact-version requirement from reviewed source; module release/JAR not yet inspected"
-      }
+      },
+      "integration_candidate": true
     },
     {
       "number": 17,

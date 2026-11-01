@@ -49,3 +49,7 @@ py -3 scripts/r8/research_addons.py --r7-lock C:\Games\Reimagined-r7\installed.l
 ```
 
 Скрипт только читает lock и официальный API Modrinth для20кандидатов; не загружаетJAR, не меняетprofile/cache/lock и не повышает статусы. Для нерешённых на Modrinth проектов всё равно нужна ручная проверка CurseForge/GitHub/авторских источников. Результат сохраняет сырые зависимости/файлы/хеши каталога, но не подтверждает SHA256 реально скачанногоJAR илиCreateABI. Если output уже существует, укажите новое имя. При недоступности сети причины сохраняются, бесконечныхповторов нет.
+
+## Party A update — 2026-11-01
+
+The three Mekanism modules are now VERIFIED_METADATA from the supplied report, and an isolated profile installer is prepared. See R8_PARTY_A_INTEGRATION.md for exact versions/hashes. Runtime remains NOT_TESTED; Party B is not authorized by metadata alone. This supersedes older research-only status for Party A.
