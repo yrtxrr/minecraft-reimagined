@@ -168,3 +168,5 @@ Prism SHA512 reader verified against official source573665f; offlineexport emits
 
 ## R8 research gate
 Branch feat/reimagined-r8-addons, immutable R7 c7b140e source snapshot,20candidate research records and A–F integration plan prepared. No addon or new quest installed. Actual R7 installed.lock/Core hash plus official artifact/closure/license checks required before partyA. Aeronautics remains priority but unverified; magic ports deferred; ArsNouveau prohibited. See docs/R8_INTEGRATION_PLAN.md.
+
+R8 baseline gate updated2026-11-01: full user lock/Core hash now provided and matched; missing-baseline blocker resolved. Next evidence gate: exact10.7.19.85 Mek module JAR metadata via scripts/r8/probe_party_a.py, plus remaining20candidate research. Do not install before source/license/closure checks; no world/runtime claim from JSON or fixture tests.

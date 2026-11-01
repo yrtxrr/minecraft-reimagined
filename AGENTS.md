@@ -1,6 +1,6 @@
 # Active R8 research stage
 
-Work only on feat/reimagined-r8-addons. User R8 request supersedes historical branch restrictions below. Preserve R7 tag c7b140e, release archives, pins, locks, Core and worlds. Research all20candidates before installing addons; no Ars Nouveau, no unverified JAR or automatic magic substitution. Actual user installed.lock/Core hash are required for baseline acceptance. Source declarations are not VERIFIED_METADATA or runtime proof. Follow docs/R8_INTEGRATION_PLAN.md; publish checkpoints only on this R8 branch.
+Work only on feat/reimagined-r8-addons. User R8 request supersedes historical branch restrictions below. Preserve R7 tag c7b140e, release archives, pins, locks, Core and worlds. Research all20candidates before installing addons; no Ars Nouveau, no unverified JAR or automatic magic substitution. User R7 lock is now frozen at pack/r8/baseline/r7-installed.lock.json (53 external artifacts); supplied Core hash matches R7. Do not ask for the same baseline again. Actual addon JAR metadata and runtime acceptance are still required. Source declarations are not VERIFIED_METADATA or runtime proof. Follow docs/R8_INTEGRATION_PLAN.md; publish checkpoints only on this R8 branch.
 
 # Current solo-development priority
 

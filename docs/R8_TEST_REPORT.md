@@ -11,7 +11,7 @@
 
 | Проверка | Статус / причина |
 |---|---|
-| Фактический установленный состав R7 и Core | BLOCKED: нет установленного lock/хеша Core из Windows; repository metadata не заменяет их |
+| Фактический установленный состав R7 и Core | PASS для предоставленного lock/CoreSHA; фактические внешниеJAR заново не хешировались в облаке |
 | Выбранные20JAR/версии/даты/SHA256/полныйclosure | NOT_TESTED: нет подтверждённых конкретных файлов |
 | Скачивание/установка партии A–F | NOT_TESTED: партии не допущены; R7 не менялся |
 | R8 Gradle/JUnit/GameTestServer с внешними аддонами | NOT_TESTED: нет установленной партии; базовые проверки не подменяют их |
@@ -27,3 +27,10 @@
 PASS:120существующих тестов установщика,5legacy,3новых теста read-only исследования; ресурсныйвалидатор346JSON/276двуязычныхключей, граф8квестов/25ID; Gradlebuild (неизменённыеJavaзадачи изкэша). Это проверки исходнойбазы/инструментов, не20аддонов.
 
 PASS:20уникальныхкандидатов,16UNVERIFIED/4DEFERRED, ниодногоinstall=true/runtime_verified=true;9обязательныхдокументов; неизменностьR7манифестов/его локальногоZIP/tag. ПолныйGameTestServer в этомэтапе не запускался: никакая новаяпартия не установлена; прежние серверныеотчёты не выданы за R8результат.
+
+## 2026-11-01: baseline and research tools
+Original uploaded lockSHA256,53records/closure/side counts/unique filenames/platform validated. UserCoreSHA equals local R7JAR and archive field; local descriptor reports reimagined0.1.0-alpha. Real ApacheMaven3.8.5 source-range comparisons executed (not mocked) for the documented7cases: alltrue. These are source/catalog-family comparisons, not downloaded addon/runtime tests.
+
+11R8 fixture tests pass, including exact fullversion/channel/loader/project filters, actualTOML/manifest placeholders, uppercaseREQUIRED, strictbase dependency, hash-verified report classification and original frozenlock immutability. Extracted researchZIP repeats all11tests and CLI imports without checkout/JDK. Its VERIFIED_METADATA fixture result is not a claim of any real module download; cloud probe not rerun against blockedcatalog/CDN. Existing installer/Core files remain unchanged relative toR7.
+
+Подтверждение checkpoint после получения lock: прошли120существующих тестов установщика,5legacy,11R8исследовательских тестов; ресурсные проверки346JSON/276двуязычныхключей,8квестов/25ID и Gradlebuild (Javaнеизменён, задачи кэшированы). Бинарные/runtime-проверки партий не заявлены. ВCI добавлен запуск11read-only/fixtureтестов. R7 исходныеinputs, локальныйZIP и CoreSHA перепроверены неизменёнными.

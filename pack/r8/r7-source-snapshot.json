@@ -9,40 +9,72 @@
     "modpack/mod-registry.json": "763e734bc3419c5134090c40a04aa76ce1b8c9aa2f8821adb960a2d110004cb4",
     "modpack/overrides/config/ftbquests/quests/chapters/reimagined_intro.snbt": "6114d050d0e85e039d14acf4c7a2b937465a3c4d508ebf39fcab495919f63dfc"
   },
-  "full_installed_lock": null,
-  "installed_baseline_ready": false,
+  "full_installed_lock": {
+    "path": "pack/r8/baseline/r7-installed.lock.json",
+    "sha256": "88bfabac42f3c52675cd9690487efa4e9ee692e319feccc3261c3d6e9a279729",
+    "source": "User-uploaded installed.lock.json; original bytes preserved",
+    "artifacts": 53,
+    "external_bytes_rehashed_here": false
+  },
+  "installed_baseline_ready": true,
   "runtime_evidence": "User reports R7 main menu only; world/save/server/two-player NOT_TESTED",
   "versions": {
     "create": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "6.0.10+mc1.21.1",
+      "artifact_key": "modrinth:LNytGWDc",
+      "filename": "create-1.21.1-6.0.10.jar",
+      "sha256": "ef87fe5709f1ba1f5b8bb20a2925b5afb4669e178fd6d8bf10c167759eefe37a",
+      "evidence": "Uploaded installed lock; not independently rehashed external JAR on Windows"
     },
     "mekanism": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "10.7.19.85",
+      "artifact_key": "modrinth:Ce6I4WUE",
+      "filename": "Mekanism-1.21.1-10.7.19.85.jar",
+      "sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+      "evidence": "Uploaded installed lock; not independently rehashed external JAR on Windows"
     },
     "ae2": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "19.2.18",
+      "artifact_key": "modrinth:XxWD5pD3",
+      "filename": "appliedenergistics2-19.2.18.jar",
+      "sha256": "df15a07f86ca1ca93aa66373f9d5d84dd3d4586631fceb38f4fbc85dad591e39",
+      "evidence": "Uploaded installed lock; not independently rehashed external JAR on Windows"
     },
     "farmersdelight": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "1.21.1-1.3.4",
+      "artifact_key": "modrinth:R2OftAxM",
+      "filename": "FarmersDelight-1.21.1-1.3.4.jar",
+      "sha256": "139ad7696462c89c03eea463f805abffa552526c5dadaadae221dd9624cb197c",
+      "evidence": "Uploaded installed lock; not independently rehashed external JAR on Windows"
     },
     "ftbquests": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "2101.1.37",
+      "artifact_key": "ftb-maven:ftb-quests-neoforge",
+      "filename": "ftb-quests-neoforge-2101.1.37.jar",
+      "sha256": "6b42457d680108d0af5b8deb21e3fe7b92138209f0683c62441dc360d4fc01d5",
+      "evidence": "Uploaded installed lock; not independently rehashed external JAR on Windows"
     },
     "reimagined": {
-      "installed_version": null,
-      "reason": "User Windows installed.lock.json unavailable in this workspace"
+      "installed_version": "0.1.0-alpha",
+      "filename": "reimagined-0.1.0-alpha.jar",
+      "sha256": "266c7e4309b6692e86498f1437b1c69c65777fb391fb6e478ae29dd7afc75451",
+      "hash_matches_r7_packaged_core": true,
+      "evidence": "User-reported installed hash equals locally packaged Core in R7 archive tagged c7b140e; actual Windows JAR not uploaded"
     }
   },
-  "user_assertion_create": "6.0.10, not independently verified against installed lock",
+  "user_assertion_create": "6.0.10+mc1.21.1 confirmed from uploaded installed lock; external JAR not independently read here",
   "local_archive_evidence": {
     "sha256": "e93482b426a5a2b7d3a7e598a5e5a9b1b4157d1854a404bb7e0cac3411e46e57",
     "manifest_revision": "c7b140edcf013016a333c453a1a390b79fbad538",
     "owned_core_sha256": "266c7e4309b6692e86498f1437b1c69c65777fb391fb6e478ae29dd7afc75451",
     "scope": "Local generated archive, NOT confirmed GitHub Release bytes or user installed Core"
+  },
+  "baseline_scope": "Declared installed composition and user-reported Core hash frozen; world/save/server/two-client acceptance NOT_TESTED",
+  "declared_profile_files": {
+    "client_external": 53,
+    "server_external": 48,
+    "client_only": 5,
+    "core_additional": 1,
+    "scope": "Lock side declarations, not a live directory inventory or runtime acceptance"
   }
 }

@@ -1,3 +1,5 @@
+Обновление baseline: предоставленныйR7 подтверждает Create6.0.10+mc1.21.1, Mek10.7.19.85, AE2 19.2.18, FD1.21.1-1.3.4, FTB2101.1.37 и Curios9.5.1. Предварительные source-диапазоны A/B/D и FDминимум MyNether сопоставлены в R8_R7_BASELINE_VERIFIED.md. Статусы бинарников не повышены.
+
 # R8: матрица совместимости
 
 Все значения относятся к проверенным исходникам, если явно не указан бинарный релиз. Ни один JAR аддона не подтверждён и не установлен. Полные source URL/revision/поля публикации — в pack/r8/addon-research.json.
@@ -25,4 +27,4 @@
 | 19 | Ocean’s Delight | UNVERIFIED | Не подтверждена | Official project/release identity not confirmed; guessed Git URL failed, not evidence no release exists. |
 | 20 | MythicBotany | DEFERRED | 4.0 source | Reviewed upstream master targets Forge1.20.1/Botania1.20.1-443-FORGE. This source incompatible with target; compatible1.21.1 binary/port and BotaniaRevived ABI not confirmed. |
 
-Для Create6.0.10 приведённые диапазоныC&A/Diesel/Industry предварительно подходят математически. Без фактического lock, jar metadata и запуска это не VERIFIED_METADATA. Для Aeronautics/Sable/Gadgets/Airliners соответствие не подтверждено. Модульные версииMekanism должны совпадать полностью. Статус DEFERRED для проверенного старого источника не является утверждением об отсутствии любых новых портов.
+Для Create6.0.10 приведённые диапазоныC&A/Diesel/Industry предварительно подходят математически. Без фактического lock и jar metadata это не VERIFIED_METADATA; без запуска — не RUNTIME_VERIFIED. Для Aeronautics/Sable/Gadgets/Airliners соответствие не подтверждено. Модульные версииMekanism должны совпадать полностью. Статус DEFERRED для проверенного старого источника не является утверждением об отсутствии любых новых портов.

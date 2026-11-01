@@ -12,3 +12,6 @@
 *.ogg binary
 *.ttf binary
 *.zip binary
+
+# Preserve the exact uploaded R7 lock bytes (including CRLF) as immutable evidence.
+pack/r8/baseline/r7-installed.lock.json binary
